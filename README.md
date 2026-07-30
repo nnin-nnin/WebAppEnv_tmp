@@ -1,11 +1,5 @@
 # 可复现应用环境
 
-本目录包含三个可独立运行的固定版本应用环境：`espocrm_8.2.5/`、`atropim_489afea/` 和 `wordpress_4.7.4/`。每个应用目录均采用相同的交付结构，并提供已经构建好的 `linux/amd64` all-in-one 镜像。
-
-## 初始账号
-
-各应用的初始账号、密码和角色均写在其目录下 `README.md` 的“访问和账号”部分。请根据要运行的应用查阅对应 README；这些账号仅供本地 benchmark 使用，不是生产账号。
-
 ## 目录说明
 
 - `README.md`：说明应用版本、启动命令、访问地址、初始账号和验证方式。
@@ -20,7 +14,7 @@
 
 ## 运行例子
 
-以 EspoCRM 8.2.5 为例，运行时可在任意目录执行：
+以 EspoCRM 8.2.5 为例，如何运行：
 
 ```bash
 docker run -d \
@@ -30,4 +24,4 @@ docker run -d \
   nnin/sop-espocrm:8.2.5
 ```
 
-随后访问 <http://localhost:18092>，使用账号 `admin` 和密码 `benchmark-only` 登录。
+随后访问 <http://localhost:18092>，使用账号 `admin` 和密码 `benchmark-only` 登录（账号密码在espocrm_8.2.5的 readme 中有写）
