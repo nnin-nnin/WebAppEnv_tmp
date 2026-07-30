@@ -13,3 +13,23 @@
 - `image/`：保存最终的 all-in-one 镜像 tar、镜像元数据和校验和。
 
 接收者实际运行时只需查看对应应用的 `README.md`。在线时可直接执行其中的 `docker run` 命令，Docker 会自动从 Docker Hub 拉取镜像；离线交付时先从 `image/` 加载镜像 tar，再执行同一条 `docker run` 命令。无需手动构建源码或配置外部数据库。
+
+## 运行例子
+
+以 EspoCRM 8.2.5 为例，在线运行时可在任意目录执行：
+
+```bash
+docker run -d \
+  --platform linux/amd64 \
+  --name espocrm-8.2.5 \
+  -p 18092:80 \
+  nnin/sop-espocrm:8.2.5
+```
+
+随后访问 <http://localhost:18092>，使用账号 `admin` 和密码 `benchmark-only` 登录。
+
+离线交付时，在本目录执行以下命令加载镜像，再执行上面的 `docker run` 命令：
+
+```bash
+docker load -i espocrm_8.2.5/image/espocrm-8.2.5-linux-amd64.tar
+```
