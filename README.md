@@ -1,20 +1,20 @@
 # 可复现应用环境
 
-本仓库保存固定版本的 Web 应用环境、源码追溯信息、Docker 构建文件、运行资源和验证脚本。每个应用都是一个独立目录，最终运行镜像发布在 Docker Hub；应用的具体账号、密码、访问地址和验证方式以对应应用目录中的 `README.md` 为准。
+本仓库保存固定版本的 Web 应用环境、源码追溯信息、Docker 构建文件、运行资源和验证脚本。每个应用都是一个独立目录，最终运行镜像发布在 Docker Hub；下表列出默认测试账号，具体访问地址、角色和验证方式以对应应用目录中的 `README.md` 为准。
 
 项目目标、构建流程和人工验证说明见 [`docs/README.md`](docs/README.md)。
 
 ## 应用目录
 
-| 应用与版本 | 应用目录 | 使用说明 |
-| --- | --- | --- |
-| AtroPIM 489afea | [`applications/atropim_489afea/`](applications/atropim_489afea/) | [`README.md`](applications/atropim_489afea/README.md) |
-| EspoCRM 8.2.5 | [`applications/espocrm_8.2.5/`](applications/espocrm_8.2.5/) | [`README.md`](applications/espocrm_8.2.5/README.md) |
-| mall 1.0.3 | [`applications/mall_1.0.3/`](applications/mall_1.0.3/) | [`README.md`](applications/mall_1.0.3/README.md) |
-| ruoyi-vue-pro 2026.06-jdk8 | [`applications/ruoyi-vue-pro_2026.06-jdk8/`](applications/ruoyi-vue-pro_2026.06-jdk8/) | [`README.md`](applications/ruoyi-vue-pro_2026.06-jdk8/README.md) |
-| WordPress 4.7.4 | [`applications/wordpress_4.7.4/`](applications/wordpress_4.7.4/) | [`README.md`](applications/wordpress_4.7.4/README.md) |
+| 应用名与版本 | 镜像名 | 启动指令 | 用户名和密码 |
+| --- | --- | --- | --- |
+| [`AtroPIM 489afea`](applications/atropim_489afea/) | `nnin/sop-atropim:489afea` | `docker run -d --platform linux/amd64 --name atropim-489afea -p 18083:80 nnin/sop-atropim:489afea` | `admin` / `benchmark-only` |
+| [`EspoCRM 8.2.5`](applications/espocrm_8.2.5/) | `nnin/sop-espocrm:8.2.5` | `docker run -d --platform linux/amd64 --name espocrm-8.2.5 -p 18092:80 nnin/sop-espocrm:8.2.5` | `admin` / `benchmark-only` |
+| [`mall 1.0.3`](applications/mall_1.0.3/) | `nnin/sop-mall:1.0.3` | `docker run -d -p 18085:80 nnin/sop-mall:1.0.3` | `admin` / `123456` |
+| [`ruoyi-vue-pro 2026.06-jdk8`](applications/ruoyi-vue-pro_2026.06-jdk8/) | `yorem/sop-ruoyi-vue-pro:2026.06-jdk8` | `docker run -d -p 18087:80 yorem/sop-ruoyi-vue-pro:2026.06-jdk8` | `admin` / `admin123` |
+| [`WordPress 4.7.4`](applications/wordpress_4.7.4/) | `nnin/sop-wordpress:4.7.4` | `docker run -d --platform linux/amd64 --name wordpress-4.7.4 -p 18084:80 nnin/sop-wordpress:4.7.4` | `admin` / `benchmark-only`<br>`editor` / `benchmark-only`<br>`subscriber` / `benchmark-only` |
 
-请先进入对应应用目录并阅读其中的 README。根 README 不重复维护各应用的账号密码，避免应用版本或初始化数据变化时出现不一致。
+请先进入对应应用目录并阅读其中的 README。表格中的账号用于快速启动验证，应用 README 还包含访问地址、角色和完整验证方式。
 
 ## 仓库结构
 
