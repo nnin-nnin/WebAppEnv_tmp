@@ -1,5 +1,15 @@
 # 可复现应用环境
 
+## 初始账号
+
+以下账号仅供本地 benchmark 使用，不是生产账号。访问地址、角色和验证方式请查看对应应用目录中的 `README.md`。
+
+| 应用名与版本 | 镜像名 | 用户名和密码 |
+| --- | --- | --- |
+| EspoCRM 8.2.5 | `nnin/sop-espocrm:8.2.5` | `admin` / `benchmark-only` |
+| AtroPIM 489afea | `nnin/sop-atropim:489afea` | `admin` / `benchmark-only` |
+| WordPress 4.7.4 | `nnin/sop-wordpress:4.7.4` | `admin` / `benchmark-only`<br>`editor` / `benchmark-only`<br>`subscriber` / `benchmark-only` |
+
 ## 目录说明
 
 - `README.md`：说明应用版本、启动命令、访问地址、初始账号和验证方式。
