@@ -2,6 +2,18 @@
 
 本目录包含三个可独立运行的固定版本应用环境：`espocrm_8.2.5/`、`atropim_489afea/` 和 `wordpress_4.7.4/`。每个应用目录均采用相同的交付结构，并提供已经构建好的 `linux/amd64` all-in-one 镜像。
 
+## 初始账号
+
+以下账号仅供本地 benchmark 使用，不是生产账号。
+
+| 应用 | 访问地址 | 用户名 | 密码 | 角色 |
+| --- | --- | --- | --- | --- |
+| EspoCRM 8.2.5 | <http://localhost:18092> | `admin` | `benchmark-only` | administrator |
+| AtroPIM `489afea` | <http://localhost:18083> | `admin` | `benchmark-only` | administrator |
+| WordPress 4.7.4 | <http://localhost:18084> | `admin` | `benchmark-only` | administrator |
+| WordPress 4.7.4 | <http://localhost:18084> | `editor` | `benchmark-only` | editor |
+| WordPress 4.7.4 | <http://localhost:18084> | `subscriber` | `benchmark-only` | subscriber |
+
 ## 目录说明
 
 - `README.md`：说明应用版本、启动命令、访问地址、初始账号和验证方式。
