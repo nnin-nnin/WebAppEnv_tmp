@@ -1,0 +1,85 @@
+id: mall_1.0.3
+application: mall
+version: 1.0.3
+artifact_type: ready_application_environment
+status: ready
+application_type: complete_web_application
+
+documentation:
+  readme: README.md
+
+source:
+  backend:
+    repository: https://github.com/macrozheng/mall
+    ref: dd617ac3fe89c8083af56bee3364b1e812cda3ed
+    commit: dd617ac3fe89c8083af56bee3364b1e812cda3ed
+    path: source/mall-1.0.3
+  frontend:
+    repository: https://github.com/macrozheng/mall-admin-web
+    ref: v1.0.0
+    commit: 2e4a79f10ed55bda7e5452026e76b6f85e87e053
+    path: source/mall-admin-web-1.0.0
+  metadata: source/source.json
+  checksum_file: source/SHA256SUMS
+  acquisition: fixed_commit_archives
+
+runtime:
+  platform: linux/amd64
+  language: Java
+  language_version: 8
+  framework: Spring Boot 2.7.5
+  web_server: embedded Tomcat
+  frontend: Vue 2.5.2, Element UI 2.3.7, webpack 3.6.0
+  frontend_build: "npm ci && npm run build"
+  frontend_static_path: /opt/mall/web
+  database: MariaDB 10.6
+  cache: Redis 6.x
+  http_port: 18085
+  container_port: 80
+  startup: docker run -d -p 18085:80 nnin/sop-mall:1.0.3
+  url: http://localhost:18085/
+  browser_entry: http://localhost:18085/
+
+docker:
+  all_in_one: true
+  topology: single image, single container; mall-admin-web, mall-admin, MariaDB and Redis run inside the same container
+  image:
+    name: nnin/sop-mall:1.0.3
+    role: all-in-one mall-admin environment
+    contains:
+      - Java 8 runtime and Spring Boot 2.7.5 embedded Tomcat
+      - Compiled mall-admin 1.0-SNAPSHOT application
+      - Compiled mall-admin-web frontend static files
+      - mall source snapshot at the fixed commit
+      - MariaDB 10.6 database service
+      - Redis 6.x cache service
+      - Initial mall database schema and data
+      - Initial admin account and roles from mall.sql
+  dockerfile: docker/standalone.Dockerfile
+  compose_file: docker/compose.yaml
+  archive: image/mall-1.0.3-linux-amd64.tar
+  metadata: image/image.json
+  checksum_file: image/SHA256SUMS
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  database_seed: resources/initial-data/database-seed.sql
+  database_seed_note: "基于固定源码 document/sql/mall.sql；仅覆盖 admin 密码哈希以满足交付初始密码 123456"
+  application_config: resources/application-all-in-one.yml
+  login: resources/login.sh
+  register: resources/register.sh
+  frontend_source: source/mall-admin-web-1.0.0
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+delivery:
+  image_reference: nnin/sop-mall:1.0.3
+  archive_path: image/mall-1.0.3-linux-amd64.tar
+  recommended_run: docker run -d -p 18085:80 nnin/sop-mall:1.0.3
+  browser_acceptance: "打开根地址显示 mall-admin-web 登录页，并使用 admin/123456 完成登录"
