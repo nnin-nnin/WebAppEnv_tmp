@@ -1,0 +1,235 @@
+id: monica_4.1.2
+application: Monica
+version: 4.1.2
+artifact_type: ready_application_environment
+status: native_compose_ready
+application_type: complete_web_application
+deployment_mode: native_compose
+deployment_statement: "This is a native multi-container Docker Compose deployment, not an all-in-one single-container deployment. Application, database, cache, mail, scheduled task, queue, and web gateway run in independent containers and communicate through the Compose network."
+
+documentation:
+  readme: README.md
+  compose_file: docker/compose.yaml
+  recommended_start: "docker compose -f docker/compose.yaml up -d"
+
+compose:
+  project_name: monica_4_1_2
+  standard_entrypoint: docker/compose.yaml
+  service_names:
+    - app
+    - web
+    - db
+    - redis
+    - cron
+    - queue
+    - mail
+  network: "Compose-created default network; containers use service names and do not use host localhost"
+  volumes:
+    - app-data
+    - db-data
+    - redis-data
+  external_dependencies: false
+
+official_compose:
+  development:
+    repository: https://github.com/monicahq/monica.git
+    file: docker-compose.dev.yml
+    commit: 50c266f7beb9d8fe6cd8c8929a759529275143f
+    status: development_only
+  full_4x:
+    repository: https://github.com/monicahq/docker.git
+    file: .examples/full/docker-compose.yml
+    commit: 7ffc74385e243e2dac4d7013a3240c0ae1229f05
+    status: official_4_x_multi_container_example
+  assessment: "The backend repository Compose file is explicitly development-only. The final topology follows the official 4.x full example and documents every delivery modification below."
+
+source:
+  backend:
+    repository: https://github.com/monicahq/monica.git
+    ref: 50c266f7beb9d8fe6cd8c8929a759529275143f
+    commit: 50c266f7beb9d8fe6cd8c8929a759529275143f
+    path: source/monica-4.1.2
+  frontend:
+    repository: null
+    commit: null
+    path: null
+    note: "Frontend is in the fixed backend repository and is built with the pinned package lock."
+  metadata: source/source.json
+  checksum_file: source/SHA256SUMS
+  acquisition: fixed_commit_git_archive
+
+runtime:
+  platform: linux/amd64
+  php: 8.2
+  node_build: 20.11.1-bookworm
+  composer_build: 2.7.6
+  frontend_build: "Yarn 1.22.22 plus Laravel Mix production build"
+  database: MariaDB 11.4.2
+  cache: Redis 7.2.5
+  mail_capture: MailHog 1.0.1
+  public_url: http://localhost:18086/
+  mail_ui_url: http://localhost:18087/
+  container_web_port: 80
+  container_fpm_port: 9000
+  api_url: http://localhost:18086/api
+  startup_initialization: "Official monica:update migration flow, Passport key creation, and idempotent official account:create CLI for admin@example.com"
+  database_seed: "No SQL seed file; schema is initialized by the official Monica migration command against the Compose db service"
+
+services:
+  - name: app
+    role: "Monica PHP-FPM application and first-account initialization"
+    image: yorem/sop-monica-app:4.1.2
+    tag: 4.1.2
+    digest: "recorded in image/image.json after linux/amd64 build"
+    platform: linux/amd64
+    source: "Local build from source/monica-4.1.2 and docker/Dockerfile"
+    ports: []
+    depends_on:
+      - db: service_healthy
+      - redis: service_healthy
+    healthcheck: "PHP fsockopen 127.0.0.1:9000"
+    volumes:
+      - app-data:/var/www/html/storage
+    secrets:
+      - app_key
+      - db_password
+      - hash_salt
+  - name: web
+    role: "Official Nginx FastCGI gateway and static frontend"
+    image: yorem/sop-monica-web:4.1.2
+    tag: 4.1.2
+    digest: "recorded in image/image.json after linux/amd64 build"
+    platform: linux/amd64
+    source: "Local build from app image, docker/web.Dockerfile, and official full-example nginx.conf"
+    ports:
+      - 18086:80
+    depends_on:
+      - app: service_healthy
+    healthcheck: "GET /login through Nginx"
+    volumes:
+      - app-data:/var/www/html/storage:ro
+  - name: db
+    role: "Monica relational database"
+    image: mariadb:11.4.2
+    tag: 11.4.2
+    digest: "recorded in image/image.json after linux/amd64 pull"
+    platform: linux/amd64
+    source: "Official MariaDB image"
+    ports: []
+    depends_on: []
+    healthcheck: "healthcheck.sh --connect --innodb_initialized"
+    volumes:
+      - db-data:/var/lib/mysql
+  - name: redis
+    role: "Cache, database session, and Redis queue service"
+    image: redis:7.2.5-alpine
+    tag: 7.2.5-alpine
+    digest: "recorded in image/image.json after linux/amd64 pull"
+    platform: linux/amd64
+    source: "Official Redis image"
+    ports: []
+    depends_on: []
+    healthcheck: "redis-cli ping"
+    volumes:
+      - redis-data:/data
+  - name: cron
+    role: "Monica schedule worker"
+    image: yorem/sop-monica-app:4.1.2
+    tag: 4.1.2
+    digest: "same local app image digest recorded in image/image.json"
+    platform: linux/amd64
+    source: "Shared fixed app image and official 4.x cron.sh"
+    ports: []
+    depends_on:
+      - app: service_healthy
+    healthcheck: "crond process"
+    volumes:
+      - app-data:/var/www/html/storage
+  - name: queue
+    role: "Monica Redis queue worker"
+    image: yorem/sop-monica-app:4.1.2
+    tag: 4.1.2
+    digest: "same local app image digest recorded in image/image.json"
+    platform: linux/amd64
+    source: "Shared fixed app image and official 4.x queue.sh"
+    ports: []
+    depends_on:
+      - app: service_healthy
+    healthcheck: "artisan queue:work process"
+    volumes:
+      - app-data:/var/www/html/storage
+  - name: mail
+    role: "Local SMTP capture and test UI"
+    image: mailhog/mailhog:v1.0.1
+    tag: v1.0.1
+    digest: "recorded in image/image.json after linux/amd64 pull"
+    platform: linux/amd64
+    source: "MailHog image used by the official development Compose topology"
+    ports:
+      - 18087:8025
+    depends_on: []
+    healthcheck: "GET /api/v2/messages"
+    volumes: []
+
+delivery:
+  mode: REGISTRY_WITH_LOCAL_ARCHIVE
+  registry: docker.io
+  namespace: yorem
+  registry_images:
+    app: yorem/sop-monica-app:4.1.2
+    web: yorem/sop-monica-web:4.1.2
+  image_metadata: image/image.json
+  image_checksum_file: image/SHA256SUMS
+  archives:
+    - image/monica-app-4.1.2-linux-amd64.tar
+    - image/monica-web-4.1.2-linux-amd64.tar
+    - image/mariadb-11.4.2-linux-amd64.tar
+    - image/redis-7.2.5-linux-amd64.tar
+    - image/mailhog-1.0.1-linux-amd64.tar
+  load_script: scripts/load-images.sh
+  start_command: "docker compose -f docker/compose.yaml up -d"
+  health_command: "bash scripts/healthcheck.sh"
+  reset_command: "bash scripts/reset.sh"
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  secrets:
+    - resources/secrets/app_key
+    - resources/secrets/db_password
+    - resources/secrets/hash_salt
+  database_seed: null
+
+scripts:
+  build: scripts/build.sh
+  load_images: scripts/load-images.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+initial_account:
+  requested_username: admin
+  actual_username: admin@example.com
+  password: benchmark-only
+  role: instance-admin
+  creation: "Monica php artisan account:create, invoked idempotently by docker/monica-entrypoint.sh"
+  ordinary_user_creation: "resources/register.sh invokes the same supported artisan account:create command through the app service"
+
+official_vs_delivery:
+  - "Official monica/docker-compose.dev.yml is development-only, uses source bind mounts, floating mysql:8/phpmyadmin/mailhog tags, and includes phpMyAdmin."
+  - "The delivery uses the official monica/docker full 4.x app/web/db/redis/cron/queue topology and adds the official development MailHog service for self-contained SMTP capture."
+  - "The app image is rebuilt from the requested backend commit instead of using the official v4.1.2 release tar commit."
+  - "All final images have fixed tags, recorded local image IDs or registry RepoDigests, and linux/amd64 archives."
+  - "Source bind mounts, phpMyAdmin, container_name, host database dependencies, runtime package downloads, and proxy settings were removed."
+  - "Named volumes, Compose secrets, health conditions, 180-second startup polling, and idempotent admin creation were added."
+  - "CHECK_VERSION and other optional network-backed features are disabled; core pages and frontend assets are local."
+
+known_limitations:
+  - "Benchmark-only secrets are stored in resources/secrets and must be replaced for production."
+  - "Monica requires an email login identifier, so requested admin is represented by admin@example.com."
+  - "MailHog captures mail and does not deliver real mail."
+  - "ARM64 hosts rely on Docker linux/amd64 emulation."
+  - "No external SMTP, object storage, weather, geolocation, or search service is included."
+  - "Optional source documentation and user-triggered links may contain external URLs; core startup and frontend assets do not depend on them."

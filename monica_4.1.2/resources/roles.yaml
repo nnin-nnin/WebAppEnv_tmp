@@ -1,0 +1,9 @@
+roles:
+  - name: instance-admin
+    permissions:
+      - "Full access to the Monica account dashboard"
+      - "Manage contacts, activities, reminders, journal, and settings"
+      - "Create additional accounts through the application-supported CLI"
+    purpose: "Initial account created by Monica's Account::createDefault flow"
+    accounts:
+      - admin@example.com

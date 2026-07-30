@@ -1,0 +1,151 @@
+#!/bin/bash
+
+set -Eeo pipefail
+
+# set environment variables with docker secrets in /run/secrets/*
+supportedSecrets=( "DB_PASSWORD"
+                   "DATABASE_URL"
+                   "APP_KEY"
+                   "HASH_SALT"
+                   "MAIL_PASSWORD"
+                   "REDIS_PASSWORD"
+                   "AWS_ACCESS_KEY_ID"
+                   "AWS_SECRET_ACCESS_KEY"
+                   "AWS_KEY"
+                   "AWS_SECRET"
+                   "PASSPORT_PASSWORD_GRANT_CLIENT_ID"
+                   "PASSPORT_PASSWORD_GRANT_CLIENT_SECRET"
+                   "SENTRY_AUTH_TOKEN"
+                   "LOCATION_IQ_API_KEY"
+                   "WEATHERAPI_KEY"
+                   "IPDATA_TOKEN"
+                  )
+
+for secret in "${supportedSecrets[@]}"; do
+    envFile="${secret}_FILE"
+    if [ -n "${!envFile}" ] && [ -f "${!envFile}" ]; then
+        val="$(< "${!envFile}")"
+        export "${secret}"="$val"
+        echo "${secret} environment variable was set by secret ${envFile}"
+    fi
+done
+
+# wait for the database to start
+waitfordb() {
+    TERM=dumb php -- <<'EOPHP'
+<?php
+function env(string $name, ?string $default = null): ?string
+{
+    $val = getenv($name);
+    return $val === false ? $default : $val;
+}
+
+$stderr = fopen('php://stderr', 'w');
+
+if (! env('DATABASE_URL')) {
+    $host = env('DB_HOST', '127.0.0.1');
+    $port = (int) env('DB_PORT', '3306');
+    $user = env('DB_USERNAME', 'homestead');
+    $pass = env('DB_PASSWORD', 'secret');
+    $database = env('DB_DATABASE', 'monica');
+    $socket = env('DB_UNIX_SOCKET');
+} else {
+    $url = parse_url(env('DATABASE_URL'));
+    $host = $url['host'];
+    $port = array_key_exists('port', $url) ? (int) $url['port'] : 0;
+    $user = $url['user'];
+    $pass = $url['pass'];
+    $database = ltrim($url['path'], '/');
+    $socket = null;
+    if ($url['query'] && strpos($url['query'], 'unix_socket=') !== false) {
+        $socket = substr($url['query'], strlen('unix_socket='));
+    }
+}
+
+$collation = ((bool) env('DB_USE_UTF8MB4', true)) ? ['utf8mb4','utf8mb4_unicode_ci'] : ['utf8','utf8_unicode_ci'];
+
+$maxAttempts = 30;
+$mysql = null;
+do {
+    try {
+        $mysql = new mysqli($host, $user, $pass, '', $port, $socket);
+        break;
+    } catch (\mysqli_sql_exception $e) {
+        fwrite($stderr, "\n" . 'Waiting for database to settle...');
+        sleep(1);
+    }
+    --$maxAttempts;
+} while ($maxAttempts > 0);
+
+if ($maxAttempts <= 0 || $mysql === null) {
+    fwrite($stderr, "\n" . 'Unable to contact your database');
+    if ($mysql !== null) {
+        fwrite($stderr, "\n" . 'MySQL Connection Error: (' . $mysql->connect_errno . ') ' . $mysql->connect_error . "\n");
+        $mysql->close();
+    }
+    exit(1);
+}
+
+fwrite($stderr, "\n" . 'Database ready.');
+
+$createDatabase = $mysql->query('CREATE DATABASE IF NOT EXISTS `' . $mysql->real_escape_string($database) . '` CHARACTER SET ' . $collation[0] . ' COLLATE ' . $collation[1]);
+if ($createDatabase === false) {
+    fwrite($stderr, "\n" . 'MySQL "CREATE DATABASE" Error: ' . $mysql->error . "\n");
+    $mysql->close();
+    exit(2);
+}
+
+$mysql->close();
+EOPHP
+}
+
+if expr "$1" : "apache" 1>/dev/null || [ "$1" = "php-fpm" ]; then
+
+    MONICADIR=/var/www/html
+    ARTISAN="php ${MONICADIR}/artisan"
+
+    # Ensure storage directories are present
+    STORAGE=${MONICADIR}/storage
+    mkdir -p ${STORAGE}/logs
+    mkdir -p ${STORAGE}/app/public
+    mkdir -p ${STORAGE}/framework/views
+    mkdir -p ${STORAGE}/framework/cache
+    mkdir -p ${STORAGE}/framework/sessions
+    chown -R www-data:www-data ${STORAGE}
+    chmod -R g+rw ${STORAGE}
+
+    if [ -z "${APP_KEY:-}" -o "$APP_KEY" = "ChangeMeBy32KeyLengthOrGenerated" ]; then
+        ${ARTISAN} key:generate --no-interaction
+    else
+        echo "APP_KEY already set"
+    fi
+
+    # Run migrations
+    waitfordb
+    ${ARTISAN} monica:update --force -vv
+
+    # The first account is created through Monica's supported account:create command.
+    # The lookup keeps restarts idempotent and avoids replacing existing data.
+    admin_email="${MONICA_ADMIN_EMAIL:-admin@example.com}"
+    admin_password="${MONICA_ADMIN_PASSWORD:-benchmark-only}"
+    if php -r 'require "/var/www/html/vendor/autoload.php"; $app = require "/var/www/html/bootstrap/app.php"; $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class); $kernel->bootstrap(); exit(App\Models\User\User::where("email", getenv("MONICA_ADMIN_EMAIL"))->exists() ? 0 : 1);'; then
+        echo "Initial Monica account already exists: ${admin_email}"
+    else
+        echo "Creating initial Monica account: ${admin_email}"
+        printf 'yes\n' | ${ARTISAN} account:create \
+            --email="${admin_email}" \
+            --password="${admin_password}" \
+            --firstname=Admin \
+            --lastname=Benchmark
+    fi
+
+    if [ ! -f "${STORAGE}/oauth-public.key" -o ! -f "${STORAGE}/oauth-private.key" ]; then
+        echo "Passport keys creation ..."
+        ${ARTISAN} passport:keys
+        ${ARTISAN} passport:client --personal --no-interaction
+        echo "! Please be careful to backup $MONICADIR/storage/oauth-public.key and $MONICADIR/storage/oauth-private.key files !"
+    fi
+
+fi
+
+exec "$@"

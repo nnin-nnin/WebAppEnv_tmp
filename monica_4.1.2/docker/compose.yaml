@@ -1,0 +1,181 @@
+name: monica_4_1_2
+
+services:
+  app:
+    image: yorem/sop-monica-app:4.1.2
+    platform: linux/amd64
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "false"
+      APP_URL: http://localhost:18086
+      APP_TRUSTED_PROXIES: "*"
+      APP_DISABLE_SIGNUP: "true"
+      APP_SIGNUP_DOUBLE_OPTIN: "false"
+      CHECK_VERSION: "false"
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_DATABASE: monica
+      DB_USERNAME: monica
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: database
+      QUEUE_CONNECTION: redis
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      MAIL_MAILER: smtp
+      MAIL_HOST: mail
+      MAIL_PORT: "1025"
+      MAIL_FROM_ADDRESS: admin@example.com
+      MAIL_FROM_NAME: Monica benchmark
+      LOG_CHANNEL: stderr
+      APP_KEY_FILE: /run/secrets/app_key
+      HASH_SALT_FILE: /run/secrets/hash_salt
+      MONICA_ADMIN_EMAIL: admin@example.com
+      MONICA_ADMIN_PASSWORD: benchmark-only
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - app-data:/var/www/html/storage
+    secrets:
+      - app_key
+      - db_password
+      - hash_salt
+    restart: unless-stopped
+
+  web:
+    image: yorem/sop-monica-web:4.1.2
+    platform: linux/amd64
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "18086:80"
+    volumes:
+      - app-data:/var/www/html/storage:ro
+    restart: unless-stopped
+
+  db:
+    image: mariadb:11.4.2
+    platform: linux/amd64
+    environment:
+      MARIADB_DATABASE: monica
+      MARIADB_USER: monica
+      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - db-data:/var/lib/mysql
+    secrets:
+      - db_password
+    healthcheck:
+      test: ["CMD-SHELL", "healthcheck.sh --connect --innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      start_period: 20s
+      retries: 30
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2.5-alpine
+    platform: linux/amd64
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  cron:
+    image: yorem/sop-monica-app:4.1.2
+    platform: linux/amd64
+    command: ["cron.sh"]
+    environment:
+      APP_ENV: production
+      APP_KEY_FILE: /run/secrets/app_key
+      HASH_SALT_FILE: /run/secrets/hash_salt
+      DB_HOST: db
+      DB_DATABASE: monica
+      DB_USERNAME: monica
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      CACHE_DRIVER: redis
+      QUEUE_CONNECTION: redis
+    depends_on:
+      app:
+        condition: service_healthy
+    volumes:
+      - app-data:/var/www/html/storage
+    secrets:
+      - app_key
+      - db_password
+      - hash_salt
+    healthcheck:
+      test: ["CMD-SHELL", "ps -ef | grep -q '[c]rond'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  queue:
+    image: yorem/sop-monica-app:4.1.2
+    platform: linux/amd64
+    command: ["queue.sh"]
+    environment:
+      APP_ENV: production
+      APP_KEY_FILE: /run/secrets/app_key
+      HASH_SALT_FILE: /run/secrets/hash_salt
+      DB_HOST: db
+      DB_DATABASE: monica
+      DB_USERNAME: monica
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      CACHE_DRIVER: redis
+      QUEUE_CONNECTION: redis
+    depends_on:
+      app:
+        condition: service_healthy
+    volumes:
+      - app-data:/var/www/html/storage
+    secrets:
+      - app_key
+      - db_password
+      - hash_salt
+    healthcheck:
+      test: ["CMD-SHELL", "ps -ef | grep -q '[a]rtisan queue:work'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  mail:
+    image: mailhog/mailhog:v1.0.1
+    platform: linux/amd64
+    ports:
+      - "18087:8025"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -Y off -q -O /dev/null http://127.0.0.1:8025/api/v2/messages"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+volumes:
+  app-data:
+  db-data:
+  redis-data:
+
+secrets:
+  app_key:
+    file: ../resources/secrets/app_key
+  db_password:
+    file: ../resources/secrets/db_password
+  hash_salt:
+    file: ../resources/secrets/hash_salt

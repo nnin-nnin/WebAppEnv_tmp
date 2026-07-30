@@ -13,8 +13,11 @@
 | [`mall 1.0.3`](applications/mall_1.0.3/) | `nnin/sop-mall:1.0.3` | `docker run -d -p 18085:80 nnin/sop-mall:1.0.3` | `admin` / `123456` |
 | [`ruoyi-vue-pro 2026.06-jdk8`](applications/ruoyi-vue-pro_2026.06-jdk8/) | `yorem/sop-ruoyi-vue-pro:2026.06-jdk8` | `docker run -d -p 18087:80 yorem/sop-ruoyi-vue-pro:2026.06-jdk8` | `admin` / `admin123` |
 | [`WordPress 4.7.4`](applications/wordpress_4.7.4/) | `nnin/sop-wordpress:4.7.4` | `docker run -d --platform linux/amd64 --name wordpress-4.7.4 -p 18084:80 nnin/sop-wordpress:4.7.4` | `admin` / `benchmark-only`<br>`editor` / `benchmark-only`<br>`subscriber` / `benchmark-only` |
+| [`Monica 4.1.2`](monica_4.1.2/) | `native_compose`：`yorem/sop-monica-app:4.1.2` + `yorem/sop-monica-web:4.1.2` | `cd monica_4.1.2 && bash scripts/up.sh` | `admin@example.com` / `benchmark-only` |
 
 请先进入对应应用目录并阅读其中的 README。表格中的账号用于快速启动验证，应用 README 还包含访问地址、角色和完整验证方式。
+
+Monica 4.1.2 是原生 Docker Compose 类型，启动方式与上面的 all-in-one 单容器应用不同。它由 app、web、MariaDB、Redis、cron、queue 和 MailHog 7 个独立服务组成；`scripts/up.sh` 会在缺少本地镜像时从 Docker Hub 拉取镜像，然后等待全部服务健康。
 
 ## 仓库结构
 
@@ -31,7 +34,7 @@
 - `docker/`：Dockerfile 与单服务 Compose 配置，用于追溯镜像构建方式。
 - `resources/`：初始用户、角色、数据库种子、登录和注册脚本等资源。
 - `scripts/`：构建、启动、健康检查和重置等辅助脚本。
-- `image/`：最终 all-in-one 镜像的元数据和校验和；镜像本体按应用 README 中的地址从 Docker Hub 获取。
+- `image/`：按应用类型保存 all-in-one 镜像或 Compose 服务镜像的元数据和校验和；镜像本体按应用 README 中的地址从 Docker Hub 获取。
 
 ## 运行示例
 
@@ -47,3 +50,13 @@ docker run -d \
 ```
 
 启动后的访问地址、账号密码和验证命令见 [`applications/espocrm_8.2.5/README.md`](applications/espocrm_8.2.5/README.md)。
+
+### Monica 4.1.2 原生 Compose 示例
+
+```bash
+cd monica_4.1.2
+docker compose -f docker/compose.yaml pull
+bash scripts/up.sh
+```
+
+启动后访问 <http://localhost:18086/>。账号密码和健康检查方式见 [`monica_4.1.2/README.md`](monica_4.1.2/README.md)。

@@ -1,0 +1,65 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/sop-monica-app:4.1.2",
+    "tag": "4.1.2",
+    "id": "sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "digest": "yorem/sop-monica-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "platform": "linux/amd64",
+    "archive": "image/monica-app-4.1.2-linux-amd64.tar"
+  },
+  {
+    "service": "web",
+    "image": "yorem/sop-monica-web:4.1.2",
+    "tag": "4.1.2",
+    "id": "sha256:3c3f075fde9b58e80996ba3c4e24b3d2594a535b71455bb8529cab3b6f014d4a",
+    "digest": "yorem/sop-monica-web@sha256:3c3f075fde9b58e80996ba3c4e24b3d2594a535b71455bb8529cab3b6f014d4a",
+    "platform": "linux/amd64",
+    "archive": "image/monica-web-4.1.2-linux-amd64.tar"
+  },
+  {
+    "service": "db",
+    "image": "mariadb:11.4.2",
+    "tag": "11.4.2",
+    "id": "sha256:11540950c48852aab8c4e5dc4b90081dd7ae66b3e1412f95f2dbd402b2893df8",
+    "digest": "mariadb@sha256:11540950c48852aab8c4e5dc4b90081dd7ae66b3e1412f95f2dbd402b2893df8",
+    "platform": "linux/amd64",
+    "archive": "image/mariadb-11.4.2-linux-amd64.tar"
+  },
+  {
+    "service": "redis",
+    "image": "redis:7.2.5-alpine",
+    "tag": "7.2.5-alpine",
+    "id": "sha256:85c8b6e23f642cfbcd9821aa7c4cd7ef196700f5703d75f2cbfc52ad0c797cf6",
+    "digest": "redis@sha256:85c8b6e23f642cfbcd9821aa7c4cd7ef196700f5703d75f2cbfc52ad0c797cf6",
+    "platform": "linux/amd64",
+    "archive": "image/redis-7.2.5-linux-amd64.tar"
+  },
+  {
+    "service": "cron",
+    "image": "yorem/sop-monica-app:4.1.2",
+    "tag": "4.1.2",
+    "id": "sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "digest": "yorem/sop-monica-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "platform": "linux/amd64",
+    "archive": "image/monica-app-4.1.2-linux-amd64.tar"
+  },
+  {
+    "service": "queue",
+    "image": "yorem/sop-monica-app:4.1.2",
+    "tag": "4.1.2",
+    "id": "sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "digest": "yorem/sop-monica-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "platform": "linux/amd64",
+    "archive": "image/monica-app-4.1.2-linux-amd64.tar"
+  },
+  {
+    "service": "mail",
+    "image": "mailhog/mailhog:v1.0.1",
+    "tag": "v1.0.1",
+    "id": "sha256:916a6c194a610ade48e3bee1d978e511c761ea635a9ceb03f308304a46969ca7",
+    "digest": "mailhog/mailhog@sha256:916a6c194a610ade48e3bee1d978e511c761ea635a9ceb03f308304a46969ca7",
+    "platform": "linux/amd64",
+    "archive": "image/mailhog-1.0.1-linux-amd64.tar"
+  }
+]

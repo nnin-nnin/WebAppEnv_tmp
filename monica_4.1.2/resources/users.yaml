@@ -1,0 +1,11 @@
+users:
+  - requested_username: admin
+    username: admin@example.com
+    password: benchmark-only
+    password_note: "Monica 4.1.2 requires the login identifier to be a valid email address; admin@example.com is the benchmark account corresponding to requested username admin."
+    user_type: administrator
+    enabled: true
+    purpose: "Initial benchmark administrator"
+    creation_method: "Monica's supported php artisan account:create command, invoked idempotently by the app entrypoint"
+    roles:
+      - instance-admin
