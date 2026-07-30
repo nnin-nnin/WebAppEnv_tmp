@@ -4,10 +4,9 @@
 
 ## 启动
 
-在仓库根目录执行：
+在任意目录直接执行：
 
 ```bash
-cd espocrm_8.2.5
 docker run -d \
   --platform linux/amd64 \
   --name espocrm-8.2.5 \

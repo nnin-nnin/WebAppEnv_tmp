@@ -4,10 +4,9 @@
 
 ## 启动
 
-在仓库根目录执行：
+在任意目录直接执行：
 
 ```bash
-cd atropim_489afea
 docker run -d \
   --platform linux/amd64 \
   --name atropim-489afea \

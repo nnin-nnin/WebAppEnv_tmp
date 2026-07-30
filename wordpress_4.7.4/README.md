@@ -4,10 +4,9 @@
 
 ## 启动
 
-在仓库根目录执行：
+在任意目录直接执行：
 
 ```bash
-cd wordpress_4.7.4
 docker run -d \
   --platform linux/amd64 \
   --name wordpress-4.7.4 \
