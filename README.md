@@ -35,4 +35,4 @@ docker run -d \
   nnin/sop-espocrm:8.2.5
 ```
 
-随后访问 <http://localhost:18092>，使用账号 `admin` 和密码 `benchmark-only` 登录（账号密码在espocrm_8.2.5的 readme 中有写）
+随后访问 <http://localhost:18092>，使用账号 `admin` 和密码 `benchmark-only` 登录（账号密码见 `applications/espocrm_8.2.5/README.md`）。
