@@ -27,7 +27,7 @@ Docker 会在本机没有镜像时自动从 Docker Hub 拉取。精确的不可�
 - 订阅者用户名：`subscriber`
 - 编辑和订阅者密码：`benchmark-only`
 
-这些都是本地 benchmark 账号，不是生产账号。账号与角色定义位于 `resources/`，但正常登录不需要先查阅这些文件。
+这些都是本地 benchmark 账号，不是生产账号。
 
 ## 验证
 
@@ -36,34 +36,3 @@ Docker 会在本机没有镜像时自动从 Docker Hub 拉取。精确的不可�
 ```bash
 ./scripts/healthcheck.sh
 ```
-
-单独验证管理员登录：
-
-```bash
-./resources/login.sh
-```
-
-创建一个普通订阅者：
-
-```bash
-./resources/register.sh test-user test-password test-user@example.test
-```
-
-## 重置
-
-删除容器及其匿名运行状态：
-
-```bash
-./scripts/reset.sh
-```
-
-重置后重新执行“启动”部分的 `docker run` 命令即可恢复到初始环境。
-
-## 文件说明
-
-- `manifest.yaml`：应用版本、论文关联、源码、运行时、镜像和脚本索引。
-- `source/`：WordPress 4.7.4 的固定版本源码、来源元数据和校验文件。
-- `docker/`：all-in-one Dockerfile 和单服务 Compose 配置。
-- `resources/`：初始用户角色、登录和普通用户创建脚本。
-- `scripts/`：镜像构建、启动辅助、健康检查、重置和镜像入口脚本。
-- `image/`：Docker Hub 已发布镜像的名称、tag、digest 和平台元数据。

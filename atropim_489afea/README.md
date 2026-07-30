@@ -25,7 +25,7 @@ Docker 会在本机没有镜像时自动从 Docker Hub 拉取。精确的不可�
 - 密码：`benchmark-only`
 - 角色：`administrator`
 
-这是本地 benchmark 账号，不是生产账号。账号定义位于 `resources/users.yaml`，但正常登录不需要先查阅该文件。
+这是本地 benchmark 账号，不是生产账号。
 
 ## 验证
 
@@ -34,34 +34,3 @@ Docker 会在本机没有镜像时自动从 Docker Hub 拉取。精确的不可�
 ```bash
 ./scripts/healthcheck.sh
 ```
-
-单独验证默认账号：
-
-```bash
-./resources/login.sh
-```
-
-创建普通测试用户：
-
-```bash
-./resources/register.sh test-user test-password
-```
-
-## 重置
-
-删除容器及其运行状态：
-
-```bash
-./scripts/reset.sh
-```
-
-重置后重新执行“启动”部分的 `docker run` 命令即可恢复到初始环境。
-
-## 文件说明
-
-- `manifest.yaml`：应用版本、源码、运行时、镜像和脚本索引。
-- `source/`：固定版本源码和校验文件。
-- `docker/`：Dockerfile 和 Compose 配置。
-- `resources/`：初始用户角色数据、登录和注册脚本。
-- `scripts/`：构建、启动辅助、健康检查、重置和镜像入口脚本。
-- `image/`：Docker Hub 已发布镜像的名称、tag、digest 和平台元数据。
