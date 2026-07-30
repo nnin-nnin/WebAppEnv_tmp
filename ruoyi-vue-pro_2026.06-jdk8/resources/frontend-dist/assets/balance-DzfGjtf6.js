@@ -1,0 +1,1 @@
+import{un as e}from"./index-DNC7Zg5H.js";var t=async t=>await e.get({url:`/pay/wallet/get`,params:t}),n=async t=>await e.get({url:`/pay/wallet/page`,params:t}),r=async t=>await e.put({url:`/pay/wallet/update-balance`,data:t});export{n,r,t};

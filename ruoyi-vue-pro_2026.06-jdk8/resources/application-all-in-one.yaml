@@ -1,0 +1,58 @@
+server:
+  address: 127.0.0.1
+  port: 48080
+
+spring:
+  autoconfigure:
+    exclude:
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+      - org.springframework.ai.vectorstore.qdrant.autoconfigure.QdrantVectorStoreAutoConfiguration
+      - org.springframework.ai.vectorstore.milvus.autoconfigure.MilvusVectorStoreAutoConfiguration
+  datasource:
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/ruoyi-vue-pro?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
+          username: root
+          password: 123456
+        slave:
+          lazy: true
+          url: jdbc:mysql://127.0.0.1:3306/ruoyi-vue-pro?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
+          username: root
+          password: 123456
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
+  data:
+    redis:
+      repositories:
+        enabled: false
+  boot:
+    admin:
+      client:
+        enabled: false
+  quartz:
+    auto-startup: false
+
+logging:
+  file:
+    name: /var/lib/yudao/logs/yudao-server.log
+
+yudao:
+  captcha:
+    enable: false
+  web:
+    admin-ui:
+      url: http://127.0.0.1
+
+# WxJava 的自动配置会在启动时创建客户端，即使当前环境不调用微信接口。
+# 使用本地占位值避免启动依赖真实第三方凭据；实际公众号/小程序功能需另行配置。
+wx:
+  mp:
+    app-id: all-in-one-disabled-mp
+    secret: all-in-one-disabled-secret
+  miniapp:
+    appid: all-in-one-disabled-miniapp
+    secret: all-in-one-disabled-secret

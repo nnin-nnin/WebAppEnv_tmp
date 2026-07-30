@@ -1,0 +1,1 @@
+import"./rolldown-runtime-BM3Ffeng.js";import{Na as e,ca as t,ga as n}from"./form-create-JMiOhIvm.js";import{t as r}from"./css-dB1GOJzL.js";var i=n({name:`UserCoupon`,__name:`index`,props:{property:{}},setup(n){return(n,i)=>{let a=r;return e(),t(a,{src:`https://shopro.sheepjs.com/admin/static/images/shop/decorate/couponCardStyle.png`})}}});export{i as default};

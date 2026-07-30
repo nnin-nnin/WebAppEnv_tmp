@@ -1,0 +1,3 @@
+/image/*.tar
+/resources/backend-app.jar
+/resources/backend-app-runtime.jar

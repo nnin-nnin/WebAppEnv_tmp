@@ -1,0 +1,1 @@
+import{r as e}from"./rolldown-runtime-BM3Ffeng.js";import{Na as t,ma as n,ua as r}from"./form-create-JMiOhIvm.js";import{t as i}from"./css-CqHD9IXi.js";import{t as a}from"./_plugin-vue_export-helper-iYi8QVLC.js";var o=e({default:()=>u}),s={},c={class:`p-30px`};function l(e,a){let o=i;return t(),r(`div`,c,[n(o,{animated:``})])}var u=a(s,[[`render`,l]]);export{o as n,u as t};

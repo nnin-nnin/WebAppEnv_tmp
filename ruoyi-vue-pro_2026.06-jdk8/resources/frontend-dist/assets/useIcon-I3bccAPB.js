@@ -1,0 +1,1 @@
+import{ya as e}from"./form-create-JMiOhIvm.js";import{pr as t}from"./index-DNC7Zg5H.js";var n=n=>e(t,n);export{n as t};

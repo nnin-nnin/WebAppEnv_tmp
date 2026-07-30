@@ -1,0 +1,1 @@
+import{un as e}from"./index-DNC7Zg5H.js";var t=async t=>await e.get({url:`/pay/wallet-transaction/page`,params:t});export{t};

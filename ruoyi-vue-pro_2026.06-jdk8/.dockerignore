@@ -1,0 +1,8 @@
+.git
+.DS_Store
+image/*
+**/node_modules
+**/target
+**/.git
+**/.gitignore
+.frontend-dist

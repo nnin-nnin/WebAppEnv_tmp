@@ -1,0 +1,13 @@
+application: ruoyi-vue-pro
+roles:
+  - name: 超级管理员
+    code: super_admin
+    permissions: "固定数据库 seed 中 system_role.id=1 关联的全部菜单和按钮权限"
+    purpose: "管理后台全功能角色"
+    initial_users:
+      - admin
+  - name: 普通用户
+    code: none
+    permissions: "默认不授予管理菜单；通过注册接口创建后可用于普通账号登录验收"
+    purpose: "验证普通用户创建和独立认证"
+    initial_users: []

@@ -1,0 +1,14 @@
+services:
+  application:
+    image: yorem/sop-ruoyi-vue-pro:2026.06-jdk8
+    ports:
+      - "18087:80"
+    volumes:
+      - application-db:/var/lib/mysql
+      - application-redis:/var/lib/redis
+      - application-data:/var/lib/yudao
+
+volumes:
+  application-db:
+  application-redis:
+  application-data:

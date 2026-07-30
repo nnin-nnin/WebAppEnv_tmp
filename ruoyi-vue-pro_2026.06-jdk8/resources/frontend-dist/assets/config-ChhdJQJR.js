@@ -1,0 +1,1 @@
+import{un as e}from"./index-DNC7Zg5H.js";var t=async()=>await e.get({url:`/trade/config/get`}),n=async t=>await e.put({url:`/trade/config/save`,data:t});export{n,t};

@@ -1,0 +1,1 @@
+import{Qn as e}from"./index-DNC7Zg5H.js";var t=(t,n,r,i)=>`￥${e(r)}`;export{t};

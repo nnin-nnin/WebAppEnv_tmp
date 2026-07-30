@@ -1,0 +1,1 @@
+import{Na as e,ca as t,ga as n,po as r}from"./form-create-JMiOhIvm.js";import{bn as i}from"./index-DNC7Zg5H.js";import{t as a}from"./Error-CkeOD5y4.js";var o=n({name:`Error404`,__name:`404`,setup(n){let{push:o}=i();return(n,i)=>{let s=a;return e(),t(s,{onErrorClick:i[0]||=e=>r(o)(`/`)})}}});export{o as default};

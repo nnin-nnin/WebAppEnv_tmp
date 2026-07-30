@@ -1,0 +1,100 @@
+id: ruoyi-vue-pro_2026.06-jdk8
+application: ruoyi-vue-pro
+version: 2026.06-jdk8
+status: ready_application_environment
+application_type: complete_web_application
+
+documentation:
+  readme: README.md
+
+source:
+  backend:
+    repository: https://github.com/YunaiV/ruoyi-vue-pro.git
+    ref: v2026.06(jdk8/11)
+    commit: 23c8c608af9da8f08bca5c62d096d4253bcce93f
+    path: source/ruoyi-vue-pro-2026.06-jdk8
+  frontend:
+    repository: https://github.com/yudaocode/yudao-ui-admin-vue3.git
+    ref: v2026.06
+    commit: 94459770d622303802c465510b1124ab794a6338
+    path: source/yudao-ui-admin-vue3-2026.06
+  metadata: source/source.json
+  checksum_file: source/SHA256SUMS
+  acquisition: fixed_commit_git_archives
+
+runtime:
+  platform: linux/amd64
+  language: Java
+  language_version: 8
+  framework: Spring Boot 2.7.18
+  web_server: Nginx, reverse proxy to embedded Spring Boot Tomcat
+  frontend: Vue 3.5, Vite 8, Element Plus 2.13.7
+  frontend_runtime: Node.js 20.19.0 build stage, pnpm 10.12.4
+  frontend_build: "pnpm install --frozen-lockfile && pnpm exec vite build --mode all-in-one"
+  frontend_static_path: /var/www/yudao-ui
+  backend_build: "mvn -B -ntp -DskipTests -Dmaven.javadoc.skip=true clean package"
+  backend_artifact: resources/backend-app-runtime.jar
+  backend_compatibility_libraries:
+    - resources/backend-compat-libs/httpclient-4.5.14.jar
+    - resources/backend-compat-libs/httpcore-4.4.16.jar
+  browser_entry: http://localhost:18087/
+  frontend_api_base: same-origin /admin-api, Nginx proxies to 127.0.0.1:48080
+  backend_internal_port: 48080
+  database: MySQL 8.0.36
+  cache: Redis packaged by the final Debian image
+  http_port: 18087
+  container_port: 80
+
+docker:
+  all_in_one: true
+  topology: "单镜像、单容器；Nginx、Spring Boot、MySQL 和 Redis 均在同一容器内"
+  base_images:
+    java_runtime: "eclipse-temurin@sha256:0aaabcd1e15dd4e360aff99b780d52388b774a3ddf31db4a3f10e96ebb2d9cb6"
+    mysql_runtime: "mysql@sha256:fe968a89962f9d6bb594f7525bc1f61e0c61ff89500a41424899bcd7cf65a5c9"
+    runtime_packages:
+      - ca-certificates
+      - curl
+      - jq
+      - nginx
+      - redis-server
+  image:
+    name: yorem/sop-ruoyi-vue-pro:2026.06-jdk8
+    role: "ruoyi-vue-pro 2026.06-jdk8 完整 Web 应用环境"
+    contains:
+      - Java 8 runtime and Spring Boot backend
+      - Fixed backend source and Maven-built yudao-server.jar
+      - Fixed Vue3 frontend source and compiled local static assets
+      - Nginx frontend server and API reverse proxy
+      - MySQL 8.0.36 database service
+      - Redis cache service
+      - Idempotent first-start database initialization from resources/initial-data/database-seed.sql
+      - Initial admin account admin/admin123 and the super_admin role
+  dockerfile: docker/Dockerfile
+  standalone_dockerfile: docker/standalone.Dockerfile
+  compose_file: docker/compose.yaml
+  archive: image/ruoyi-vue-pro-2026.06-jdk8-linux-amd64.tar
+  metadata: image/image.json
+  checksum_file: image/SHA256SUMS
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  database_seed: resources/initial-data/database-seed.sql
+  application_config: resources/application-all-in-one.yaml
+  web_server_config: resources/nginx.conf
+  login: resources/login.sh
+  register: resources/register.sh
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+delivery:
+  image_reference: yorem/sop-ruoyi-vue-pro:2026.06-jdk8
+  archive_path: image/ruoyi-vue-pro-2026.06-jdk8-linux-amd64.tar
+  recommended_run: "docker run -d -p 18087:80 yorem/sop-ruoyi-vue-pro:2026.06-jdk8"
+  browser_acceptance: "打开根地址显示真实 Vue3 登录页，使用 admin/admin123 登录后进入首页"
+  runtime_network_downloads: false

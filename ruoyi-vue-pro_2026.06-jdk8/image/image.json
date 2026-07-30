@@ -1,0 +1,86 @@
+[
+    {
+        "Architecture": "amd64",
+        "Config": {
+            "Entrypoint": [
+                "/usr/local/bin/entrypoint.sh"
+            ],
+            "Env": [
+                "PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.17",
+                "MYSQL_MAJOR=8.0",
+                "MYSQL_VERSION=8.0.36-1debian12",
+                "JAVA_HOME=/opt/java/openjdk",
+                "TZ=Asia/Shanghai",
+                "MYSQL_DATABASE=ruoyi-vue-pro",
+                "MYSQL_ROOT_PASSWORD=123456",
+                "JAVA_OPTS=-Xms512m -Xmx512m -Djava.security.egd=file:/dev/./urandom"
+            ],
+            "ExposedPorts": {
+                "3306/tcp": {},
+                "33060/tcp": {},
+                "80/tcp": {}
+            },
+            "Healthcheck": {
+                "Interval": 10000000000,
+                "Retries": 12,
+                "StartPeriod": 120000000000,
+                "Test": [
+                    "CMD-SHELL",
+                    "IN_CONTAINER=1 RUOYI_BASE_URL=http://127.0.0.1 /usr/local/bin/healthcheck.sh"
+                ],
+                "Timeout": 10000000000
+            },
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/lib/redis": {},
+                "/var/lib/yudao": {}
+            }
+        },
+        "Created": "2026-07-30T19:41:38.927947126+08:00",
+        "Descriptor": {
+            "digest": "sha256:dd3c93a1d80b303c6d6ae4798c62ab3bd219100805d0995649cc0ed23e07082c",
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "size": 4900
+        },
+        "Id": "sha256:dd3c93a1d80b303c6d6ae4798c62ab3bd219100805d0995649cc0ed23e07082c",
+        "Metadata": {
+            "LastTagTime": "2026-07-30T11:41:39.068617335Z"
+        },
+        "Os": "linux",
+        "Parent": "sha256:c6a3f2b040d331a64930d4099da2d9975e7223f2f102bef03e7801a72b5526cf",
+        "RepoDigests": [
+            "yorem/sop-ruoyi-vue-pro@sha256:dd3c93a1d80b303c6d6ae4798c62ab3bd219100805d0995649cc0ed23e07082c"
+        ],
+        "RepoTags": [
+            "yorem/sop-ruoyi-vue-pro:2026.06-jdk8"
+        ],
+        "RootFS": {
+            "Layers": [
+                "sha256:52ec5a4316fadc09a4a51f82b8d7b66ead0d71bea4f75e81e25b4094c4219061",
+                "sha256:4eba9ebaf7cc2381b23f0743f0307045095569c528dc99fe3f62ecbc8f55e66d",
+                "sha256:763fedf6e672c4cefab1d1a258d1db7328bc4babc32a331114ea71c48b12ac46",
+                "sha256:f8ed1846d34ce13213af120935c054ee508bc338d67e768cfad4ccf3ceb2a2dd",
+                "sha256:8cfc6a2dcd66f7f116248577000c1c27c3fb60b6db1c00e4521c46053667fdda",
+                "sha256:e1b589bd9cd763fca18a08e408ef3f3f508c571df430f4a2fd1c8a51db345775",
+                "sha256:792e90e5a803b1fd21adb34cd2b9d5caf37c4b0566251a302ead6c684b7cd14b",
+                "sha256:2bb6f14011c5c1a71f5f7d982aa8e16cf8f1f3e7042fc4ebd5beee2f171e9c8e",
+                "sha256:0c5218b1ceece4d6faa67391136fe2a14de065b9c05671703535ba4b1fcc5a3c",
+                "sha256:8b28f3f762918dd1f3a7dd894754201977d9dda1123716d97315b4744cd3751b",
+                "sha256:df533e05f17c0b0c035fd69d711b94df512648fb917fc7cc058b08de8fb87728",
+                "sha256:dd13d5f3b62035e97cb8a58e5740d71baabf6aefc3a44da7d8feaec4d637f8e6",
+                "sha256:f8ee33f0ee64db49968c0634b1926e921da96c1f8564ccdbda3b4188a02a089a",
+                "sha256:1bd27d0abe9728c1165f0cf4d66fcd0a3f979c42bf9b1ad8f525dfc4a73c0dd6",
+                "sha256:d5c1420578911ac7d02af3a9c88e787344e6a2fe251440c44a2372d851591d46",
+                "sha256:ef1721cb0285cea308949a963b87cc4199f80e6b49230a5a2a4ef6959821fb9f",
+                "sha256:8dc0f95cedfa8acb8a47323bbe8ef59afa9f04148da36dfea364f05791a2bd2b",
+                "sha256:f2bbcd32d66eb479ba29f59172f29db7882726a16f8bd266095a5c026e67bb41",
+                "sha256:bdd3bb15945d2268524cf525903b7bb9f4719e175134a1d10a247ad3bec0832a",
+                "sha256:a9ecbe016b323ce2249456ee8a215835fbbcc8ebc4cb01f1a97b75bb64ac50e2",
+                "sha256:659e8e92456d344481bcc908c1c247aadfaa5b5a480154bfabb5ed3199092529"
+            ],
+            "Type": "layers"
+        },
+        "Size": 379487919
+    }
+]

@@ -1,0 +1,12 @@
+application: ruoyi-vue-pro
+version: 2026.06-jdk8
+users:
+  - username: admin
+    password: admin123
+    password_source: "固定 MySQL seed 中的 BCrypt 密码哈希，已通过真实登录接口验收"
+    user_type: admin
+    enabled: true
+    tenant: "芋道源码"
+    roles:
+      - super_admin
+    purpose: "初始管理员，用于浏览器登录和环境验收"

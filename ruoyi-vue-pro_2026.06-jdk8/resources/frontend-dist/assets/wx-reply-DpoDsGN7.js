@@ -1,0 +1,1 @@
+import"./TabNews-CK8UjWIG.js";import{t as e}from"./main-Dmkrkkto.js";var t=e;export{t};
