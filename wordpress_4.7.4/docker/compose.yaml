@@ -1,0 +1,13 @@
+services:
+  application:
+    platform: linux/amd64
+    image: nnin/sop-wordpress:4.7.4
+    ports:
+      - "18084:80"
+    volumes:
+      - wordpress-content:/var/www/html/wp-content
+      - wordpress-database:/var/lib/mysql
+
+volumes:
+  wordpress-content:
+  wordpress-database:

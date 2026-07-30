@@ -1,0 +1,84 @@
+id: atropim_489afea
+application: AtroPIM
+application_type: pim
+version: commit-489afea
+artifact_type: all_in_one_application_environment
+status: ready
+
+source:
+  repository: https://github.com/atrocore/skeleton-pim
+  ref: master
+  commit: 489afeaf17a7332b351122f6f071cc70ea531b22
+  path: source/atropim-489afea
+  metadata_file: source/source.json
+  checksum_file: source/SHA256SUMS
+  acquisition: fixed_commit_archive
+  selection: last public skeleton-pim commit before the paper artifact's PHP 7.4-era dependency model changed
+
+runtime:
+  platform: linux/amd64
+  language: PHP
+  language_version: 7.4
+  web_server: Apache
+  database: MariaDB 10.5
+  package_managers:
+    - Composer
+  extra:
+    - Imagick
+    - cron
+  http_port: 18083
+  startup: docker run -d --platform linux/amd64 -p 18083:80 nnin/sop-atropim:489afea
+  url: http://localhost:18083
+
+dependencies:
+  - name: atrocore/core
+    version: 1.2.57
+    repository: https://github.com/atrocore/atrocore
+    commit: d44602bbe8695fb1ae1c12586231c4acd527eb03
+  - name: atrocore/pim
+    version: 1.1.44
+    repository: https://github.com/atrocore/atropim
+    commit: 51f220d3f27da2c579338fd2ac4ab3ac0d6ed756
+  - name: atrocore/dam
+    version: 1.2.48
+    repository: https://github.com/atrocore/atrodam
+    commit: 5425a4d4bd1c628cec20170920d2a46d7bc18182
+  - name: atrocore/export-feeds
+    version: 1.1.26
+    repository: https://github.com/atrocore/export
+    commit: 0c4b4dae0cdafaef0aa7df7f5f3c034d2ef16c84
+  - name: atrocore/import-feeds
+    version: 1.0.13
+    repository: https://github.com/atrocore/import
+    commit: 5776ec58142b6ba75085302ba26b6c7a8f34ec48
+
+docker:
+  image:
+    name: nnin/sop-atropim:489afea
+    role: all-in-one AtroPIM environment
+    contains:
+      - Apache and PHP 7.4
+      - MariaDB 10.5
+      - AtroPIM source and fixed Composer dependencies
+      - Automatic database and administrator initialization
+  compose_file: docker/compose.yaml
+  published:
+    registry: docker.io
+    repository: nnin/sop-atropim
+    tag: 489afea
+    reference: docker.io/nnin/sop-atropim:489afea
+    digest: sha256:9ea9af1abaf04b71e2be575ffea0be112770bf3736670925a7bfac02b83500de
+    metadata: image/image.json
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+
+scripts:
+  build: scripts/build.sh
+  entrypoint: scripts/entrypoint.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

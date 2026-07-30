@@ -1,0 +1,58 @@
+id: espocrm_8.2.5
+application: EspoCRM
+version: 8.2.5
+artifact_type: ready_application_environment
+status: ready
+
+documentation:
+  readme: README.md
+
+source:
+  repository: https://github.com/espocrm/espocrm
+  ref: 8.2.5
+  commit: 06be47c3488c7c369ee879b920ec4c3fc4acbb5d
+  path: source/espocrm-8.2.5
+  checksum_file: source/SHA256SUMS
+  acquisition: fixed_commit_archive
+
+runtime:
+  platform: linux/amd64
+  language: PHP
+  language_version: 8.2
+  web_server: Apache
+  database: MariaDB 10.6
+  http_port: 18092
+  startup: docker run -d --platform linux/amd64 -p 18092:80 nnin/sop-espocrm:8.2.5
+  url: http://localhost:18092
+
+docker:
+  image:
+    name: nnin/sop-espocrm:8.2.5
+    role: all-in-one EspoCRM environment
+    contains:
+      - Apache and PHP 8.2
+      - MariaDB 10.6.27
+      - Preinstalled EspoCRM 8.2.5
+      - Initial application data and database
+  compose_file: docker/compose.yaml
+  published:
+    registry: docker.io
+    repository: nnin/sop-espocrm
+    tag: 8.2.5
+    reference: docker.io/nnin/sop-espocrm:8.2.5
+    digest: sha256:382dc7b2ee5b9ccfd9bb74076eb9300c54538d90cafa18793e97be92ef8ac7b8
+    metadata: image/image.json
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  application_data: resources/initial-data/app-data
+  database_seed: resources/initial-data/espocrmdb.sql
+  login: resources/login.sh
+  register: resources/register.sh
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

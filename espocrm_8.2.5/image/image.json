@@ -1,0 +1,12 @@
+{
+  "delivery": "docker_hub",
+  "registry": "docker.io",
+  "repository": "nnin/sop-espocrm",
+  "tag": "8.2.5",
+  "reference": "docker.io/nnin/sop-espocrm:8.2.5",
+  "digest": "sha256:382dc7b2ee5b9ccfd9bb74076eb9300c54538d90cafa18793e97be92ef8ac7b8",
+  "digest_reference": "docker.io/nnin/sop-espocrm@sha256:382dc7b2ee5b9ccfd9bb74076eb9300c54538d90cafa18793e97be92ef8ac7b8",
+  "platform": "linux/amd64",
+  "role": "all-in-one EspoCRM 8.2.5 environment",
+  "published_at": "2026-07-30"
+}

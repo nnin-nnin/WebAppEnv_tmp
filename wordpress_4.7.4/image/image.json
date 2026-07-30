@@ -1,0 +1,12 @@
+{
+  "delivery": "docker_hub",
+  "registry": "docker.io",
+  "repository": "nnin/sop-wordpress",
+  "tag": "4.7.4",
+  "reference": "docker.io/nnin/sop-wordpress:4.7.4",
+  "digest": "sha256:1dc13acd6f13584a7e6e742c05832ecf4efd1115e274c62b2559dc90500d921f",
+  "digest_reference": "docker.io/nnin/sop-wordpress@sha256:1dc13acd6f13584a7e6e742c05832ecf4efd1115e274c62b2559dc90500d921f",
+  "platform": "linux/amd64",
+  "role": "all-in-one WordPress 4.7.4 environment",
+  "published_at": "2026-07-30"
+}

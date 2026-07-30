@@ -1,0 +1,10 @@
+roles:
+  - name: administrator
+    permissions: Full site and user administration.
+    purpose: Installs and administers the benchmark site.
+  - name: editor
+    permissions: Publishes and edits posts, pages, and comments.
+    purpose: Represents a content-management role.
+  - name: subscriber
+    permissions: Authenticated profile access only.
+    purpose: Represents an ordinary registered user.

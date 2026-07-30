@@ -1,0 +1,17 @@
+name: atropim_489afea
+
+services:
+  app:
+    platform: linux/amd64
+    image: nnin/sop-atropim:489afea
+    ports:
+      - "18083:80"
+    volumes:
+      - atropim_489afea_db:/var/lib/mysql
+      - atropim_489afea_data:/var/www/html/data
+      - atropim_489afea_upload:/var/www/html/upload
+
+volumes:
+  atropim_489afea_db:
+  atropim_489afea_data:
+  atropim_489afea_upload:

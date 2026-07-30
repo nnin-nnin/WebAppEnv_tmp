@@ -1,0 +1,72 @@
+id: wordpress_4.7.4
+application: WordPress
+application_type: content_management_system
+version: 4.7.4
+artifact_type: all_in_one_application_environment
+status: ready
+
+research_context:
+  paper: 'NAVEX: Precise and Scalable Exploit Generation for Dynamic Web Applications'
+  paper_id: 40_2018_USENIX_Security_NAVEX_Precise_and_Scalable_Exploit_Generation_for_Dynamic_Web_Applications
+  evidence: Table 1 lists WordPress (4.7.4) as a subject application.
+
+source:
+  repository: https://github.com/WordPress/WordPress
+  ref: 4.7.4
+  commit: 2152a6a1ea3db59fcc626fe8129d6fc175e0df66
+  path: source/wordpress-4.7.4
+  metadata_file: source/source.json
+  checksum_file: source/SHA256SUMS
+  acquisition: fixed_commit_archive
+
+runtime:
+  platform: linux/amd64
+  language: PHP
+  language_version: '7.4'
+  web_server: Apache
+  database: MariaDB 10.5
+  http_port: 18084
+  startup: docker run -d --platform linux/amd64 --name wordpress-4.7.4 -p 18084:80 nnin/sop-wordpress:4.7.4
+  url: http://localhost:18084
+
+docker:
+  image:
+    name: nnin/sop-wordpress:4.7.4
+    role: all-in-one WordPress benchmark environment
+    contains:
+      - Apache and PHP 7.4
+      - MariaDB 10.5
+      - WordPress 4.7.4 source
+      - Automatic database, application, role, and user initialization
+  compose_file: docker/compose.yaml
+  published:
+    registry: docker.io
+    repository: nnin/sop-wordpress
+    tag: 4.7.4
+    reference: docker.io/nnin/sop-wordpress:4.7.4
+    digest: sha256:1dc13acd6f13584a7e6e742c05832ecf4efd1115e274c62b2559dc90500d921f
+    metadata: image/image.json
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+
+scripts:
+  build: scripts/build.sh
+  entrypoint: scripts/entrypoint.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+verification:
+  completed_at: '2026-07-30'
+  checks:
+    - Source SHA256SUMS verification and published image digest recording
+    - Shell and in-image PHP syntax checks
+    - Cold image load followed by documented docker run command
+    - HTTP health check and administrator login
+    - Ordinary user creation and login
+    - Single-container Apache and MariaDB process check
+    - Container restart with administrator and ordinary-user login persistence

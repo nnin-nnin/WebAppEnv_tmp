@@ -1,0 +1,19 @@
+users:
+  - username: admin
+    password: benchmark-only
+    role: administrator
+    email: admin@example.test
+    enabled: true
+    purpose: Initial benchmark administrator.
+  - username: editor
+    password: benchmark-only
+    role: editor
+    email: editor@example.test
+    enabled: true
+    purpose: Initial content editing role.
+  - username: subscriber
+    password: benchmark-only
+    role: subscriber
+    email: subscriber@example.test
+    enabled: true
+    purpose: Initial ordinary authenticated role.
