@@ -26,7 +26,7 @@ name 访问依赖服务。接收者不需要手动创建 Docker 网络，不需�
 获取自建的 app/web 镜像，并由 Compose 拉取 MariaDB、Redis 和 MailHog 官方镜像：
 
 ```bash
-cd monica_4.1.2
+cd applications/monica_4.1.2
 docker compose -f docker/compose.yaml pull
 bash scripts/up.sh
 ```

@@ -13,7 +13,7 @@
 | [`mall 1.0.3`](applications/mall_1.0.3/) | `nnin/sop-mall:1.0.3` | `docker run -d -p 18085:80 nnin/sop-mall:1.0.3` | `admin` / `123456` |
 | [`ruoyi-vue-pro 2026.06-jdk8`](applications/ruoyi-vue-pro_2026.06-jdk8/) | `yorem/sop-ruoyi-vue-pro:2026.06-jdk8` | `docker run -d -p 18087:80 yorem/sop-ruoyi-vue-pro:2026.06-jdk8` | `admin` / `admin123` |
 | [`WordPress 4.7.4`](applications/wordpress_4.7.4/) | `nnin/sop-wordpress:4.7.4` | `docker run -d --platform linux/amd64 --name wordpress-4.7.4 -p 18084:80 nnin/sop-wordpress:4.7.4` | `admin` / `benchmark-only`<br>`editor` / `benchmark-only`<br>`subscriber` / `benchmark-only` |
-| [`Monica 4.1.2`](monica_4.1.2/) | `native_compose`：`yorem/sop-monica-app:4.1.2` + `yorem/sop-monica-web:4.1.2` | `cd monica_4.1.2 && bash scripts/up.sh` | `admin@example.com` / `benchmark-only` |
+| [`Monica 4.1.2`](applications/monica_4.1.2/) | `native_compose`：`yorem/sop-monica-app:4.1.2` + `yorem/sop-monica-web:4.1.2` | `cd applications/monica_4.1.2 && bash scripts/up.sh` | `admin@example.com` / `benchmark-only` |
 
 请先进入对应应用目录并阅读其中的 README。表格中的账号用于快速启动验证，应用 README 还包含访问地址、角色和完整验证方式。
 
@@ -54,9 +54,9 @@ docker run -d \
 ### Monica 4.1.2 原生 Compose 示例
 
 ```bash
-cd monica_4.1.2
+cd applications/monica_4.1.2
 docker compose -f docker/compose.yaml pull
 bash scripts/up.sh
 ```
 
-启动后访问 <http://localhost:18086/>。账号密码和健康检查方式见 [`monica_4.1.2/README.md`](monica_4.1.2/README.md)。
+启动后访问 <http://localhost:18086/>。账号密码和健康检查方式见 [`applications/monica_4.1.2/README.md`](applications/monica_4.1.2/README.md)。
