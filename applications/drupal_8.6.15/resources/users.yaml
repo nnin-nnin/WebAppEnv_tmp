@@ -1,0 +1,9 @@
+users:
+  - username: admin
+    password: "Drupal8615Admin!"
+    email: admin@example.test
+    uid: 1
+    user_type: initial_administrator
+    enabled: true
+    purpose: "Initial site administration and acceptance testing"
+    creation_method: "Drupal install_drupal() API through the one-shot installer service"

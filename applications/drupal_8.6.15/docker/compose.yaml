@@ -1,0 +1,67 @@
+name: drupal-8615
+
+x-drupal-image: &drupal-image "yorem/sop-drupal:8.6.15"
+
+services:
+  db:
+    image: "postgres:10.23-bullseye"
+    platform: linux/amd64
+    pull_policy: missing
+    env_file:
+      - .env
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+    restart: unless-stopped
+
+  installer:
+    image: *drupal-image
+    platform: linux/amd64
+    pull_policy: missing
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["php", "/opt/drupal-tools/install-drupal.php"]
+    volumes:
+      - drupal-sites:/var/www/html/sites
+      - ../resources/initial-data/install-drupal.php:/opt/drupal-tools/install-drupal.php:ro
+    restart: "no"
+
+  application:
+    image: *drupal-image
+    platform: linux/amd64
+    pull_policy: missing
+    depends_on:
+      db:
+        condition: service_healthy
+      installer:
+        condition: service_completed_successfully
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-sites:/var/www/html/sites
+      - drupal-themes:/var/www/html/themes
+      - ../resources/initial-data/create-user.php:/opt/drupal-tools/create-user.php:ro
+    ports:
+      - "${DRUPAL_HOST_PORT:-18090}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent --show-error http://127.0.0.1/ >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  database-data:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:

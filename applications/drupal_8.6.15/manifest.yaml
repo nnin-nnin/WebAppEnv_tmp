@@ -1,0 +1,132 @@
+application:
+  name: Drupal
+  version: 8.6.15
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment with a source-built Drupal application image and a separate PostgreSQL container."
+
+target:
+  platform: linux/amd64
+  compose_project: drupal-8615
+  compose_file: docker/compose.yaml
+  host_port: 18090
+  host_port_variable: DRUPAL_HOST_PORT
+  browser_url: http://127.0.0.1:18090/
+  login_url: http://127.0.0.1:18090/user/login
+
+source:
+  repository: https://github.com/drupal/drupal.git
+  fixed_ref: 8.6.15
+  immutable_commit: 91ded4b7776e05ee9633bdc1c458b41c718133e0
+  path: source/drupal-8.6.15
+  metadata: source/source.json
+  checksums: source/SHA256SUMS
+  snapshot_method: git_archive
+  frontend_note: "Drupal core includes the browser frontend; there is no independent frontend repository."
+
+build:
+  dockerfile: docker/Dockerfile
+  script: scripts/build.sh
+  base_image: docker.io/library/drupal:8.6.15-apache@sha256:6494e8cdd709bed5f6cb8452611ece78d239a4bba47ff199cf768bb36b1e9753
+  source_used_by_dockerfile: true
+  build_platform: linux/amd64
+  application_image: yorem/sop-drupal:8.6.15
+  local_application_image: sop/drupal:8.6.15
+  database_image: postgres:10.23-bullseye
+
+compose:
+  project_name: drupal-8615
+  services:
+    - application
+    - installer
+    - db
+  volumes:
+    - database-data
+    - drupal-modules
+    - drupal-profiles
+    - drupal-sites
+    - drupal-themes
+  external_dependencies: true
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKER_HUB
+  metadata: image/image.json
+  prepare_script: scripts/load-images.sh
+  application_image: yorem/sop-drupal:8.6.15
+  database_image: postgres:10.23-bullseye
+  note: "The GitHub repository stores image metadata; runtime images are pulled from Docker Hub. Local tar archives are optional build outputs."
+
+services:
+  - name: application
+    role: "Long-running Drupal Apache web application"
+    image: yorem/sop-drupal:8.6.15
+    platform: linux/amd64
+    source: "source/drupal-8.6.15 through docker/Dockerfile"
+    ports:
+      - "${DRUPAL_HOST_PORT:-18090}:80"
+    depends_on:
+      - db: service_healthy
+      - installer: service_completed_successfully
+    healthcheck: "HTTP GET http://127.0.0.1/ inside the container"
+  - name: installer
+    role: "One-shot idempotent Drupal schema and administrator initializer"
+    image: yorem/sop-drupal:8.6.15
+    platform: linux/amd64
+    source: "source/drupal-8.6.15 through docker/Dockerfile"
+    depends_on:
+      - db: service_healthy
+    healthcheck: "Must exit with status 0"
+  - name: db
+    role: "PostgreSQL database"
+    image: postgres:10.23-bullseye
+    platform: linux/amd64
+    source: "Official PostgreSQL image from Docker Hub"
+    healthcheck: "pg_isready using the configured database and user"
+
+initialization:
+  installer_script: resources/initial-data/install-drupal.php
+  database: "PostgreSQL official entrypoint creates the database; installer calls Drupal 8.6.15 install_drupal() with the standard profile."
+  idempotence: "Existing settings.php and users_field_data cause the installer to exit successfully without overwriting data."
+  database_seed: null
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin
+    password: "Drupal8615Admin!"
+    email: admin@example.test
+    role: administrator
+    creation_method: "Drupal install_drupal() API through the installer service"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+  register_script: resources/register.sh
+
+operations:
+  build: bash scripts/build.sh
+  publish: bash scripts/publish.sh
+  prepare_images: bash scripts/load-images.sh
+  start: bash scripts/up.sh
+  compose_start: docker compose --env-file docker/.env -f docker/compose.yaml up -d
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - source_checksum
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+    - normal_user_creation_and_login
+  final_state: "After scripts/up.sh, db and application run healthy and installer exits 0."
+
+known_limits:
+  - "Drupal 8.6.15, PHP 7.2, and PostgreSQL 10 are end-of-life and intended only for isolated research."
+  - "The default HTTP endpoint has no TLS and the documented credentials are benchmark credentials."
+  - "The Docker Hub images target linux/amd64; ARM64 hosts require Docker cross-architecture support."
+
+consistency_statement: "This is a native multi-container Docker Compose environment, not an all-in-one image. The application image is built from the fixed Drupal source snapshot and published to Docker Hub, while PostgreSQL is pulled from the official Docker Hub image."

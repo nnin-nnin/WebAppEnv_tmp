@@ -1,0 +1,36 @@
+{
+  "delivery_method": "DOCKER_HUB",
+  "platform": "linux/amd64",
+  "base_image": "docker.io/library/drupal:8.6.15-apache@sha256:6494e8cdd709bed5f6cb8452611ece78d239a4bba47ff199cf768bb36b1e9753",
+  "images": [
+    {
+      "service": "application",
+      "image": "yorem/sop-drupal:8.6.15",
+      "local_tag": "sop/drupal:8.6.15",
+      "tag": "8.6.15",
+      "digest": "sha256:a6c3e93b843d344637d69979ad49835166c63e7fd1243085d8aa7eac2f2d4d2f",
+      "platform": "linux/amd64",
+      "source": "Docker Hub",
+      "local_archive": "image/drupal-app-8.6.15-linux-amd64.tar"
+    },
+    {
+      "service": "installer",
+      "image": "yorem/sop-drupal:8.6.15",
+      "local_tag": "sop/drupal:8.6.15",
+      "tag": "8.6.15",
+      "digest": "sha256:a6c3e93b843d344637d69979ad49835166c63e7fd1243085d8aa7eac2f2d4d2f",
+      "platform": "linux/amd64",
+      "source": "Docker Hub",
+      "local_archive": "image/drupal-app-8.6.15-linux-amd64.tar"
+    },
+    {
+      "service": "db",
+      "image": "postgres:10.23-bullseye",
+      "tag": "10.23-bullseye",
+      "platform": "linux/amd64",
+      "source": "Docker Hub official image",
+      "local_archive": "image/postgres-10.23-linux-amd64.tar"
+    }
+  ],
+  "local_archives": "Generated only when scripts/build.sh is run locally"
+}

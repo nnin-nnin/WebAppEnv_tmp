@@ -1,0 +1,9 @@
+.git
+.DS_Store
+image
+docker/.env
+README.md
+manifest.yaml
+resources
+scripts
+source/SHA256SUMS

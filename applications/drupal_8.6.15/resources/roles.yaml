@@ -1,0 +1,12 @@
+roles:
+  - id: administrator
+    name: Administrator
+    permissions: "Standard-profile administrator permissions; uid 1 also has Drupal superuser access"
+    purpose: "Full site administration"
+    assigned_to:
+      - admin
+  - id: authenticated
+    name: Authenticated user
+    permissions: "Drupal standard-profile authenticated-user permissions"
+    purpose: "Normal signed-in use for users created by resources/register.sh"
+    assigned_to: []
