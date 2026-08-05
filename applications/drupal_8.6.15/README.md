@@ -2,7 +2,7 @@
 
 本目录交付固定版本 Drupal 8.6.15 的原生多容器 Docker Compose 环境。Drupal 应用、一次性安装器和 PostgreSQL 运行在独立容器中，不是 all-in-one 单容器。
 
-源码固定为 Drupal 仓库 commit `91ded4b7776e05ee9633bdc1c458b41c718133e0`。`docker/Dockerfile` 使用固定 digest 的官方 Drupal 8.6.15 Apache 镜像作为运行时基础，并将 `source/drupal-8.6.15/` 复制进最终应用镜像。
+源码来源为 [Drupal 官方 GitHub 仓库](https://github.com/drupal/drupal.git)，固定 commit 为 `91ded4b7776e05ee9633bdc1c458b41c718133e0`。如果源码快照不随交付物传递，可按该链接和 commit 获取；当前目录仍保留可校验的源码快照。`docker/Dockerfile` 使用固定 digest 的官方 Drupal 8.6.15 Apache 镜像作为运行时基础，并将 `source/drupal-8.6.15/` 复制进最终应用镜像。
 
 ## 前置条件
 
@@ -136,7 +136,7 @@ bash scripts/reset.sh
 
 ## Docker Hub 镜像
 
-应用镜像已经发布到：
+应用镜像已经发布到 [Docker Hub](https://hub.docker.com/r/yorem/sop-drupal/tags)：
 
 ```text
 yorem/sop-drupal:8.6.15
