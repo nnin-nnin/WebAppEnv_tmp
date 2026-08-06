@@ -4,6 +4,8 @@
 
 项目目标、构建流程和人工验证说明见 [`docs/README.md`](docs/README.md)。
 
+Black Widow 和 YuraScanner 两篇论文中的 29 个应用，以及论文版本与远端当前环境版本的对应关系，见 [`applications/index/README.md`](applications/index/README.md)。
+
 ## 应用目录
 
 | 应用名与版本 | 镜像名 | 启动指令 | 用户名和密码 |
