@@ -1,0 +1,12 @@
+services:
+  application:
+    image: asteriskax001/sop-fluxbb:1.5.11
+    ports:
+      - "18311:80"
+    volumes:
+      - fluxbb-data:/var/lib/fluxbb
+      - fluxbb-db:/var/lib/mysql
+
+volumes:
+  fluxbb-data:
+  fluxbb-db:

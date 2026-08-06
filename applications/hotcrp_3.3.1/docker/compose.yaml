@@ -1,0 +1,13 @@
+services:
+  application:
+    image: asteriskax001/sop-hotcrp:3.3.1
+    platform: linux/amd64
+    ports:
+      - "18403:80"
+    volumes:
+      - application-db:/var/lib/mysql
+      - application-data:/var/www/html/docs
+
+volumes:
+  application-db:
+  application-data:

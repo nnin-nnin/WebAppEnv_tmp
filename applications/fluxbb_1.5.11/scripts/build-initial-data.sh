@@ -1,0 +1,30 @@
+#!/bin/bash
+set -Eeuo pipefail
+mkdir -p /run/mysqld /var/lib/fluxbb /var/log/mysql
+chown -R mysql:mysql /run/mysqld /var/lib/mysql /var/log/mysql
+chown -R www-data:www-data /var/lib/fluxbb
+if [ ! -d /var/lib/mysql/mysql ]; then
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql --skip-test-db >/dev/null
+fi
+mysqld --user=mysql --datadir=/var/lib/mysql --bind-address=127.0.0.1 --skip-name-resolve --socket=/run/mysqld/mysqld.sock --pid-file=/run/mysqld/mysqld.pid >/var/log/mysql/mysqld.log 2>&1 &
+db_pid=$!
+trap 'kill "$db_pid" 2>/dev/null || true; wait "$db_pid" 2>/dev/null || true' EXIT
+for _ in $(seq 1 120); do
+    if mysqladmin --protocol=socket --socket=/run/mysqld/mysqld.sock -uroot ping >/dev/null 2>&1; then break; fi
+    if ! kill -0 "$db_pid" 2>/dev/null; then cat /var/log/mysql/mysqld.log >&2; exit 1; fi
+    sleep 1
+done
+mysqladmin --protocol=socket --socket=/run/mysqld/mysqld.sock -uroot ping >/dev/null
+mysql --protocol=socket --socket=/run/mysqld/mysqld.sock -uroot <<'SQL'
+CREATE DATABASE IF NOT EXISTS fluxbb CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER IF NOT EXISTS 'fluxbb'@'127.0.0.1' IDENTIFIED BY 'benchmark-db-only';
+GRANT ALL PRIVILEGES ON fluxbb.* TO 'fluxbb'@'127.0.0.1';
+FLUSH PRIVILEGES;
+SQL
+if ! mysql --protocol=socket --socket=/run/mysqld/mysqld.sock -uroot -N -e "SHOW TABLES FROM fluxbb LIKE 'fluxbb_users'" | grep -q fluxbb_users; then
+    FLUXBB_BASE_URL=http://localhost:18311 php /opt/fluxbb-scripts/initialize.php >/var/log/fluxbb-install.log 2>&1
+fi
+if [ ! -f /var/lib/fluxbb/config.php ]; then
+    FLUXBB_BASE_URL=http://localhost:18311 php /opt/fluxbb-scripts/write-config.php
+fi
+touch /var/lib/fluxbb/initialized

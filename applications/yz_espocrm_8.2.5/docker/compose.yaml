@@ -1,0 +1,13 @@
+services:
+  application:
+    image: asteriskax001/sop-espocrm:8.2.5
+    ports:
+      - "18292:80"
+    volumes:
+      - application-data:/var/www/html/data
+      - application-db:/var/lib/mysql
+      - application-custom:/var/www/html/custom
+volumes:
+  application-data:
+  application-db:
+  application-custom:

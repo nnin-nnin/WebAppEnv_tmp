@@ -1,0 +1,5 @@
+roles:
+  - name: Administrator
+    permissions: 全部系统、实体、用户和管理权限
+    purpose: 初始管理员角色
+    accounts: [admin]

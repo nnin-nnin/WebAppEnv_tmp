@@ -1,0 +1,105 @@
+[
+    {
+        "Id": "sha256:909ed760754bf9cdcf7b07ab78aa373b14458e9afcf87668be0175ebb75b8bd5",
+        "RepoTags": [
+            "asteriskax001/sop-fluxbb:1.5.11",
+            "nnin/sop-fluxbb:1.5.11"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-fluxbb@sha256:909ed760754bf9cdcf7b07ab78aa373b14458e9afcf87668be0175ebb75b8bd5",
+            "nnin/sop-fluxbb@sha256:909ed760754bf9cdcf7b07ab78aa373b14458e9afcf87668be0175ebb75b8bd5"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-05T15:10:20.875981111+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_EXTRA_BUILD_DEPS=apache2-dev",
+                "PHP_EXTRA_CONFIGURE_ARGS=--with-apxs2 --disable-cgi",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC9FF8D3EE5AF27F",
+                "PHP_VERSION=7.2.34",
+                "PHP_URL=https://www.php.net/distributions/php-7.2.34.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-7.2.34.tar.xz.asc",
+                "PHP_SHA256=409e11bc6a2c18707dfc44bc61c820ddfd81e17481470f3405ee7822d8379903",
+                "DEBIAN_FRONTEND=noninteractive",
+                "APACHE_DOCUMENT_ROOT=/var/www/html",
+                "FLUXBB_BASE_URL=http://localhost:18311"
+            ],
+            "Entrypoint": [
+                "/opt/fluxbb-scripts/entrypoint.sh"
+            ],
+            "Volumes": {
+                "/var/lib/fluxbb": {},
+                "/var/lib/mysql": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "FLUXBB_URL=http://127.0.0.1/ /opt/fluxbb-scripts/healthcheck.sh >/dev/null"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 30000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 201153188,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:87c8a1d8f54f3aa4e05569e8919397b65056aa71cdf48b7f061432c98475eee9",
+                "sha256:ddcd8d2fcf7eadeef5a1e569539568bd276784e3535cb942a51a19c538090e1e",
+                "sha256:e45a78df7536d9ab717733086f8026d40bb78c2ee532cff284308424d0018828",
+                "sha256:02eef72b445f93168347adc16dece8be0d697c462b4e3c293480d08e599127a8",
+                "sha256:bc0429138e0dd22d175170fed62fda8fc76f1f2e36641b075a1ea0bbf1882e6e",
+                "sha256:d666585087a124c44f2c108e27410db31325a1c5076cea26a1bf67affe4cfd79",
+                "sha256:0ff9183bd0993a682d701d9253051790f1e5fe21e1a899872b83fc579ba4ead5",
+                "sha256:914a1eddd57a1d908536132066887fa07c1917d4ba636d689677c8a678af8967",
+                "sha256:e1cd0107ea852c13e540c79461b945af69211233c8fc6d489ec5005503d74f29",
+                "sha256:ce60a0c97d4a1a244ae78d16ca874d82dbf98f437ac8c3cb2f86d4e6a9c81e30",
+                "sha256:9a60d912a14f96cffb1b6a7b1ef4c8b0b51a6ee12a4785a61aeb9e100386ddcd",
+                "sha256:6ec4d4ce53cc16cb2c806d8a7ff92fa660c8d1c61e06d129264b001fdfcfa2d0",
+                "sha256:cc45506c444753c370f98084471e834058d4e91c31b37c7eac966ba8a3185446",
+                "sha256:5dc98019746790eed1758d7135e1ca091171e1b8c9fdb6f6edbfd836893ba5e9",
+                "sha256:c67414dba5225317b7395f8b7048ebc759e951c62e925e122e76e2c7cbbc362f",
+                "sha256:ae0323ad2ce03eb2958e57bc3c48b8b42c572aad580bf62a234db112fe11a584",
+                "sha256:37d172eb176b1ee7afa8756ed78dd0d97f0e5a6bb2e712e3c526b41ce34076c7",
+                "sha256:f3ddab42ce1817cf297640d60c06146ea8ce6202e67127a03e54b85c8f365b77",
+                "sha256:bfe5e78d4085d944ead0505ec9fc3c5ae5d049b4a338a6edef203a9cb3666c94"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T04:21:00.242220143Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:909ed760754bf9cdcf7b07ab78aa373b14458e9afcf87668be0175ebb75b8bd5",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-fluxbb:1.5.11",
+                "org.opencontainers.image.ref.name": "1.5.11"
+            }
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/asteriskax001/sop-fluxbb"
+                }
+            ]
+        }
+    }
+]

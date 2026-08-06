@@ -1,0 +1,8 @@
+.git
+source/prestashop/.git
+source/prestashop/var/cache/*
+source/prestashop/var/logs/*
+source/prestashop/var/sessions/*
+image/*.tar
+image/*.json
+image/SHA256SUMS

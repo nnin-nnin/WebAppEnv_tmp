@@ -1,0 +1,12 @@
+services:
+  application:
+    image: asteriskax001/sop-phpmyadmin:4.7.9
+    ports:
+      - "18379:80"
+    volumes:
+      - application-db:/var/lib/mysql
+      - application-data:/var/www/html/data
+
+volumes:
+  application-db:
+  application-data:

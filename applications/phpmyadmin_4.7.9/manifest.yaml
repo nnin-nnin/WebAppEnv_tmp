@@ -1,0 +1,71 @@
+application:
+  name: phpMyAdmin
+  version: 4.7.9
+  type: full-web-application
+  source_repository: https://github.com/phpmyadmin/phpmyadmin.git
+  source_tag: RELEASE_4_7_9
+  source_tag_object: 98a32765caae870e0f9df3e3374ee5c8cff435e8
+  source_commit: 80914e327e4deafe78e0813ffdba7fce8acf10ac
+  independent_frontend_repository: null
+  independent_frontend_commit: null
+  source_path: source/phpmyadmin-4.7.9
+  source_checksums: source/SHA256SUMS
+  source_metadata: source/source.json
+
+platform:
+  target: linux/amd64
+  runtime: PHP 7.2.34
+  web_server: Apache HTTP Server 2.4.38 with mod_php
+  database: MariaDB 10.3.39
+
+web:
+  browser_entry: http://127.0.0.1:18379/
+  frontend_type: bundled phpMyAdmin JavaScript/CSS and PHP-rendered HTML
+  frontend_build_command: none; release ships with bundled browser assets
+  static_resource_root: /var/www/html
+  api_connection: same-origin PHP endpoints; PHP connects to MariaDB at 127.0.0.1:3306
+  external_core_urls: none required for startup or login
+
+all_in_one:
+  image: asteriskax001/sop-phpmyadmin:4.7.9
+  single_image_single_container: true
+  description: Single container containing phpMyAdmin, Apache/PHP, MariaDB, database initialization and startup supervision.
+  components:
+    - phpMyAdmin 4.7.9 application and bundled frontend
+    - PHP 7.2.34 with mysqli, mbstring, XML, GD and ZIP extensions
+    - Apache HTTP Server 2.4.38 with mod_php
+    - MariaDB 10.3.39 on 127.0.0.1:3306
+    - initial benchmark database and admin account
+  archive: image/phpmyadmin-4.7.9-linux-amd64.tar
+  image_metadata: image/image.json
+  image_checksums: image/SHA256SUMS
+
+network:
+  exposed_port: 80
+  host_port: 18379
+
+credentials:
+  initial_admin_username: admin
+  initial_admin_password: benchmark-only
+  initial_admin_role: database-administrator
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+operations:
+  build: scripts/build.sh
+  entrypoint: scripts/entrypoint.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  recommended_run: docker run -d -p 18379:80 asteriskax001/sop-phpmyadmin:4.7.9
+
+acceptance:
+  application_login: phpMyAdmin cookie authentication with admin/benchmark-only
+  ordinary_user_creation: resources/register.sh via Docker exec and MariaDB CREATE USER
+  persistence: Docker-managed /var/lib/mysql and /var/www/html/data volumes
+  api_only: false

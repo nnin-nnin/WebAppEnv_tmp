@@ -1,0 +1,5 @@
+.git
+**/.git
+image/*.tar
+source/*/test/ldap/ldap_data
+

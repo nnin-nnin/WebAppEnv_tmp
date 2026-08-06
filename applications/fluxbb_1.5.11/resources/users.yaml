@@ -1,0 +1,8 @@
+application: FluxBB
+version: 1.5.11
+users:
+  - username: admin
+    password: benchmark-only
+    type: administrator
+    enabled: true
+    purpose: benchmark-only initial administrator

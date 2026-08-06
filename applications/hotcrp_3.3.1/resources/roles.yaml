@@ -1,0 +1,16 @@
+application: HotCRP
+roles:
+  - name: sysadmin
+    permissions:
+      - conference administration
+      - user and role management
+      - submission and review management
+      - HotCRP API access permitted by application policy
+    purpose: HotCRP 系统管理员角色（ROLE_ADMIN）。
+    accounts:
+      - admin
+  - name: user
+    permissions:
+      - own profile and permitted conference actions
+    purpose: 普通用户默认角色；由管理员在 HotCRP 的用户管理页创建。
+    accounts: []

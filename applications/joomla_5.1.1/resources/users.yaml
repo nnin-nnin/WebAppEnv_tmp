@@ -1,0 +1,6 @@
+users:
+  - username: admin
+    password: benchmark-only
+    type: administrator
+    enabled: true
+    purpose: 初始 Joomla 超级用户，用于浏览器后台登录和验收

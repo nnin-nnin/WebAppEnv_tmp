@@ -1,0 +1,41 @@
+application:
+  name: FluxBB
+  version: 1.5.11
+  type: full Web application
+  source_repository: https://github.com/fluxbb/fluxbb.git
+  source_commit: 0e37a7800d53267bf46d04498afa2d92a6be1471
+  resolved_source_commit: 3909815c00f859fd565ca9e7bdcd254dba23c585
+  frontend_repository: null
+  frontend_commit: null
+  source_checksum: source/SHA256SUMS
+platform:
+  target: linux/amd64
+runtime:
+  base_image: php:7.2-apache@sha256:4dc0f0115acf8c2f0df69295ae822e49f5ad5fe849725847f15aa0e5802b55f8
+  language: PHP 7.2.34 CLI/Apache module
+  web_server: Apache HTTP Server 2.4
+  database: MariaDB 10.3 (internal, 127.0.0.1)
+  frontend_build_command: not applicable; FluxBB ships server-rendered PHP templates and CSS
+  static_resource_path: /var/www/html/style, /var/www/html/img, /var/www/html/common.js
+  browser_entrypoint: /
+delivery:
+  port: 18311
+  image: asteriskax001/sop-fluxbb:1.5.11
+  image_archive: image/fluxbb-1.5.11-linux-amd64.tar
+  image_metadata: image/image.json
+  image_checksum: image/SHA256SUMS
+  all_in_one: single image and single container; application and MariaDB run inside it
+  frontend: real FluxBB PHP/template/CSS browser UI is included; pages connect to MariaDB through mysqli at 127.0.0.1
+  components: [FluxBB 1.5.11, PHP 7.2.34, Apache, MariaDB 10.3, initialized forum database]
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: 无独立 seed 文件；论坛数据库由 scripts/build-initial-data.sh 在镜像构建阶段预初始化并随镜像交付
+scripts:
+  build: scripts/build.sh
+  start: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18311:80 asteriskax001/sop-fluxbb:1.5.11

@@ -1,0 +1,99 @@
+[
+    {
+        "Id": "sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8",
+        "RepoTags": [
+            "asteriskax001/sop-phpmyadmin:4.7.9",
+            "nnin/sop-phpmyadmin:4.7.9"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-phpmyadmin@sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8",
+            "nnin/sop-phpmyadmin@sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-05T10:24:25.153510199+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_EXTRA_BUILD_DEPS=apache2-dev",
+                "PHP_EXTRA_CONFIGURE_ARGS=--with-apxs2 --disable-cgi",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC9FF8D3EE5AF27F",
+                "PHP_VERSION=7.2.34",
+                "PHP_URL=https://www.php.net/distributions/php-7.2.34.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-7.2.34.tar.xz.asc",
+                "PHP_SHA256=409e11bc6a2c18707dfc44bc61c820ddfd81e17481470f3405ee7822d8379903",
+                "APACHE_DOCUMENT_ROOT=/var/www/html",
+                "MYSQL_DATADIR=/var/lib/mysql"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/phpmyadmin-entrypoint.sh"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/data": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "curl --fail --silent http://127.0.0.1/index.php | grep -qi phpmyadmin"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 30000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 269919331,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:87c8a1d8f54f3aa4e05569e8919397b65056aa71cdf48b7f061432c98475eee9",
+                "sha256:ddcd8d2fcf7eadeef5a1e569539568bd276784e3535cb942a51a19c538090e1e",
+                "sha256:e45a78df7536d9ab717733086f8026d40bb78c2ee532cff284308424d0018828",
+                "sha256:02eef72b445f93168347adc16dece8be0d697c462b4e3c293480d08e599127a8",
+                "sha256:bc0429138e0dd22d175170fed62fda8fc76f1f2e36641b075a1ea0bbf1882e6e",
+                "sha256:d666585087a124c44f2c108e27410db31325a1c5076cea26a1bf67affe4cfd79",
+                "sha256:0ff9183bd0993a682d701d9253051790f1e5fe21e1a899872b83fc579ba4ead5",
+                "sha256:914a1eddd57a1d908536132066887fa07c1917d4ba636d689677c8a678af8967",
+                "sha256:e1cd0107ea852c13e540c79461b945af69211233c8fc6d489ec5005503d74f29",
+                "sha256:ce60a0c97d4a1a244ae78d16ca874d82dbf98f437ac8c3cb2f86d4e6a9c81e30",
+                "sha256:9a60d912a14f96cffb1b6a7b1ef4c8b0b51a6ee12a4785a61aeb9e100386ddcd",
+                "sha256:6ec4d4ce53cc16cb2c806d8a7ff92fa660c8d1c61e06d129264b001fdfcfa2d0",
+                "sha256:cc45506c444753c370f98084471e834058d4e91c31b37c7eac966ba8a3185446",
+                "sha256:5dc98019746790eed1758d7135e1ca091171e1b8c9fdb6f6edbfd836893ba5e9",
+                "sha256:32ec417d23d3b87bc51bc8bc15bb71e71bdde7c43b8c05b8ad2b69d92086c1b7",
+                "sha256:5631f13425801bedc5db6c63890f73c0a8aa0b286ce17229082b1cd044d092c0",
+                "sha256:ec7647612c85d34fb17d6c480a148dd1c08868f5fed719fded79ee7c5bca09e0",
+                "sha256:bf17dc65244a1061b19e17376d682551a0e074e1f7aa595bb7094cc38de2d91d",
+                "sha256:cb14d9dd5b4968aa63be8efd6deab381fe439e78022d162bcdf00452ea8febb7",
+                "sha256:4100d606869f8f66e964157705fa84cc0d589b23e1a10811ef2a3ab823203334"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T04:51:03.971259711Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8",
+            "size": 4233,
+            "annotations": {
+                "config.digest": "sha256:107f717bafcb8bb71f5de0215c13aeae232870844df3bd01a2c191960a39e3d9",
+                "io.containerd.image.name": "docker.io/nnin/sop-phpmyadmin:4.7.9",
+                "org.opencontainers.image.ref.name": "4.7.9"
+            }
+        }
+    }
+]

@@ -1,0 +1,13 @@
+services:
+  application:
+    image: asteriskax001/sop-oscommerce:2.4.2
+    ports:
+      - "18402:80"
+    volumes:
+      - oscommerce-db:/var/lib/mysql
+      - oscommerce-work:/var/www/html/includes/OSC/Work
+
+volumes:
+  oscommerce-db:
+  oscommerce-work:
+

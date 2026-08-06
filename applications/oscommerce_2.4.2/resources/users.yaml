@@ -1,0 +1,14 @@
+users:
+  - username: admin
+    password: benchmark-only
+    password_note: "benchmark-only 初始管理员凭据"
+    user_type: administrator
+    enabled: true
+    purpose: "登录 osCommerce Administration Dashboard"
+  - username: "由注册脚本传入的 email"
+    password: "由注册脚本传入"
+    password_note: "osCommerce 普通客户账号使用邮箱作为登录名"
+    user_type: customer
+    enabled: true
+    purpose: "通过真实的 create_account.php 注册流程验证普通用户创建"
+

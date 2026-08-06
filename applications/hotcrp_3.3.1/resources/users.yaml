@@ -1,0 +1,9 @@
+application: HotCRP
+version: 3.3.1
+users:
+  - username: admin
+    login_identifier: admin@hotcrp.local
+    password: benchmark-only
+    type: administrator
+    enabled: true
+    purpose: 初始系统管理员；HotCRP 使用邮箱作为本地登录标识。

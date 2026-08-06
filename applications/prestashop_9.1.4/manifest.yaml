@@ -1,0 +1,50 @@
+application:
+  name: PrestaShop
+  version: 9.1.4
+  type: complete-web-application
+  description: 单镜像、单容器、内部包含 PrestaShop Apache/PHP 应用服务和 MariaDB 数据库服务的 all-in-one 环境。
+source:
+  repository: https://github.com/PrestaShop/PrestaShop
+  commit: 4f7653032a0605d8dfc16515a5f3aea62dcef9b1
+  frontend_repository: null
+  frontend_commit: null
+  path: source/prestashop
+  checksum_file: source/SHA256SUMS
+  metadata_file: source/source.json
+build:
+  platform: linux/amd64
+  base_image: php:8.3.33-apache-bookworm
+  base_image_digest: sha256:973e11c67c1c81e7811077a0efa0f910cf903af0ba972cab6ba0c0e15913c771
+  runtime: PHP 8.3.x with Composer dependencies installed at build time
+  web_server: Apache HTTP Server 2.4 with mod_rewrite
+  frontend_build_command: ./tools/assets/build.sh all --force
+  static_assets: PrestaShop repository themes and admin-dev themes, built in the image build
+  browser_entrypoint: http://localhost:18401/
+database:
+  engine: MariaDB
+  version: 11.8.x (Debian trixie package in the fixed base image)
+  host_inside_container: 127.0.0.1
+  database: prestashop
+  user: prestashop
+  initialization: PrestaShop install-dev/index_cli.php, idempotent via generated app/config/parameters.php and persisted database
+network:
+  port: 18401
+image:
+  name: asteriskax001/sop-prestashop:9.1.4
+  archive: image/prestashop-9.1.4-linux-amd64.tar
+  metadata: image/image.json
+  checksum_file: image/SHA256SUMS
+  contents: [PrestaShop source, PHP extensions, Composer vendor, compiled frontend assets, Apache, MariaDB, initialization entrypoint]
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: null
+operations:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18401:80 asteriskax001/sop-prestashop:9.1.4

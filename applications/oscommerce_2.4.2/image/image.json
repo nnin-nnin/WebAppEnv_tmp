@@ -1,0 +1,98 @@
+[
+    {
+        "Id": "sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494",
+        "RepoTags": [
+            "asteriskax001/sop-oscommerce:2.4.2",
+            "nnin/sop-oscommerce:2.4.2"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-oscommerce@sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494",
+            "nnin/sop-oscommerce@sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-05T20:10:20.788947021+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=1198C0117593497A5EC5C199286AF1F9897469DC C28D937575603EB4ABB725861C0779DC5C0A9DE4 AFD8691FDAEDF03BDF6E460563F15A9B715376CA",
+                "PHP_VERSION=8.3.33",
+                "PHP_URL=https://www.php.net/distributions/php-8.3.33.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.3.33.tar.xz.asc",
+                "PHP_SHA256=e293ed620cec74651bb4a071317892a478aa6840fab22db45c72d77cd42f9676",
+                "APACHE_DOCUMENT_ROOT=/var/www/html",
+                "APP_DB_NAME=oscommerce",
+                "APP_DB_USER=oscommerce",
+                "APP_DB_PASSWORD=oscommerce-internal",
+                "APP_PUBLIC_URL=http://127.0.0.1:18402",
+                "TZ=Asia/Shanghai"
+            ],
+            "Entrypoint": [
+                "/opt/oscommerce/entrypoint.sh"
+            ],
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "curl -fsS --max-time 4 http://127.0.0.1/ >/dev/null || exit 1"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 60000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 288334837,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6f94328331290cbd81edab450664d42da7b64c191416c9346cd5d28c84f76035",
+                "sha256:e28b4ed2dbb73ed1502b288f0c0e25c7397890065b459dc6ecb88a438a74e4b4",
+                "sha256:673e7b971f778392dbcbbbaffbefa8e32aeeb0e3f3833aaed0a4cfd029ddd150",
+                "sha256:e372bfdf0f46283ae9205bd8d4b5d98451ac9478ef581dee9ac69d184d8cf940",
+                "sha256:a848f55781d5cc1b80417857b6ea37885acae3db9c07819e5f178952292e15fc",
+                "sha256:157c68175643650eba54132d31ff5f844c377086f6cce360037ee4a2403f7837",
+                "sha256:6bbcb94f1b837b1b7ffeb572a00c9b60e2ae598843c4487d7b3b09e55a7499dc",
+                "sha256:95a9745a4aadecfba8f2aa5aac0c489b2094260557854075ed48e38460b8fb43",
+                "sha256:5f24810669d26187976f4aa2c5a142bbc3922f0aa10f4a16992dd95873e75d15",
+                "sha256:09c65a531c19cf26f9e0c18dc5a6b9b9437d63b08f3b7b079e3e19d32d67a450",
+                "sha256:e031425c8c4c4c285f6c9d253bca1aab53ab0f543341d40df455236e1557c4cb",
+                "sha256:852e48099358157cc382902a5601bb29fe4cd5d6f8b6d7233d169a6e5a875b79",
+                "sha256:d73ad7be234739355ef43678cfcd988e7ba3873b7eef421af352852d7ee40e13",
+                "sha256:bb94f1c409d55e4e62be47be46b938e6ae575229df87be8db40278b8295f579c",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:76759362fb8713422c525384ff9e2f059f89e89e98d66cbeb4bf580b05969338",
+                "sha256:f6b5ae8d8d1bd796241c9a5927341b01442054b638b3cbff17e0228f829d50d8",
+                "sha256:d677cb046210f7cfd53ea94555d8655584bf05698a5f8fa9249d5814ec9bff35",
+                "sha256:7dcf951ba3990e6b69a909c2fb9b6a4733344329ab03e19b40f89fbed04e8b10",
+                "sha256:fa4fb8568b85b4d19ac652cc49829c15ce01de96aa9a2a3516ea67d5f625594e",
+                "sha256:a8356117922e2bfd09bcf5386fa55965f5d6571f37738beae500a5fe8e43655e",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T04:21:00.510567195Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-oscommerce:2.4.2",
+                "org.opencontainers.image.ref.name": "2.4.2"
+            }
+        }
+    }
+]

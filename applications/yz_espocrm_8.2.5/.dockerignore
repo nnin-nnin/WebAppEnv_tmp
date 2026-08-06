@@ -1,0 +1,6 @@
+.git
+image
+source/espocrm/.git
+source/espocrm/node_modules
+source/espocrm/vendor
+data

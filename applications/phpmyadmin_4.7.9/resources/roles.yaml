@@ -1,0 +1,15 @@
+roles:
+  - name: database-administrator
+    permissions:
+      - manage databases
+      - create and alter database users
+      - read and write benchmark data
+    purpose: Initial phpMyAdmin administrator role.
+    assigned_to:
+      - admin
+  - name: database-user
+    permissions:
+      - read and write the user's own benchmark database
+    purpose: Least-privilege ordinary user created for acceptance.
+    assigned_to:
+      - users-created-by-register.sh

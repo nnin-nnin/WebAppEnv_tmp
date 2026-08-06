@@ -1,0 +1,48 @@
+application:
+  name: HotCRP
+  version: 3.3.1
+  type: 完整 Web 应用
+  source_repository: https://github.com/kohler/hotcrp
+  source_commit: 718e6f4be324c3bd4a7515b894665d69407780c4
+  frontend_repository: null
+  frontend_commit: null
+  source_path: source/hotcrp-718e6f4be3
+  source_checksums: source/SHA256SUMS
+platform: linux/amd64
+runtime:
+  language: PHP 8.3.33
+  web_server: Apache HTTP Server with mod_php and mod_rewrite
+  database: MariaDB 11.8.6 (Debian 13 trixie package)
+  auxiliary: poppler-utils (pdftohtml)
+  frontend_build_command: 无；HotCRP 3.3.1 使用源码内置 JS/CSS
+  static_assets: scripts/, stylesheets/, images/
+  browser_entry: /
+  api_entry: /api
+delivery:
+  image: asteriskax001/sop-hotcrp:3.3.1
+  port: 18403
+  all_in_one: true
+  description: 单镜像、单容器；镜像内部包含 HotCRP、Apache/PHP、MariaDB、schema 初始化、初始账号和入口管理逻辑。数据库只监听容器内 127.0.0.1。
+  frontend_description: 完整 Web 应用；前端为源码内置的 HotCRP PHP 页面及 JS/CSS，浏览器通过同一容器的相对 URL 访问后端，不依赖独立前端或外部 API。
+  archive: image/hotcrp-3.3.1-linux-amd64.tar
+  metadata: image/image.json
+  checksums: image/SHA256SUMS
+  components:
+    - HotCRP 3.3.1 application source
+    - PHP 8.3.33 with mysqli, intl, zip
+    - Apache HTTP Server
+    - MariaDB server in the same container
+    - poppler-utils
+    - initial HotCRP schema and administrator seed
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data
+operations:
+  build: scripts/build.sh
+  start: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18403:80 asteriskax001/sop-hotcrp:3.3.1

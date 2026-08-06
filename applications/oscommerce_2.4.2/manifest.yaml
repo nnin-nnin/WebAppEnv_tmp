@@ -1,0 +1,68 @@
+application:
+  name: osCommerce
+  version: "2.4.2"
+  type: "完整 Web 应用"
+  source_repository: "https://github.com/osCommerce/oscommerce2"
+  source_commit: "99fbb604bd1de8d1f13c792d378fd1952f64ca61"
+  frontend_repository: null
+  frontend_commit: null
+  source_directory: "source/oscommerce2"
+  source_checksums: "source/SHA256SUMS"
+  retrieved_at: "2026-08-05T00:00:00+08:00"
+platform:
+  target: "linux/amd64"
+runtime:
+  language: "PHP 8.3"
+  base_image: "php:8.3.33-apache-bookworm@sha256:973e11c67c1c81e7811077a0efa0f910cf903af0ba972cab6ba0c0e15913c771"
+  web_server: "Apache httpd 2.4 (mod_rewrite)"
+  database: "MariaDB 11.8.6 (Debian package)"
+  php_extensions:
+    - pdo_mysql
+    - curl
+    - gd
+    - mbstring
+    - zip
+    - intl
+web:
+  entrypoint: "http://127.0.0.1:18402/"
+  admin_entrypoint: "http://127.0.0.1:18402/admin/"
+  frontend_build_command: "不适用：前端随固定 PHP 源码提供"
+  static_asset_directory: "catalog/public"
+  api_connection: "不适用：商城使用同一 PHP 应用的页面请求，数据库通过容器内 127.0.0.1 连接"
+delivery:
+  image: "asteriskax001/sop-oscommerce:2.4.2"
+  port: 18402
+  all_in_one: true
+  architecture: "单镜像、单容器；内部包含 Apache、PHP、osCommerce 和 MariaDB"
+  components:
+    - "osCommerce 2.4.2 PHP 应用、商城前台和管理后台"
+    - "Apache httpd"
+    - "PHP 8.3 及 PDO MySQL 等运行时扩展"
+    - "MariaDB 服务和固定源码中的 Schema/seed 初始数据"
+  archive: "image/oscommerce-2.4.2-linux-amd64.tar"
+  metadata: "image/image.json"
+  checksums: "image/SHA256SUMS"
+resources:
+  users: "resources/users.yaml"
+  roles: "resources/roles.yaml"
+  login: "resources/login.sh"
+  register: "resources/register.sh"
+  initial_data: "resources/initial-data/database-seed.sql"
+scripts:
+  build: "scripts/build.sh"
+  start: "scripts/up.sh"
+  entrypoint: "scripts/entrypoint.sh"
+  healthcheck: "scripts/healthcheck.sh"
+  reset: "scripts/reset.sh"
+run:
+  recommended: "docker run -d -p 18402:80 asteriskax001/sop-oscommerce:2.4.2"
+  database_host_inside_container: "127.0.0.1"
+  browser_login:
+    username: "admin"
+    password: "benchmark-only"
+    role: "管理员（osCommerce Administration Dashboard）"
+notes:
+  - "镜像是 all-in-one 单容器，数据库不作为独立 Docker service 暴露。"
+  - "首次启动自动建库、建表、导入初始商城数据、创建管理员并安装默认模块。"
+  - "完整 Web 应用的静态资源来自固定源码 catalog/public，并由 Apache 同一容器提供。"
+  - "容器内部无运行时依赖下载或核心远程 CDN。源码中 Cookie Consent 的可选 logo/theme 外链已不参与默认模板核心加载。"

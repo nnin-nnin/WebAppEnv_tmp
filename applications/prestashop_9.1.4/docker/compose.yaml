@@ -1,0 +1,20 @@
+services:
+  application:
+    image: asteriskax001/sop-prestashop:9.1.4
+    ports:
+      - "18401:80"
+    volumes:
+      - prestashop-db:/var/lib/mysql
+      - prestashop-config:/var/www/html/app/config
+      - prestashop-runtime:/var/www/html/var
+      - prestashop-images:/var/www/html/img
+      - prestashop-upload:/var/www/html/upload
+      - prestashop-download:/var/www/html/download
+
+volumes:
+  prestashop-db:
+  prestashop-config:
+  prestashop-runtime:
+  prestashop-images:
+  prestashop-upload:
+  prestashop-download:

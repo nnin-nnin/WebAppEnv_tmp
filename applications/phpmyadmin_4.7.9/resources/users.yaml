@@ -1,0 +1,13 @@
+users:
+  - username: admin
+    password: benchmark-only
+    user_type: administrator
+    enabled: true
+    role: database-administrator
+    purpose: Initial benchmark login and database administration.
+  - username: ordinary
+    password: generated-by-register-script
+    user_type: ordinary-database-user
+    enabled: false
+    role: database-user
+    purpose: Example account created by resources/register.sh during acceptance.

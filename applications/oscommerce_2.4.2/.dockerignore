@@ -1,0 +1,11 @@
+.git
+image/*.tar
+image/image.json
+image/SHA256SUMS
+source/oscommerce2/.git
+docker/compose.yaml
+README.md
+manifest.yaml
+scripts/build.sh
+scripts/healthcheck.sh
+scripts/login.sh

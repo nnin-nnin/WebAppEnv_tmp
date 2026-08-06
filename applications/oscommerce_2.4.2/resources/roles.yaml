@@ -1,0 +1,16 @@
+roles:
+  - name: administrator
+    permissions:
+      - "登录 /admin/"
+      - "管理商品、分类、客户、订单、配置和模块"
+    purpose: "商城后台管理"
+    users:
+      - admin
+  - name: customer
+    permissions:
+      - "浏览商城"
+      - "管理自己的客户账号、地址簿和订单"
+    purpose: "商城普通客户"
+    users:
+      - "由 register.sh 创建的账号"
+

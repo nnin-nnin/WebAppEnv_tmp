@@ -1,0 +1,10 @@
+application: PrestaShop
+roles:
+  - name: SuperAdmin
+    permissions: [all-back-office-permissions, all-shops]
+    purpose: 初始管理员的完整后台角色
+    users: [admin@example.com]
+  - name: Customer
+    permissions: [storefront-account, orders-and-profile]
+    purpose: 前台普通客户账号；由 resources/register.sh 创建
+    users: []

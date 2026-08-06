@@ -1,0 +1,18 @@
+services:
+  application:
+    image: asteriskax001/sop-joomla:5.1.1
+    ports:
+      - "18211:80"
+    volumes:
+      - application-db:/var/lib/mysql
+      - application-images:/var/www/html/images
+      - application-media:/var/www/html/media
+      - application-cache:/var/www/html/cache
+      - application-tmp:/var/www/html/tmp
+
+volumes:
+  application-db:
+  application-images:
+  application-media:
+  application-cache:
+  application-tmp:

@@ -1,0 +1,8 @@
+application: PrestaShop
+users:
+  - username: admin@example.com
+    display_name: admin
+    password: benchmark-only
+    user_type: administrator
+    enabled: true
+    purpose: benchmark-only 初始后台管理员；PrestaShop 后台使用邮箱作为登录名

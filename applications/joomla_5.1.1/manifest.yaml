@@ -1,0 +1,44 @@
+application:
+  name: Joomla
+  version: 5.1.1
+  type: full_web_application
+  repository: https://github.com/joomla/joomla-cms.git
+  tag: 5.1.1
+  tag_object: 089ff915f92bbd45ad36a5b3303022a1e828fce3
+  commit: 7dcf9238e9e27ef029833edec7ac4cd9eb78425b
+  frontend_repository: null
+  frontend_commit: null
+  source_checksums: source/SHA256SUMS
+  image_content_source: source/joomla-runtime
+  image_content_note: "镜像内的应用文件来自官方完整发布包 Joomla_5-1-1-Stable-Full_Package.tar.gz（解压到 source/joomla-runtime，Dockerfile 中 COPY source/joomla-runtime/），不是由 source/joomla-cms-7dcf9238.../ 的 git 源码编译得到。git 源码同版本存档在 source/ 中用于追溯，两者校验和都记录在 source/SHA256SUMS。"
+platform: linux/amd64
+runtime:
+  base_image: php:8.2-apache@sha256:e71d4502e5569f46b638c81c420d552d8776e4703c06a90775792497ab982230
+  language: PHP 8.2.33 with mysqli, PDO MySQL, intl, mbstring, XML, ZIP and GD
+  web_server: Apache HTTP Server 2.4.68 with mod_rewrite
+  database: MariaDB 11.8.6 (same container, localhost socket/127.0.0.1)
+  frontend_build_command: not applicable; Joomla full package ships compiled static assets
+  static_assets: source/joomla-runtime/media and templates
+  browser_entry: http://127.0.0.1:18211/
+  administrator_entry: http://127.0.0.1:18211/administrator/
+delivery:
+  image: asteriskax001/sop-joomla:5.1.1
+  archive: image/joomla-5.1.1-linux-amd64.tar
+  metadata: image/image.json
+  image_checksums: image/SHA256SUMS
+  all_in_one: 单镜像、单容器，内部包含 Joomla、Apache、PHP、MariaDB、数据库初始化和初始账号。
+  web_application: 镜像内提供 Joomla 真实站点和 administrator 前端，浏览器请求通过同一容器访问后端 PHP。
+  exposed_port: 18211
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data/database-seed.sql
+operations:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18211:80 asteriskax001/sop-joomla:5.1.1

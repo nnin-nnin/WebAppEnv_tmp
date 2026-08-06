@@ -1,0 +1,8 @@
+roles:
+  - name: Super Users
+    permissions: 全部站点和管理员权限
+    purpose: Joomla 内置超级用户角色
+    initial_accounts: [admin]
+  - name: Registered
+    permissions: 登录站点和访问受限内容
+    purpose: 普通用户角色

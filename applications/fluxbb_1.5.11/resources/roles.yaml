@@ -1,0 +1,14 @@
+application: FluxBB
+roles:
+  - name: Administrators
+    permissions: all forum and administration permissions
+    purpose: initial administrator role
+    initial_accounts: [admin]
+  - name: Members
+    permissions: read, create topics, reply, edit own posts, search
+    purpose: normal registered users
+    initial_accounts: []
+  - name: Guests
+    permissions: read public forum content
+    purpose: anonymous visitors
+    initial_accounts: []
