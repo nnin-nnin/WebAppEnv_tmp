@@ -55,7 +55,7 @@ PMA_URL=http://127.0.0.1:18379 PMA_USER=admin PMA_PASSWORD=benchmark-only resour
 ## 文件说明
 
 - `manifest.yaml`：应用、源码、运行时、镜像、端口和运维入口的机器可读清单。
-- `source/`：固定 commit 的 phpMyAdmin 源码、源码元数据和 SHA256 校验文件。
+- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/`：最终镜像 Dockerfile、备用 standalone Dockerfile 和单服务 Compose 配置。
 - `resources/`：账号、角色、真实登录/用户创建辅助脚本以及数据库初始 SQL。
 - `scripts/`：构建、容器入口、健康检查和重置脚本。

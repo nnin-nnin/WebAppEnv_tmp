@@ -42,7 +42,7 @@ Monica 4.1.2 是原生 Docker Compose 类型，启动方式与上面的 all-in-o
 
 - `README.md`：应用版本、镜像名称、启动命令、访问地址、初始账号和验证方式。
 - `manifest.yaml`：源码版本、运行时、镜像、资源和脚本索引。
-- `source/`：固定版本源码、来源信息和源码校验和。
+- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希，文件为 `source/source.yaml`；源码快照不随本仓库交付。
 - `docker/`：Dockerfile 与 Compose 配置，用于追溯镜像构建方式。
 - `resources/`：初始用户、角色、数据库种子、登录和注册脚本等资源。
 - `scripts/`：构建、启动、健康检查和重置等辅助脚本。

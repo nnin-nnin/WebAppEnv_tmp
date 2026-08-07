@@ -53,7 +53,7 @@ docker run -d -p 18211:80 --name joomla-5-1-1 asteriskax001/sop-joomla:5.1.1
 ## 文件说明
 
 - `manifest.yaml`：版本、固定源码、运行时、镜像、资源和运维入口。
-- `source/`：固定 commit 源码、Joomla 5.1.1 完整发布包、`source.json` 和校验和。镜像内的应用文件取自官方完整发布包（`source/joomla-runtime/`），git 源码（`source/joomla-cms-7dcf9238.../`）同版本存档用于追溯，两者校验和都在 `source/SHA256SUMS` 中。
+- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照和发布包不随本目录交付。已发布镜像内包含运行所需的应用文件。
 - `docker/`：最终 Dockerfile、standalone Dockerfile 和仅含一个 service 的可选 Compose 文件。
 - `resources/`：用户、角色、登录/注册脚本和数据库 seed。
 - `scripts/`：构建、入口、启动、健康检查和重置脚本。

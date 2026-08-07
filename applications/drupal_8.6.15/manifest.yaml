@@ -18,9 +18,8 @@ source:
   repository: https://github.com/drupal/drupal.git
   fixed_ref: 8.6.15
   immutable_commit: 91ded4b7776e05ee9633bdc1c458b41c718133e0
-  path: source/drupal-8.6.15
-  metadata: source/source.json
-  checksums: source/SHA256SUMS
+  metadata: source/source.yaml
+  availability: github_only
   snapshot_method: git_archive
   frontend_note: "Drupal core includes the browser frontend; there is no independent frontend repository."
 

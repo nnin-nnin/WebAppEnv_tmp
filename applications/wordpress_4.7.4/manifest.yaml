@@ -14,9 +14,8 @@ source:
   repository: https://github.com/WordPress/WordPress
   ref: 4.7.4
   commit: 2152a6a1ea3db59fcc626fe8129d6fc175e0df66
-  path: source/wordpress-4.7.4
-  metadata_file: source/source.json
-  checksum_file: source/SHA256SUMS
+  metadata_file: source/source.yaml
+  availability: github_only
   acquisition: fixed_commit_archive
 
 runtime:

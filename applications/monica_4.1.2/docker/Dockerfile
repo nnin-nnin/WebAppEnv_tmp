@@ -80,7 +80,7 @@ COPY docker/monica-entrypoint.sh docker/cron.sh docker/queue.sh /usr/local/bin/
 
 RUN set -eux; \
     printf '4.1.2\n' > config/.version; \
-    printf '50c266f7beb9d8fe6cd8c8929a759529275143f\n' > config/.commit; \
+    printf '50c266f7beb9d8fe6cd8c8929a759529275143f4\n' > config/.commit; \
     cp .env.example .env; \
     mkdir -p bootstrap/cache storage/logs storage/app/public storage/framework/views \
       storage/framework/cache storage/framework/sessions; \

@@ -8,9 +8,8 @@ application:
   source_commit: 80914e327e4deafe78e0813ffdba7fce8acf10ac
   independent_frontend_repository: null
   independent_frontend_commit: null
-  source_path: source/phpmyadmin-4.7.9
-  source_checksums: source/SHA256SUMS
-  source_metadata: source/source.json
+  source_metadata: source/source.yaml
+  source_availability: github_only
 
 platform:
   target: linux/amd64

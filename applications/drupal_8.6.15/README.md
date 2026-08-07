@@ -2,7 +2,7 @@
 
 本目录交付固定版本 Drupal 8.6.15 的原生多容器 Docker Compose 环境。Drupal 应用、一次性安装器和 PostgreSQL 运行在独立容器中，不是 all-in-one 单容器。
 
-源码来源为 [Drupal 官方 GitHub 仓库](https://github.com/drupal/drupal.git)，固定 commit 为 `91ded4b7776e05ee9633bdc1c458b41c718133e0`。如果源码快照不随交付物传递，可按该链接和 commit 获取；当前目录仍保留可校验的源码快照。`docker/Dockerfile` 使用固定 digest 的官方 Drupal 8.6.15 Apache 镜像作为运行时基础，并将 `source/drupal-8.6.15/` 复制进最终应用镜像。
+源码来源为 [Drupal 官方 GitHub 仓库](https://github.com/drupal/drupal.git)，固定 commit 为 `91ded4b7776e05ee9633bdc1c458b41c718133e0`，详见 `source/source.yaml`。当前轻量交付目录不包含源码快照；标准使用方式是直接拉取已发布镜像。若要重建，需在仓库外按该链接和 commit 准备源码，再使用现有 Dockerfile。
 
 ## 前置条件
 
@@ -15,7 +15,7 @@ Drupal 8.6.15、PHP 7.2 和 PostgreSQL 10 均已停止维护。本环境只用�
 
 ## 构建镜像
 
-如果需要根据本目录中的固定源码重新构建镜像，在应用目录执行：
+如果需要重新构建镜像，请先按 `source/source.yaml` 在仓库外准备固定 commit 的源码，再在应用目录执行：
 
 ```bash
 bash scripts/build.sh
@@ -24,7 +24,7 @@ bash scripts/build.sh
 构建脚本会：
 
 1. 使用固定的官方 Drupal 镜像作为基础镜像。
-2. 将 `source/drupal-8.6.15/` 写入本地镜像 `sop/drupal:8.6.15`，并同步标记为 `yorem/sop-drupal:8.6.15`。
+2. 将准备好的 Drupal 源码写入构建上下文中的 `source/drupal-8.6.15/`，再构建并标记为 `yorem/sop-drupal:8.6.15`。
 3. 拉取固定版本的 PostgreSQL 10.23 镜像。
 4. 在本机生成可选的镜像 tar 和 `image/image.json`；构建不会自动推送镜像。
 
@@ -76,10 +76,10 @@ docker compose --env-file docker/.env -f docker/compose.yaml up -d
 
 ## 验证
 
-验证源码和 Docker Hub 镜像：
+验证来源元数据和 Docker Hub 镜像：
 
 ```bash
-(cd source && sha256sum -c SHA256SUMS)
+test -s source/source.yaml
 docker pull --platform linux/amd64 yorem/sop-drupal:8.6.15
 docker pull --platform linux/amd64 postgres:10.23-bullseye
 docker image inspect yorem/sop-drupal:8.6.15 postgres:10.23-bullseye
@@ -121,7 +121,7 @@ bash scripts/reset.sh
 ## 文件说明
 
 - `manifest.yaml`：应用版本、固定源码、构建基础、Compose 服务、Docker Hub 镜像、资源和脚本索引。
-- `source/`：固定 commit 的 Drupal 源码、来源元数据和 `source/SHA256SUMS`。
+- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/Dockerfile`：从固定官方基础镜像和固定源码构建应用镜像。
 - `docker/compose.yaml`：唯一标准 Compose 入口，定义 application、installer 和 db 服务。
 - `docker/.env`：研究环境的数据库和初始账号参数。

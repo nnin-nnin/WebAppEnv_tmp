@@ -94,7 +94,7 @@ docker run -d -p 18085:80 nnin/sop-mall:1.0.3
 ## 文件说明
 
 - `manifest.yaml`：记录固定源码、运行时、all-in-one 拓扑、镜像、归档、资源和脚本索引。
-- `source/`：保存固定 commit 的 mall 后端和 mall-admin-web 前端源码快照、来源元数据和 `SHA256SUMS`。
+- `source/`：仅保存 mall 后端和 mall-admin-web 前端的 GitHub 仓库链接及固定 commit 哈希，见 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/`：保存编译阶段 Dockerfile、最终 all-in-one Dockerfile 和单服务 Compose 辅助配置。
 - `resources/`：保存用户、角色、真实登录/注册脚本、应用配置和数据库 seed。
 - `scripts/`：保存镜像构建、入口进程监督、辅助启动、健康检查和重置脚本。

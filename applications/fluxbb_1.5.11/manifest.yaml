@@ -7,7 +7,8 @@ application:
   resolved_source_commit: 3909815c00f859fd565ca9e7bdcd254dba23c585
   frontend_repository: null
   frontend_commit: null
-  source_checksum: source/SHA256SUMS
+  source_metadata: source/source.yaml
+  source_availability: github_only
 platform:
   target: linux/amd64
 runtime:

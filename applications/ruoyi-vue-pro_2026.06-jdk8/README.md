@@ -79,7 +79,7 @@ docker run -d --name ruoyi-vue-pro -p 18087:80 yorem/sop-ruoyi-vue-pro:2026.06-j
 ## 文件说明
 
 - `manifest.yaml`：记录固定源码、运行时、前端构建方式、单容器拓扑、镜像和交付命令。
-- `source/`：后端固定 commit、独立前端固定 commit、源码元数据和源码校验和。
+- `source/`：后端和独立前端的 GitHub 仓库链接及固定 commit 哈希，见 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/`：最终 all-in-one Dockerfile、兼容名称的 `standalone.Dockerfile` 和单服务 Compose 辅助配置；Compose 不是启动前提。
 - `resources/`：用户、角色、应用配置、真实登录/注册脚本和 MySQL 初始 seed。
 - `scripts/`：镜像构建、容器入口、辅助启动、健康检查和重置脚本。

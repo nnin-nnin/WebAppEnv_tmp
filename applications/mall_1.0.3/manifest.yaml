@@ -13,14 +13,12 @@ source:
     repository: https://github.com/macrozheng/mall
     ref: dd617ac3fe89c8083af56bee3364b1e812cda3ed
     commit: dd617ac3fe89c8083af56bee3364b1e812cda3ed
-    path: source/mall-1.0.3
   frontend:
     repository: https://github.com/macrozheng/mall-admin-web
     ref: v1.0.0
     commit: 2e4a79f10ed55bda7e5452026e76b6f85e87e053
-    path: source/mall-admin-web-1.0.0
-  metadata: source/source.json
-  checksum_file: source/SHA256SUMS
+  metadata: source/source.yaml
+  availability: github_only
   acquisition: fixed_commit_archives
 
 runtime:
@@ -69,7 +67,7 @@ resources:
   application_config: resources/application-all-in-one.yml
   login: resources/login.sh
   register: resources/register.sh
-  frontend_source: source/mall-admin-web-1.0.0
+  frontend_source_metadata: source/source.yaml
 
 scripts:
   build: scripts/build.sh

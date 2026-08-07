@@ -49,7 +49,7 @@ scripts/reset.sh fluxbb-1.5.11
 ## 文件说明
 
 - `manifest.yaml`：应用、源码、运行时、组件、镜像和脚本元数据。
-- `source/`：固定 FluxBB 源码、源码获取记录和校验和。
+- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/`：最终 Dockerfile、辅助 standalone Dockerfile 和单服务 Compose 配置。
 - `resources/`：账号、角色、真实登录/注册脚本；初始化数据库已作为镜像内预初始化数据交付。
 - `scripts/`：构建、单容器入口、初始化、健康检查、启动辅助和重置脚本。

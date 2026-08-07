@@ -99,10 +99,7 @@ docker compose -f docker/compose.yaml up -d
 ├── README.md
 ├── manifest.yaml
 ├── source/
-│   ├── <fixed-backend-source-directory>/
-│   ├── <fixed-frontend-source-directory>/  # 仅当应用需要独立前端时
-│   ├── source.json
-│   └── SHA256SUMS
+│   └── source.yaml  # GitHub 仓库链接和固定 commit 哈希
 ├── resources/
 │   ├── users.yaml
 │   ├── roles.yaml
@@ -168,12 +165,11 @@ README 必须明确：
 
 四、源码和服务来源要求
 
-1. 获取后端指定 commit 的源码；
+1. 确定后端指定 commit 的 GitHub 仓库链接和哈希；
 2. 不使用浮动分支、latest、当前主分支或未记录版本；
-3. 将实际运行所需的源码保存到 source/；
-4. 记录仓库、固定 ref、immutable commit、获取时间、源码路径和校验值；
-5. 生成 source/SHA256SUMS；
-6. 如果前端来自独立仓库，必须保存前端固定 commit 和校验和；
+3. 将 GitHub 仓库链接和 immutable commit 写入 `source/source.yaml`；
+4. 不将完整源码快照或逐文件校验清单提交到交付仓库；
+5. 如果前端来自独立仓库，必须在 `source/source.yaml` 中记录前端固定仓库和 commit；
 7. 如果应用依赖官方或第三方基础镜像，记录每个 image 的仓库、tag、digest、平台和用途；
 8. 如果 Compose 直接使用官方数据库、Redis 或其他镜像，不能只记录 tag，必须记录
    digest 或可验证的固定版本信息；
@@ -183,8 +179,8 @@ README 必须明确：
 
 如果官方项目将前端放在独立仓库：
 
-1. 必须为前端选择并记录固定 commit；
-2. 必须将前端源码保存到 source/并生成校验和；
+1. 必须为前端选择并记录固定 GitHub 仓库和 commit；
+2. 不将前端源码快照提交到 `source/`；
 3. 必须在构建阶段生成前端静态资源，或者使用已验证的固定前端镜像；
 4. 必须让最终 Compose 环境提供真实登录页和登录后的业务页面；
 5. 前端 API 地址必须指向 Compose 网络中的应用服务，而不是宿主机临时地址；
@@ -461,7 +457,7 @@ manifest 中必须明确说明：
 17. 重启 Compose 项目后应用和账号仍然可用；
 18. 命名卷可以保留应用和数据库数据；
 19. `scripts/reset.sh` 只影响当前 Compose 项目；
-20. image/SHA256SUMS 和 source/SHA256SUMS 校验通过；
+20. `image/SHA256SUMS` 校验通过，且 `source/source.yaml` 中的链接和 commit 哈希完整；
 21. Compose 中没有 `latest`、未记录 digest 或本机绝对路径；
 22. Compose 中没有 all-in-one 进程管理、独立数据库替换或外部宿主机数据库依赖；
 23. 最终目录中没有旧的双镜像引用或无关应用镜像；

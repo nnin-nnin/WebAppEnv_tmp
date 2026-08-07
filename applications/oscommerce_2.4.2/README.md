@@ -52,7 +52,7 @@ scripts/reset.sh --yes oscommerce-242
 ## 文件说明
 
 - `manifest.yaml`：版本、固定 commit、运行时、all-in-one 组件、入口、归档和脚本元数据。
-- `source/`：固定 commit 的官方源码、`source.json` 和 `SHA256SUMS`。
+- `source/`：仅保存官方 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/`：最终镜像 Dockerfile、同一构建契约的 `standalone.Dockerfile` 和单 service 辅助 Compose 配置。
 - `resources/`：用户、角色、真实登录/注册脚本，以及固定源码的商城初始数据 seed。
 - `scripts/`：构建、入口、初始化、启动、健康检查和重置运维脚本。
@@ -67,4 +67,3 @@ bash scripts/build.sh
 ```
 
 构建只导出 `asteriskax001/sop-oscommerce:2.4.2`，归档为 `image/oscommerce-2.4.2-linux-amd64.tar`。镜像运行时不下载源码、依赖或核心远程资源；仓库中原有的可选 Cookie Consent 代码含有外链，但默认商城核心模板不加载该可选组件。
-

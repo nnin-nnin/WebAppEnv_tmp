@@ -13,10 +13,10 @@ docker load -i image/prestashop-9.1.4-linux-amd64.tar
 docker run -d -p 18401:80 asteriskax001/sop-prestashop:9.1.4
 ```
 
-如需核对源码校验和，注意 `source/SHA256SUMS` 中的路径相对于 `source/prestashop/`：
+源码来源和固定 commit 记录在 `source/source.yaml`；当前轻量交付目录不包含源码快照，标准使用方式不需要源码校验：
 
 ```bash
-(cd source/prestashop && sha256sum --check ../SHA256SUMS)
+cat source/source.yaml
 ```
 
 接收者只需要执行 `docker load` 和 `docker run`。镜像内部已经包含应用、Composer 依赖、编译后的前端资源、MariaDB、数据库初始化和启动逻辑，不需要执行 `build.sh`、Docker Compose、bootstrap 脚本或 Web Installer。
@@ -61,7 +61,7 @@ docker run -d -p 18401:80 asteriskax001/sop-prestashop:9.1.4
 ## 文件说明
 
 - `manifest.yaml`：应用、固定源码、运行时、组件、镜像和脚本元数据。
-- `source/`：固定 commit 的 PrestaShop 源码、源码元数据和校验和。
+- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/`：最终 Dockerfile、辅助 Dockerfile 和单 service Compose 配置。
 - `resources/`：用户、角色、真实登录/注册脚本；应用本身的数据库初始数据由官方安装器内置并在镜像中随源码交付，因此没有额外 seed SQL。
 - `scripts/`：构建、入口、启动、健康检查和重置运维脚本。

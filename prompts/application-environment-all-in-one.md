@@ -74,10 +74,7 @@ docker run -d -p [HOST_PORT]:80 [IMAGE_NAME]:[VERSION]
 ├── README.md
 ├── manifest.yaml
 ├── source/
-│   ├── [fixed-backend-source-directory]/
-│   ├── [fixed-frontend-source-directory]/  # 仅当应用需要独立前端时
-│   ├── source.json
-│   └── SHA256SUMS
+│   └── source.yaml  # GitHub 仓库链接和固定 commit 哈希
 ├── resources/
 │   ├── users.yaml
 │   ├── roles.yaml
@@ -128,19 +125,18 @@ README 的启动章节必须明确：接收者只需要 `docker load` 和 `docke
 
 三、源码要求
 
-1. 获取指定仓库中固定 commit 的源码；
+1. 确定指定仓库中固定 commit 的 GitHub 链接和哈希；
 2. 不使用浮动分支、latest、当前主分支或未记录版本；
-3. 将源码保存到 source/；
-4. 记录仓库、版本、commit、获取时间、源码路径和校验值；
-5. 生成 source/SHA256SUMS；
-6. 应用运行所需的依赖应在构建镜像时安装完成；
+3. 将 GitHub 仓库链接和固定 commit 写入 `source/source.yaml`；
+4. 不将源码快照或逐文件校验清单提交到交付仓库；
+5. 应用运行所需的依赖应在已发布镜像中准备完成；
 7. 容器运行时不得联网下载依赖、源码或初始化组件；
 8. 不要将本机路径写入构建文件或 manifest。
 
 如果官方项目将前端放在独立仓库：
 
-1. 必须为前端选择并记录固定 commit；
-2. 必须将前端源码保存到 `source/` 并生成校验和；
+1. 必须为前端选择并记录固定 GitHub 仓库和 commit；
+2. 不将前端源码快照提交到 `source/`；
 3. 必须在构建阶段生成前端静态资源；
 4. 必须把前端静态资源放入最终镜像，并配置 Web 服务器提供服务；
 5. 必须将前端 API 地址配置为当前 all-in-one 容器中的后端地址；

@@ -63,7 +63,10 @@ for expected_entry in \
     exit 1
   }
 done
-sha256sum --check --quiet "$project_dir/source/SHA256SUMS"
+if [[ ! -d "$project_dir/source/ruoyi-vue-pro-2026.06-jdk8" || ! -d "$project_dir/source/yudao-ui-admin-vue3-2026.06" ]]; then
+  echo "当前轻量仓库不包含源码快照；请按 source/source.yaml 在单独的构建工作目录准备固定源码后再执行构建。" >&2
+  exit 2
+fi
 
 docker build \
   --platform linux/amd64 \

@@ -2,7 +2,7 @@
 
 本目录交付 Monica 4.1.2 的完整 Web 应用环境。后端源码固定为
 `https://github.com/monicahq/monica.git` commit
-`50c266f7beb9d8fe6cd8c8929a759529275143f`，部署模式是
+`50c266f7beb9d8fe6cd8c8929a759529275143f4`，部署模式是
 `native_compose`。
 
 这是原生多容器 Docker Compose 环境，不是 all-in-one 单容器环境。应用、Nginx
@@ -176,7 +176,7 @@ Redis、MailHog 使用固定 tag 的官方镜像。所有最终服务均声明 `
 
 - `manifest.yaml`：应用类型、native Compose 拓扑、固定源码、服务、镜像、卷、脚本、
   交付方式、差异和残余风险。
-- `source/`：固定 commit 的 Monica 后端源码、来源元数据和 `source/SHA256SUMS`。
+- `source/`：仅保存 Monica 相关 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
   Monica 的前端与后端同仓库，没有独立前端仓库。
 - `docker/`：最终唯一 Compose 文件、固定源码构建 Dockerfile、Nginx 配置和官方
   4.x entrypoint/cron/queue 脚本。

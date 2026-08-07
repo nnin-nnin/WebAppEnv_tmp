@@ -34,7 +34,7 @@ official_compose:
   development:
     repository: https://github.com/monicahq/monica.git
     file: docker-compose.dev.yml
-    commit: 50c266f7beb9d8fe6cd8c8929a759529275143f
+    commit: 50c266f7beb9d8fe6cd8c8929a759529275143f4
     status: development_only
   full_4x:
     repository: https://github.com/monicahq/docker.git
@@ -46,16 +46,16 @@ official_compose:
 source:
   backend:
     repository: https://github.com/monicahq/monica.git
-    ref: 50c266f7beb9d8fe6cd8c8929a759529275143f
-    commit: 50c266f7beb9d8fe6cd8c8929a759529275143f
+    ref: 50c266f7beb9d8fe6cd8c8929a759529275143f4
+    commit: 50c266f7beb9d8fe6cd8c8929a759529275143f4
     path: source/monica-4.1.2
   frontend:
     repository: null
     commit: null
     path: null
     note: "Frontend is in the fixed backend repository and is built with the pinned package lock."
-  metadata: source/source.json
-  checksum_file: source/SHA256SUMS
+  metadata: source/source.yaml
+  availability: github_only
   acquisition: fixed_commit_git_archive
 
 runtime:

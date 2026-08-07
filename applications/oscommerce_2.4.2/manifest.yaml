@@ -6,8 +6,8 @@ application:
   source_commit: "99fbb604bd1de8d1f13c792d378fd1952f64ca61"
   frontend_repository: null
   frontend_commit: null
-  source_directory: "source/oscommerce2"
-  source_checksums: "source/SHA256SUMS"
+  source_metadata: "source/source.yaml"
+  source_availability: "github_only"
   retrieved_at: "2026-08-05T00:00:00+08:00"
 platform:
   target: "linux/amd64"

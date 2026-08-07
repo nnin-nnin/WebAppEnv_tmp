@@ -9,9 +9,8 @@ source:
   repository: https://github.com/atrocore/skeleton-pim
   ref: master
   commit: 489afeaf17a7332b351122f6f071cc70ea531b22
-  path: source/atropim-489afea
-  metadata_file: source/source.json
-  checksum_file: source/SHA256SUMS
+  metadata_file: source/source.yaml
+  availability: github_only
   acquisition: fixed_commit_archive
   selection: last public skeleton-pim commit before the paper artifact's PHP 7.4-era dependency model changed
 

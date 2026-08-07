@@ -55,7 +55,7 @@ docker run -d --name hotcrp -p 18403:80 -v hotcrp-db:/var/lib/mysql -v hotcrp-do
 ## 文件说明
 
 - `manifest.yaml`：应用版本、固定源码、运行时、镜像和运维入口的机器可读清单。
-- `source/`：固定 commit 的 HotCRP 源码、源码元数据和校验和。
+- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/`：实际 Dockerfile、兼容用 standalone Dockerfile 和单服务 Compose 辅助配置。
 - `resources/`：用户、角色、真实登录/用户创建验证脚本以及初始配置和数据库 seed。
 - `scripts/`：镜像构建、容器入口、健康检查和重置脚本。

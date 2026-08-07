@@ -43,7 +43,7 @@ docker exec espocrm /usr/local/bin/espocrm-healthcheck
 ## 文件说明
 
 - `manifest.yaml`：固定源码、运行时、镜像和验收元数据。
-- `source/`：固定 commit 的 EspoCRM 源码及校验清单。
+- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
 - `docker/`：最终 Dockerfile、辅助 Dockerfile 和单服务 Compose 配置。
 - `resources/`：用户、角色以及登录/创建用户脚本；本版本不需要额外 seed 文件。
 - `scripts/`：构建、入口、启动、健康检查和重置运维脚本。

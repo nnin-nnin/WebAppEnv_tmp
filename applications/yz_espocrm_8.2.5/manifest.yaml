@@ -7,7 +7,8 @@ source_commit_tag: 8.2.5
 source_tag_object: 06be47c3488c7c369ee879b920ec4c3fc4acbb5d
 frontend_repository: null
 frontend_commit: null
-source_checksum_file: source/SHA256SUMS
+source_metadata_file: source/source.yaml
+source_availability: github_only
 target_platform: linux/amd64
 runtime:
   base_image: php:8.3-apache@sha256:973e11c67c1c81e7811077a0efa0f910cf903af0ba972cab6ba0c0e15913c771

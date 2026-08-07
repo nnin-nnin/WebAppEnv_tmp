@@ -8,9 +8,8 @@ source:
   commit: 4f7653032a0605d8dfc16515a5f3aea62dcef9b1
   frontend_repository: null
   frontend_commit: null
-  path: source/prestashop
-  checksum_file: source/SHA256SUMS
-  metadata_file: source/source.json
+  metadata_file: source/source.yaml
+  availability: github_only
 build:
   platform: linux/amd64
   base_image: php:8.3.33-apache-bookworm

@@ -11,8 +11,8 @@ source:
   repository: https://github.com/espocrm/espocrm
   ref: 8.2.5
   commit: 06be47c3488c7c369ee879b920ec4c3fc4acbb5d
-  path: source/espocrm-8.2.5
-  checksum_file: source/SHA256SUMS
+  metadata_file: source/source.yaml
+  availability: github_only
   acquisition: fixed_commit_archive
 
 runtime:

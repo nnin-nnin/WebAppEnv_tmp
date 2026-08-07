@@ -12,14 +12,12 @@ source:
     repository: https://github.com/YunaiV/ruoyi-vue-pro.git
     ref: v2026.06(jdk8/11)
     commit: 23c8c608af9da8f08bca5c62d096d4253bcce93f
-    path: source/ruoyi-vue-pro-2026.06-jdk8
   frontend:
     repository: https://github.com/yudaocode/yudao-ui-admin-vue3.git
     ref: v2026.06
     commit: 94459770d622303802c465510b1124ab794a6338
-    path: source/yudao-ui-admin-vue3-2026.06
-  metadata: source/source.json
-  checksum_file: source/SHA256SUMS
+  metadata: source/source.yaml
+  availability: github_only
   acquisition: fixed_commit_git_archives
 
 runtime:

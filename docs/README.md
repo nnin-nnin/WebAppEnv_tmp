@@ -27,7 +27,7 @@
 | --- | --- |
 | `README.md` | 应用版本、启动命令、访问地址、账号和验证方式 |
 | `manifest.yaml` | 源码版本、运行时、镜像、资源和脚本索引 |
-| `source/` | 固定版本源码、来源信息和源码校验和 |
+| `source/` | GitHub 仓库链接和固定 commit 哈希（`source/source.yaml`）；不保存源码快照 |
 | `resources/` | 初始数据、用户、角色、登录和注册脚本 |
 | `docker/` | Dockerfile 和用于调试或追溯的 Compose 配置 |
 | `scripts/` | 构建、容器入口、健康检查和重置脚本 |
@@ -118,7 +118,7 @@ python3 code/codex_environment_runner.py \
 
 - `README.md` 是否写明版本、启动命令、访问地址和账号；
 - `manifest.yaml` 中的版本、源码 commit、镜像名和端口是否与目录内容一致；
-- `source/` 是否有固定版本源码和校验文件；
+- `source/source.yaml` 是否记录固定版本的 GitHub 仓库和 commit 哈希；
 - `resources/` 是否有初始数据、账号和角色信息；
 - `scripts/` 是否有健康检查和重置脚本；
 - `image/` 是否有最终镜像 tar、元数据和 `SHA256SUMS`。
@@ -201,7 +201,7 @@ cat resources/users.yaml
 
 - `README.md` 中的版本是 EspoCRM 8.2.5；
 - `manifest.yaml` 中的源码 commit、镜像名和端口与 README 一致；
-- `source/` 中存在固定版本源码和 `SHA256SUMS`；
+- `source/source.yaml` 中存在固定版本的 GitHub 仓库和 commit 哈希；
 - `resources/users.yaml` 中存在 `admin` 账号；
 - `scripts/healthcheck.sh` 和 `resources/login.sh` 存在；
 - `image/` 中存在最终镜像和校验文件。

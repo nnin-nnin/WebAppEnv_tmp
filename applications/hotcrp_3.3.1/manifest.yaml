@@ -6,8 +6,8 @@ application:
   source_commit: 718e6f4be324c3bd4a7515b894665d69407780c4
   frontend_repository: null
   frontend_commit: null
-  source_path: source/hotcrp-718e6f4be3
-  source_checksums: source/SHA256SUMS
+  source_metadata: source/source.yaml
+  source_availability: github_only
 platform: linux/amd64
 runtime:
   language: PHP 8.3.33
