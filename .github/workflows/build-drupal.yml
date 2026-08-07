@@ -35,8 +35,8 @@ jobs:
       - name: Read fixed source metadata
         run: |
           metadata="$APPLICATION_DIR/source/source.yaml"
-          source_repository="$(awk '/repository:/ { print $2; exit }' "$metadata")"
-          source_commit="$(awk '/commit:/ { print $2; exit }' "$metadata")"
+          source_repository="$(awk '$1 == "-" && $2 == "repository:" { print $3; exit }' "$metadata")"
+          source_commit="$(awk '$1 == "commit:" { print $2; exit }' "$metadata")"
           test -n "$source_repository"
           test -n "$source_commit"
           echo "SOURCE_REPOSITORY=$source_repository" >> "$GITHUB_ENV"
