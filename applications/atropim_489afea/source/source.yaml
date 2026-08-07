@@ -1,0 +1,13 @@
+sources:
+  - repository: https://github.com/atrocore/skeleton-pim
+    commit: 489afeaf17a7332b351122f6f071cc70ea531b22
+  - repository: https://github.com/atrocore/atrocore
+    commit: d44602bbe8695fb1ae1c12586231c4acd527eb03
+  - repository: https://github.com/atrocore/atropim
+    commit: 51f220d3f27da2c579338fd2ac4ab3ac0d6ed756
+  - repository: https://github.com/atrocore/atrodam
+    commit: 5425a4d4bd1c628cec20170920d2a46d7bc18182
+  - repository: https://github.com/atrocore/export
+    commit: 0c4b4dae0cdafaef0aa7df7f5f3c034d2ef16c84
+  - repository: https://github.com/atrocore/import
+    commit: 5776ec58142b6ba75085302ba26b6c7a8f34ec48

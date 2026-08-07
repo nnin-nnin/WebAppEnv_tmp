@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/phpmyadmin/phpmyadmin.git
+    commit: 80914e327e4deafe78e0813ffdba7fce8acf10ac

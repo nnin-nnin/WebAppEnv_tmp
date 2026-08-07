@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/PrestaShop/PrestaShop
+    commit: 4f7653032a0605d8dfc16515a5f3aea62dcef9b1

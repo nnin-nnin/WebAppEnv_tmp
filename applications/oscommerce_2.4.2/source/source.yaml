@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/osCommerce/oscommerce2
+    commit: 99fbb604bd1de8d1f13c792d378fd1952f64ca61

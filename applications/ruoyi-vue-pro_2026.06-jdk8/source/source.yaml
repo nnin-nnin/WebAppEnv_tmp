@@ -1,0 +1,5 @@
+sources:
+  - repository: https://github.com/YunaiV/ruoyi-vue-pro.git
+    commit: 23c8c608af9da8f08bca5c62d096d4253bcce93f
+  - repository: https://github.com/yudaocode/yudao-ui-admin-vue3.git
+    commit: 94459770d622303802c465510b1124ab794a6338

@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/joomla/joomla-cms.git
+    commit: 7dcf9238e9e27ef029833edec7ac4cd9eb78425b

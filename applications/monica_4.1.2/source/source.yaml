@@ -1,0 +1,5 @@
+sources:
+  - repository: https://github.com/monicahq/monica.git
+    commit: 50c266f7beb9d8fe6cd8c8929a759529275143f4
+  - repository: https://github.com/monicahq/docker.git
+    commit: 7ffc74385e243e2dac4d7013a3240c0ae1229f05

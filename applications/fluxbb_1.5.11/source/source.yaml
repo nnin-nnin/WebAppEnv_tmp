@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/fluxbb/fluxbb.git
+    commit: 3909815c00f859fd565ca9e7bdcd254dba23c585

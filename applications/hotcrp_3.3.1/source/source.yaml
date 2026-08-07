@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/kohler/hotcrp
+    commit: 718e6f4be324c3bd4a7515b894665d69407780c4
