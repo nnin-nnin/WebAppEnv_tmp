@@ -4,16 +4,14 @@
 
 ## 启动
 
-从仓库根目录进入本目录并校验归档，然后只需加载和运行镜像：
+从应用环境仓库根目录执行：
 
 ```bash
-cd yz_espocrm_8.2.5
-(cd image && sha256sum -c SHA256SUMS)
-docker load -i image/espocrm-8.2.5-linux-amd64.tar
+cd applications/espocrm/8.2.5/yz-rebuild
 docker run -d --name espocrm -p 18292:80 -v espocrm-data:/var/www/html/data -v espocrm-db:/var/lib/mysql -v espocrm-custom:/var/www/html/custom asteriskax001/sop-espocrm:8.2.5
 ```
 
-接收者不需要执行 `build.sh`、Compose、bootstrap、Web Installer 或数据库脚本；镜像入口会自动启动 MariaDB、建库、建表和初始化管理员。
+接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。不需要执行 `build.sh`、Compose、bootstrap、Web Installer 或数据库脚本；镜像入口会自动启动 MariaDB、建库、建表和初始化管理员。
 
 ## 访问和账号
 
@@ -47,4 +45,4 @@ docker exec espocrm /usr/local/bin/espocrm-healthcheck
 - `docker/`：最终 Dockerfile、辅助 Dockerfile 和单服务 Compose 配置。
 - `resources/`：用户、角色以及登录/创建用户脚本；本版本不需要额外 seed 文件。
 - `scripts/`：构建、入口、启动、健康检查和重置运维脚本。
-- `image/`：最终 all-in-one 镜像 tar、元数据和 SHA256 校验文件。
+- `image/`：仅保存镜像元数据 `image.json`；镜像本体从 Docker Hub 获取，tar 和校验和不提交到仓库。

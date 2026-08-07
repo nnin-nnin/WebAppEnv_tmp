@@ -1,0 +1,13 @@
+services:
+  application:
+    image: asteriskax001/sop-nextcloud:29.0.1
+    ports:
+      - "18522:80"
+    volumes:
+      - nextcloud-data:/var/www/html/data
+      - nextcloud-db:/var/lib/mysql
+
+volumes:
+  nextcloud-data:
+  nextcloud-db:
+

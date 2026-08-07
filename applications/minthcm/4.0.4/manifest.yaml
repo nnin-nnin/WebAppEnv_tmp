@@ -1,0 +1,61 @@
+application:
+  name: MintHCM
+  version: "4.0.4"
+  type: complete-web-application
+  description: 单镜像、单容器、内部包含应用服务和数据库服务的 all-in-one 环境；镜像内包含真实 Vue 前端静态资源。
+
+source:
+  repository: https://github.com/minthcm/minthcm.git
+  commit: e821f829d64ad1eaea8b98f04ad2891dfbe282e8
+  tag: 4.0.4
+  frontend:
+    repository: null
+    commit: null
+    build_command: npm ci --no-audit --no-fund && npm run build
+    static_directory: vue/dist
+    browser_entrypoint: /
+    api_base: same-origin relative /api/* within the all-in-one container
+
+platform: linux/amd64
+runtime:
+  php: "8.0"
+  node_build: "16"
+  web_server: Apache 2.4 with mod_rewrite
+  database: MariaDB server (Debian Bullseye package)
+  search: Elasticsearch 7.9.3
+  database_host: 127.0.0.1
+
+network:
+  container_port: 80
+  host_port: 18520
+
+image:
+  name: asteriskax001/sop-minthcm:4.0.4
+  all_in_one: true
+  components:
+    - MintHCM 4.0.4 backend and fixed source
+    - MintHCM Vue frontend static bundle
+    - PHP 8.0 runtime and Apache
+    - MariaDB database service
+    - Elasticsearch 7.9.3 service
+    - automatic idempotent database and application initialization
+  metadata: image/image.json
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data/
+  credentials: 受控渠道保存；不在 manifest 中记录明文密码
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  container_healthcheck: scripts/healthcheck-container.sh
+  reset: scripts/reset.sh
+
+recommended_run: docker run -d -p 18520:80 asteriskax001/sop-minthcm:4.0.4
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

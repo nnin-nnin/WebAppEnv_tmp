@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/wikimedia/mediawiki
+    commit: 36da63d008b7a2f9de929113b99bc7059831cb90

@@ -1,0 +1,8 @@
+.git
+.git/**
+image/*.tar
+image/image.json
+source/.git
+source/.git/**
+source/limesurvey-6.5.3/.git
+**/.DS_Store

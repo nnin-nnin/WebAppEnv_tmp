@@ -1,0 +1,14 @@
+services:
+  application:
+    image: asteriskax001/sop-mautic:5.0.4
+    ports:
+      - "18518:80"
+    volumes:
+      - application-data:/var/www/html/var
+      - application-media:/var/www/html/media/files
+      - application-db:/var/lib/mysql
+
+volumes:
+  application-data:
+  application-media:
+  application-db:

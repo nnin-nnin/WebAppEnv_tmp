@@ -1,0 +1,10 @@
+application: Mautic
+initial_users:
+  - username: admin
+    password: WcMautic!26-dF8qN4X
+    user_type: administrator
+    enabled: true
+    purpose: 应用初始化与首次登录
+ordinary_user_creation:
+  method: Mautic HTTP API POST /api/users/new; register.sh ensures the non-administrator Sales Team role exists
+  credential: 使用管理员 API Basic Auth；新用户密码由调用者通过环境变量提供

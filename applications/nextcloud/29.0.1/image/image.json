@@ -1,0 +1,97 @@
+[
+    {
+        "Id": "sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19",
+        "RepoTags": [
+            "asteriskax001/sop-nextcloud:29.0.1",
+            "nnin/sop-nextcloud:29.0.1"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-nextcloud@sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19",
+            "nnin/sop-nextcloud@sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T18:33:39.176371173+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=39B641343D8C104B2B146DC3F9C39DC0B9698544 E60913E4DF209907D8E30D96659A97C9CF2A795A 1198C0117593497A5EC5C199286AF1F9897469DC",
+                "PHP_VERSION=8.2.33",
+                "PHP_URL=https://www.php.net/distributions/php-8.2.33.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.2.33.tar.xz.asc",
+                "PHP_SHA256=fbdeace9b38220436a4c8fd79b900df92878151db145e641750743a283b514c1",
+                "DEBIAN_FRONTEND=noninteractive",
+                "APACHE_DOCUMENT_ROOT=/var/www/html",
+                "NEXTCLOUD_DB_PASSWORD=nc-local-db-29-0-1"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/nextcloud-entrypoint.sh"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/data": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "curl --fail --silent http://127.0.0.1/status.php | grep -q '\\\"installed\\\":true'"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 30000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 490879934,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6f94328331290cbd81edab450664d42da7b64c191416c9346cd5d28c84f76035",
+                "sha256:520cef94fddd7bce34543fc2033aff94b69feadd61aaeb07552b06f37729e343",
+                "sha256:44a4e125ba2055d0e90637d1cb6089ba35e1c941d546b47df9d607f5c3d53d87",
+                "sha256:4e8cef09369d33641e18ee9597617c7de06ce63ed8d436f87d44ef6fb08fcecd",
+                "sha256:29481f3048494ec904536fa10f5ee1527f8399dd5f1ae1c7eb965c25dd34872b",
+                "sha256:f25aab00e164407ac81d6bd0b0d5ee75dd515c9fb547512bd321afbfdb1d6f40",
+                "sha256:ab2f8a3c92bd945e8985ffd1f224a12de0a71184a93cbeb43fb8b3278b5596f0",
+                "sha256:6868d6efb32fb7b237810d84f7d4c9ebcdafa3482eafc6f3fc256b8ff36397d6",
+                "sha256:d03c82b32e206f498190d898a674c54eb9f7f32de2aae7b5c6baa6e0a5dd1374",
+                "sha256:debf45f7f6315881f64a807304359403b9354ea0afc256fb175bbd4a0f7fc411",
+                "sha256:43a640568f6eb7134f0e1ddbcec05ca9ced3fdd228d3abf5f0d0b0fdf0003e63",
+                "sha256:0948ecfffff16fd5669c2103fb34e95274b8f8e5fba07c65598c4dd4ee16ae1a",
+                "sha256:cb86faa0f299836de83b904c7cacb295c7ae592bfecf5395857de1f7b3081220",
+                "sha256:7e32378fe82e6f28d9ad8445b0eb028801db24a0edfb1720c1f6c471c3524511",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:16caa1813c037c9d4dd69259be8de144f6a4751b42c8c429eda2d189abba1453",
+                "sha256:7bb955fdd0c84b9c2e7fa03da30edcbbcc677ed97dae7c1fd06dc634eefc7f4d",
+                "sha256:d6e9849a55e99ad5d2ca5f6058d8e066eef171af88984693719f3ca7f927e681",
+                "sha256:1ad7b19908f67ffb5b923e5ca365f9cb0aded978fb401b74adf9ae424bddd4b1",
+                "sha256:20c6d6ef59dcd1389727351a35361aff05558ab92220019ff18aa820871aa9b4"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-07T05:46:16.251833406Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-nextcloud:29.0.1",
+                "org.opencontainers.image.ref.name": "29.0.1"
+            }
+        }
+    }
+]

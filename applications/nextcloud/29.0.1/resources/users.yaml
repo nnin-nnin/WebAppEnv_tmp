@@ -1,0 +1,13 @@
+application: Nextcloud
+users:
+  - username: admin
+    password: WcNext!26-cR7vK2P
+    user_type: administrator
+    enabled: true
+    purpose: Initial administrator for application initialization and dynamic acceptance.
+  - username: acceptance-user
+    credentials: created-during-acceptance
+    user_type: regular
+    enabled: true
+    purpose: Example ordinary user created through the verified OCS user-management API.
+

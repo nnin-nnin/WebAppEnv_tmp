@@ -1,0 +1,10 @@
+application: MintHCM
+roles:
+  - name: System Administrator
+    permissions: MintHCM 全部模块和系统配置权限
+    purpose: 管理应用、用户、角色和系统设置
+    relation: 初始 admin 账号
+  - name: Regular User
+    permissions: 按 MintHCM 用户配置和模块 ACL 授权
+    purpose: 普通业务用户
+    relation: register.sh 创建的用户默认不是管理员

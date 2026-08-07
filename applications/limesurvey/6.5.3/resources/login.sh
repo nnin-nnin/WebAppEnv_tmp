@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+base_url="${LIMESURVEY_URL:-http://127.0.0.1:18517}"
+base_url="${base_url%/}"
+username="${LIMESURVEY_USERNAME:-admin}"
+: "${LIMESURVEY_PASSWORD:?请通过受控环境变量 LIMESURVEY_PASSWORD 提供密码}"
+
+tmp_dir="$(mktemp -d)"
+trap 'rm -rf "$tmp_dir"' EXIT
+curl --fail --silent --show-error --location --max-time 15 \
+    --cookie-jar "$tmp_dir/cookies" --output "$tmp_dir/login.html" \
+    "$base_url/index.php?r=admin/authentication/sa/login"
+csrf_token="$(grep -Eo 'value="[^"]+" name="YII_CSRF_TOKEN"' "$tmp_dir/login.html" | sed -E 's/^value="([^"]+)".*/\1/' | head -n 1)"
+[[ -n "$csrf_token" ]] || { echo 'LimeSurvey 登录页面缺少 CSRF token' >&2; exit 1; }
+status="$(curl --silent --show-error --max-time 15 --location \
+    --cookie "$tmp_dir/cookies" --cookie-jar "$tmp_dir/cookies" \
+    --output "$tmp_dir/result.html" --write-out '%{http_code}' \
+    --request POST "$base_url/index.php?r=admin/authentication/sa/login" \
+    --data-urlencode "YII_CSRF_TOKEN=$csrf_token" \
+    --data-urlencode "user=$username" --data-urlencode "password=$LIMESURVEY_PASSWORD" \
+    --data-urlencode 'authMethod=Authdb' --data-urlencode 'action=login' \
+    --data-urlencode 'login_submit=login' --data-urlencode 'loginlang=en')"
+# 原实现没有 --location，POST 拿到的是 302 空 body，所有否定判定真空通过，
+# 任何密码都会判定成功。现在跟随重定向，并要求出现登录后才有的登出入口。
+if [[ "$status" != 2* ]] || ! grep -q 'authentication/sa/logout' "$tmp_dir/result.html" \
+   || grep -Eiq 'Invalid username|Invalid password|Authentication failed' "$tmp_dir/result.html"; then
+    echo "LimeSurvey 登录失败（HTTP $status）" >&2
+    exit 1
+fi
+echo "LimeSurvey 登录成功：$username"

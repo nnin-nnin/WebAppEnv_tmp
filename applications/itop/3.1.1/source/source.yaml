@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/Combodo/iTop
+    commit: be699b4358b253d34835f763316877a66e1ba072

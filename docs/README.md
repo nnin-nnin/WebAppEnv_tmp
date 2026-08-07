@@ -4,16 +4,16 @@
 
 本项目面向 Web 安全研究，收集论文或研究任务中使用的真实 Web 应用，并将指定版本构造成固定、可验证的运行环境。
 
-每个应用版本都对应一个独立目录。目录中同时保存固定版本源码、Docker 构建文件、初始账号和数据、验证脚本，以及已经构建好的 all-in-one Docker 镜像。
+每个应用版本都对应一个独立目录。目录中保存固定源码的仓库链接和 commit 哈希、Docker 构建文件、初始账号和数据、验证脚本，以及最终 all-in-one 镜像的元数据；源码快照和镜像本体不提交到本仓库。
 
-交付后的使用方式是：接收者从 Docker Hub 拉取镜像，或从 `image/` 导入镜像，然后直接运行一个容器，访问真实 Web 应用并完成登录验证。
+交付后的使用方式是：接收者按应用 README 中的 `docker run` 命令直接运行一个容器，Docker 会自动从 Docker Hub 拉取镜像，然后访问真实 Web 应用并完成登录验证。
 
 ## 2. 目标产物
 
-每个应用版本的目录结构如下：
+每个应用版本对应一个目录，路径为 `applications/<应用名>/<版本>/`；同一版本存在多套独立构建时再加一层变体目录，例如 `applications/espocrm/8.2.5/yz-rebuild/`。
 
 ```text
-<application>_<version>/
+applications/<应用名>/<版本>/<可选变体>/
 ├── README.md
 ├── manifest.yaml
 ├── source/
@@ -31,7 +31,7 @@
 | `resources/` | 初始数据、用户、角色、登录和注册脚本 |
 | `docker/` | Dockerfile 和用于调试或追溯的 Compose 配置 |
 | `scripts/` | 构建、容器入口、健康检查和重置脚本 |
-| `image/` | 最终 all-in-one 镜像 tar、元数据和校验和 |
+| `image/` | 镜像元数据 `image.json`；镜像本体发布在 Docker Hub，tar 和校验和不提交到仓库 |
 
 目标产物是一个可直接运行的最终镜像。镜像内部已经包含应用运行所需的运行时、源码、依赖、数据库或缓存、初始数据和入口程序。接收者不需要重新构建源码、配置外部数据库或执行 Web Installer。
 
@@ -43,11 +43,10 @@
 
 运行记录保存在 `code/runs/`，包括开始时间、结束时间、耗时、事件日志、最终回复和 token 用量。
 
-运行前先登录 Codex，并进入 `applications/` 目录：
+运行前先登录 Codex，并停留在仓库根目录（`code/` 和 `applications/` 都在根目录下）：
 
 ```bash
 codex login
-cd applications
 export CODEX_ADMIN_PASSWORD='benchmark-only'
 ```
 
@@ -74,10 +73,9 @@ python3 code/codex_environment_runner.py \
 - 未替换的占位符是否能够被发现；
 - Codex 事件中的 token 用量是否能够正确统计。
 
-执行测试：
+在仓库根目录执行测试：
 
 ```bash
-cd applications
 python3 code/test_codex_environment_runner.py
 ```
 
@@ -104,7 +102,7 @@ python3 code/codex_environment_runner.py \
 进入生成的应用目录，确认以下内容存在：
 
 ```text
-<application>_<version>/
+applications/<应用名>/<版本>/<可选变体>/
 ├── README.md
 ├── manifest.yaml
 ├── source/
@@ -121,19 +119,17 @@ python3 code/codex_environment_runner.py \
 - `source/source.yaml` 是否记录固定版本的 GitHub 仓库和 commit 哈希；
 - `resources/` 是否有初始数据、账号和角色信息；
 - `scripts/` 是否有健康检查和重置脚本；
-- `image/` 是否有最终镜像 tar、元数据和 `SHA256SUMS`。
+- `image/` 是否有镜像元数据 `image.json`（tar 和 `SHA256SUMS` 由 `.gitignore` 排除，不随仓库交付）。
 
 ### 4.2 启动应用
 
-先按照 README 中的命令启动。随目录交付镜像 tar 时：
+直接执行应用 README 中的 `docker run` 命令即可，Docker 会自动从 Docker Hub 拉取镜像：
 
 ```text
-(cd image && sha256sum -c SHA256SUMS)
-docker load -i image/<application>-<version>-<platform>.tar
 docker run -d -p <host-port>:80 <image-name>:<tag>
 ```
 
-使用 Docker Hub 镜像时，直接执行应用 README 中的 `docker run` 命令即可，Docker 会自动拉取镜像。
+镜像 tar 和 `SHA256SUMS` 不随仓库交付；构建者在本地执行 `scripts/build.sh` 时会生成它们，但它们由各 `image/.gitignore` 排除，不会进入版本控制。
 
 执行后查看容器状态，确认容器没有立即退出：
 
@@ -204,7 +200,7 @@ cat resources/users.yaml
 - `source/source.yaml` 中存在固定版本的 GitHub 仓库和 commit 哈希；
 - `resources/users.yaml` 中存在 `admin` 账号；
 - `scripts/healthcheck.sh` 和 `resources/login.sh` 存在；
-- `image/` 中存在最终镜像和校验文件。
+- `image/` 中存在镜像元数据 `image.json`。
 
 #### 2. 拉取并运行镜像
 
@@ -231,14 +227,7 @@ docker ps
 docker logs espocrm-8.2.5
 ```
 
-如果使用目录中交付的镜像 tar，则先执行：
-
-```bash
-(cd image && sha256sum -c SHA256SUMS)
-docker load -i image/espocrm-8.2.5-linux-amd64.tar
-```
-
-之后仍然使用上面的 `docker run` 命令启动。
+仓库中不包含镜像 tar，`docker run` 会自行从 Docker Hub 拉取，无需 `docker load`。
 
 #### 3. 运行脚本验证
 

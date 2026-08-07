@@ -1,0 +1,12 @@
+services:
+  application:
+    image: asteriskax001/sop-owncloud:10.14.0
+    ports:
+      - "18524:80"
+    volumes:
+      - owncloud-data:/mnt/data
+      - owncloud-db:/var/lib/mysql
+
+volumes:
+  owncloud-data:
+  owncloud-db:

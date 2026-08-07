@@ -1,0 +1,8 @@
+application: iTop
+version: 3.1.1
+users:
+  - username: admin
+    password: WcITop!26-bL9hS5C
+    user_type: local_administrator
+    enabled: true
+    purpose: 初始应用管理员

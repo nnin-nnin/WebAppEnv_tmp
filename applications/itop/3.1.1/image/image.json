@@ -1,0 +1,100 @@
+[
+    {
+        "Id": "sha256:cb5bd72ec2631b3f47a010ed65faac39fe010ca52af331120bffe0c32e9db197",
+        "RepoTags": [
+            "asteriskax001/sop-itop:3.1.1",
+            "nnin/sop-itop:3.1.1"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-itop@sha256:cb5bd72ec2631b3f47a010ed65faac39fe010ca52af331120bffe0c32e9db197",
+            "nnin/sop-itop@sha256:cb5bd72ec2631b3f47a010ed65faac39fe010ca52af331120bffe0c32e9db197"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T13:28:13.304798896+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=528995BFEDFBA7191D46839EF9BA0ADA31CBD89E 39B641343D8C104B2B146DC3F9C39DC0B9698544 F1F692238FBC1666E5A5CCD4199F9DFEF6FFBAFD",
+                "PHP_VERSION=8.1.34",
+                "PHP_URL=https://www.php.net/distributions/php-8.1.34.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.1.34.tar.xz.asc",
+                "PHP_SHA256=ffa9e0982e82eeaea848f57687b425ed173aa278fe563001310ae2638db5c251",
+                "DEBIAN_FRONTEND=noninteractive",
+                "ITOP_DB_NAME=itop",
+                "ITOP_DB_USER=itop",
+                "ITOP_DB_PASSWORD=itop-internal-db"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/itop-entrypoint"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/data": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "curl -fsS http://127.0.0.1/pages/UI.php | grep -Eiq 'iTop|IT Operations Portal|login' || exit 1"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 45000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 334639540,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6a7f953ae30c9f480e6eaf7be8b1ba742bce57a3a83c43e927348e763cff7472",
+                "sha256:2307c6b505e1a617397d550a419b9ac9f41408d360b67b0a258534011b79d012",
+                "sha256:a194aa34810c51c799b4e1115c3af303bb5219d1ec97890968ab8dbc0632626c",
+                "sha256:3a81edb1aa5c2f9accf6ea7f08c012779a7c0027395ebf011c83426154142e50",
+                "sha256:c3a4f943fe0dce4ed13bad5ed7677ead558d8c8f590d7c7efb169322cbcd0e4b",
+                "sha256:9d7ca0f1d79e9359445a28e5167d23cd74550be863e7e2b3b85cb63114312a67",
+                "sha256:a02e335afb5ee4d6c5b59d9351d717af5688c7b5a04e51a5d03386ca69622756",
+                "sha256:e437f4ded1ec2e1860199d6ea1354433520901528efbbfd833aa780bab31d6ea",
+                "sha256:32341b48cc2a4c41ee7b5f58389e7d2409c6de091571f1d481f9c8e797d59a5b",
+                "sha256:b1e3c6bc6b17d6b26dfcd9e8eb10a772ac69970fa6fdc3b7f365dddc81cca5cc",
+                "sha256:75094ce8889a53422ae46c630797f46a3ff8718d28d3e18b2d4b5c224caa2226",
+                "sha256:fbb984a4f3c7f0b139fa34624621d536397e37b4573f22a419dc9dea23df8e61",
+                "sha256:e09aeb4a564e19e93442b0b13c54b4899198a175ef1f45ad4c079a89dd774be0",
+                "sha256:aba400b191aa092541d90394aad624926cb51cbe1ecf9873aaeb2a27023150f1",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:01aa231a01a11a2a0adc185045dd8faa91ca7109f57e9c2ba49319d635b57a13",
+                "sha256:e6b053f317c5bb956c7a5b60ed897ea26f0bcb34dd77ef72203a3140a84d5aae",
+                "sha256:13bc8b217015ec99ad98fee8b2b5a521bf8ceb7a8f0bf949aaae2e7c3b558f78",
+                "sha256:a727b67d0cbb6a794ae3bdcc1e552a779f5833ed1af3ad308dce7e04a1fb455f",
+                "sha256:03ab796aa23e7908be9a950f9e3b4c7e3424b70f7a5682bad1ad91c5522786a0",
+                "sha256:55356cfcda16ec5e52d4ea59bc455e83501813f9f2cf7f48a7d3c001124e92a3",
+                "sha256:aaa2a36ef988998b6aaf4b32a4b60ffd91ee5bf9dc0d32b45d2353b4ccf2f87c"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T16:39:13.751746619Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:cb5bd72ec2631b3f47a010ed65faac39fe010ca52af331120bffe0c32e9db197",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-itop:3.1.1",
+                "org.opencontainers.image.ref.name": "3.1.1"
+            }
+        }
+    }
+]

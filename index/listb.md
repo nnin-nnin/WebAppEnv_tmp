@@ -11,23 +11,23 @@
 | Black Widow-S&P'21 | 7 | SCARF | - | 2007 | - | - |
 | Black Widow-S&P'21 | 8 | Vanilla | - | 2.0.17.10 | - | - |
 | Black Widow-S&P'21 | 9 | WordPress | [WordPress/wordpress-develop](https://github.com/WordPress/wordpress-develop) | 5.1 | 4.7.4 | [WordPress 4.7.4](../applications/wordpress/4.7.4/) |
-| YuraScanner-NDSS'25 | 1 | Dolibarr | [Dolibarr/dolibarr](https://github.com/Dolibarr/dolibarr) | 19.0.2 | - | - |
+| YuraScanner-NDSS'25 | 1 | Dolibarr | [Dolibarr/dolibarr](https://github.com/Dolibarr/dolibarr) | 19.0.2 | 19.0.2 | [Dolibarr 19.0.2](../applications/dolibarr/19.0.2/) |
 | YuraScanner-NDSS'25 | 2 | EspoCRM | [espocrm/espocrm](https://github.com/espocrm/espocrm) | 8.2.5 | 8.2.5 | [default](../applications/espocrm/8.2.5/default/); [yz-rebuild](../applications/espocrm/8.2.5/yz-rebuild/) |
-| YuraScanner-NDSS'25 | 3 | GitLab | [gitlabhq/gitlabhq](https://github.com/gitlabhq/gitlabhq) | 16.11.2-ce.0 | - | - |
-| YuraScanner-NDSS'25 | 4 | GLPI | [glpi-project/glpi](https://github.com/glpi-project/glpi) | 10.0.15 | - | - |
-| YuraScanner-NDSS'25 | 5 | iTop | [Combodo/iTop](https://github.com/Combodo/iTop) | 3.1.1 | - | - |
+| YuraScanner-NDSS'25 | 3 | GitLab | [gitlabhq/gitlabhq](https://github.com/gitlabhq/gitlabhq) | 16.11.2-ce.0 | 16.11.2-ce.0 | [GitLab 16.11.2-ce.0](../applications/gitlab/16.11.2-ce.0/) |
+| YuraScanner-NDSS'25 | 4 | GLPI | [glpi-project/glpi](https://github.com/glpi-project/glpi) | 10.0.15 | 10.0.15 | [GLPI 10.0.15](../applications/glpi/10.0.15/) |
+| YuraScanner-NDSS'25 | 5 | iTop | [Combodo/iTop](https://github.com/Combodo/iTop) | 3.1.1 | 3.1.1 | [iTop 3.1.1](../applications/itop/3.1.1/) |
 | YuraScanner-NDSS'25 | 6 | Joomla | [joomla/joomla-cms](https://github.com/joomla/joomla-cms) | 5.1.1 | 5.1.1 | [Joomla 5.1.1](../applications/joomla/5.1.1/) |
-| YuraScanner-NDSS'25 | 7 | Leantime | [Leantime/leantime](https://github.com/Leantime/Leantime) | 3.1.4 | - | - |
-| YuraScanner-NDSS'25 | 8 | LimeSurvey | [LimeSurvey/LimeSurvey](https://github.com/LimeSurvey/LimeSurvey) | 6.5.3 | - | - |
-| YuraScanner-NDSS'25 | 9 | Mautic | [mautic/mautic](https://github.com/mautic/mautic) | 5.0.4 | - | - |
-| YuraScanner-NDSS'25 | 10 | MediaWiki | [wikimedia/mediawiki](https://github.com/wikimedia/mediawiki) | 1.41.1 | - | - |
-| YuraScanner-NDSS'25 | 11 | MintHCM | [minthcm/minthcm](https://github.com/minthcm/minthcm) | 4.0.4 | - | - |
+| YuraScanner-NDSS'25 | 7 | Leantime | [Leantime/leantime](https://github.com/Leantime/Leantime) | 3.1.4 | 3.1.4 | [Leantime 3.1.4](../applications/leantime/3.1.4/) |
+| YuraScanner-NDSS'25 | 8 | LimeSurvey | [LimeSurvey/LimeSurvey](https://github.com/LimeSurvey/LimeSurvey) | 6.5.3 | 6.5.3 | [LimeSurvey 6.5.3](../applications/limesurvey/6.5.3/) |
+| YuraScanner-NDSS'25 | 9 | Mautic | [mautic/mautic](https://github.com/mautic/mautic) | 5.0.4 | 5.0.4 | [Mautic 5.0.4](../applications/mautic/5.0.4/) |
+| YuraScanner-NDSS'25 | 10 | MediaWiki | [wikimedia/mediawiki](https://github.com/wikimedia/mediawiki) | 1.41.1 | 1.41.1 | [MediaWiki 1.41.1](../applications/mediawiki/1.41.1/) |
+| YuraScanner-NDSS'25 | 11 | MintHCM | [minthcm/minthcm](https://github.com/minthcm/minthcm) | 4.0.4 | 4.0.4 | [MintHCM 4.0.4](../applications/minthcm/4.0.4/) |
 | YuraScanner-NDSS'25 | 12 | Monica | [monicahq/monica](https://github.com/monicahq/monica) | 4.1.2 | 4.1.2 | [Monica 4.1.2](../applications/monica/4.1.2/) |
-| YuraScanner-NDSS'25 | 13 | Moodle | [moodle/moodle](https://github.com/moodle/moodle) | 4.4.0 | - | - |
-| YuraScanner-NDSS'25 | 14 | Nextcloud | [nextcloud/server](https://github.com/nextcloud/server) | 29.0.1 | - | - |
-| YuraScanner-NDSS'25 | 15 | OpenCart | [opencart/opencart](https://github.com/opencart/opencart) | 4.0.2-3 | - | - |
-| YuraScanner-NDSS'25 | 16 | ownCloud | [owncloud/core](https://github.com/owncloud/core) | 10.14.0 | - | - |
+| YuraScanner-NDSS'25 | 13 | Moodle | [moodle/moodle](https://github.com/moodle/moodle) | 4.4.0 | 4.4.0 | [Moodle 4.4.0](../applications/moodle/4.4.0/) |
+| YuraScanner-NDSS'25 | 14 | Nextcloud | [nextcloud/server](https://github.com/nextcloud/server) | 29.0.1 | 29.0.1 | [Nextcloud 29.0.1](../applications/nextcloud/29.0.1/) |
+| YuraScanner-NDSS'25 | 15 | OpenCart | [opencart/opencart](https://github.com/opencart/opencart) | 4.0.2-3 | 4.0.2-3 | [OpenCart 4.0.2-3](../applications/opencart/4.0.2-3/) |
+| YuraScanner-NDSS'25 | 16 | ownCloud | [owncloud/core](https://github.com/owncloud/core) | 10.14.0 | 10.14.0 | [ownCloud 10.14.0](../applications/owncloud/10.14.0/) |
 | YuraScanner-NDSS'25 | 17 | phpBB | [phpbb/phpbb](https://github.com/phpbb/phpbb) | 3.3.11 | - | - |
-| YuraScanner-NDSS'25 | 18 | Redmine | [redmine/redmine](https://github.com/redmine/redmine) | 5.1.2 | - | - |
+| YuraScanner-NDSS'25 | 18 | Redmine | [redmine/redmine](https://github.com/redmine/redmine) | 5.1.2 | 5.1.2 | [Redmine 5.1.2](../applications/redmine/5.1.2/) |
 | YuraScanner-NDSS'25 | 19 | Silverpeas | [Silverpeas/Silverpeas-Core](https://github.com/Silverpeas/Silverpeas-Core) | 6.3.5 | - | - |
-| YuraScanner-NDSS'25 | 20 | WordPress | [WordPress/wordpress-develop](https://github.com/WordPress/wordpress-develop) | 6.5.3 | 4.7.4 | [WordPress 4.7.4](../applications/wordpress/4.7.4/) |
+| YuraScanner-NDSS'25 | 20 | WordPress | [WordPress/wordpress-develop](https://github.com/WordPress/wordpress-develop) | 6.5.3 | 6.5.3 | [WordPress 6.5.3](../applications/wordpress/6.5.3/) |

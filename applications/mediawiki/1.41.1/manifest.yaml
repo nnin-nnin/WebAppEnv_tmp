@@ -1,0 +1,57 @@
+application:
+  name: MediaWiki
+  version: 1.41.1
+  type: full-web-application
+  source_repository: https://github.com/wikimedia/mediawiki.git
+  source_commit: 36da63d008b7a2f9de929113b99bc7059831cb90
+  frontend_repository: https://github.com/wikimedia/mediawiki-skins-Vector.git
+  frontend_commit: f5d1b9c2d06403d8b82aaae2afe1d238a8ca9dce
+
+platform:
+  target: linux/amd64
+  exposed_port: 18519
+  container_port: 80
+
+runtime:
+  language: PHP 8.2
+  web_server: Apache HTTP Server 2.4 with mod_rewrite
+  database: MariaDB 11.8.6 (Debian trixie package series)
+  frontend_build_command: 不需要独立打包；固定 Vector 皮肤源码随镜像提供，由 MediaWiki ResourceLoader 生成并提供静态资源
+  static_resource_directory: source/mediawiki/resources、source/mediawiki/skins 和 source/vector/resources，由 MediaWiki ResourceLoader 提供
+  browser_entry: http://127.0.0.1:18519/index.php
+  api_entry: http://127.0.0.1:18519/api.php
+
+delivery:
+  all_in_one: true
+  architecture: single-image-single-container
+  image: asteriskax001/sop-mediawiki:1.41.1
+  image_metadata: image/image.json
+  contains:
+    - MediaWiki fixed source and Composer runtime dependencies
+    - PHP 8.2 runtime
+    - Apache web server
+    - MariaDB database service bound to 127.0.0.1 inside the container
+    - MediaWiki LocalSettings.php and an idempotent initial database seed
+    - Bundled MediaWiki browser frontend and ResourceLoader assets
+  database_connection: 127.0.0.1 via the internal MariaDB service
+  frontend_api_connection: same-origin /api.php inside the all-in-one container
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: null
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  container_healthcheck: scripts/healthcheck-container.sh
+  reset: scripts/reset.sh
+
+recommended_run: docker run -d -p 18519:80 asteriskax001/sop-mediawiki:1.41.1
+credential_policy: 初始管理员密码只由受控渠道提供，用于镜像初始化和动态验收；不得写入交付文件或镜像环境变量。
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

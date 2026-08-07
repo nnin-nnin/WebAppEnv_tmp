@@ -1,0 +1,12 @@
+services:
+  application:
+    image: asteriskax001/sop-moodle:4.4.0
+    ports:
+      - "18521:80"
+    volumes:
+      - moodle-data:/var/www/moodledata
+      - moodle-db:/var/lib/mysql
+
+volumes:
+  moodle-data:
+  moodle-db:

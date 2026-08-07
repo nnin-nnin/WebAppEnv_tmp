@@ -1,0 +1,51 @@
+application:
+  name: Leantime
+  version: 3.1.4
+  type: 完整 Web 应用
+  repository: https://github.com/Leantime/leantime.git
+  commit: d54fdf9d187ebfef703e7d2c81a0c1e29df109b8
+  frontend_repository: null
+  frontend_commit: null
+platform:
+  target: linux/amd64
+runtime:
+  php: 8.2
+  web_server: Apache 2.4
+  database: MariaDB 11.8（容器内）
+frontend:
+  repository: same-as-backend
+  build_command: npm ci --no-audit --no-fund && npx mix --production && node generateBlocklist.mjs
+  static_assets: public/dist
+  browser_entry: /
+  api_connection: 同一容器内的 PHP 应用入口，使用相对路径请求后端
+delivery:
+  mode: 单镜像、单容器、all-in-one；内部同时包含 Leantime Web 服务和 MariaDB 服务
+  image: asteriskax001/sop-leantime:3.1.4
+  metadata: image/image.json
+  exposed_port: 18516
+  internal_web_port: 80
+  internal_database_host: 127.0.0.1
+  components:
+    - Leantime 3.1.4 PHP 应用和同仓库前端静态资源
+    - PHP 8.2 及 Composer 生产依赖
+    - Apache 2.4
+    - MariaDB 11.8
+    - 自动幂等数据库初始化和初始管理员账号
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run:
+  command: docker run -d -p 18516:80 asteriskax001/sop-leantime:3.1.4
+  browser_url: http://127.0.0.1:18516/
+  admin_username: admin
+  admin_credentials: 由受控渠道保存，不写入 manifest
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

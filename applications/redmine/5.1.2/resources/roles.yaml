@@ -1,0 +1,11 @@
+application: Redmine
+roles:
+  - name: Administrator
+    permissions: Redmine 内置全部管理及项目权限
+    purpose: 系统初始化与管理
+    assigned_to: admin
+  - name: Non-member
+    permissions: 由项目权限配置决定
+    purpose: Redmine 内置普通访问角色
+    assigned_to: 普通用户由管理员按项目分配
+

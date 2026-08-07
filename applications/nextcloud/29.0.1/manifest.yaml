@@ -1,0 +1,55 @@
+application:
+  name: Nextcloud
+  version: 29.0.1
+  type: complete-web-application
+  description: 单镜像、单容器、内部包含 Nextcloud Web 应用与 MariaDB 的 all-in-one 环境。
+source:
+  repository: https://github.com/nextcloud/server.git
+  commit: 3bb0c9b012f0e87ccddd37e4782d3fb5ae2025a6
+  frontend_repository: null
+  frontend_commit: null
+  frontend_note: 官方 server 源码固定 commit 已包含 dist/ 前端静态 bundle。
+platform:
+  target: linux/amd64
+runtime:
+  php: 8.2
+  web_server: Apache HTTP Server 2.4 with mod_rewrite
+  database: MariaDB 11.8.6 (same container, loopback only)
+  frontend_build_command: 官方发布源码的 dist/ 静态 bundle，无独立前端仓库；镜像内直接提供
+  frontend_static_directory: /var/www/html/dist plus application static assets
+  browser_entry: http://127.0.0.1:18522/
+  api_entry: http://127.0.0.1:18522/ocs/v1.php/cloud/
+delivery:
+  port: 18522
+  image: asteriskax001/sop-nextcloud:29.0.1
+  image_metadata: image/image.json
+  components:
+    - Nextcloud 29.0.1 application source and bundled frontend
+    - PHP 8.2 runtime and Apache HTTP Server
+    - MariaDB 11.8.6 database service inside the same container
+    - Pre-initialized Nextcloud schema, configuration, and application data seed
+    - Internal process entrypoint and Docker HEALTHCHECK
+  all_in_one: 单镜像、单容器；应用服务与数据库服务均在容器内，应用通过 127.0.0.1 连接数据库。
+accounts:
+  initial_admin:
+    username: admin
+    role: administrator
+    password: 受控渠道保存，仅用于镜像初始化和动态验收
+  resources:
+    users: resources/users.yaml
+    roles: resources/roles.yaml
+    login: resources/login.sh
+    register: resources/register.sh
+scripts:
+  build: scripts/build.sh
+  start: docker run -d -p 18522:80 asteriskax001/sop-nextcloud:29.0.1
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+docker:
+  dockerfile: docker/Dockerfile
+  standalone_dockerfile: docker/standalone.Dockerfile
+  compose: docker/compose.yaml
+  runtime_downloads: none
+  core_external_urls: none; optional user-selected integrations may use their configured remote services
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

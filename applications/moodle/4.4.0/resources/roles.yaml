@@ -1,0 +1,10 @@
+application: Moodle
+roles:
+  - name: site administrator
+    permissions: Moodle 全部站点管理权限
+    purpose: 管理站点、课程、用户和系统设置
+    initial_user_relation: admin 为初始站点管理员
+  - name: authenticated user
+    permissions: 登录后的普通 Moodle 用户权限
+    purpose: 普通用户访问其获授权的课程和个人页面
+    initial_user_relation: 由 resources/register.sh 创建的普通用户使用该基础角色

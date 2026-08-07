@@ -1,0 +1,13 @@
+application: MintHCM
+version: "4.0.4"
+users:
+  - username: admin
+    password: MintHCM-Admin-2026!R7w2
+    user_type: system administrator
+    enabled: true
+    purpose: 初始系统管理员和环境验收账号
+  - username: "通过 register.sh 参数提供"
+    password: MintHCM-Admin-2026!R7w2
+    user_type: regular user
+    enabled: true
+    purpose: 普通用户创建验收

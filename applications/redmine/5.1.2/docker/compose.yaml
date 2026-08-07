@@ -1,0 +1,16 @@
+services:
+  application:
+    image: asteriskax001/sop-redmine:5.1.2
+    ports:
+      - "18512:80"
+    volumes:
+      - redmine-files:/usr/src/redmine/files
+      - redmine-log:/usr/src/redmine/log
+      - redmine-tmp:/usr/src/redmine/tmp
+      - redmine-db:/var/lib/mysql
+
+volumes:
+  redmine-files:
+  redmine-log:
+  redmine-tmp:
+  redmine-db:

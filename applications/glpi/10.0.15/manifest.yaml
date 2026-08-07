@@ -1,0 +1,54 @@
+application:
+  name: GLPI
+  version: 10.0.15
+  type: full-web-application
+  description: 完整 Web 应用，包含真实浏览器管理界面、后端、运行时和内部数据库
+source:
+  repository: https://github.com/glpi-project/glpi.git
+  commit: f64caeedbeda1010cfd8142d5fa0125e11568129
+  frontend_repository: null
+  frontend_commit: null
+  frontend_build_command: npm ci --no-audit --no-fund && npm run build:pack
+  frontend_static_resource_directories:
+    - public/lib
+    - css/lib
+  browser_entrypoint: /
+runtime:
+  platform: linux/amd64
+  php: 8.2
+  web_server: Apache HTTP Server 2.4 with mod_php
+  database: MariaDB 11.8 (same container, bound to 127.0.0.1)
+  port: 18514
+  internal_port: 80
+image:
+  name: asteriskax001/sop-glpi:10.0.15
+  all_in_one: true
+  architecture: linux/amd64
+  components:
+    - GLPI 10.0.15 PHP application and Composer dependencies
+    - GLPI browser assets built from the same fixed source commit
+    - PHP 8.2 with GLPI-required extensions
+    - Apache HTTP Server
+    - MariaDB 11.8 server and client
+    - GLPI database schema and default application data, initialized on first start
+    - controlled-channel administrator password verifier for the admin account
+  metadata: image/image.json
+  startup: 单镜像、单容器；容器内部同时运行 Apache 应用服务和 MariaDB 数据库服务，应用通过 127.0.0.1 连接数据库。
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: GLPI 源码内置 install/mysql/glpi-empty.sql 和 install/empty_data.php，无额外 seed 文件
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18514:80 asteriskax001/sop-glpi:10.0.15
+api:
+  endpoint: /apirest.php
+  credentials_login_enabled: true
+  ordinary_user_creation: resources/register.sh 通过 GLPI 真实 REST API 的 User 资源创建并分配 Self-Service 角色
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

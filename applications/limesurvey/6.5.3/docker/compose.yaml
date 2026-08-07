@@ -1,0 +1,15 @@
+services:
+  application:
+    image: asteriskax001/sop-limesurvey:6.5.3
+    platform: linux/amd64
+    ports:
+      - "18517:80"
+    volumes:
+      - application-db:/var/lib/mysql
+      - application-runtime:/var/www/html/application/runtime
+      - application-upload:/var/www/html/upload
+
+volumes:
+  application-db:
+  application-runtime:
+  application-upload:

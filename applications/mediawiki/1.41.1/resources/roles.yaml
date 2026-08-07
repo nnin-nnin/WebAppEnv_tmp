@@ -1,0 +1,14 @@
+roles:
+  - name: administrator
+    permissions:
+      - MediaWiki 默认管理员权限
+      - sysop
+      - bureaucrat
+    purpose: 管理站点配置、页面和用户
+    initial_users:
+      - admin
+  - name: user
+    permissions:
+      - MediaWiki 默认注册用户权限
+    purpose: 普通 wiki 用户
+

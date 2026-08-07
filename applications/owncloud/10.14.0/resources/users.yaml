@@ -1,0 +1,8 @@
+application: ownCloud
+version: 10.14.0
+users:
+  - username: admin
+    password: WcOwn!26-iS9nF2L
+    type: administrator
+    enabled: true
+    purpose: 初始管理、登录验收和普通用户创建

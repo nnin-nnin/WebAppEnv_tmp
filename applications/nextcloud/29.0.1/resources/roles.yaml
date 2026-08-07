@@ -1,0 +1,11 @@
+application: Nextcloud
+roles:
+  - name: administrator
+    permissions: Full Nextcloud administration and file access.
+    purpose: Application initialization and administration.
+    accounts: [admin]
+  - name: regular-user
+    permissions: Own files and ordinary user capabilities; no administration.
+    purpose: User-creation acceptance.
+    accounts: [acceptance-user]
+

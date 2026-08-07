@@ -1,0 +1,14 @@
+services:
+  application:
+    image: asteriskax001/sop-wordpress:6.5.3
+    platform: linux/amd64
+    ports:
+      - "18513:80"
+    volumes:
+      - wordpress-data:/var/www/html/wp-content
+      - wordpress-db:/var/lib/mysql
+
+volumes:
+  wordpress-data:
+  wordpress-db:
+

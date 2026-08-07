@@ -1,0 +1,13 @@
+services:
+  application:
+    image: asteriskax001/sop-dolibarr:19.0.2
+    ports:
+      - "18525:80"
+    volumes:
+      - application-data:/var/www/html/documents
+      - application-db:/var/lib/mysql
+
+volumes:
+  application-data:
+  application-db:
+

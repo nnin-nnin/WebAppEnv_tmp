@@ -14,7 +14,8 @@ curl "${curl_args[@]}" "$BASE_URL/admin/login.php" -o "$tmp_dir/login.html"
 curl "${curl_args[@]}" -d "username=${USERNAME}&password=${PASSWORD}" \
   "$BASE_URL/admin/login.php?action=process" -o "$tmp_dir/result.html"
 
-if ! grep -Eqi 'Administration|Dashboard|admin_menu|osCommerce' "$tmp_dir/result.html"; then
+# 原判定含 'osCommerce'/'Administration'——登录页同样命中。改为检查登录后才有的登出入口。
+if ! grep -Eq 'logoff\.php' "$tmp_dir/result.html"; then
   echo "osCommerce 管理员登录失败：$BASE_URL/admin/" >&2
   exit 1
 fi

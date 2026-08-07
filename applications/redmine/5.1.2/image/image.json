@@ -1,0 +1,105 @@
+[
+    {
+        "Id": "sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60",
+        "RepoTags": [
+            "asteriskax001/sop-redmine:5.1.2",
+            "nnin/sop-redmine:5.1.2"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-redmine@sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60",
+            "nnin/sop-redmine@sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T03:12:47.803899959+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "3000/tcp": {},
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "RUBY_VERSION=3.2.4",
+                "RUBY_DOWNLOAD_URL=https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.4.tar.xz",
+                "RUBY_DOWNLOAD_SHA256=e7f1653d653232ec433472489a91afbc7433c9f760cc822defe7437c9d95791b",
+                "GEM_HOME=/usr/local/bundle",
+                "BUNDLE_SILENCE_ROOT_WARNING=1",
+                "BUNDLE_APP_CONFIG=/usr/local/bundle",
+                "GOSU_VERSION=1.17",
+                "RAILS_ENV=production",
+                "HOME=/home/redmine",
+                "REDMINE_VERSION=5.1.2",
+                "REDMINE_DOWNLOAD_URL=https://www.redmine.org/releases/redmine-5.1.2.tar.gz",
+                "REDMINE_DOWNLOAD_SHA256=26c0ca0a9aaee1ceb983825bf1266c99b0850bf013c178713f5a3b0080012123",
+                "RACK_ENV=production",
+                "RAILS_LOG_TO_STDOUT=true",
+                "BUNDLE_WITHOUT=development:test",
+                "REDMINE_DB_HOST=127.0.0.1",
+                "REDMINE_DB_NAME=redmine",
+                "REDMINE_DB_USER=redmine",
+                "REDMINE_DB_PASSWORD=redmine-local-db"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/redmine-entrypoint"
+            ],
+            "Volumes": {
+                "/usr/src/redmine/files": {},
+                "/usr/src/redmine/log": {},
+                "/usr/src/redmine/tmp": {},
+                "/var/lib/mysql": {}
+            },
+            "WorkingDir": "/usr/src/redmine",
+            "ArgsEscaped": true,
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "curl -fsS http://127.0.0.1/ | grep -Eiq 'Redmine|Projects|My page'"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 45000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 410929582,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:5d4427064ecc46e3c2add169e9b5eafc7ed2be7861081ec925938ab628ac0e25",
+                "sha256:4078883d41f9d4733e8630d3c11422f5f82874f00b140887271dce6ff9d59b54",
+                "sha256:a39c57201057fe2e1590272029e47b303e2d1f33476d9311be54dd2d81daa863",
+                "sha256:a193b50cdd50ec87381fe773d870ad47edecd63d1c9c2586ee8c18a126cf090e",
+                "sha256:bd4127fdba706b22e0b951d47118ae9e26ac924bea912c985a551aae14e506bb",
+                "sha256:1d2fcaa331ca9b518af033aaddbd92779f23f2574ba2928225800eef280f6de4",
+                "sha256:f9456d506f5f11116f4a1e6e137bcd17cfc5e4f7f95bdf8b683885ad1073e722",
+                "sha256:92f0728fdabe393844c104ee4cbc1a60d242db7e9b29e31b0d9b92d9382884f8",
+                "sha256:9e65b35fd2a72a09242320b63efddf0d6cada1fcc7903a9ba9b3aa2e77e576e8",
+                "sha256:35aba809460bfb13bbeb6fa11e7e596cd2a25e6f1ed43dee92533f3284cff979",
+                "sha256:8f59d7ba06472b945c871d365f08726ab968f03b3b3042701909ac700070422f",
+                "sha256:24b8fb56bc2cb28694acfdcce87a24739841e9481c71cd291f06c16414e055de",
+                "sha256:27bd58ea31fa745b33c5eaa86856322e6ecb70815526c926774799a90d7caae7",
+                "sha256:8139414e0923b405d3d2c4e223c14ad0fe2d5c58e025875ca59dc63978623466",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:409ea2de48c7faca2c252dd02fa912f9bf80495a5b497ec5badeada7c6713c38",
+                "sha256:20232d044ad64b02986965fe7955a230ed44c845edc64a46141a553a561e35b6",
+                "sha256:526de74c824d3af26b2d52579e1d7a79a81e1d5ffd7abb01246f4abd032811a9",
+                "sha256:61a2b4bd6f910805956f68ac8cb6eec4d40e2ffcaaa488d7dc11c79c9c8b34b7",
+                "sha256:071271db7db8c9c979a1ace9bc3ef2b67483329d0717b94d1a13f7b3e03c3e3c"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T16:43:00.416221985Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-redmine:5.1.2",
+                "org.opencontainers.image.ref.name": "5.1.2"
+            }
+        }
+    }
+]

@@ -1,0 +1,12 @@
+services:
+  application:
+    image: asteriskax001/sop-leantime:3.1.4
+    ports:
+      - "18516:80"
+    volumes:
+      - application-db:/var/lib/mysql
+      - application-userfiles:/var/www/html/userfiles
+
+volumes:
+  application-db:
+  application-userfiles:

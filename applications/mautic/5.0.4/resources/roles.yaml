@@ -1,0 +1,10 @@
+application: Mautic
+roles:
+  - name: Administrator
+    permissions: Mautic administrator role with full application permissions
+    purpose: Initial administrator access
+    initial_user_relation: admin is assigned this role during CLI installation
+  - name: Sales Team
+    permissions: Mautic's standard non-administrator sales permissions
+    purpose: Ordinary user creation target used by register.sh
+    initial_user_relation: register.sh creates this non-administrator role through the verified Mautic API when it is absent

@@ -1,0 +1,8 @@
+application: GLPI
+accounts:
+  - username: admin
+    password: WcGlpi!26-fC7mR2N
+    user_type: 本地 GLPI 用户
+    enabled: true
+    purpose: 初始超级管理员，用于浏览器登录和动态验收
+

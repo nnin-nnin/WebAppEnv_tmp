@@ -1,0 +1,48 @@
+application:
+  name: Moodle
+  version: 4.4.0
+  type: complete-web-application
+  frontend_repository: null
+  frontend_commit: null
+source:
+  repository: https://github.com/moodle/moodle.git
+  commit: ee91c6536f99e1633e2245780c4fe7f47340ed66
+runtime:
+  platform: linux/amd64
+  php: 8.2
+  web_server: Apache 2.4 with mod_rewrite
+  database: MariaDB 11.8 (Debian trixie package)
+  frontend_build_command: official Moodle PHP/AMD/Theme assets; no separate frontend repository
+  static_resource_directory: /var/www/html
+  browser_entrypoint: http://localhost:18521/
+  api_entrypoint: http://localhost:18521/webservice/rest/server.php
+delivery:
+  image: asteriskax001/sop-moodle:4.4.0
+  all_in_one: true
+  architecture: single-image-single-container
+  components:
+    - Moodle 4.4.0 fixed source
+    - Apache HTTP server
+    - PHP 8.2 runtime and Moodle-required extensions
+    - MariaDB 10.11 database service bound to 127.0.0.1
+    - Moodle database and moodledata initialization seed
+    - Internal entrypoint and Docker healthcheck
+  frontend: Moodle browser UI is served from the same Apache/PHP container
+  frontend_api_connection: browser requests use the same container origin and Moodle PHP endpoints
+  image_metadata: image/image.json
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data
+operations:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18521:80 asteriskax001/sop-moodle:4.4.0
+notes: 单镜像、单容器、内部包含 Moodle 应用服务和 MariaDB 数据库服务的 all-in-one 环境；运行时数据库连接使用 127.0.0.1，完整 Web 前端由同一容器直接提供。
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

@@ -1,0 +1,90 @@
+[
+    {
+        "Id": "sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c",
+        "RepoTags": [
+            "asteriskax001/sop-gitlab:16.11.2-ce.0",
+            "nnin/sop-gitlab:16.11.2-ce.0"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-gitlab@sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c",
+            "nnin/sop-gitlab@sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T21:20:49.194205011+08:00",
+        "Author": "GitLab Inc. <support@gitlab.com>",
+        "Config": {
+            "ExposedPorts": {
+                "22/tcp": {},
+                "443/tcp": {},
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/opt/gitlab/embedded/bin:/opt/gitlab/bin:/assets:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "EDITOR=/bin/vi",
+                "GITLAB_ALLOW_SHA1_RSA=false",
+                "TERM=xterm",
+                "GITLAB_OMNIBUS_CONFIG=external_url 'http://127.0.0.1:18527'; nginx['listen_port']=80; nginx['listen_https']=false; nginx['worker_processes']=2; nginx['worker_connections']=1024; letsencrypt['enable']=false; prometheus_monitoring['enable']=false; puma['worker_processes']=2; puma['min_threads']=1; puma['max_threads']=4; sidekiq['concurrency']=5; gitlab_rails['monitoring_whitelist']=['0.0.0.0/0','::/0']"
+            ],
+            "Entrypoint": [
+                "/opt/sop/entrypoint.sh"
+            ],
+            "Volumes": {
+                "/etc/gitlab": {},
+                "/var/log/gitlab": {},
+                "/var/opt/gitlab": {}
+            },
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            },
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "GITLAB_URL=http://127.0.0.1:80 /opt/sop/healthcheck.sh"
+                ],
+                "Interval": 30000000000,
+                "Timeout": 10000000000,
+                "StartPeriod": 180000000000,
+                "Retries": 10
+            },
+            "Shell": [
+                "/bin/sh",
+                "-c"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 1252474804,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:629ca62fb7c791374ce57626d6b8b62c76378be091a0daf1a60d32700b49add7",
+                "sha256:153b2a6f140a61ec23cf6f229782a7989c95a0210dc0dfd24d48d7b48f7ec114",
+                "sha256:a30a433ef3aad0c6e31ee58a60459ae972f1b513c436ddfac0e187af14c6bbd1",
+                "sha256:ee8c2ad3a14107022576f1e2b27ad0ed37def0d36a2617466eb766c08925fed2",
+                "sha256:c28aca6d20f221c1116930dba40349321c54dc39085d6300bf040dc6ff0f37ec",
+                "sha256:f1ce9a8ede6bb6ecefaf0602b5e8a546813e22d38bfb45d6145e904d42123c43",
+                "sha256:04968258ff3c08e74c9c1f7d73e47815441f2af49b85db7ec889c9933985d533",
+                "sha256:69f9d2124be81f042e353c2535fef128b9e4c652fafd5686b03c85957e36436f",
+                "sha256:01efeaa820855aadda50cf9324237c7e5d9d79d7671abd172f3d2a2b8bbcc5a8",
+                "sha256:8bf18bd502fa18c57e320f74a561843ec8f6a667ab7adba6e1b79faf4a68d42a",
+                "sha256:c4119539b3fbe4721ef060a2e03b80e3d52ff9f2a3f1dff6e19dad0e17969db0",
+                "sha256:16a5db25167c2e0aebeeed4ad7b072e938747d9f3e094456dd7fdc048a27832d",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-07T05:43:38.359499349Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-gitlab:16.11.2-ce.0",
+                "org.opencontainers.image.ref.name": "16.11.2-ce.0"
+            }
+        }
+    }
+]

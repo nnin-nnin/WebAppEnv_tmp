@@ -1,0 +1,115 @@
+[
+    {
+        "Id": "sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d",
+        "RepoTags": [
+            "asteriskax001/sop-owncloud:10.14.0",
+            "nnin/sop-owncloud:10.14.0"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-owncloud@sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d",
+            "nnin/sop-owncloud@sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T19:34:36.897401902+08:00",
+        "Config": {
+            "User": "root",
+            "ExposedPorts": {
+                "80/tcp": {},
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TERM=xterm",
+                "GOMPLATE_VERSION=v3.11.8",
+                "WAIT_FOR_VERSION=v2.0.4",
+                "RETRY_VERSION=v2.0.0",
+                "APACHE_LISTEN=80",
+                "APACHE_DOCUMENT_ROOT=/var/www/owncloud",
+                "OWNCLOUD_DATA_ROOT=/mnt/data",
+                "OWNCLOUD_DB_DIR=/var/lib/mysql",
+                "OWNCLOUD_DB_HOST=127.0.0.1:3306",
+                "OWNCLOUD_DB_NAME=owncloud",
+                "OWNCLOUD_DB_USERNAME=owncloud",
+                "OWNCLOUD_DB_TYPE=mysql",
+                "OWNCLOUD_DOMAIN=localhost",
+                "OWNCLOUD_TRUSTED_DOMAINS=localhost,127.0.0.1"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/owncloud-all-in-one"
+            ],
+            "Volumes": {
+                "/mnt/data": {},
+                "/var/lib/mysql": {}
+            },
+            "WorkingDir": "/var/www/owncloud",
+            "Labels": {
+                "maintainer": "ownCloud GmbH <devops@owncloud.com>",
+                "org.opencontainers.image.authors": "ownCloud DevOps <devops@owncloud.com>",
+                "org.opencontainers.image.description": "ownCloud - Secure Collaboration Platform",
+                "org.opencontainers.image.documentation": "https://github.com/owncloud-docker/server",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.source": "https://github.com/owncloud-docker/server",
+                "org.opencontainers.image.title": "ownCloud Server",
+                "org.opencontainers.image.url": "https://hub.docker.com/r/owncloud/server",
+                "org.opencontainers.image.vendor": "ownCloud GmbH",
+                "org.opencontainers.image.version": "20.04"
+            },
+            "ArgsEscaped": true,
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "bash",
+                    "-c",
+                    "mysqladmin --protocol=socket --socket=/run/mysqld/mysqld.sock -uowncloud -powncloud-db-internal-10-14-0 ping >/dev/null 2>&1 && curl -fsS http://127.0.0.1/status.php | grep -q '\"installed\":true'"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 90000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 515439095,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:3ec3ded77c0ce89e931f92aed086b2a2c774a6fbd51617853decc8afa4e1087a",
+                "sha256:0979fb47fa914fbdbc5b91fb87da3cf7e1ba7eb496d0dab0deba6b675e03032d",
+                "sha256:a6eb0008fddf3d0898bef70b7be2a6cff7757ac3e6dcf9c85719d39bbaca8a55",
+                "sha256:bddb497a068be2ace7e3e713262c7e72d89727655bc9286c47aae9eb259cdc82",
+                "sha256:c3138e59bb8713f446efa4cdd7c0e542b21a918a339bce7caf14c01f1ac877fa",
+                "sha256:a89c98355f7013e74276adecf5f7ae1e413b60c57631478869f7fb47f8a217ec",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:5ea8d04d3bb770def2403430a6a477f7f69a87c8e82a4bd8ee5f692c5fc0f5a6",
+                "sha256:8807531e41b484cdcbba81bde60ee2fbc58adf59448d7e94ef2f03f0e487e269",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:2ad2801c277b6f0a92c0d9f300cacdc929d70575827de890ef4c9f114f5ac70a",
+                "sha256:ddcd33cb5f24bc1087875a200a683a53ad1d225c6072bad39f53e26cd47e32bc",
+                "sha256:3e4ace3f24e51a600d765c73843170a9d2bb33d963bd833963475a98a774ed08",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:af1151d7774d247f54807431cc44f4df14defa322b4f18f8b1157228641ff082",
+                "sha256:42f118d7232e68ff5bde0e0384a81f6f3df59b7afb1a011136f53a352c02798b",
+                "sha256:94a5b2844d31d0be9a7311b8d49a33a41f11b7d590dc02d5608eb271ea5bf06a",
+                "sha256:00a0fe9fd055058d4e2fc30101939ef0faeda8a3ba066f4cc78b9f12ed3d923e",
+                "sha256:859b561a96562ac97934486692827ac8a9b6028327574a5b4f1a77f4d102e61f",
+                "sha256:c43557a10d1755c75878eaf4bcd94ba5439ddc8c5f1cccf0f60540da50d6e0aa",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-07T05:47:32.582063632Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d",
+            "size": 4429,
+            "annotations": {
+                "config.digest": "sha256:b62e7593a8d2125d3a7fca43d3737b0cbc3a9880911887498fc50ef079285dd4",
+                "io.containerd.image.name": "docker.io/nnin/sop-owncloud:10.14.0",
+                "org.opencontainers.image.ref.name": "10.14.0"
+            }
+        }
+    }
+]

@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: WcWiki!26-eJ5sV9B
+    type: administrator
+    enabled: true
+    purpose: MediaWiki 初始管理员账号
+

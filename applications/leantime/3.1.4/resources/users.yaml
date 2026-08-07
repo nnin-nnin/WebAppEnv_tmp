@@ -1,0 +1,7 @@
+application: Leantime
+users:
+  - username: admin
+    password: WcLean!26-rT5kM9V
+    type: administrator
+    enabled: true
+    purpose: 初始管理员账号

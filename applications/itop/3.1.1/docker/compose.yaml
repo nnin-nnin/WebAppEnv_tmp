@@ -1,0 +1,12 @@
+services:
+  application:
+    image: asteriskax001/sop-itop:3.1.1
+    ports:
+      - "18515:80"
+    volumes:
+      - application-data:/var/www/html/data
+      - application-db:/var/lib/mysql
+
+volumes:
+  application-data:
+  application-db:

@@ -1,0 +1,8 @@
+source/opencart/.git
+image
+*.tar
+README.md
+manifest.yaml
+resources
+docker/compose.yaml
+docker/standalone.Dockerfile

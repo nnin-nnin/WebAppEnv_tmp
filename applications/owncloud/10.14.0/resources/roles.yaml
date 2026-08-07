@@ -1,0 +1,11 @@
+application: ownCloud
+roles:
+  - name: administrator
+    permissions: ownCloud 全局管理权限、用户管理和文件管理
+    purpose: 应用初始化与管理
+    accounts:
+      - admin
+  - name: regular-user
+    permissions: 个人文件和被授权共享资源
+    purpose: 普通用户验收
+    accounts: []

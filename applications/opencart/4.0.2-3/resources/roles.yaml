@@ -1,0 +1,10 @@
+roles:
+  - name: Administrator
+    permissions: OpenCart 内置 Administrator 全部后台权限
+    purpose: 管理商品、订单、客户、扩展和系统设置
+    users:
+      - admin
+  - name: Customer
+    permissions: OpenCart storefront 普通客户权限
+    purpose: 通过公开注册接口创建的普通客户
+    users: []

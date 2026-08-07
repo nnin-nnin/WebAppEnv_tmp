@@ -1,0 +1,96 @@
+[
+    {
+        "Id": "sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12",
+        "RepoTags": [
+            "asteriskax001/sop-moodle:4.4.0",
+            "nnin/sop-moodle:4.4.0"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-moodle@sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12",
+            "nnin/sop-moodle@sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T17:03:45.276175689+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=39B641343D8C104B2B146DC3F9C39DC0B9698544 E60913E4DF209907D8E30D96659A97C9CF2A795A 1198C0117593497A5EC5C199286AF1F9897469DC",
+                "PHP_VERSION=8.2.33",
+                "PHP_URL=https://www.php.net/distributions/php-8.2.33.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.2.33.tar.xz.asc",
+                "PHP_SHA256=fbdeace9b38220436a4c8fd79b900df92878151db145e641750743a283b514c1",
+                "APACHE_DOCUMENT_ROOT=/var/www/html",
+                "DEBIAN_FRONTEND=noninteractive"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/moodle-entrypoint"
+            ],
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "sh -c \"curl -fsS -H 'Host: localhost:18521' http://127.0.0.1/ | grep -Eq 'Moodle|login'\""
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 60000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 425854333,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:f2ec4de84f559f5c7be4233b589cdbdbb5507807e05621b77320edd55a1f2a0f",
+                "sha256:b3be4f0b2ec894b3b27d4845c7d38627065b04a50cb8ecc7fd42f65694c5fe0c",
+                "sha256:c5a093ccc031cd8cc546de8e0079b2523fd9b82f0071481e796e30bea2873879",
+                "sha256:58a753917d8bea03e3abdf0b8613479aa3aeaf2d23f76ac25bfc365d47c699a7",
+                "sha256:f1cc916c2da13ae58362fc915b5ad3f5cee97d31366913854f6660f84d019332",
+                "sha256:4b4f78527b3dca149b571fd83d7bf373da063ade36ac1e132ef408e68dac4ec1",
+                "sha256:98a3ad4fc67f82327dcba46b342d5ce076ab9329c348427a505cfb036a578af0",
+                "sha256:2a3469fe2371b8a9ec2a53fcb1014d6caa268eda0ed7d443ecddcbacdfd39291",
+                "sha256:251483956ea922d7bed6a5ae1aa558042ec792072bf6409b060f87379f884d4b",
+                "sha256:379623e03d55031b458519aa884755d6d459bbea93bd8e9e18314783cb522f5f",
+                "sha256:01cdd1bf6c2ecf47053c55f54a4db00df699163badf006711dc9e5f9e2562340",
+                "sha256:ee06d0f2b1ba9ba9ab934cb2731925fddeef59e112f8c140b5e1e813c4bc0b9c",
+                "sha256:9b50e54caa1a6b4837e5c946a9d12e0b201f2199f85f2e951be30b87356a623c",
+                "sha256:e69b4620f68552fcc12843962e03c6fa2475e4475d052dd9338ea625df934324",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:bfe7615e05f4be013f2ac9273cc7ad99105c30b5758515793a825326f8d85001",
+                "sha256:826f8ea60ce572365199d80d9592bbc80f60b8c754f9f0e1c5ac8dc89c5670ba",
+                "sha256:d68d4c27b93f8eb7a2c63cb418983ff400d2caccbd725bfdb48bfbc38c1ef0d5",
+                "sha256:9a4890b01e47ae96257f2b41dca531105d7d25e3a2a4cd2689d7e84a918d3db9",
+                "sha256:89e5b0ae7f26539a1647ceb18e8844c50e336c57c775c92531c1c464f0d1f1a4",
+                "sha256:4677664f041432b1506aee3e075571115e8bebd2c781e9c314f5ac85e363c758",
+                "sha256:f124bc3b5b5e0af3b6d6cef1352a59c05be1609bd4b94b97849d27fc33a79b34",
+                "sha256:5db56f76284b2822ce8970b0f48658fe191796ce745aafb0145f899b1b119533",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T16:42:28.315844791Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-moodle:4.4.0",
+                "org.opencontainers.image.ref.name": "4.4.0"
+            }
+        }
+    }
+]

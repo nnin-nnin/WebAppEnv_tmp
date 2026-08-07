@@ -1,0 +1,13 @@
+roles:
+  - name: Super administrator
+    permissions:
+      - global superadmin read
+      - LimeSurvey 全部管理权限
+    purpose: 应用初始管理员角色
+    users:
+      - admin
+  - name: Ordinary user
+    permissions:
+      - 默认无全局管理权限，可由管理员按 survey 或模板分配
+    purpose: 通过 LimeSurvey 用户管理页面创建的普通后台用户
+    users: []

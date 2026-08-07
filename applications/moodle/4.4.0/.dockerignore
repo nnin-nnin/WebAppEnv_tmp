@@ -1,0 +1,5 @@
+image/*.tar
+source/SHA256SUMS
+source/source.json
+README.md
+manifest.yaml

@@ -1,0 +1,114 @@
+[
+    {
+        "Id": "sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b",
+        "RepoTags": [
+            "asteriskax001/sop-minthcm:4.0.4",
+            "nnin/sop-minthcm:4.0.4"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-minthcm@sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b",
+            "nnin/sop-minthcm@sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b"
+        ],
+        "Created": "2026-08-07T01:33:54.938788336+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "MINTHCM_ADMIN_PASSWORD=",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=1729F83938DA44E27BA0F4D3DBDB397470D12172 BFDDD28642824F8118EF77909B67A5C12229118F 2C16C765DBE54A088130F1BC4B9B5F600B55F3B4 39B641343D8C104B2B146DC3F9C39DC0B9698544",
+                "PHP_VERSION=8.0.30",
+                "PHP_URL=https://www.php.net/distributions/php-8.0.30.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.0.30.tar.xz.asc",
+                "PHP_SHA256=216ab305737a5d392107112d618a755dc5df42058226f1670e9db90e77d777d9",
+                "APACHE_DOCUMENT_ROOT=/var/www/MintHCM",
+                "MARIADB_DATABASE=minthcm",
+                "MARIADB_USER=minthcm",
+                "MARIADB_PASSWORD=minthcm-local-db",
+                "MINTHCM_URL=http://localhost:18520",
+                "ES_HOME=/usr/share/elasticsearch",
+                "ES_JAVA_HOME=/usr/share/elasticsearch/jdk",
+                "ES_JAVA_OPTS=-Xms128m -Xmx128m -XX:MaxDirectMemorySize=512m",
+                "MINTHCM_ADMIN_PASSWORD_FILE="
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/entrypoint.sh"
+            ],
+            "WorkingDir": "/var/www/MintHCM",
+            "Labels": {
+                "org.opencontainers.image.revision": "e821f829d64ad1eaea8b98f04ad2891dfbe282e8",
+                "org.opencontainers.image.source": "https://github.com/minthcm/minthcm.git",
+                "org.opencontainers.image.title": "MintHCM all-in-one",
+                "org.opencontainers.image.version": "4.0.4"
+            },
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "/usr/local/bin/healthcheck-container.sh"
+                ],
+                "Interval": 30000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 90000000000,
+                "Retries": 8
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 1061461037,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:1b6fd3ad4ce602924fffb84437331a255e2a9463531a1bd92a15e9e3c4d11523",
+                "sha256:f99b495681efa94a642bca982cd8494004891587eadc07b5505fcfb2169b1e24",
+                "sha256:9908a80d2ba08344acd752f0db61461fac5594014c2f153b4bba06c4cb668878",
+                "sha256:470cafb92a2a5f63512dc599e5843a541119bd8177d660cbd451b8314affce72",
+                "sha256:2b9a138953717a1cfa08a3f590763963a8ce0d1479a6f015d73f30b2df15213e",
+                "sha256:a676f10abc76d50c9d68602d9973490bf96b0b2206cc632e165f16aa399e8820",
+                "sha256:7fb8b6b1303d091e3ebbb34c43810d7e36ef3b8306b1b4ff0c71aea62e84e338",
+                "sha256:643ef540638b8303248b09340d5acd32f8b05f7470853b169d2302c209064695",
+                "sha256:25acef0694e65e03c10d35523bc631eb3ef2a2ebdf0715dafe7bb75cc2204993",
+                "sha256:b1fa81c598abb9424b1792679d0004cf1477ee26c4582b065a03fc2504466008",
+                "sha256:bccfcf081202e27c062d8b4d545d0359fcd23e07c87bc30b9e39aa571488b6a7",
+                "sha256:d5c4f03c0e222cbe4c92e67cbd854067b30189fb474aa4ad3bd93d6c88f7fdea",
+                "sha256:b010af92d1b8b4ad2e15488f503f0fc0a9d40ca33a504d65229951eba2d39093",
+                "sha256:ffc18dfb34f3d4906b9b29f57a7c51d021c4df70e5eaad4083edcdb5165da396",
+                "sha256:7006d4535c9c9ce06c1f3ef2e1ed5effaddb72fc878a1e1004dc27937d657a14",
+                "sha256:cd642aba095e5acff31862a68b0ca809067342a652f7182b43a5af3933a3af4e",
+                "sha256:1072b0724eb4c905f6a310574664dadb335217bf627381c2b295c1ac276dd954",
+                "sha256:47010d98fc329d682c02a186aeb055bbd74f91e457fce4274664ab82b3419a02",
+                "sha256:fa49be91d94529770a018388692c0e0f9fe7a89c514805493bcda3bf47c33923",
+                "sha256:0563c5e902ab8c1bc856f5b10c38c3f13c81f59cbb3141adc056d9e683ad6e2f",
+                "sha256:b236d4c07249d606c6946ea05857f4a1d01e7ca956efab1d2ca72f31077cf61d",
+                "sha256:0b5b48300a4d5c19d92661dd931b3b6173d1d7982b301c11c1fda080756faaae",
+                "sha256:5d25a4977bd2530dae5cc667d8bde0ad356d1b2d61ae2ab350d1c04d411e7eea",
+                "sha256:679ad51a0764718c0c04610300ae03985211c285a3079f8cdb8042b995cdfa2e",
+                "sha256:9bf751498bf9c44d1f071e50e3f7c5eacb881ddab4da39468874a7ed290f2604",
+                "sha256:e18d2892e112b24cacac3148725804c63f67f62fec4131e009156f984dbb583d",
+                "sha256:a1eead108251550dc018db13b245f996caae770187ab018e6ef6a4384bdba3fe",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:7b2f07b71051293f00f3ab2d9dc1d86abc85b7abdffa2c26f01afd278e8f0fcc"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-07T05:45:20.009677294Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b",
+            "size": 6590,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-minthcm:4.0.4",
+                "org.opencontainers.image.ref.name": "4.0.4"
+            }
+        }
+    }
+]

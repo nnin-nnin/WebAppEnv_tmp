@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/mautic/mautic
+    commit: 4676457f5ac7c9d13308b119a28bbe527cb542ce

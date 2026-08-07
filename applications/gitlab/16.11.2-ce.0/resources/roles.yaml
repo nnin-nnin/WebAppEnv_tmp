@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    permissions: Full instance administration, user management, project and group management
+    purpose: Initial administrator role
+    users:
+      - admin

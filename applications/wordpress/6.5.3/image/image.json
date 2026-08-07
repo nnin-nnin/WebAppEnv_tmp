@@ -1,0 +1,99 @@
+[
+    {
+        "Id": "sha256:f4ccc154623599cd25843081ef340cdfdfdaa08d86adcce0c0586c6b95f71eb7",
+        "RepoTags": [
+            "asteriskax001/sop-wordpress:6.5.3",
+            "nnin/sop-wordpress:6.5.3"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-wordpress@sha256:f4ccc154623599cd25843081ef340cdfdfdaa08d86adcce0c0586c6b95f71eb7",
+            "nnin/sop-wordpress@sha256:f4ccc154623599cd25843081ef340cdfdfdaa08d86adcce0c0586c6b95f71eb7"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T12:47:48.052495824+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=39B641343D8C104B2B146DC3F9C39DC0B9698544 E60913E4DF209907D8E30D96659A97C9CF2A795A 1198C0117593497A5EC5C199286AF1F9897469DC",
+                "PHP_VERSION=8.2.33",
+                "PHP_URL=https://www.php.net/distributions/php-8.2.33.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.2.33.tar.xz.asc",
+                "PHP_SHA256=fbdeace9b38220436a4c8fd79b900df92878151db145e641750743a283b514c1"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/wordpress-entrypoint"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/wp-content": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/usr/local/bin/wordpress-healthcheck"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 60000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 356923366,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:f2ec4de84f559f5c7be4233b589cdbdbb5507807e05621b77320edd55a1f2a0f",
+                "sha256:b3be4f0b2ec894b3b27d4845c7d38627065b04a50cb8ecc7fd42f65694c5fe0c",
+                "sha256:c5a093ccc031cd8cc546de8e0079b2523fd9b82f0071481e796e30bea2873879",
+                "sha256:58a753917d8bea03e3abdf0b8613479aa3aeaf2d23f76ac25bfc365d47c699a7",
+                "sha256:f1cc916c2da13ae58362fc915b5ad3f5cee97d31366913854f6660f84d019332",
+                "sha256:4b4f78527b3dca149b571fd83d7bf373da063ade36ac1e132ef408e68dac4ec1",
+                "sha256:98a3ad4fc67f82327dcba46b342d5ce076ab9329c348427a505cfb036a578af0",
+                "sha256:2a3469fe2371b8a9ec2a53fcb1014d6caa268eda0ed7d443ecddcbacdfd39291",
+                "sha256:251483956ea922d7bed6a5ae1aa558042ec792072bf6409b060f87379f884d4b",
+                "sha256:379623e03d55031b458519aa884755d6d459bbea93bd8e9e18314783cb522f5f",
+                "sha256:01cdd1bf6c2ecf47053c55f54a4db00df699163badf006711dc9e5f9e2562340",
+                "sha256:ee06d0f2b1ba9ba9ab934cb2731925fddeef59e112f8c140b5e1e813c4bc0b9c",
+                "sha256:9b50e54caa1a6b4837e5c946a9d12e0b201f2199f85f2e951be30b87356a623c",
+                "sha256:e69b4620f68552fcc12843962e03c6fa2475e4475d052dd9338ea625df934324",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:6c1e8d36b7588bf40a6b5633a785839e7a19379099e6719ee2f08bd49bf31d39",
+                "sha256:d997bbe88007d24d5fc75a46c057d499855d5da83c2872fed510eba81adb74c4",
+                "sha256:a5f053336f2e26c4ba8b2d20b351545ad44dfc0fbd8d1dc0a036d765448ce56d",
+                "sha256:fcbe5cf2bad1e9b0517b376bb122d8c3f42962afd592669dce9faa99a73bf3df",
+                "sha256:5f4d356bb59cb8f884b8e52dd5282404bac715c40e312295973d892e2d973619",
+                "sha256:ee820f3943a8e917e9936e82effd65b516000fbb0e7bc0656ef2a38470ba65c2",
+                "sha256:e3c6053af64359c126d27eb75c42ee5716a740828054bf2070c802fcf08a904b",
+                "sha256:a057f3074eb90e8e19f3ca9efde9e2c093b10bbbc52188fbdb6b4025fad530e0",
+                "sha256:dc6bf1b11d8403c6bfb0eb4b187787c5555d2d275ce65a4573d6156aaf97fe7e",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T16:43:21.70099349Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:f4ccc154623599cd25843081ef340cdfdfdaa08d86adcce0c0586c6b95f71eb7",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-wordpress:6.5.3",
+                "org.opencontainers.image.ref.name": "6.5.3"
+            }
+        }
+    }
+]

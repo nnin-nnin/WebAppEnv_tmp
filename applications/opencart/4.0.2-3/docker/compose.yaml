@@ -1,0 +1,10 @@
+services:
+  application:
+    image: asteriskax001/sop-opencart:4.0.2-3
+    ports:
+      - "18523:80"
+    volumes:
+      - application-db:/var/lib/mysql
+
+volumes:
+  application-db:

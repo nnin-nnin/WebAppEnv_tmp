@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/nextcloud/server
+    commit: 3bb0c9b012f0e87ccddd37e4782d3fb5ae2025a6

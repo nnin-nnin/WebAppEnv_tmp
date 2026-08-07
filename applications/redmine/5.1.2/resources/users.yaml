@@ -1,0 +1,8 @@
+application: Redmine
+users:
+  - username: admin
+    password: WcRed!26-nK9vT5J
+    type: administrator
+    enabled: true
+    purpose: 初始系统管理员
+

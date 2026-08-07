@@ -1,0 +1,15 @@
+services:
+  application:
+    image: asteriskax001/sop-glpi:10.0.15
+    ports:
+      - "18514:80"
+    volumes:
+      - glpi-data:/var/www/html/files
+      - glpi-config:/var/www/html/config
+      - glpi-db:/var/lib/mysql
+
+volumes:
+  glpi-data:
+  glpi-config:
+  glpi-db:
+

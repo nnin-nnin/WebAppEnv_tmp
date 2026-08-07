@@ -1,0 +1,51 @@
+application:
+  name: LimeSurvey
+  version: 6.5.3
+  type: full-web-application
+  description: 完整浏览器 Web 应用，包含 LimeSurvey PHP 后端、真实管理前端、Apache、PHP 和同容器 MariaDB
+source:
+  repository: https://github.com/LimeSurvey/LimeSurvey.git
+  commit: 0eb5ddce58511fee183f7ed98096931e38e94939
+  frontend_repository: null
+  frontend_commit: null
+  frontend_build_command: null
+  frontend_static_resource_directories:
+    - admin
+    - themes
+    - assets
+  browser_entrypoint: /index.php?r=admin/authentication/sa/login
+runtime:
+  platform: linux/amd64
+  php: 8.2
+  web_server: Apache HTTP Server 2.4 with mod_php
+  database: MariaDB 10.11 (same container, bound to 127.0.0.1)
+  port: 18517
+  internal_port: 80
+image:
+  name: asteriskax001/sop-limesurvey:6.5.3
+  all_in_one: true
+  architecture: linux/amd64
+  components:
+    - LimeSurvey 6.5.3 PHP application and Composer dependencies
+    - LimeSurvey browser management interface and local static assets
+    - PHP 8.2 with LimeSurvey-required extensions
+    - Apache HTTP Server
+    - MariaDB 10.11 server and client
+    - LimeSurvey database schema, default data and initial administrator permissions
+    - controlled-channel administrator password verifier
+  startup: 单镜像、单容器；容器内部同时运行 Apache 应用服务和 MariaDB 数据库服务，应用通过 127.0.0.1 连接数据库；镜像内自动初始化数据库和管理员
+  metadata: image/image.json
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data/config.php
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18517:80 asteriskax001/sop-limesurvey:6.5.3
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

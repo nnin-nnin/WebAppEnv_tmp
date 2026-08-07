@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/redmine/redmine
+    commit: 77574d948e60fa926e49f49bb589f341459dfa2d

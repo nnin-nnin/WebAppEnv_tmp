@@ -1,0 +1,116 @@
+[
+    {
+        "Id": "sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e",
+        "RepoTags": [
+            "asteriskax001/sop-mautic:5.0.4",
+            "nnin/sop-mautic:5.0.4"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-mautic@sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e",
+            "nnin/sop-mautic@sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T14:52:46.483600949+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=528995BFEDFBA7191D46839EF9BA0ADA31CBD89E 39B641343D8C104B2B146DC3F9C39DC0B9698544 F1F692238FBC1666E5A5CCD4199F9DFEF6FFBAFD",
+                "PHP_VERSION=8.1.34",
+                "PHP_URL=https://www.php.net/distributions/php-8.1.34.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.1.34.tar.xz.asc",
+                "PHP_SHA256=ffa9e0982e82eeaea848f57687b425ed173aa278fe563001310ae2638db5c251",
+                "APACHE_DOCUMENT_ROOT=/var/www/html",
+                "APP_ENV=prod",
+                "APP_DEBUG=0",
+                "MAUTIC_DB_DRIVER=pdo_mysql",
+                "MAUTIC_DB_HOST=127.0.0.1",
+                "MAUTIC_DB_PORT=3306",
+                "MAUTIC_DB_NAME=mautic",
+                "MAUTIC_DB_USER=mautic",
+                "MAUTIC_DB_PASSWORD=mautic",
+                "MAUTIC_REQUEST_CONTEXT_HOST=localhost",
+                "MAUTIC_REQUEST_CONTEXT_SCHEME=http",
+                "MAUTIC_REQUEST_CONTEXT_HTTP_PORT=80",
+                "MAUTIC_REQUEST_CONTEXT_HTTPS_PORT=443",
+                "MAUTIC_MAILER_DSN=null://null",
+                "MAUTIC_MESSENGER_DSN_EMAIL=sync://",
+                "MAUTIC_MESSENGER_DSN_HIT=sync://",
+                "MAUTIC_MESSENGER_DSN_FAILED=null://null"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/mautic-entrypoint"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/media/files": {},
+                "/var/www/html/var": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "curl -fsS http://127.0.0.1/s/login >/dev/null || exit 1"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 60000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 513637304,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6a7f953ae30c9f480e6eaf7be8b1ba742bce57a3a83c43e927348e763cff7472",
+                "sha256:2307c6b505e1a617397d550a419b9ac9f41408d360b67b0a258534011b79d012",
+                "sha256:a194aa34810c51c799b4e1115c3af303bb5219d1ec97890968ab8dbc0632626c",
+                "sha256:3a81edb1aa5c2f9accf6ea7f08c012779a7c0027395ebf011c83426154142e50",
+                "sha256:c3a4f943fe0dce4ed13bad5ed7677ead558d8c8f590d7c7efb169322cbcd0e4b",
+                "sha256:9d7ca0f1d79e9359445a28e5167d23cd74550be863e7e2b3b85cb63114312a67",
+                "sha256:a02e335afb5ee4d6c5b59d9351d717af5688c7b5a04e51a5d03386ca69622756",
+                "sha256:e437f4ded1ec2e1860199d6ea1354433520901528efbbfd833aa780bab31d6ea",
+                "sha256:32341b48cc2a4c41ee7b5f58389e7d2409c6de091571f1d481f9c8e797d59a5b",
+                "sha256:b1e3c6bc6b17d6b26dfcd9e8eb10a772ac69970fa6fdc3b7f365dddc81cca5cc",
+                "sha256:75094ce8889a53422ae46c630797f46a3ff8718d28d3e18b2d4b5c224caa2226",
+                "sha256:fbb984a4f3c7f0b139fa34624621d536397e37b4573f22a419dc9dea23df8e61",
+                "sha256:e09aeb4a564e19e93442b0b13c54b4899198a175ef1f45ad4c079a89dd774be0",
+                "sha256:aba400b191aa092541d90394aad624926cb51cbe1ecf9873aaeb2a27023150f1",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:0aec472cb86e3b20a6e8abf03bbb5187b74c63dd37efa5a18fe7c9c2aace78b4",
+                "sha256:92a286eeed136ff1e1d2e18bbdd6cbdc4090a81bd8f7ee53fb2f7085fc0f12c5",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:d6c9fafdf27a3842f3ae92f960d0404a255411aecb931e6d3685e748ffc2cc28",
+                "sha256:77f5e5ae098a9406a7696530de16683acaac4b0e195250117e7e2bcdd841e6b7",
+                "sha256:560fed246856ccde5c47ca31b96d531545f747e28e7ba318df6837bc38533997",
+                "sha256:38b195043034f73b430a5766129201548c6c672a4c72da2c6f4c448c49d1af95",
+                "sha256:f25c926d4ab3fab9664f51b904637ba7c39d89e2c2620a5ed8a83c38548e57b8",
+                "sha256:bda0f0f57a5203bd4bf543caa7b89c4ce5a666b621dfeff65ac5d4c0a209af75"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T16:41:13.464713255Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-mautic:5.0.4",
+                "org.opencontainers.image.ref.name": "5.0.4"
+            }
+        }
+    }
+]

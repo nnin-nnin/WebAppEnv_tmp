@@ -1,0 +1,8 @@
+.git
+.git/**
+image/*.tar
+image/SHA256SUMS
+source/SHA256SUMS
+records
+*.log
+

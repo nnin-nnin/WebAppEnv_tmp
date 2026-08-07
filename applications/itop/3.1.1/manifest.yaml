@@ -1,0 +1,43 @@
+application: iTop
+version: 3.1.1
+application_type: full_web_application
+source_repository: https://github.com/Combodo/iTop.git
+source_commit: be699b4358b253d34835f763316877a66e1ba072
+source_commit_tag: 3.1.1
+frontend_repository: null
+frontend_commit: null
+target_platform: linux/amd64
+runtime:
+  php: 8.1 (iTop requirement >=7.4.0 and <8.2.0)
+  web_server: Apache 2.4 with mod_rewrite
+  database: MariaDB 11.8 from the Debian trixie package (in the same container)
+frontend:
+  build_command: none; official source is a server-rendered PHP web UI with bundled static assets
+  static_assets: source/itop/css, source/itop/js, source/itop/images and source/itop/node_modules
+  browser_entry: http://localhost:18515/
+  api_base: same-origin /webservices/rest.php
+port: 18515
+image: asteriskax001/sop-itop:3.1.1
+all_in_one: true
+components:
+  - iTop 3.1.1 PHP backend and real browser UI
+  - bundled CSS, JavaScript, images and server-rendered login/application pages
+  - Apache web server
+  - PHP 8.1 runtime with GD, mysqli, SOAP and OPcache
+  - MariaDB 11.8 on 127.0.0.1 in the same container
+  - automatic idempotent schema, predefined data and administrator initialization
+image_metadata: image/image.json
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+scripts:
+  build: scripts/build.sh
+  start: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18515:80 asteriskax001/sop-itop:3.1.1
+notes: 单镜像、单容器 all-in-one 环境；应用和数据库均在容器内，应用通过 127.0.0.1 连接数据库；前端为官方源码内置的真实服务端渲染 Web UI，不依赖独立前端仓库或运行时外网下载。
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

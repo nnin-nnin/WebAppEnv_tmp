@@ -1,0 +1,3 @@
+sources:
+  - repository: https://github.com/LimeSurvey/LimeSurvey
+    commit: 0eb5ddce58511fee183f7ed98096931e38e94939

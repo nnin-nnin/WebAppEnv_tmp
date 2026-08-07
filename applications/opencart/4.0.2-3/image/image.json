@@ -1,0 +1,94 @@
+[
+    {
+        "Id": "sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c",
+        "RepoTags": [
+            "asteriskax001/sop-opencart:4.0.2-3",
+            "nnin/sop-opencart:4.0.2-3"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-opencart@sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c",
+            "nnin/sop-opencart@sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T18:59:50.143303173+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=39B641343D8C104B2B146DC3F9C39DC0B9698544 E60913E4DF209907D8E30D96659A97C9CF2A795A 1198C0117593497A5EC5C199286AF1F9897469DC",
+                "PHP_VERSION=8.2.33",
+                "PHP_URL=https://www.php.net/distributions/php-8.2.33.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.2.33.tar.xz.asc",
+                "PHP_SHA256=fbdeace9b38220436a4c8fd79b900df92878151db145e641750743a283b514c1",
+                "APACHE_DOCUMENT_ROOT=/var/www/html",
+                "DEBIAN_FRONTEND=noninteractive",
+                "MYSQL_DATADIR=/var/lib/mysql"
+            ],
+            "Entrypoint": [
+                "/usr/local/sbin/opencart-entrypoint.sh"
+            ],
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "curl -fsS --max-time 4 http://127.0.0.1/ | grep -Eiq 'OpenCart|Your Store|Shopping Cart'         && mariadb-admin --protocol=socket --socket=/run/mysqld/mysqld.sock ping >/dev/null 2>&1"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 40000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 274808437,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:f2ec4de84f559f5c7be4233b589cdbdbb5507807e05621b77320edd55a1f2a0f",
+                "sha256:b3be4f0b2ec894b3b27d4845c7d38627065b04a50cb8ecc7fd42f65694c5fe0c",
+                "sha256:c5a093ccc031cd8cc546de8e0079b2523fd9b82f0071481e796e30bea2873879",
+                "sha256:58a753917d8bea03e3abdf0b8613479aa3aeaf2d23f76ac25bfc365d47c699a7",
+                "sha256:f1cc916c2da13ae58362fc915b5ad3f5cee97d31366913854f6660f84d019332",
+                "sha256:4b4f78527b3dca149b571fd83d7bf373da063ade36ac1e132ef408e68dac4ec1",
+                "sha256:98a3ad4fc67f82327dcba46b342d5ce076ab9329c348427a505cfb036a578af0",
+                "sha256:2a3469fe2371b8a9ec2a53fcb1014d6caa268eda0ed7d443ecddcbacdfd39291",
+                "sha256:251483956ea922d7bed6a5ae1aa558042ec792072bf6409b060f87379f884d4b",
+                "sha256:379623e03d55031b458519aa884755d6d459bbea93bd8e9e18314783cb522f5f",
+                "sha256:01cdd1bf6c2ecf47053c55f54a4db00df699163badf006711dc9e5f9e2562340",
+                "sha256:ee06d0f2b1ba9ba9ab934cb2731925fddeef59e112f8c140b5e1e813c4bc0b9c",
+                "sha256:9b50e54caa1a6b4837e5c946a9d12e0b201f2199f85f2e951be30b87356a623c",
+                "sha256:e69b4620f68552fcc12843962e03c6fa2475e4475d052dd9338ea625df934324",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:f098807080a0c6b370af81166fd64a651e9da06c22066f2de8d538a73fdfd8c2",
+                "sha256:4bb796e0ea6b5cb160e5978236725557a1073a0f8fa2ace217c4eee65c4f9ea9",
+                "sha256:bb5615b14e78ed1f3a7711c73c35fda461cf300f3b452f668150f1e1f3250e3b",
+                "sha256:20288775a4365853d07d23ef0839391edad15a16fbf63fef58b19cf8d6eac34d",
+                "sha256:82ed3a1f108174ef6e73037a8cecd60a62c5f1128e67f26b8594ca1caa56e865",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-07T05:46:41.977861177Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-opencart:4.0.2-3",
+                "org.opencontainers.image.ref.name": "4.0.2-3"
+            }
+        }
+    }
+]

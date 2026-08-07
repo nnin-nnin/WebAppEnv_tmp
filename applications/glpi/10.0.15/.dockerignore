@@ -1,0 +1,10 @@
+.git
+image/*.tar
+source/SHA256SUMS
+source/source.json
+**/node_modules
+**/vendor
+**/files/_*
+**/config/config_db.php
+**/config/glpicrypt.key
+

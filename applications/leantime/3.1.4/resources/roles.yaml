@@ -1,0 +1,26 @@
+application: Leantime
+roles:
+  - name: owner
+    permissions: 应用内置的最高级项目、用户和系统管理权限
+    purpose: 初始管理员角色
+    users: [admin]
+  - name: admin
+    permissions: 应用内置的管理权限
+    purpose: 普通管理用户可使用的角色
+    users: []
+  - name: manager
+    permissions: 应用内置的项目和团队管理权限
+    purpose: 项目管理用户
+    users: []
+  - name: editor
+    permissions: 应用内置的项目编辑权限
+    purpose: 普通用户创建脚本的默认角色
+    users: []
+  - name: commenter
+    permissions: 应用内置的评论权限
+    purpose: 只评论用户
+    users: []
+  - name: readonly
+    permissions: 应用内置的只读权限
+    purpose: 只读用户
+    users: []

@@ -1,0 +1,10 @@
+application: iTop
+roles:
+  - name: Administrator
+    permissions: iTop 内置管理员全部权限；REST Services User
+    purpose: 管理配置项、工单、用户和系统设置，并支持受控用户创建验收
+    assigned_to: admin
+  - name: 普通本地用户
+    permissions: Service Desk Agent（iTop 内置角色）
+    purpose: 非管理员验收账号
+    assigned_to: 由 resources/register.sh 创建

@@ -1,0 +1,55 @@
+application:
+  name: GitLab
+  version: 16.11.2-ce.0
+  type: complete-web-application
+  platform: linux/amd64
+  source_repository: https://github.com/gitlabhq/gitlabhq
+  source_tag: v16.11.2
+  source_tag_object: fe17fb3c5636b849d781ea4a7710b02dc7b957b7
+  source_commit: 0c3000e3564b870316b6cf74252b1eb8f20afcf9
+  source_repository_note: "gitlabhq/gitlabhq 是 gitlab-org/gitlab-foss 的 GitHub 镜像，v16.11.2 在两边的标签对象和 commit 完全一致。镜像基于官方 Omnibus 镜像 gitlab/gitlab-ce:16.11.2-ce.0 构建，源码树不参与构建。"
+  frontend_repository: null
+  frontend_commit: null
+  frontend_build_command: "GitLab Rails asset bundle is included in the fixed source/official Omnibus artifact"
+  frontend_static_assets: "/opt/gitlab/embedded/service/gitlab-rails/public/assets"
+  browser_entrypoint: http://127.0.0.1:18527/
+runtime:
+  language: Ruby/Rails, Go, Node.js runtime components bundled by Omnibus
+  web_server: NGINX + GitLab Workhorse
+  database: PostgreSQL bundled in the Omnibus image
+  cache_and_queue: Redis bundled in the Omnibus image
+  internal_database_host: 127.0.0.1
+delivery:
+  mode: all-in-one-single-image-single-container
+  image: asteriskax001/sop-gitlab:16.11.2-ce.0
+  image_metadata: image/image.json
+  published_port: 18527:80
+  components:
+    - GitLab Rails application and bundled frontend assets
+    - NGINX, Workhorse, Puma, Sidekiq and Gitaly
+    - PostgreSQL and Redis in the same container
+    - automatic reconfigure and database initialization
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data/
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: >-
+  docker run -d --name gitlab-16.11.2-ce.0 -p 18527:80
+  -v gitlab-16.11.2-ce.0-config:/etc/gitlab
+  -v gitlab-16.11.2-ce.0-logs:/var/log/gitlab
+  -v gitlab-16.11.2-ce.0-data:/var/opt/gitlab
+  asteriskax001/sop-gitlab:16.11.2-ce.0
+notes:
+  - The image is a single all-in-one container with application and database services inside it.
+  - The complete Web application serves its bundled frontend from the same container and uses same-origin backend APIs.
+  - The initial administrator credential is retained through a controlled channel and is intentionally absent from this manifest.
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

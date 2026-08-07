@@ -1,0 +1,7 @@
+application: Moodle
+users:
+  - username: admin
+    password: WcMood!26-mQ6rS2F
+    type: site administrator
+    enabled: true
+    purpose: 初始站点管理与验收

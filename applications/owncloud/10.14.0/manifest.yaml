@@ -1,0 +1,50 @@
+application:
+  name: ownCloud
+  version: 10.14.0
+  type: 完整 Web 应用
+  source_repository: https://github.com/owncloud/core.git
+  source_commit: f8c196c1d17abca4e8c2ce17e936cb9fe4ebd316
+  frontend_repository: null
+  frontend_commit: null
+platform: linux/amd64
+runtime:
+  language: PHP 7.4.3
+  web_server: Apache 2.4.41
+  database: MariaDB 10.3.39（Ubuntu 20.04 focal 固定发行版包 1:10.3.39-0ubuntu0.20.04.2）
+  dependency_policy: 构建时安装并打包，运行时不联网下载依赖
+frontend:
+  included: true
+  build_command: 无独立前端构建；ownCloud core 固定源码已包含浏览器静态资源
+  static_resource_directory: /var/www/owncloud/core/js、/var/www/owncloud/core/css、/var/www/owncloud/core/img 及应用资源
+  browser_entrypoint: /
+  api_connection: 浏览器通过同一容器的相对路径访问 ownCloud PHP API
+delivery:
+  target_port: 18524
+  container_port: 80
+  image: asteriskax001/sop-owncloud:10.14.0
+  all_in_one: true
+  description: 单镜像、单容器；内部包含 ownCloud、Apache、PHP 和 MariaDB，数据库通过 127.0.0.1:3306 连接
+  components:
+    - ownCloud core 10.14.0 固定源码
+    - ownCloud core browser frontend and static assets
+    - PHP 7.4 with packaged extensions and Composer dependencies
+    - Apache 2.4
+    - MariaDB 10.3.39
+    - 初始化数据库、配置、管理员账号和文件数据
+  metadata: image/image.json
+  credential_policy: 初始管理员凭据由受控渠道保存，未写入本清单
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data/
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d --name owncloud-10-14-0 -p 18524:80 asteriskax001/sop-owncloud:10.14.0
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

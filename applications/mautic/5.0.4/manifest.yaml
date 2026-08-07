@@ -1,0 +1,43 @@
+application:
+  name: Mautic
+  version: 5.0.4
+  type: 完整 Web 应用
+  repository: https://github.com/mautic/mautic.git
+  commit: 4676457f5ac7c9d13308b119a28bbe527cb542ce
+  frontend_repository: null
+  frontend_commit: null
+source:
+runtime:
+  platform: linux/amd64
+  php: 8.1
+  web_server: Apache HTTP Server 2.4 with mod_rewrite
+  frontend_build_command: composer install --no-dev (post-install runs npm ci and production asset generation)
+  static_assets: media/assets and repository-generated public assets
+  browser_entrypoint: http://localhost:18518/s/login
+  database: MariaDB 11.8 (same container, bound to 127.0.0.1)
+  external_port: 18518
+  api_base: http://localhost:18518/api
+image:
+  name: asteriskax001/sop-mautic:5.0.4
+  all_in_one: true
+  description: 单镜像、单容器；内部包含 Mautic、Apache、PHP 8.1 和 MariaDB 11.8 服务
+  frontend_included: true
+  frontend_api_connection: 同源 /api 路径，由同一 Apache/PHP 服务处理
+  metadata: image/image.json
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data/README.md
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+delivery:
+  recommended_run: docker run -d --name mautic-5-0-4 -p 18518:80 asteriskax001/sop-mautic:5.0.4
+  internal_initialization: 镜像内部自动启动 MariaDB、保留初始化数据库并启动 Apache；不需要 Compose、安装器或外部数据库
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

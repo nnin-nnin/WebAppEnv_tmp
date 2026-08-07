@@ -1,0 +1,14 @@
+services:
+  application:
+    image: asteriskax001/sop-minthcm:4.0.4
+    ports:
+      - "18520:80"
+    volumes:
+      - minthcm-data:/var/www/MintHCM/legacy/upload
+      - minthcm-db:/var/lib/mysql
+      - minthcm-search:/var/lib/elasticsearch
+
+volumes:
+  minthcm-data:
+  minthcm-db:
+  minthcm-search:

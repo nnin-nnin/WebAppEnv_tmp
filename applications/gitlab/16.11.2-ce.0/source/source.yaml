@@ -1,0 +1,5 @@
+sources:
+  - repository: https://github.com/gitlabhq/gitlabhq
+    tag: v16.11.2
+    tag_object: fe17fb3c5636b849d781ea4a7710b02dc7b957b7
+    commit: 0c3000e3564b870316b6cf74252b1eb8f20afcf9

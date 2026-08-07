@@ -1,0 +1,6 @@
+users:
+  - username: admin
+    password: WcGit!26-lP4yN8C
+    user_type: administrator
+    enabled: true
+    purpose: Initial GitLab instance administrator

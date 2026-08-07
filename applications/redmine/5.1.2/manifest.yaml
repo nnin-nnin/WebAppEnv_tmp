@@ -1,0 +1,49 @@
+application:
+  name: Redmine
+  version: 5.1.2
+  type: 完整 Web 应用
+  repository: https://github.com/redmine/redmine.git
+  commit: 77574d948e60fa926e49f49bb589f341459dfa2d
+  frontend_repository: null
+  frontend_commit: null
+
+platform:
+  target: linux/amd64
+  runtime: Ruby 3.2.4 / Rails 6.1.7.7
+  verified_base_image: redmine@sha256:8a02500706f3dd025bef2d028b3315cc75cdd7514a5d1de5adff7b2adbab5301
+  web_server: Nginx 1.22 with Puma 6.x
+  frontend_build_command: 不适用；Redmine 5.1.2 使用源码随附的发布静态资源
+  static_assets: source/redmine/public（镜像内由 Nginx 直接提供）
+  browser_entrypoint: http://127.0.0.1:18512/
+
+database:
+  engine: MariaDB 10.11 (same container)
+  host: 127.0.0.1
+  initialization: 镜像构建阶段迁移并初始化，容器启动时幂等迁移
+
+delivery:
+  all_in_one: true
+  description: 单镜像、单容器，内部包含 Redmine、Nginx、Puma、Ruby 运行时和 MariaDB 数据库服务
+  image: asteriskax001/sop-redmine:5.1.2
+  metadata: image/image.json
+  port: 18512
+  internal_port: 80
+  frontend: 镜像包含 Redmine 原生页面和本地静态资源，Nginx 将动态请求转发到同容器 127.0.0.1:3000 的 Puma
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: none; 数据库已作为镜像内置初始化数据，运行时按需复制到持久卷
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+recommended_run: docker run -d -p 18512:80 asteriskax001/sop-redmine:5.1.2
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

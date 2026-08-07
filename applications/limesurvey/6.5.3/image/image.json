@@ -1,0 +1,98 @@
+[
+    {
+        "Id": "sha256:0acedae2f92e974b9be96d358cea27a1a9fa5bc61a2e3345367293b487faa943",
+        "RepoTags": [
+            "asteriskax001/sop-limesurvey:6.5.3",
+            "nnin/sop-limesurvey:6.5.3"
+        ],
+        "RepoDigests": [
+            "asteriskax001/sop-limesurvey@sha256:0acedae2f92e974b9be96d358cea27a1a9fa5bc61a2e3345367293b487faa943",
+            "nnin/sop-limesurvey@sha256:0acedae2f92e974b9be96d358cea27a1a9fa5bc61a2e3345367293b487faa943"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-06T13:37:06.614314188+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=39B641343D8C104B2B146DC3F9C39DC0B9698544 E60913E4DF209907D8E30D96659A97C9CF2A795A 1198C0117593497A5EC5C199286AF1F9897469DC",
+                "PHP_VERSION=8.2.33",
+                "PHP_URL=https://www.php.net/distributions/php-8.2.33.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.2.33.tar.xz.asc",
+                "PHP_SHA256=fbdeace9b38220436a4c8fd79b900df92878151db145e641750743a283b514c1"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/limesurvey-entrypoint"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/application/runtime": {},
+                "/var/www/html/upload": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/usr/local/bin/limesurvey-healthcheck"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 8000000000,
+                "StartPeriod": 120000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 436983451,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:66462cc862fe2053b9863fefa3866e07bb5dfb06f6b3ce3177cc096e4021aabe",
+                "sha256:03a673c7a0baf0df882ae62aa156eede6e4752793ad110b07d61cfd3e371a4c0",
+                "sha256:dda4bf1d9032fd2779e5ccaee7ab95743d2c37467b63c3b633937c4fdd03da14",
+                "sha256:150b8b3041564fbb8a4208b86a822b701c9f885b975dc696e246ce2aad3dd142",
+                "sha256:c7c3403e71d156cd707c78327557ac61b68081c47c3b74d0dd76a9051464447e",
+                "sha256:12b1ab2953223166177d6eb6599c8dc0b5cd447e4c9a026eb9bdf7107dfaf062",
+                "sha256:a9d709a9907f59b678f4eb8eb2dde8fe239d30914bed3cd0edb24aca6572fba6",
+                "sha256:c2b00ff01ea5035d7ecd620dfa23a134ddae1edbaabca689ca8064dcd48ba594",
+                "sha256:9fd3399070a47141788a281e7f2f4156c5c9646c589eade062ccf25c93c99440",
+                "sha256:d8fe0605a9879895d1eba1c720b9504b9d95ff15928663ebbce8511ed32345f2",
+                "sha256:776bd0f57fa9bed3723275ee69b45812eaa45dde994e4ca25fcba19f2bc514b9",
+                "sha256:db2b44bc314e0c037b5f42d94fc20fe5b38650921ce9559107f615987291fc5a",
+                "sha256:33d0f0a5b97fc7c4f0ad85ee62e6cf87ba71e33f13dda021c18cf98780bd4b00",
+                "sha256:26703f5f50e29156aef417950146c56e5c724a739d810fe7ff2e6e3aa391f82c",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:4151a49f0d69290f568270d7b0426b4d9aff502a7a12881cd3e1ee8d474189b7",
+                "sha256:9ba3bb26fe7aed3a6405c1296110bdc17f1659e5c554be4ea671b7e205896b86",
+                "sha256:5f68b83714efb09ad273eaa98f1ca7d199a1a47a7a860a9764264edea635df60",
+                "sha256:0846518afcaafa7db449e3beac848029fc8f299134372d1e90c1591b82770a3d",
+                "sha256:71cf41d2b54da09de9c70ba02ec720d003e4da5a9b980e4f0cab1f4d466a51cc",
+                "sha256:c038f61ed84c56119c1999a1be2377d3418a11fdf1e39cbad0d27ecca9b644f8",
+                "sha256:2988325718c6010d79912e28a24c1e47071f36663902ba58973f23d239d8d22c",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-06T16:40:28.05483317Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:0acedae2f92e974b9be96d358cea27a1a9fa5bc61a2e3345367293b487faa943",
+            "size": 856,
+            "annotations": {
+                "io.containerd.image.name": "docker.io/nnin/sop-limesurvey:6.5.3",
+                "org.opencontainers.image.ref.name": "6.5.3"
+            }
+        }
+    }
+]

@@ -1,0 +1,7 @@
+production:
+  adapter: mysql2
+  database: <%= ENV.fetch('REDMINE_DB_NAME', 'redmine') %>
+  host: <%= ENV.fetch('REDMINE_DB_HOST', '127.0.0.1') %>
+  username: <%= ENV.fetch('REDMINE_DB_USER', 'redmine') %>
+  password: <%= ENV.fetch('REDMINE_DB_PASSWORD', 'redmine-local-db') %>
+  encoding: utf8mb4
