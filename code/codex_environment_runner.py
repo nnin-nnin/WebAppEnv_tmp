@@ -229,7 +229,7 @@ def make_parser(repo_root: Path) -> argparse.ArgumentParser:
     parser.add_argument(
         "--prompt-file",
         type=Path,
-        default=repo_root / "prompts/application-environment-all-in-one.md",
+        default=repo_root / "code/prompts/application-environment-all-in-one.md",
     )
     parser.add_argument("--workdir", type=Path, default=repo_root)
     parser.add_argument("--record-dir", type=Path, default=repo_root / "code/runs")

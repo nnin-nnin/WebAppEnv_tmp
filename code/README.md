@@ -1,6 +1,6 @@
 # Codex 环境构建脚本
 
-`codex_environment_runner.py` 将 `prompts/application-environment-all-in-one.md` 参数化后，交给本机已安装的 Codex CLI 执行。它使用 `codex exec --json` 的机器可读事件流，因此 Codex 可以在指定工作目录中检查文件、修改环境、构建 Docker 镜像并执行验收；Python 脚本负责记录执行时间、原始事件和 token 用量。
+`codex_environment_runner.py` 将 `code/prompts/application-environment-all-in-one.md` 参数化后，交给本机已安装的 Codex CLI 执行。它使用 `codex exec --json` 的机器可读事件流，因此 Codex 可以在指定工作目录中检查文件、修改环境、构建 Docker 镜像并执行验收；Python 脚本负责记录执行时间、原始事件和 token 用量。
 
 当前环境没有独立的 Codex Python 包。这个脚本使用 Python 标准库调用已经安装的 `codex` CLI；不需要安装 `openai` 或其他 Python 依赖，也不会把 API key 写入文件。运行前需要先在本机完成 Codex 登录：
 

@@ -9,7 +9,7 @@
 从仓库根目录进入本应用目录，并校验最终归档：
 
 ```bash
-cd applications/mall_1.0.3
+cd applications/mall/1.0.3
 sha256sum -c image/SHA256SUMS
 docker load -i image/mall-1.0.3-linux-amd64.tar
 docker run -d -p 18085:80 nnin/sop-mall:1.0.3

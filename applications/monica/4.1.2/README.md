@@ -26,7 +26,7 @@ name 访问依赖服务。接收者不需要手动创建 Docker 网络，不需�
 获取自建的 app/web 镜像，并由 Compose 拉取 MariaDB、Redis 和 MailHog 官方镜像：
 
 ```bash
-cd applications/monica_4.1.2
+cd applications/monica/4.1.2
 docker compose -f docker/compose.yaml pull
 bash scripts/up.sh
 ```
@@ -37,7 +37,7 @@ bash scripts/up.sh
 如果使用的是包含本地归档的构建工作目录，也可以先校验并加载全部服务镜像：
 
 ```bash
-cd applications/monica_4.1.2
+cd applications/monica/4.1.2
 sha256sum -c image/SHA256SUMS
 docker load -i image/monica-app-4.1.2-linux-amd64.tar
 docker load -i image/monica-web-4.1.2-linux-amd64.tar

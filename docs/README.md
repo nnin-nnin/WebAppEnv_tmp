@@ -39,9 +39,9 @@
 
 ### `codex_environment_runner.py`
 
-这是环境构建运行器。它读取并参数化 `prompts/application-environment-all-in-one.md`，调用本机已经登录的 Codex CLI，让 Codex 在指定目录中完成应用检查、文件构建、Docker 镜像构建和验收。
+这是环境构建运行器。它读取并参数化 `code/prompts/application-environment-all-in-one.md`，调用本机已经登录的 Codex CLI，让 Codex 在指定目录中完成应用检查、文件构建、Docker 镜像构建和验收。
 
-运行记录保存在 `applications/code/runs/`，包括开始时间、结束时间、耗时、事件日志、最终回复和 token 用量。
+运行记录保存在 `code/runs/`，包括开始时间、结束时间、耗时、事件日志、最终回复和 token 用量。
 
 运行前先登录 Codex，并进入 `applications/` 目录：
 
@@ -179,7 +179,7 @@ docker restart <container-name-or-id>
 进入应用目录：
 
 ```bash
-cd applications/espocrm_8.2.5
+cd applications/espocrm/8.2.5/default
 ```
 
 先看目录是否完整：
