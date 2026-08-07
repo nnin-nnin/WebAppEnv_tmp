@@ -1,0 +1,112 @@
+name: Build Drupal Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Push the verified application image to Docker Hub
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: drupal-8-6-15-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and verify Drupal 8.6.15
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      APPLICATION_DIR: applications/drupal/8.6.15
+      IMAGE_VERSION: 8.6.15
+      LOCAL_IMAGE: sop/drupal:ci
+      COMPOSE_IMAGE: yorem/sop-drupal:8.6.15
+      REMOTE_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/sop-drupal
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Read fixed source metadata
+        run: |
+          metadata="$APPLICATION_DIR/source/source.yaml"
+          source_repository="$(awk '/repository:/ { print $2; exit }' "$metadata")"
+          source_commit="$(awk '/commit:/ { print $2; exit }' "$metadata")"
+          test -n "$source_repository"
+          test -n "$source_commit"
+          echo "SOURCE_REPOSITORY=$source_repository" >> "$GITHUB_ENV"
+          echo "SOURCE_COMMIT=$source_commit" >> "$GITHUB_ENV"
+
+      - name: Check out fixed Drupal source
+        run: |
+          source_dir="$RUNNER_TEMP/drupal-8.6.15-source"
+          git clone --filter=blob:none --no-checkout "$SOURCE_REPOSITORY" "$source_dir"
+          git -C "$source_dir" checkout --detach "$SOURCE_COMMIT"
+          test "$(git -C "$source_dir" rev-parse HEAD)" = "$SOURCE_COMMIT"
+
+      - name: Prepare temporary Docker build context
+        run: |
+          build_context="$RUNNER_TEMP/drupal-8.6.15-build"
+          mkdir -p "$build_context/source/drupal-8.6.15"
+          cp -a "$APPLICATION_DIR"/. "$build_context"/
+          git -C "$RUNNER_TEMP/drupal-8.6.15-source" archive "$SOURCE_COMMIT" \
+            | tar -xf - -C "$build_context/source/drupal-8.6.15"
+          test -f "$build_context/source/drupal-8.6.15/core/lib/Drupal.php"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build application image
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ runner.temp }}/drupal-8.6.15-build
+          file: ${{ runner.temp }}/drupal-8.6.15-build/docker/Dockerfile
+          load: true
+          push: false
+          tags: ${{ env.LOCAL_IMAGE }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Start and verify Compose environment
+        run: |
+          build_context="$RUNNER_TEMP/drupal-8.6.15-build"
+          docker tag "$LOCAL_IMAGE" "$COMPOSE_IMAGE"
+          bash "$build_context/scripts/up.sh"
+          bash "$build_context/scripts/healthcheck.sh"
+
+      - name: Show Compose logs on failure
+        if: failure()
+        run: |
+          build_context="$RUNNER_TEMP/drupal-8.6.15-build"
+          if test -f "$build_context/docker/compose.yaml"; then
+            docker compose --env-file "$build_context/docker/.env" -f "$build_context/docker/compose.yaml" ps --all || true
+            docker compose --env-file "$build_context/docker/.env" -f "$build_context/docker/compose.yaml" logs --tail=100 || true
+          fi
+
+      - name: Log in to Docker Hub
+        if: inputs.publish
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Tag and push verified application image
+        if: inputs.publish
+        run: |
+          docker tag "$LOCAL_IMAGE" "$REMOTE_IMAGE:$IMAGE_VERSION"
+          docker tag "$LOCAL_IMAGE" "$REMOTE_IMAGE:$IMAGE_VERSION-${{ github.sha }}"
+          docker push "$REMOTE_IMAGE:$IMAGE_VERSION"
+          docker push "$REMOTE_IMAGE:$IMAGE_VERSION-${{ github.sha }}"
+
+      - name: Remove Compose environment
+        if: always()
+        run: |
+          build_context="$RUNNER_TEMP/drupal-8.6.15-build"
+          if test -f "$build_context/docker/compose.yaml"; then
+            docker compose --env-file "$build_context/docker/.env" -f "$build_context/docker/compose.yaml" down --volumes --remove-orphans || true
+          fi
