@@ -1,35 +1,35 @@
 # SPIP 4.2.0
 
-原生 Docker Compose 应用运行环境。
+Native Docker Compose application environment.
 
-## 前置条件
+## Prerequisites
 - Docker Engine
 - Docker Compose v2
-- 网络访问 Docker Hub
+- Network access to Docker Hub
 
-## 启动
-进入目录后执行：
+## Quick Start
+Navigate to this directory and run:
 ```bash
 bash scripts/up.sh
 ```
 
-## 访问和账号
-- 访问地址：http://localhost:18611
+## Access & Credentials
+- Access URL: http://localhost:18611
 - 后台登录地址：http://localhost:18611/ecrire/
-- 管理员用户名：`admin`
-- 管理员密码：`benchmark-only`
+- Admin Username: `admin`
+- Admin Password: `benchmark-only`
 
-## 验证
+## Verification
 ```bash
 bash scripts/healthcheck.sh
 ```
 
-## 登录验证
+## Authentication Verification
 ```bash
 bash resources/login.sh
 ```
 
-## 重置
+## State Reset
 ```bash
 bash scripts/reset.sh
 ```

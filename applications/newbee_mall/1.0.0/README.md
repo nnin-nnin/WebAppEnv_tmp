@@ -1,6 +1,6 @@
 # newbee-mall 1.0.0
 
-这是一个可复现的、多容器 Docker Compose 应用环境。
+这是一个可复现的、多容器 Docker Compose Application Environment。
 
 ## 架构说明
 
@@ -11,29 +11,29 @@
 
 Compose 会创建项目网络，应用通过 Compose service name (`db`) 连接数据库服务。接收者不需要手动创建 Docker 网络，不需要手动安装数据库或导入 SQL。
 
-## 前置条件
+## Prerequisites
 - Docker Engine
 - Docker Compose v2
-- 目标平台: linux/amd64
+- Target architecture: linux/amd64
 
-## 启动指南 (Docker Hub 方式)
+## Quick Start Guide (Docker Hub 方式)
 
 本应用镜像已上传到 `yorem/newbee-mall:1.0.0@sha256:ad016fb1454bb256b6508f6f1b74ff773014e75fbcc9e6a3c0a644abf0f21dff
 
 ```bash
-# 1. 拉取固定版本镜像
+# 1. Pull Pinned Version Image
 docker compose -f docker/compose.yaml pull
 
-# 2. 启动服务并等待健康检查通过
+# 2. Launch Services并等待健康检查通过
 bash scripts/up.sh
 ```
 
-## 访问和账号
+## Access & Credentials
 
 - **前台页面**: http://localhost:28089/
 - **后台管理页面**: http://localhost:28089/admin
-- **初始管理员账号**: admin
-- **初始管理员密码**: 123456
+- **Initial Admin Username**: admin
+- **Initial Admin Password**: 123456
 
 （注：登录需手动输入图片验证码）
 
@@ -60,7 +60,7 @@ bash scripts/register.sh
 bash scripts/reset.sh
 ```
 
-## 文件说明
+## Directory Structure
 
 - `manifest.yaml`: 环境清单和元数据。
 - `source/`: 包含官方源码的 commit 记录。

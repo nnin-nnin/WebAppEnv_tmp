@@ -1,67 +1,67 @@
-# Zen Cart 1.5.7 应用环境 (Compose)
+# Zen Cart 1.5.7 Application Environment (Compose)
 
-本文档说明如何运行和验证 Zen Cart 1.5.7 可复现应用环境。
+This document describes how to deploy and verify the reproducible Zen Cart 1.5.7 application environment.
 
-## 1. 环境说明
+## 1. Environment Details
 
-- **应用名称**：Zen Cart
-- **应用版本**：1.5.7
-- **源码仓库**：`https://github.com/zencart/zencart`
-- **源码 Commit**：`0ad1b0990f0d13080fa7c9c79a1c51187ae78afc`
-- **部署方式**：Docker Compose (TurnKey Appliance: Apache + MariaDB 10.1 + PHP 7.0)
-- **对外端口**：`18625`
+- **Application**: Zen Cart
+- **Version**: 1.5.7
+- **Source Repository**: `https://github.com/zencart/zencart`
+- **Source Commit**: `0ad1b0990f0d13080fa7c9c79a1c51187ae78afc`
+- **Deployment**: Docker Compose (TurnKey Appliance: Apache + MariaDB 10.1 + PHP 7.0)
+- **Exposed Port**: `18625`
 
-## 2. 启动方式
+## 2. Launch Instructions
 
-进入当前应用环境目录并启动：
+Navigate to this environment directory and launch:
 
 ```bash
 cd applications/zencart/1.5.7/default
 ./scripts/up.sh
 ```
 
-或直接执行 Docker Compose 命令：
+Or execute Docker Compose directly:
 
 ```bash
 docker compose -f docker/compose.yaml up -d
 ```
 
-## 3. 访问与账号信息
+## 3. Access & Credentials
 
-- **商城前台地址**：`http://localhost:18625/`
-- **后台管理地址**：`http://localhost:18625/admin/` (或 `http://localhost:18625/manage/`)
-- **客户登录地址**：`http://localhost:18625/index.php?main_page=login`
-- **管理员账号**：`admin`
-- **管理员密码**：`benchmark-only`
+- **Storefront URL**: `http://localhost:18625/`
+- **Admin Dashboard URL**: `http://localhost:18625/admin/` (或 `http://localhost:18625/manage/`)
+- **Customer Login URL**: `http://localhost:18625/index.php?main_page=login`
+- **Admin Username**: `admin`
+- **Admin Password**: `benchmark-only`
 
-## 4. 验证方法
+## 4. Verification Methods
 
-执行自动化健康检查：
+Execute automated health check:
 
 ```bash
 ./scripts/healthcheck.sh
 ```
 
-执行登录端点测试：
+Execute authentication endpoint test:
 
 ```bash
 ./resources/login.sh
 ```
 
-## 5. 数据重置
+## 5. Data Reset
 
-重置所有容器及持久化数据：
+Reset all containers and persistent data:
 
 ```bash
 ./scripts/reset.sh
 ```
 
-## 6. 目录结构与文件说明
+## 6. Directory Structure & Files
 
-- `manifest.yaml`：描述应用版本、源码 Commit、端口及脚本契约索引
-- `source/source.yaml`：固定的 upstream GitHub 源码仓库链接与 Commit
-- `source/SHA256SUMS`：源码元数据哈希校验文件
-- `docker/compose.yaml`：服务拓扑定义及端口映射
+- `manifest.yaml`: Describes application version, source commit, ports, and operational script index
+- `source/source.yaml`: Pinned upstream GitHub repository URL and commit hash
+- `source/SHA256SUMS`: Source metadata hash verification checksums
+- `docker/compose.yaml`: Service topology definition and port mappings
 - `image/image.json`：镜像元数据定义
-- `resources/`：包含管理员账号角色定义及 login.sh 自动化验证脚本
-- `scripts/`：包含一键启动 up.sh、健康检查 healthcheck.sh 及重置 reset.sh 脚本
+- `resources/`: Pre-seeded user roles and login.sh verification script
+- `scripts/`: Operations scripts (up.sh, healthcheck.sh, reset.sh)

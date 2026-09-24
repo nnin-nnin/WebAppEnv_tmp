@@ -1,6 +1,6 @@
-# 全部应用环境 (已实机全流程验证通过)
+# All Application Environments (Fully Verified)
 
-| 应用 | 版本或固定标识 | 变体 | 环境目录 |
+| Application | Version / Identifier | Variant | Environment Directory |
 | --- | --- | --- | --- |
 | AbanteCart | 1.4.4 | default | [applications/abantecart/1.4.4/default](../applications/abantecart/1.4.4/default/) |
 | ActiveMQ | 5.18.6 | default | [applications/activemq/5.18.6/default](../applications/activemq/5.18.6/default/) |

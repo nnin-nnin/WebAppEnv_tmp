@@ -1,10 +1,10 @@
-# PrestaShop 9.1.4 应用环境
+# PrestaShop 9.1.4 Application Environment ()
 
-这是固定源码 commit `4f7653032a0605d8dfc16515a5f3aea62dcef9b1` 构建的完整 Web 应用环境，目标平台为 `linux/amd64`。最终交付物是单镜像、单容器的 all-in-one 镜像 `yorem/prestashop:9.1.4`，容器内部同时运行 Apache/PHP、PrestaShop 和 MariaDB。
+This is a reproducible environment built from pinned source commit `4f7653032a0605d8dfc16515a5f3aea62dcef9b1` targeting platform `linux/amd64`。最终交付物是单镜像、单容器的 all-in-one 镜像 `yorem/prestashop:9.1.4`，容器内部同时运行 Apache/PHP、PrestaShop 和 MariaDB。
 
-## 启动
+## Quick Start
 
-从应用环境目录执行：
+从Application Environment目录执行：
 
 ```bash
 cd prestashop_9.1.4
@@ -23,18 +23,18 @@ cat source/source.yaml
 
 首次启动会在容器内自动初始化 MariaDB，并使用 PrestaShop 官方 `install-dev/index_cli.php` 安装器导入数据库、模块、主题和演示商品。首次初始化可能需要几十秒；可通过 `docker logs -f <container-id>` 查看进度。
 
-## 访问和账号
+## Access & Credentials
 
 - 店铺前台：<http://localhost:18401/>，显示 Classic 主题的真实 PrestaShop 店铺首页。
 - 后台登录页：<http://localhost:18401/admin-dev/index.php/login>，登录后进入真实后台仪表盘，可访问 Catalog、Orders、Customers 等菜单。
 - 初始管理员显示名：`admin`。
 - PrestaShop 登录名：`admin@example.com`（PrestaShop 后台认证字段是邮箱）。
-- 初始密码：`benchmark-only`。
-- 角色：`SuperAdmin`，拥有全部后台权限。
+- Initial Password: `benchmark-only`。
+- Role: `SuperAdmin`，拥有全部后台权限。
 
 以上账号仅用于 benchmark 环境，请勿用于生产部署。
 
-## 验证
+## Verification
 
 应用启动后执行：
 
@@ -46,7 +46,7 @@ resources/register.sh buyer@example.com 'Buyer-Only-2026' Buyer Example
 
 `resources/login.sh` 使用真实的 `/admin-dev/index.php/login` 表单完成后台登录；`resources/register.sh` 使用 PrestaShop 前台真实的 `/registration`、`submitCreate` 注册流程创建普通客户账号。注册参数不完整或应用返回校验错误时脚本返回非零退出码。
 
-## 重置
+## State Reset
 
 重置会删除指定容器及其持久化卷中的数据库、配置、图片和上传数据：
 
@@ -58,10 +58,10 @@ docker run -d -p 18401:80 yorem/prestashop:9.1.4
 
 不执行重置时，重启同一容器会复用已有数据库和 `app/config/parameters.php`，不会重复安装或覆盖数据。需要长期保存数据时，可按 `docker/compose.yaml` 中的应用服务卷映射启动；Compose 不是交付启动的必要条件，且其中只有一个 service。
 
-## 文件说明
+## Directory Structure
 
 - `manifest.yaml`：应用、固定源码、运行时、组件、镜像和脚本元数据。
-- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
+- `source/`: Upstream provenance (`source/source.yaml`); source snapshots excluded.
 - `docker/`：最终 Dockerfile、辅助 Dockerfile 和单 service Compose 配置。
 - `resources/`：用户、角色、真实登录/注册脚本；应用本身的数据库初始数据由官方安装器内置并在镜像中随源码交付，因此没有额外 seed SQL。
 - `scripts/`：构建、入口、启动、健康检查和重置运维脚本。

@@ -1,8 +1,8 @@
 # SpringBlade
 
-本应用环境是 SpringBlade 5.0.1 版本的 all-in-one `linux/amd64` 镜像环境。前端采用 Saber，后端采用 SpringBlade-boot；Java 21、MySQL 8、Redis 和 Nginx 已集成在同一个容器中。当前镜像已上传到 Docker Hub，并通过首次冷启动、重启、管理员登录和普通用户创建验收。
+本Application Environment是 SpringBlade 5.0.1 版本的 all-in-one `linux/amd64` 镜像环境。前端采用 Saber，后端采用 SpringBlade-boot；Java 21、MySQL 8、Redis 和 Nginx 已集成在同一个容器中。当前镜像已上传到 Docker Hub，并通过首次冷启动、重启、管理员登录和普通用户创建验收。
 
-## 启动
+## Quick Start
 
 推荐使用 Docker Hub 固定 digest 启动：
 
@@ -20,16 +20,16 @@ docker run -d --platform linux/amd64 --name springblade-all-in-one -p 8080:80 yo
 
 不需要执行源码构建、手动安装数据库、导入 SQL 或创建网络；容器首次启动时会自动初始化 MySQL 和应用数据。该交付明确采用 all-in-one 单容器方案，应用服务、数据库、Redis 和 Nginx 不拆分为独立容器。
 
-## 访问和账号
+## Access & Credentials
 
 - **前端地址**：`http://127.0.0.1:8080`
 - **后端 API**：`http://127.0.0.1:8080/api/`
-- **初始管理员账号**：`admin`
-- **初始管理员密码**：`admin`
+- **Initial Admin Username**: `admin`
+- **Initial Admin Password**: `admin`
 - **租户ID**：`000000`
 - **Docker Hub 镜像**：`yorem/springblade:5.0.1@sha256:fd84a9b745d7928818e89ca3ee64ff6dab8c7c6c550666071485d836f0cc2509
 
-## 验证
+## Verification
 
 验证应用状态和 API 可用性：
 
@@ -40,7 +40,7 @@ bash resources/register.sh 8080 testuser testpass
 docker compose -f docker/compose.yaml ps
 ```
 
-## 重置
+## State Reset
 
 如需重置当前项目容器和数据：
 
@@ -48,7 +48,7 @@ docker compose -f docker/compose.yaml ps
 bash scripts/reset.sh
 ```
 
-## 文件说明
+## Directory Structure
 
 - `manifest.yaml`: 部署记录和配置清单。
 - `source/`: 包含后端（SpringBlade）和前端（Saber）的固定 commit 信息。

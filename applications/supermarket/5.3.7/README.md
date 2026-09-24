@@ -7,12 +7,12 @@
 本交付物是多容器 Compose 环境，不是 all-in-one 单容器环境。
 应用、数据库和缓存服务分别运行在独立容器中，Compose 会自动创建项目网络。接收者不需要手动创建 Docker 网络、安装数据库或导入 SQL。
 
-### 前置条件
+### Prerequisites
 - Docker Engine
 - Docker Compose v2
 - 目标平台 linux/amd64
 
-### 启动方式
+### Launch Instructions
 
 本环境采用 Docker Hub（DOCKERHUB）方式分发，应用镜像为 `yorem/supermarket:5.3.7`。执行以下命令拉取固定镜像并启动服务；接收者无需源码构建或手动加载归档：
 
@@ -20,23 +20,23 @@
 # 1. 拉取所有固定版本服务镜像
 docker compose -f docker/compose.yaml pull
 
-# 2. 启动服务
+# 2. Launch Services
 docker compose -f docker/compose.yaml up -d
 ```
 
-### 访问和账号
+### Access & Credentials
 
-- 浏览器入口：`http://127.0.0.1:18095`
+- Web Entrypoint: `http://127.0.0.1:18095`
 - 初始管理员账号：无直接本地密码（使用 OAuth2 Mock 机制）
 - 认证机制说明：Supermarket 官方强制要求使用 Chef Infra Server (oc-id) 进行 OAuth2 登录，不支持本地注册。为了在这个独立环境中进行验证，我们在 Dockerfile 中注入了 `MOCK_AUTH=true`。这意味着在浏览器中点击 `Sign In` 后，系统会自动使用 `OmniAuth.config.test_mode` 截获认证请求，并让你以预设的 `admin` 身份登录。
 
-### 服务说明
+### Service Overview
 
 1. **application**: Supermarket 核心 Web 应用程序（基于 Ruby on Rails，包含 Puma 服务器和所有前端资源）。
 2. **db**: PostgreSQL 13.19，用于存储 Supermarket 的关系型数据。应用自动通过入口脚本执行 `db:setup`。
 3. **redis**: Redis 6.2.5，用作后台任务和缓存。
 
-### 验证
+### Verification
 
 1. **健康检查**
    ```bash
@@ -55,7 +55,7 @@ docker compose -f docker/compose.yaml up -d
    ```
    （会提示 Supermarket 不支持本地注册，完全依赖 Chef Infra Server。）
 
-### 重置
+### State Reset
 
 重置操作只删除当前 Compose 项目的容器、网络和数据卷：
 ```bash
@@ -63,7 +63,7 @@ bash scripts/reset.sh
 ```
 注意，这将同时清空保存在 `application-data` 和 `database-data` 中的业务数据。
 
-## 文件说明
+## Directory Structure
 
 - `manifest.yaml`: 部署元数据，包含版本、端口、服务说明和风险提示。
 - `source/`: 包含 `source.yaml`，记录后端的固定 GitHub 仓库及 immutable commit 哈希。

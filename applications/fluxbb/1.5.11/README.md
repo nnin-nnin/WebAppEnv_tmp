@@ -1,8 +1,8 @@
-# FluxBB 1.5.11 应用环境
+# FluxBB 1.5.11 Application Environment ()
 
 本目录交付 FluxBB 1.5.11 的完整 Web 应用 all-in-one `linux/amd64` 镜像。镜像内包含真实 FluxBB 论坛页面、PHP、Apache、MariaDB、初始化数据库和启动入口；不需要独立数据库容器、Compose 或 Web Installer。
 
-## 启动
+## Quick Start
 
 在本目录执行：
 
@@ -15,18 +15,18 @@ docker run -d --platform linux/amd64 --name fluxbb-1.5.11 -p 18311:80 yorem/flux
 
 接收者只需要 `docker load` 和 `docker run`。镜像已经包含应用、数据库、初始数据、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库导入或 Web Installer。
 
-## 访问和账号
+## Access & Credentials
 
-- 浏览器入口：<http://127.0.0.1:18311/>
+- Web Entrypoint: <http://127.0.0.1:18311/>
 - 登录入口：<http://127.0.0.1:18311/login.php>
 - API 地址：FluxBB 1.5.11 未提供独立 REST API；浏览器页面和表单接口均使用同一地址。
-- 初始用户名：`admin`
-- 初始密码：`benchmark-only`
-- 角色：`Administrators`，拥有论坛和管理后台权限
+- Initial Username: `admin`
+- Initial Password: `benchmark-only`
+- Role: `Administrators`，拥有论坛和管理后台权限
 
 首页是 FluxBB 的真实论坛首页，登录后会显示论坛导航、默认分类/论坛和管理员入口，而不是状态页或 API 文档。
 
-## 验证
+## Verification
 
 ```bash
 FLUXBB_URL=http://127.0.0.1:18311 scripts/healthcheck.sh
@@ -36,7 +36,7 @@ FLUXBB_URL=http://127.0.0.1:18311 resources/register.sh benchmark-user benchmark
 
 `login.sh` 会先取得 FluxBB 登录页中的真实 CSRF token，再提交真实登录表单。`register.sh` 使用 FluxBB 公开的 `register.php` 表单创建普通 Members 用户；密码至少 9 个字符。两者都不依赖 Docker Compose。
 
-## 重置
+## State Reset
 
 重置会删除指定容器内的 FluxBB 数据库并重新运行内置安装器，属于破坏性操作：
 
@@ -46,7 +46,7 @@ scripts/reset.sh fluxbb-1.5.11
 
 容器重启完成后恢复为 `admin` / `benchmark-only`，默认论坛数据也会恢复。未使用外部 Docker volume 时无法恢复被删除的数据；使用 volume 的数据也会被该命令主动清除。
 
-## 文件说明
+## Directory Structure
 
 - `manifest.yaml`：应用、源码、运行时、组件、镜像和脚本元数据。
 - `source/`：固定 commit 的 FluxBB 源码快照、GitHub provenance 和源码归档校验和。

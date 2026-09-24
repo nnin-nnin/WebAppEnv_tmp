@@ -1,6 +1,6 @@
-# Black Widow 和 YuraScanner 应用列表
+# Academic Benchmark Applications (Black Widow & YuraScanner)
 
-| 论文 | 编号 | 应用 | 上游源码 | 论文版本 | 当前版本 | 当前环境目录 |
+| Benchmark Paper | # | Application | Upstream Repository | Paper Version | Current Version | Environment Directory |
 | --- | --- | --- | --- | --- | --- | --- |
 | Black Widow-S&P'21 | 1 | Drupal | [drupal/drupal](https://github.com/drupal/drupal) | 8.6.15 | 8.6.15 | [Drupal 8.6.15](../applications/drupal/8.6.15/) |
 | Black Widow-S&P'21 | 2 | HotCRP | [kohler/hotcrp](https://github.com/kohler/hotcrp) | 2.102 | 3.3.1 | [HotCRP 3.3.1](../applications/hotcrp/3.3.1/) |

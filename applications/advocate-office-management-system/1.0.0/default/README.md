@@ -1,21 +1,21 @@
 # Advocate Office Management System (1.0.0)
 
-本交付物为 **Advocate Office Management System 1.0.0** 的原生多容器 Docker Compose 可复现运行环境。
+本交付物为 **Advocate Office Management System 1.0.0** 的原生多容器 Docker Compose reproducible runtime environment。
 
 > **特别说明**：本环境采用原生多容器 Docker Compose 架构部署，Web 应用服务 (`app`) 和 MySQL 数据库服务 (`db`) 运行于独立的容器中，通过 Docker Compose 网络互相连接通信。
 
 ---
 
-## 1. 前置条件
+## 1. Prerequisites
 
 - **Docker Engine**: v20.10.0+
 - **Docker Compose**: v2.0.0+
-- **目标平台**: `linux/amd64`
+- **Target Platform**: `linux/amd64`
 - **端口要求**: 宿主机需空闲端口 `18004`
 
 ---
 
-## 2. 快速启动
+## 2. Quick Start
 
 ### 从 Docker Hub 拉取镜像并启动
 
@@ -36,8 +36,8 @@ docker compose -f docker/compose.yaml up -d
 
 - **Web 浏览器入口**: [http://localhost:18004/](http://localhost:18004/)
 - **登录页面**: [http://localhost:18004/control/login.php](http://localhost:18004/control/login.php)
-- **初始管理员账号**: `admin`
-- **初始管理员密码**: `benchmark-only`
+- **Initial Admin Username**: `admin`
+- **Initial Admin Password**: `benchmark-only`
 - **系统角色**: `admin` (系统超级管理员，具备案件管理、客户管理、法律条款管理及系统设置权限)
 
 ---
@@ -53,7 +53,7 @@ docker compose -f docker/compose.yaml up -d
 
 ## 5. 验证与运维命令
 
-### 健康检查
+### Health Check
 
 执行自动化健康检查脚本：
 
@@ -61,7 +61,7 @@ docker compose -f docker/compose.yaml up -d
 ./scripts/healthcheck.sh
 ```
 
-### 验证登录与注册
+### Verification登录与注册
 
 测试管理员登录：
 
@@ -75,7 +75,7 @@ docker compose -f docker/compose.yaml up -d
 ./resources/register.sh "张三" "Male" "1990-01-01" "zhangsan@example.com" "13800138000" "北京市朝阳区"
 ```
 
-### 重置环境
+### State Reset环境
 
 清理当前 Compose 项目的所有容器、网络和命名卷：
 
@@ -106,6 +106,6 @@ docker compose -f docker/compose.yaml up -d
 └── scripts/
     ├── build.sh                       # 本地镜像构建脚本
     ├── up.sh                          # 启动及健康等待脚本
-    ├── healthcheck.sh                 # 环境健康检查脚本
-    └── reset.sh                       # 环境重置清理脚本
+    ├── healthcheck.sh                 # Environment health check script
+    └── reset.sh                       # Environment reset and cleanup script
 ```

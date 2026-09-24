@@ -1,17 +1,17 @@
-# NewBee Mall 1.0.0 原生 Docker Compose 环境
+# NewBee Mall 1.0.0 Native Docker Compose Environment
 
 本交付物为 **NewBee Mall 1.0.0** 的原生 Docker Compose 运行环境。
 
-## 1. 前置条件
+## 1. Prerequisites
 
 - **Docker Engine**: v20.10.0+
 - **Docker Compose**: v2.0.0+
-- **目标平台**: `linux/amd64`
+- **Target Platform**: `linux/amd64`
 - **宿主机端口**: `18586`
 
-## 2. 快速启动
+## 2. Quick Start
 
-进入应用目录后执行：
+Navigate to the application directory and run:
 ```bash
 ./scripts/up.sh
 ```
@@ -29,7 +29,7 @@ docker compose -f docker/compose.yaml up -d
 - **默认管理员密码**: `123456`
 - **后端数据库**: MySQL 8.0.35 (`newbee_mall_db`)
 
-## 4. 服务组成
+## 4. Service Architecture
 
 | 服务名称 | 镜像 | 平台 | 端口映射 | 说明 |
 | :--- | :--- | :--- | :--- | :--- |
@@ -48,7 +48,7 @@ docker compose -f docker/compose.yaml up -d
 ./resources/login.sh
 ```
 
-## 6. 环境重置
+## 6. Environment Reset
 
 执行清理重置脚本，停止并清理容器与卷：
 ```bash

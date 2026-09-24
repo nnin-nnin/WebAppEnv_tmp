@@ -1,22 +1,22 @@
 # Admidio 5.0.14 原生多容器 Docker Compose 环境
 
-本交付物为 **Admidio 5.0.14** 的原生多容器 Docker Compose 应用环境。
+本交付物为 **Admidio 5.0.14** 的原生多容器 Docker Compose Application Environment。
 
 > [!NOTE]
 > 本环境为原生多容器 Compose 部署，不是 all-in-one 单容器环境。应用服务（Web/PHP）与数据库服务（MariaDB）分别运行在独立的容器中，并通过 Compose 专有网络通信。接收者无需手动安装数据库、手动创建网络或手动导入 SQL 脚本。
 
 ---
 
-## 1. 前置条件
+## 1. Prerequisites
 
 - **Docker Engine**: v20.10.0+
 - **Docker Compose**: v2.0.0+
-- **目标平台**: `linux/amd64`
+- **Target Platform**: `linux/amd64`
 - **网络要求**: 宿主机需可用端口 `18003`
 
 ---
 
-## 2. 快速启动 (Docker Hub 交付方式)
+## 2. Quick Start (Docker Hub Delivery)
 
 使用已拉取/推送至 Docker Hub 的镜像直接启动：
 
@@ -25,7 +25,7 @@ docker compose -f docker/compose.yaml pull
 docker compose -f docker/compose.yaml up -d
 ```
 
-或者使用封装好的启动脚本：
+Or use the provided launch script:
 
 ```bash
 ./scripts/up.sh
@@ -33,38 +33,38 @@ docker compose -f docker/compose.yaml up -d
 
 ---
 
-## 3. 访问与初始账号
+## 3. Access & Default Credentials
 
 - **浏览器访问地址**: [http://localhost:18003](http://localhost:18003)
 - **登录页面地址**: [http://localhost:18003/system/login.php](http://localhost:18003/system/login.php)
-- **初始管理员账号**: `admin`
-- **初始管理员密码**: `benchmark-only`
-- **初始角色**: `Administrator`
+- **Initial Admin Username**: `admin`
+- **Initial Admin Password**: `benchmark-only`
+- **Initial Role**: `Administrator`
 
 登录成功后，页面将跳转至 Admidio 管理控制台首页，展现组织管理、用户管理、角色权限与模块设置等核心功能。
 
 ---
 
-## 4. 服务组成
+## 4. Service Architecture
 
 本环境保留官方服务边界，包含 2 个核心独立服务：
 
-| 服务名称 | 职责说明 | 镜像 / 基础镜像 | 目标平台 |
+| Service Name | Description | Image / Base Image | Target Platform |
 | :--- | :--- | :--- | :--- |
 | **app** | Admidio 5.0.14 Web 界面与 PHP 业务逻辑 | `yorem/admidio:5.0.14` | `linux/amd64` |
 | **db** | MariaDB 10.11 关系型数据库 | `mariadb:10.11.8` | `linux/amd64` |
 
 ---
 
-## 5. 环境验证与辅助工具
+## 5. Verification & Helper Tools
 
-### 自动健康检查
+### Automated Health Check
 
 ```bash
 ./scripts/healthcheck.sh
 ```
 
-### 账号登录验证
+### Authentication Verification
 
 ```bash
 ./resources/login.sh admin benchmark-only
@@ -78,15 +78,15 @@ docker compose -f docker/compose.yaml up -d
 
 ---
 
-## 6. 环境重置
+## 6. Environment Reset
 
-重置环境并清理当前 Compose 项目的容器、网络和数据卷：
+Reset environment and clean up containers, networks, and data volumes for this Compose project:
 
 ```bash
 ./scripts/reset.sh
 ```
 
-或手动执行：
+Or execute manually:
 
 ```bash
 docker compose -f docker/compose.yaml down -v
@@ -94,7 +94,7 @@ docker compose -f docker/compose.yaml down -v
 
 ---
 
-## 7. 目录结构说明
+## 7. Directory Structure
 
 ```text
 default/
@@ -114,9 +114,9 @@ default/
 │   └── compose.yaml                    # 运行拓扑 Compose 定义
 └── scripts/
     ├── build.sh                        # 本地镜像构建脚本
-    ├── up.sh                           # Compose 启动与健康等待脚本
+    ├── up.sh                           # Compose launch and healthcheck wait script
     ├── healthcheck.sh                  # 综合健康检查脚本
-    └── reset.sh                        # 环境重置清理脚本
+    └── reset.sh                        # Environment reset and cleanup script
 ```
 
 ---

@@ -2,13 +2,13 @@
 
 本交付物是多容器 Docker Compose 环境，保留了 InvoiceNinja 原本的容器拓扑，不是 all-in-one 单容器环境。
 
-## 前置条件
+## Prerequisites
 - 操作系统支持 Docker
 - 已安装 Docker Engine 和 Docker Compose v2
-- 目标架构：linux/amd64
+- Target architecture: linux/amd64
 - 确保端口 `18085` 未被占用
 
-## 启动服务
+## Quick Start
 
 使用 Docker Hub 镜像交付方式，执行以下命令：
 ```bash
@@ -20,7 +20,7 @@ docker compose -p invoiceninja-5-13-30 -f docker/compose.yaml up -d
 bash scripts/up.sh
 ```
 
-## 服务说明
+## Service Overview
 本环境包含 3 个独立容器，通过 Compose 网络互相连接：
 1. **server** (`nginx`): 负责静态文件处理和代理到 PHP-FPM。
 2. **app** (`yorem/invoiceninja:5.13.30`): 包含应用代码、通过 supervisord 启动的 PHP-FPM、定时任务 (cron) 和队列处理守护进程。
@@ -28,15 +28,15 @@ bash scripts/up.sh
 
 应用通过 `db:3306` 访问数据库。数据卷配置了本地持久化，重新创建容器不会丢失数据。
 
-## 访问与账号
+## Access & Credentials
 
-- 浏览器入口：http://127.0.0.1:18085
+- Web Entrypoint: http://127.0.0.1:18085
 - 初始管理员账号：`admin@example.com`
-- 初始管理员密码：`adminpassword`
+- Initial Admin Password: `adminpassword`
 
 初始管理员是由 `app` 容器在第一次启动、初始化数据库后自动根据环境变量创建的。
 
-## 验证
+## Verification
 
 验证应用健康状态：
 ```bash
@@ -53,7 +53,7 @@ bash resources/login.sh
 bash resources/register.sh newuser@example.com newpassword
 ```
 
-## 重置
+## State Reset
 
 如果需要清理环境，执行以下命令（将删除所有相关容器、网络以及命名卷，业务数据将被清空）：
 ```bash

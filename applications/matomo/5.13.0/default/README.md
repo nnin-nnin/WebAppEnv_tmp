@@ -1,34 +1,34 @@
 # Matomo 5.13.0
 
-原生 Docker Compose 应用运行环境。
+Native Docker Compose application environment.
 
-## 前置条件
+## Prerequisites
 - Docker Engine
 - Docker Compose v2
-- 网络访问 Docker Hub
+- Network access to Docker Hub
 
-## 启动
-进入目录后执行：
+## Quick Start
+Navigate to this directory and run:
 ```bash
 bash scripts/up.sh
 ```
 
-## 访问和账号
-- 地址：http://localhost:18563
-- 管理员用户名：`admin`
-- 管理员密码：`AdminPassword123!`
+## Access & Credentials
+- URL: http://localhost:18563
+- Admin Username: `admin`
+- Admin Password: `AdminPassword123!`
 
-## 验证
+## Verification
 ```bash
 bash scripts/healthcheck.sh
 ```
 
-## 登录验证
+## Authentication Verification
 ```bash
 bash resources/login.sh
 ```
 
-## 重置
+## State Reset
 ```bash
 bash scripts/reset.sh
 ```

@@ -1,25 +1,25 @@
-# Apache InLong (2.4.0) 原生 Docker Compose 应用环境
+# Apache InLong (2.4.0) 原生 Docker Compose Application Environment ()
 
 本目录包含 Apache InLong 的原生多容器 Docker Compose 环境。
 
-## 前置条件
+## Prerequisites
 - Docker Engine
 - Docker Compose v2
-- 目标平台: linux/amd64
+- Target architecture: linux/amd64
 - 可用的网络以拉取 Docker Hub 镜像
 
-## 启动指南
+## Quick Start Guide
 本环境采用 Docker Hub 拉取镜像的方式部署。进入本目录后执行：
 ```shell
 bash scripts/up.sh
 ```
-或手动执行：
+Or execute manually:
 ```shell
 docker compose -p apache-inlong-2-4-0 -f docker/compose.yaml pull
 docker compose -p apache-inlong-2-4-0 -f docker/compose.yaml up -d
 ```
 
-## 访问与账号
+## Access & Credentials
 - **浏览器入口**: `http://127.0.0.1:80`；启动前请确保宿主机 80 端口未被占用。
 - **管理员账号**: `admin`
 - **初始密码**: `inlong`
@@ -35,7 +35,7 @@ docker compose -p apache-inlong-2-4-0 -f docker/compose.yaml up -d
 - **jobmanager / taskmanager**: 运行 Flink 任务的处理引擎。
 - **logcollector / loki / grafana**: 可选日志组件（目前默认未开启 profile）。
 
-## 验证与测试
+## Verification与测试
 提供以下脚本验证环境状态（在根目录下执行）：
 ```shell
 # 检查健康状态和可达性
@@ -54,7 +54,7 @@ bash scripts/reset.sh
 ```
 此命令仅删除当前项目的容器和网络，并清理本地对应的数据卷。
 
-## 文件说明
+## Directory Structure
 - `manifest.yaml`: 项目及镜像环境元数据说明。
 - `source/`: 包含官方代码的仓库地址和不可变 commit Hash。
 - `docker/`: 最终的 `compose.yaml` 配置，无宿主机依赖。

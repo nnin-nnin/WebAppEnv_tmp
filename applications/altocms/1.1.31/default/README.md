@@ -1,4 +1,4 @@
-# AltoCMS 1.1.31 原生 Docker Compose 环境
+# AltoCMS 1.1.31 Native Docker Compose Environment
 
 本产物为 **AltoCMS 1.1.31** 的原生多容器 Docker Compose 可复现部署环境。
 
@@ -7,21 +7,21 @@
 
 ---
 
-## 1. 前置条件
+## 1. Prerequisites
 
 - **Docker Engine**: v20.10+
 - **Docker Compose**: v2.0+
-- **目标平台**: `linux/amd64`
+- **Target Platform**: `linux/amd64`
 - **网络要求**: 宿主机可访问 Docker Hub 拉取镜像，宿主机开放 `18007` 端口。
 
 ---
 
-## 2. 快速启动
+## 2. Quick Start
 
 ### 方式一：Docker Hub 方式（推荐）
 
 ```bash
-# 1. 拉取固定版本镜像
+# 1. Pull Pinned Version Image
 docker compose -f docker/compose.yaml pull
 
 # 2. 启动环境
@@ -41,8 +41,8 @@ bash scripts/up.sh
 ## 3. 服务访问与初始账号
 
 - **浏览器入口**: [http://localhost:18007/](http://localhost:18007/)
-- **初始管理员账号**: `admin`
-- **初始管理员密码**: `benchmark-only`
+- **Initial Admin Username**: `admin`
+- **Initial Admin Password**: `benchmark-only`
 - **初始管理员邮箱**: `admin@example.com`
 - **角色类型**: 系统管理员 (administrator, user_role=3)
 
@@ -86,7 +86,7 @@ bash resources/register.sh testuser benchmark-only testuser@example.com
 
 ---
 
-## 6. 环境重置
+## 6. Environment Reset
 
 ```bash
 bash scripts/reset.sh
@@ -96,7 +96,7 @@ bash scripts/reset.sh
 
 ---
 
-## 7. 目录结构说明
+## 7. Directory Structure
 
 ```text
 altocms_1.1.31/

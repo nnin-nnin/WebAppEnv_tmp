@@ -1,29 +1,29 @@
 # SMF (Simple Machines Forum) 2.0.18
 
-SMF 2.0.18 原生 Docker Compose 应用运行环境。
+SMF 2.0.18 Native Docker Compose application environment.
 
-## 前置条件
+## Prerequisites
 - Docker Engine 20.10+
 - Docker Compose v2+
 - 镜像仓库网络访问（Docker Hub）
 
-## 启动
-进入应用目录后执行：
+## Quick Start
+Navigate to the application directory and run:
 ```bash
 bash scripts/up.sh
 ```
 
-## 访问与账号
-- 访问地址：http://localhost:18622
-- 管理员用户名：`admin`
-- 管理员密码：`AdminPassword123!`
+## Access & Credentials
+- Access URL: http://localhost:18622
+- Admin Username: `admin`
+- Admin Password: `AdminPassword123!`
 
-## 验证
+## Verification
 ```bash
 bash scripts/healthcheck.sh
 ```
 
-## 重置与清理
+## Reset & Cleanup
 ```bash
 bash scripts/reset.sh
 ```

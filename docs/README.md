@@ -1,57 +1,66 @@
-# Web 应用环境构建
+# Web Application Environment Packaging & Verification Specification
 
-## 1. 背景
+## 1. Background & Motivation
 
-本项目面向 Web 安全研究，收集论文或研究任务中使用的真实 Web 应用，并将指定版本构造成固定、可验证的运行环境。
+This benchmark repository provides reproducible, deterministic target environments for empirical Web security research, automated exploit generation (AEG), SWE benchmarks, and autonomous security agent evaluation (LLM-based agents).
 
-每个应用版本都对应一个独立目录。目录中保存固定源码的仓库链接和 commit 哈希、Docker 构建文件、初始账号和数据、验证脚本，以及最终 all-in-one 镜像的元数据；源码快照和镜像本体不提交到本仓库。
+Every application version is housed in an isolated, decoupled directory containing:
+- Upstream source repository URL and immutable Git commit hash (`source/source.yaml`);
+- Standardized container orchestrations (`Dockerfile` and `compose.yaml`);
+- Pre-seeded users, role bindings, and database migrations (`resources/`);
+- Autonomous lifecycle and verification scripts (`scripts/`);
+- Cryptographic image digests (`image/image.json`).
 
-交付后的使用方式是：接收者按应用 README 中的 `docker run` 命令直接运行一个容器，Docker 会自动从 Docker Hub 拉取镜像，然后访问真实 Web 应用并完成登录验证。
+Source code trees and raw image tarballs are excluded from version control to prevent repository bloat. Users launch target environments with a single Docker command; containers pull pre-built immutable images from Docker Hub, initialize all services into steady state, and enable immediate browser and API interaction with zero setup wizards.
 
-## 2. 目标产物
+---
 
-每个应用版本对应一个目录，路径为 `applications/<应用名>/<版本>/`；同一版本存在多套独立构建时再加一层变体目录，例如 `applications/espocrm/8.2.5/yz-rebuild/`。
+## 2. Directory Layout & Deliverable Specification
+
+Each environment suite resides in `applications/<application-name>/<version>/<optional-variant>/`:
 
 ```text
-applications/<应用名>/<版本>/<可选变体>/
-├── README.md
-├── manifest.yaml
-├── source/
-├── resources/
-├── docker/
-├── scripts/
-└── image/
+applications/<application-name>/<version>/<optional-variant>/
+├── README.md               # Quickstart guide, port mappings, pre-seeded credentials, and verification steps
+├── manifest.yaml           # Metadata index of source commits, runtimes, exposed ports, and image tags
+├── source/                 # Upstream Git provenance (source.yaml); no raw source trees included
+├── resources/              # Pre-seeded users (users.yaml), roles, SQL migrations, and login/register scripts
+├── docker/                 # Production Dockerfile and docker-compose.yaml configuration
+├── scripts/                # Life-cycle operations: build.sh, up.sh, healthcheck.sh, reset.sh, entrypoint.sh
+└── image/                  # Metadata (image.json); image binaries are hosted on Docker Hub
 ```
 
-| 路径 | 内容 |
-| --- | --- |
-| `README.md` | 应用版本、启动命令、访问地址、账号和验证方式 |
-| `manifest.yaml` | 源码版本、运行时、镜像、资源和脚本索引 |
-| `source/` | GitHub 仓库链接和固定 commit 哈希（`source/source.yaml`）；不保存源码快照 |
-| `resources/` | 初始数据、用户、角色、登录和注册脚本 |
-| `docker/` | Dockerfile 和用于调试或追溯的 Compose 配置 |
-| `scripts/` | 构建、容器入口、健康检查和重置脚本 |
-| `image/` | 镜像元数据 `image.json`；镜像本体发布在 Docker Hub，tar 和校验和不提交到仓库 |
+| Path | Description |
+| :--- | :--- |
+| `README.md` | Application version, quickstart launch commands, web entrypoints, accounts, and testing procedures. |
+| `manifest.yaml` | Machine-readable manifest specifying runtime dependencies, exposed ports, image refs, and assets. |
+| `source/` | Upstream Git provenance (`source/source.yaml`) locking commit hashes without repository bloat. |
+| `resources/` | Seed data, credentials, role hierarchies, and scriptable authentication helpers. |
+| `docker/` | Dockerfile and Compose configurations for local build and reproducible container orchestration. |
+| `scripts/` | Lifecycle management: build, bootstrap, health check, credential verification, and state reset. |
+| `image/` | Image metadata (`image.json`). Image binaries are hosted on Docker Hub under `yorem/<app>:<version>`. |
 
-目标产物是一个可直接运行的最终镜像。镜像内部已经包含应用运行所需的运行时、源码、依赖、数据库或缓存、初始数据和入口程序。接收者不需要重新构建源码、配置外部数据库或执行 Web Installer。
+The end deliverable is a self-contained, immediately actionable runtime topology. Containers encapsulate their own application runtimes (PHP, Node, Java, Python), database engines (MySQL/MariaDB, PostgreSQL), and pre-seeded database states.
 
-## 3. 如何使用 `code/` 中的两个代码文件
+---
+
+## 3. Automation Tools (`code/`)
 
 ### `codex_environment_runner.py`
+The orchestration runner reads and parameterizes `code/prompts/application-environment-all-in-one.md`, delegating workspace inspection, packaging, and validation to the local Codex CLI.
 
-这是环境构建运行器。它读取并参数化 `code/prompts/application-environment-all-in-one.md`，调用本机已经登录的 Codex CLI，让 Codex 在指定目录中完成应用检查、文件构建、Docker 镜像构建和验收。
+Run logs are persisted to `code/runs/`:
+- `<run-id>.json`: Latency, completion status, and token metrics.
+- `<run-id>.events.log`: Full raw JSONL events.
+- `<run-id>.last-message.md`: Summary response.
 
-运行记录保存在 `code/runs/`，包括开始时间、结束时间、耗时、事件日志、最终回复和 token 用量。
-
-运行前先登录 Codex，并停留在仓库根目录（`code/` 和 `applications/` 都在根目录下）：
-
+Authenticate Codex prior to execution:
 ```bash
 codex login
 export CODEX_ADMIN_PASSWORD='benchmark-only'
 ```
 
-以 EspoCRM 8.2.5 为例：
-
+Launch EspoCRM 8.2.5 packaging example:
 ```bash
 python3 code/codex_environment_runner.py \
   --application EspoCRM \
@@ -63,24 +72,13 @@ python3 code/codex_environment_runner.py \
   --workdir .
 ```
 
-运行其他应用时，替换应用名称、版本、源码仓库、commit、镜像名和端口即可。
-
 ### `test_codex_environment_runner.py`
-
-这是运行器的单元测试，不会构建 Docker 镜像。它主要检查：
-
-- prompt 参数是否正确替换；
-- 未替换的占位符是否能够被发现；
-- Codex 事件中的 token 用量是否能够正确统计。
-
-在仓库根目录执行测试：
-
+Unit tests for parameter substitution, placeholder detection, and token tracking:
 ```bash
 python3 code/test_codex_environment_runner.py
 ```
 
-只检查参数、prompt 和命令构造，不启动 Codex：
-
+Parameter validation without invoking Codex:
 ```bash
 python3 code/codex_environment_runner.py \
   --application Example \
@@ -93,185 +91,109 @@ python3 code/codex_environment_runner.py \
   --validate-only
 ```
 
-## 4. 如何验证
+---
 
-应用构建完成后，需要人工打开应用目录并完成一次真实运行验证。`test_codex_environment_runner.py` 和 `--validate-only` 只能验证运行器本身，不能证明应用可以使用。
+## 4. Verification Protocol & Mitigating Environmental False Positives
 
-### 4.1 检查应用目录
+Automated scripts and HTTP status checks (`200 OK`) alone do not prove operational steady state. To eliminate the **Shallow Liveness Fallacy**, every environment must satisfy multi-tier operational assertions.
 
-进入生成的应用目录，确认以下内容存在：
+### 4.1 Taxonomy of Environmental False Positives
+1. **Zombie Liveness ($\mathcal{FP}_{\text{port}}$)**: Port accepts TCP SYN-ACK, but internal daemon is hanging or exited.
+2. **Shallow White Screen ($\mathcal{FP}_{\text{http}}$)**: HTTP returns 200, but page renders unhandled PHP fatal errors or setup wizard prompts.
+3. **Authentication Broken ($\mathcal{FP}_{\text{auth}}$)**: Login UI loads, but pre-seeded passwords mismatch, CSRF fails, or session storage is unwritable.
+4. **Empty Shell ($\mathcal{FP}_{\text{crud}}$)**: Static pages load, but database schema is unmigrated or default seed datasets are missing.
+5. **Persistence Evaporation ($\mathcal{FP}_{\text{persist}}$)**: Cold start works, but storage volumes are ephemeral, wiping databases upon container reboot.
 
-```text
-applications/<应用名>/<版本>/<可选变体>/
-├── README.md
-├── manifest.yaml
-├── source/
-├── resources/
-├── docker/
-├── scripts/
-└── image/
-```
+### 4.2 Multi-Tier Verification Steps
 
-然后人工查看：
-
-- `README.md` 是否写明版本、启动命令、访问地址和账号；
-- `manifest.yaml` 中的版本、源码 commit、镜像名和端口是否与目录内容一致；
-- `source/source.yaml` 是否记录固定版本的 GitHub 仓库和 commit 哈希；
-- `resources/` 是否有初始数据、账号和角色信息；
-- `scripts/` 是否有健康检查和重置脚本；
-- `image/` 是否有镜像元数据 `image.json`（tar 和 `SHA256SUMS` 由 `.gitignore` 排除，不随仓库交付）。
-
-### 4.2 启动应用
-
-直接执行应用 README 中的 `docker run` 命令即可，Docker 会自动从 Docker Hub 拉取镜像：
-
-```text
-docker run -d -p <host-port>:80 <image-name>:<tag>
-```
-
-镜像 tar 和 `SHA256SUMS` 不随仓库交付；构建者在本地执行 `scripts/build.sh` 时会生成它们，但它们由各 `image/.gitignore` 排除，不会进入版本控制。
-
-执行后查看容器状态，确认容器没有立即退出：
-
+#### Step 1: Directory Integrity Inspection
+Verify required assets exist:
 ```bash
-docker ps
-docker logs <container-name-or-id>
-```
-
-### 4.3 浏览器人工验证
-
-在浏览器中打开 README 中记录的访问地址，人工确认：
-
-1. 页面显示真实应用的登录页面，而不是空白页、安装页、Apache 默认页或错误页；
-2. 使用 README 中的初始用户名和密码登录；
-3. 登录成功后进入应用的真实业务首页；
-4. 页面中的菜单、主要资源或最小业务操作可以正常显示；
-5. 如果应用包含多个角色，分别使用管理员和普通用户账号登录，确认角色配置生效。
-
-### 4.4 重启后再次验证
-
-登录成功后重启容器：
-
-```bash
-docker restart <container-name-or-id>
-```
-
-等待应用恢复，再次打开访问地址并登录。确认数据库、账号、角色和必要的应用状态没有因为重启丢失。
-
-容器启动后至少确认：
-
-- 容器处于运行状态；
-- Web 首页可以访问；
-- 初始账号可以登录；
-- 登录后能够进入真实业务页面；
-- 重启容器后应用和账号仍然可用。
-
-健康检查脚本和登录脚本可以作为辅助检查，但不能代替浏览器人工验证。最终要确认的是：别人拿到这个应用目录后，能够按照 README 启动应用并完成登录。
-
-### 4.5 示例：人工验证 EspoCRM 8.2.5
-
-#### 1. 检查应用目录
-
-进入应用目录：
-
-```bash
-cd applications/espocrm/8.2.5/default
-```
-
-先看目录是否完整：
-
-```bash
+cd applications/<app-name>/<version>/<variant>
 ls -la
 find source docker resources scripts image -maxdepth 2 -type f | sort
 ```
+Confirm:
+- `manifest.yaml` matches the runtime specs, ports, and image tags in `README.md`;
+- `source/source.yaml` specifies upstream git repository and commit hash;
+- `resources/users.yaml` contains default `admin` and regular user entries;
+- `scripts/healthcheck.sh` and `resources/login.sh` are executable;
+- `image/image.json` locks the image digest.
 
-然后逐个打开关键文件：
-
+#### Step 2: Container Launch
+Pull and run the pre-built image from Docker Hub:
 ```bash
-sed -n '1,160p' README.md
-sed -n '1,220p' manifest.yaml
+docker run -d -p <host-port>:80 yorem/<app-name>:<version>
+# or for multi-container compose:
+./scripts/up.sh
+```
+Check container status:
+```bash
+docker ps
+docker logs <container-id>
+```
+
+#### Step 3: Scripted Health Check
+Execute the local automated check:
+```bash
+./scripts/healthcheck.sh
+```
+Checks:
+- HTTP endpoint connectivity;
+- API or authentication endpoint availability;
+- Credential validation via `resources/login.sh`.
+
+#### Step 4: End-to-End Browser Verification
+Open the web entrypoint in a browser:
+1. Verify the real application homepage or login form displays (no setup wizard, no Apache/Nginx default placeholder, no unhandled PHP trace).
+2. Authenticate using pre-seeded credentials (`admin` / `benchmark-only`).
+3. Verify navigation renders internal dashboard, administrative menus, and seed records.
+4. Verify non-admin role authentication when multi-role configurations are present.
+
+#### Step 5: Reboot Persistence Assertion
+Restart the running container:
+```bash
+docker restart <container-id>
+```
+Re-verify web entrypoint and re-authenticate. Confirm that database tables, users, and state persist across container restarts.
+
+---
+
+## 5. Walkthrough Example: EspoCRM 8.2.5
+
+### 1. Check Directory
+```bash
+cd applications/espocrm/8.2.5/default
+head -n 30 README.md
+cat manifest.yaml
 cat resources/users.yaml
 ```
 
-重点确认：
-
-- `README.md` 中的版本是 EspoCRM 8.2.5；
-- `manifest.yaml` 中的源码 commit、镜像名和端口与 README 一致；
-- `source/source.yaml` 中存在固定版本的 GitHub 仓库和 commit 哈希；
-- `resources/users.yaml` 中存在 `admin` 账号；
-- `scripts/healthcheck.sh` 和 `resources/login.sh` 存在；
-- `image/` 中存在镜像元数据 `image.json`。
-
-#### 2. 拉取并运行镜像
-
-先拉取 Docker Hub 镜像：
-
-```bash
-docker pull yorem/espocrm:8.2.5
-```
-
-启动容器：
-
+### 2. Pull & Run
 ```bash
 docker run -d \
   --platform linux/amd64 \
   --name espocrm-8.2.5 \
   -p 18092:80 \
   yorem/espocrm:8.2.5
-```
 
-查看容器是否正常运行：
-
-```bash
 docker ps
 docker logs espocrm-8.2.5
 ```
 
-仓库中不包含镜像 tar，`docker run` 会自行从 Docker Hub 拉取，无需 `docker load`。
-
-#### 3. 运行脚本验证
-
-在应用目录执行：
-
+### 3. Automated Check
 ```bash
 ./scripts/healthcheck.sh
 ```
 
-脚本会检查：
+### 4. Interactive Browser Login
+Open `http://localhost:18092`:
+1. Observe the EspoCRM login form;
+2. Enter username `admin` and password `benchmark-only`;
+3. Confirm successful entry into the CRM administrative dashboard.
 
-- `http://localhost:18092` 是否返回正常页面；
-- 使用 `admin / benchmark-only` 是否能够访问 EspoCRM API；
-- 登录脚本是否执行成功。
-
-脚本通过后，再进行浏览器验证。脚本通过不能代替浏览器验证。
-
-#### 4. 浏览器登录验证
-
-在浏览器中打开：
-
-```text
-http://localhost:18092
-```
-
-打开后人工确认：
-
-1. 页面显示 EspoCRM 的登录页面；
-2. 页面不是空白页、Apache 默认页、安装页或错误页；
-3. 页面中有用户名输入框、密码输入框和登录按钮；
-4. 在用户名输入框填写 `admin`；
-5. 在密码输入框填写 `benchmark-only`；
-6. 点击登录按钮；
-7. 登录成功后进入 EspoCRM 的主页面或后台首页，并能看到应用导航、菜单或仪表盘内容；
-8. 页面没有提示账号密码错误，也没有跳回登录页。
-
-#### 5. 重启后再次登录
-
-登录成功后重启容器：
-
+### 5. Restart Test
 ```bash
 docker restart espocrm-8.2.5
 ```
-
-等待几秒后重新访问 `http://localhost:18092`，再次使用 `admin / benchmark-only` 登录。登录仍然成功，说明容器内部的 MariaDB、Apache、应用配置和初始账号可以在重启后继续工作。
-
-以上步骤全部通过后，才能将 EspoCRM 8.2.5 标记为人工验证通过。
+Re-access `http://localhost:18092` and log in again to verify persistence of MariaDB, Apache, and application state.

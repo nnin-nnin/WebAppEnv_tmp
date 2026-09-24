@@ -1,14 +1,14 @@
-# Joomla 6.1.2 原生 Docker Compose 环境
+# Joomla 6.1.2 Native Docker Compose Environment
 
 本环境为 Joomla 6.1.2 版本的原生多容器 Docker Compose 部署配置。
 
-## 前置条件
+## Prerequisites
 - Docker Engine
 - Docker Compose v2
-- 目标平台：linux/amd64
+- Target architecture: linux/amd64
 - 确保端口 8080 未被占用
 
-## 启动指南
+## Quick Start Guide
 本环境使用 Docker Hub 获取镜像。请按照以下步骤启动：
 
 1. 拉取镜像：
@@ -21,18 +21,18 @@ docker compose -f docker/compose.yaml pull
 docker compose -f docker/compose.yaml up -d
 ```
 
-## 访问与账号
-- 浏览器入口：`http://localhost:8080` (首次启动可能需要等待数据库初始化完成)
-- 管理后台：`http://localhost:8080/administrator/`
-- 初始管理员账号：`admin`
-- 初始管理员密码：`12345678password`
+## Access & Credentials
+- Web Entrypoint: `http://localhost:8080` (首次启动可能需要等待数据库初始化完成)
+- Admin Dashboard: `http://localhost:8080/administrator/`
+- Initial Admin Username: `admin`
+- Initial Admin Password: `12345678password`
 
-## 服务说明
+## Service Overview
 本配置包含以下独立容器服务，它们通过 Compose 网络进行通信，不会合并到单个容器中：
 - **joomla**: 运行 Joomla PHP-Apache 应用，连接到数据库服务。
 - **db**: 运行 MySQL 8.0.35 数据库，保存应用数据。
 
-## 验证与重置
+## Verification与重置
 可以使用以下命令进行验证：
 ```bash
 bash scripts/healthcheck.sh
@@ -45,14 +45,14 @@ bash scripts/reset.sh
 ```
 注意：在执行 `reset.sh` 后，数据库数据仍保留在 Docker volume 中。如需完全清理，请手动删除 volume。
 
-## 文件说明
+## Directory Structure
 - `manifest.yaml`: 项目及镜像信息描述。
 - `source/`: 源码及构建相关说明。
 - `docker/`: 核心 Compose 配置。
 - `resources/`: 测试用账号和验证脚本。
 - `scripts/`: 生命周期操作脚本。
 
-## 差异说明
+## Differences & Operational Notes
 与官方简单 Compose 示例的差异：
 - 补充了固定镜像 digest 确保完全复现。
 - 使用 `joomla` 的环境变自动创建初始管理员，无需手动点击安装向导。

@@ -1,8 +1,8 @@
-# Joomla 5.1.1 all-in-one 应用环境
+# Joomla 5.1.1 all-in-one Application Environment ()
 
 这是 Joomla 5.1.1（源码固定 commit `7dcf9238e9e27ef029833edec7ac4cd9eb78425b`）的 `linux/amd64` 完整 Web 应用镜像。单个镜像和单个容器内同时提供 Apache、PHP、Joomla 前端/后台、MariaDB 和幂等初始化数据。
 
-## 启动
+## Quick Start
 
 从仓库根目录进入本目录并校验归档，然后只需加载和运行镜像；不需要 build.sh、Compose、bootstrap、Web Installer 或单独数据库容器：
 
@@ -15,17 +15,17 @@ docker run -d -p 18211:80 --name joomla-5-1-1 yorem/joomla:5.1.1
 
 镜像入口会自动初始化 MariaDB、创建 Joomla 数据库和账号、导入 seed，并启动 Apache。数据可通过 `/var/lib/mysql`、`images`、`media`、`cache` 和 `tmp` volume 持久化。
 
-## 访问和账号
+## Access & Credentials
 
 - 站点入口：<http://127.0.0.1:18211/>
 - 管理员入口：<http://127.0.0.1:18211/administrator/>
-- 用户名：`admin`
-- 密码：`benchmark-only`
-- 角色：Super Users（全部站点和管理员权限）
+- Username: `admin`
+- Password: `benchmark-only`
+- Role: Super Users（全部站点和管理员权限）
 
 根路径显示 Joomla 真实站点；管理员登录后进入 Joomla Control Panel，可管理文章、菜单、媒体和用户。
 
-## 验证
+## Verification
 
 ```bash
 JOOMLA_URL=http://127.0.0.1:18211 ./scripts/healthcheck.sh
@@ -41,7 +41,7 @@ docker exec joomla-5-1-1 /usr/local/bin/joomla-healthcheck
 
 `register.sh` 使用 Joomla 自带 `cli/joomla.php user:add` 创建真实 Registered 用户，而不是伪造通用注册 API。
 
-## 重置
+## State Reset
 
 ```bash
 JOOMLA_CONTAINER=joomla-5-1-1 ./scripts/reset.sh
@@ -50,7 +50,7 @@ docker run -d -p 18211:80 --name joomla-5-1-1 yorem/joomla:5.1.1
 
 未显式挂载 volume 时容器删除即清除数据；若使用命名卷，请删除对应数据库卷后再运行以获得全新数据库。
 
-## 文件说明
+## Directory Structure
 
 - `manifest.yaml`：版本、固定源码、运行时、镜像、资源和运维入口。
 - `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照和发布包不随本目录交付。已发布镜像内包含运行所需的应用文件。

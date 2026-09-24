@@ -1,37 +1,37 @@
 # Ghost 5.89.0
 
-原生 Docker Compose 应用运行环境。
+Native Docker Compose application environment.
 
-## 基本信息
+## Basic Information
 - 应用名称：ghost
 - 版本：5.89.0
-- 目标平台：linux/amd64
-- 部署模式：native_compose
-- 交付方式：DOCKERHUB
+- Target architecture: linux/amd64
+- Deployment mode: native_compose
+- Delivery mechanism: Docker Hub
 
-## 端口与账号
-- 访问地址：http://localhost:18556
-- 管理后台：http://localhost:18556/ghost
-- 管理员账号：`admin@benchmark.local`
-- 管理员密码：`AdminPassword123!`
+## Ports & Credentials
+- Access URL: http://localhost:18556
+- Admin Dashboard: http://localhost:18556/ghost
+- Admin Username: `admin@benchmark.local`
+- Admin Password: `AdminPassword123!`
 
-## 启动
-进入目录后执行：
+## Quick Start
+Navigate to this directory and run:
 ```bash
 bash scripts/up.sh
 ```
 
-## 健康检查与登录验证
+## Health Check & Authentication Verification
 ```bash
 bash scripts/healthcheck.sh
 ```
 
-## 登录测试
+## Authentication Test
 ```bash
 bash resources/login.sh
 ```
 
-## 重置与清理
+## Reset & Cleanup
 ```bash
 bash scripts/reset.sh
 ```

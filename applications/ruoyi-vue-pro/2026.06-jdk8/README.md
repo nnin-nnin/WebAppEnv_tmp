@@ -1,8 +1,8 @@
 # ruoyi-vue-pro 2026.06-jdk8
 
-这是 `ruoyi-vue-pro` 固定版本 `2026.06-jdk8` 的完整 Web 应用环境，目标平台为 `linux/amd64`。最终交付物是单个 all-in-one Docker 镜像：镜像内部包含 Vue3 管理后台、Nginx、Spring Boot 后端、Java 8、MySQL、Redis、数据库初始化数据和启动入口。
+这是 `ruoyi-vue-pro` 固定版本 `2026.06-jdk8` 的完整 Web Application Environment，targeting platform `linux/amd64`。最终交付物是单个 all-in-one Docker 镜像：镜像内部包含 Vue3 管理后台、Nginx、Spring Boot 后端、Java 8、MySQL、Redis、数据库初始化数据和启动入口。
 
-## 启动
+## Quick Start
 
 以下命令从应用目录执行。接收者只需要从 Docker Hub 拉取镜像并执行 `docker run`；镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Docker Compose、bootstrap 脚本、Web Installer、手动 SQL 或单独的数据库容器。
 
@@ -16,19 +16,19 @@ docker run -d -p 18087:80 yorem/ruoyi-vue-pro:2026.06-jdk8
 
 启动后，容器会自动启动内部 Redis 和 MySQL，等待数据库完成初始化，再启动 Spring Boot 和 Nginx。数据库第一次初始化可能需要几十秒；后续重启会复用 Docker 自动创建的数据卷，不会重复导入 seed。
 
-## 访问和账号
+## Access & Credentials
 
-- 浏览器入口：<http://localhost:18087/>
+- Web Entrypoint: <http://localhost:18087/>
 - 预期页面：真实的“芋道管理系统” Vue3 登录页；登录成功后进入管理后台首页，可看到侧边栏菜单、工作台和系统管理内容。
 - 后端 API：<http://localhost:18087/admin-api/>
 - 初始租户：`芋道源码`，内部租户编号为 `1`
-- 初始管理员：`admin`
-- 初始密码：`admin123`
-- 初始角色：`超级管理员`（`super_admin`）
+- Initial Admin: `admin`
+- Initial Password: `admin123`
+- Initial Role: `超级管理员`（`super_admin`）
 
 为保证离线验收可重复，镜像配置关闭了可选的滑块验证码校验；这不会替代真实认证，账号密码仍通过项目实际的 `/admin-api/system/auth/login` 接口校验。前端 API 使用同源 `/admin-api`，核心 JS、CSS、字体和图片均随镜像提供，不依赖 CDN 或远程后端。
 
-## 验证
+## Verification
 
 检查 shell 脚本语法：
 
@@ -63,7 +63,7 @@ docker exec <container-id> mysqladmin --protocol=TCP -h127.0.0.1 -uroot -p123456
 docker exec <container-id> redis-cli -h127.0.0.1 ping
 ```
 
-## 重置
+## State Reset
 
 `docker run` 未显式指定卷时，Docker 会为 `/var/lib/mysql`、`/var/lib/redis` 和 `/var/lib/yudao` 自动创建匿名卷。要保留已有数据，直接 `docker restart <container-id>` 即可；重启后管理员账号和已创建用户仍然可用。
 
@@ -76,7 +76,7 @@ docker run -d --name ruoyi-vue-pro -p 18087:80 yorem/ruoyi-vue-pro:2026.06-jdk8
 
 `reset.sh` 会删除目标容器及其 MySQL/Redis 数据卷；这是有意的破坏性重置，不能恢复。只删除容器而不删除数据卷不会恢复到初始 seed。
 
-## 文件说明
+## Directory Structure
 
 - `manifest.yaml`：记录固定源码、运行时、前端构建方式、单容器拓扑、镜像和交付命令。
 - `source/`：后端和独立前端的 GitHub 仓库链接及固定 commit 哈希，见 `source/source.yaml`；源码快照不随本目录交付。

@@ -1,10 +1,10 @@
-# HotCRP 3.3.1 应用环境
+# HotCRP 3.3.1 Application Environment ()
 
-这是固定源码 commit `718e6f4be324c3bd4a7515b894665d69407780c4` 构建的完整 Web 应用环境，目标平台为 `linux/amd64`。最终交付是单镜像、单容器的 all-in-one 产物，镜像内包含 HotCRP、Apache/PHP、MariaDB、数据库 schema、初始化账号和启动逻辑。
+This is a reproducible environment built from pinned source commit `718e6f4be324c3bd4a7515b894665d69407780c4` targeting platform `linux/amd64`。最终交付是单镜像、单容器的 all-in-one 产物，镜像内包含 HotCRP、Apache/PHP、MariaDB、数据库 schema、初始化账号和启动逻辑。
 
-## 启动
+## Quick Start
 
-从应用环境目录执行：
+从Application Environment目录执行：
 
 ```sh
 sha256sum -c image/SHA256SUMS
@@ -20,18 +20,18 @@ docker run -d -p 18403:80 yorem/hotcrp:3.3.1
 docker run -d --name hotcrp -p 18403:80 -v hotcrp-db:/var/lib/mysql -v hotcrp-docs:/var/www/html/docs yorem/hotcrp:3.3.1
 ```
 
-## 访问和账号
+## Access & Credentials
 
-- 浏览器入口：<http://127.0.0.1:18403/>
+- Web Entrypoint: <http://127.0.0.1:18403/>
 - 登录页：<http://127.0.0.1:18403/signin>
 - API 入口：<http://127.0.0.1:18403/api>
 - 初始账号：`admin`（HotCRP 本地登录标识为 `admin@hotcrp.local`）
-- 初始密码：`benchmark-only`
-- 角色：sysadmin（HotCRP `ROLE_ADMIN`，系统管理员）
+- Initial Password: `benchmark-only`
+- Role: sysadmin（HotCRP `ROLE_ADMIN`，系统管理员）
 
 登录后应看到 HotCRP 的真实会议管理首页、管理菜单和用户/设置入口，而不是状态页或 Swagger 页面；首次登录若浏览器仍停留在账户设置页，也属于真实应用页面，可从顶部菜单进入 Users、Settings 或首页。
 
-## 验证
+## Verification
 
 ```sh
 HOTCRP_BASE_URL=http://127.0.0.1:18403 scripts/healthcheck.sh
@@ -41,7 +41,7 @@ HOTCRP_BASE_URL=http://127.0.0.1:18403 resources/register.sh user@example.com Ex
 
 `register.sh` 使用管理员登录后调用 HotCRP 真实的 `/profile.php/bulk` 用户批量管理表单创建普通用户；它不是伪造的通用注册 API。新用户的登录密码需要由管理员在 HotCRP 用户页面设置或通过应用支持的密码流程完成。
 
-## 重置
+## State Reset
 
 重置会删除明确指定的 HotCRP 容器、数据库卷和文档卷。确认后执行：
 
@@ -52,10 +52,10 @@ docker run -d --name hotcrp -p 18403:80 -v hotcrp-db:/var/lib/mysql -v hotcrp-do
 
 如果使用了其他容器或卷名，可通过 `HOTCRP_CONTAINER_NAME`、`HOTCRP_DB_VOLUME` 和 `HOTCRP_DOCS_VOLUME` 覆盖。重置后的初始账号恢复为 `admin@hotcrp.local` / `benchmark-only`。
 
-## 文件说明
+## Directory Structure
 
 - `manifest.yaml`：应用版本、固定源码、运行时、镜像和运维入口的机器可读清单。
-- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
+- `source/`: Upstream provenance (`source/source.yaml`); source snapshots excluded.
 - `docker/`：实际 Dockerfile、兼容用 standalone Dockerfile 和单服务 Compose 辅助配置。
 - `resources/`：用户、角色、真实登录/用户创建验证脚本以及初始配置和数据库 seed。
 - `scripts/`：镜像构建、容器入口、健康检查和重置脚本。
