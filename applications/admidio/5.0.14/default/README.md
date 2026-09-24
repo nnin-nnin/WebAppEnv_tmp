@@ -5,16 +5,12 @@
 > [!NOTE]
 > 本环境为原生多容器 Compose 部署，不是 all-in-one 单容器环境。应用服务（Web/PHP）与数据库服务（MariaDB）分别运行在独立的容器中，并通过 Compose 专有网络通信。接收者无需手动安装数据库、手动创建网络或手动导入 SQL 脚本。
 
----
-
 ## 1. Prerequisites
 
 - **Docker Engine**: v20.10.0+
 - **Docker Compose**: v2.0.0+
 - **Target Platform**: `linux/amd64`
 - **网络要求**: 宿主机需可用端口 `18003`
-
----
 
 ## 2. Quick Start (Docker Hub Delivery)
 
@@ -31,8 +27,6 @@ Or use the provided launch script:
 ./scripts/up.sh
 ```
 
----
-
 ## 3. Access & Default Credentials
 
 - **浏览器访问地址**: [http://localhost:18003](http://localhost:18003)
@@ -43,8 +37,6 @@ Or use the provided launch script:
 
 登录成功后，页面将跳转至 Admidio 管理控制台首页，展现组织管理、用户管理、角色权限与模块设置等核心功能。
 
----
-
 ## 4. Service Architecture
 
 本环境保留官方服务边界，包含 2 个核心独立服务：
@@ -53,8 +45,6 @@ Or use the provided launch script:
 | :--- | :--- | :--- | :--- |
 | **app** | Admidio 5.0.14 Web 界面与 PHP 业务逻辑 | `yorem/admidio:5.0.14` | `linux/amd64` |
 | **db** | MariaDB 10.11 关系型数据库 | `mariadb:10.11.8` | `linux/amd64` |
-
----
 
 ## 5. Verification & Helper Tools
 
@@ -76,8 +66,6 @@ Or use the provided launch script:
 ./resources/register.sh testuser benchmark-only testuser@example.com Test User
 ```
 
----
-
 ## 6. Environment Reset
 
 Reset environment and clean up containers, networks, and data volumes for this Compose project:
@@ -91,8 +79,6 @@ Or execute manually:
 ```bash
 docker compose -f docker/compose.yaml down -v
 ```
-
----
 
 ## 7. Directory Structure
 
@@ -118,8 +104,6 @@ default/
     ├── healthcheck.sh                  # 综合健康检查脚本
     └── reset.sh                        # Environment reset and cleanup script
 ```
-
----
 
 ## 8. 官方部署与交付部署差异说明
 

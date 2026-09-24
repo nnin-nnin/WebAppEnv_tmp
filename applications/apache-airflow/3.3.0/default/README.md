@@ -8,16 +8,12 @@ This deliverable provides the native multi-container Docker Compose reproducible
 > Airflow application components, the PostgreSQL database, and Redis cache/broker run in decoupled containers connected via Docker Compose bridge networking.  
 > Users do **not** need to install databases, import SQL dumps, manually configure networks, or set host environment variables.
 
----
-
 ## 1. Prerequisites
 
 - **Docker Engine**: v20.10+
 - **Docker Compose**: v2.0+
 - **Target Platform**: `linux/amd64` (ARM64 / Apple Silicon hosts supported via Docker emulation)
 - **Network**: Network access to Docker Hub to pull images
-
----
 
 ## 2. Standard Launch Procedure
 
@@ -37,8 +33,6 @@ Or execute the provided lifecycle orchestration script:
 ./scripts/up.sh
 ```
 
----
-
 ## 3. Access & Default Credentials
 
 - **Web UI / API URL**: [http://localhost:18010](http://localhost:18010)
@@ -47,8 +41,6 @@ Or execute the provided lifecycle orchestration script:
 - **Role**: `Admin`
 
 Access `http://localhost:18010` in a browser and enter the admin credentials to enter the Airflow management console.
-
----
 
 ## 4. Service Architecture & Topology
 
@@ -62,8 +54,6 @@ Access `http://localhost:18010` in a browser and enter the admin credentials to 
 | **`airflow-worker`** | Celery Worker task executor | `yorem/apache-airflow:3.3.0` | Internal | `postgres`, `redis`, `airflow-apiserver`, `airflow-init` |
 | **`airflow-triggerer`** | Airflow asynchronous triggerer | `yorem/apache-airflow:3.3.0` | Internal | `postgres`, `redis`, `airflow-init` |
 | **`airflow-init`** | Database migration & admin initialization | `yorem/apache-airflow:3.3.0` | Internal | `postgres`, `redis` |
-
----
 
 ## 5. Verification & Operations Scripts
 
@@ -99,8 +89,6 @@ Stop and remove all containers, networks, and data volumes:
 ./scripts/reset.sh
 ```
 
----
-
 ## 6. Deliverable Directory Structure
 
 ```text
@@ -122,8 +110,6 @@ apache-airflow/3.3.0/default/
     └── reset.sh              # Environment reset and cleanup script
 ```
 
----
-
 ## 7. Images & Pinned Digests
 
 | Service | Deliverable Image | Tag | Digest / Identification | Provenance |
@@ -131,8 +117,6 @@ apache-airflow/3.3.0/default/
 | Airflow Components | `yorem/apache-airflow:3.3.0` | `3.3.0` | `sha256:977cb287a1f8e70e27e820439a36037c8db52a5e022d67a903f668ba77bd91dd` | Derived from `apache/airflow:3.3.0` hosted under `yorem` |
 | PostgreSQL | `postgres` | `16` | Official pinned release | Docker Hub official image |
 | Redis | `redis` | `7.2-bookworm` | Official pinned release | Docker Hub official image |
-
----
 
 ## 8. Differences with Official Compose
 

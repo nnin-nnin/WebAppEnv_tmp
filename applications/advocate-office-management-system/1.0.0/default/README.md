@@ -4,16 +4,12 @@
 
 > **特别说明**：本环境采用原生多容器 Docker Compose 架构部署，Web 应用服务 (`app`) 和 MySQL 数据库服务 (`db`) 运行于独立的容器中，通过 Docker Compose 网络互相连接通信。
 
----
-
 ## 1. Prerequisites
 
 - **Docker Engine**: v20.10.0+
 - **Docker Compose**: v2.0.0+
 - **Target Platform**: `linux/amd64`
 - **端口要求**: 宿主机需空闲端口 `18004`
-
----
 
 ## 2. Quick Start
 
@@ -30,8 +26,6 @@ docker compose -f docker/compose.yaml up -d
 ./scripts/up.sh
 ```
 
----
-
 ## 3. 访问入口与账号
 
 - **Web 浏览器入口**: [http://localhost:18004/](http://localhost:18004/)
@@ -40,16 +34,12 @@ docker compose -f docker/compose.yaml up -d
 - **Initial Admin Password**: `benchmark-only`
 - **系统角色**: `admin` (系统超级管理员，具备案件管理、客户管理、法律条款管理及系统设置权限)
 
----
-
 ## 4. 服务拓扑说明
 
 | 服务名称 | 角色 | 镜像名称 | 对外端口 | 平台 | 说明 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `app` | 应用服务 | `yorem/advocate-office:1.0.0` | `18004:80` | `linux/amd64` | PHP 8.2 + Apache，运行 Advocate Office 核心 Web 应用 |
 | `db` | 数据库服务 | `mysql:8.0.36` | 无 (内部 3306) | `linux/amd64` | MySQL 8.0 数据库，初始数据自动加载 |
-
----
 
 ## 5. 验证与运维命令
 
@@ -82,8 +72,6 @@ docker compose -f docker/compose.yaml up -d
 ```bash
 ./scripts/reset.sh
 ```
-
----
 
 ## 6. 交付文件结构说明
 

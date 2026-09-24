@@ -2,8 +2,6 @@
 
 本交付物包含 **b2evolution 7.2.5** 的原生多容器 Docker Compose 部署配置及自动化运维与验证脚本。
 
----
-
 ## 1. Environment Architecture
 
 本环境采用原生多容器架构：
@@ -11,15 +9,11 @@
 - **app**: b2evolution Web 应用服务（基于 openSUSE / Nginx / PHP 7.4-FPM），对外暴露宿主机端口 `18587:80`。
 - **db**: 独立 MariaDB 数据库容器（`mariadb:10.11`），通过 Compose 内部网络与 Web 应用通信。
 
----
-
 ## 2. Prerequisites
 
 - Docker Engine 20.10+
 - Docker Compose v2+
 - Target architecture: `linux/amd64` (ARM64 hosts supported via Rosetta 2 or QEMU)
-
----
 
 ## 3. Standard Launch Procedure
 
@@ -35,8 +29,6 @@ Alternatively, launch using the operational scripts:
 bash scripts/up.sh
 ```
 
----
-
 ## 4. Access Endpoints and Default Credentials
 
 - **前台首页**: [http://127.0.0.1:18587/](http://127.0.0.1:18587/)
@@ -44,16 +36,12 @@ bash scripts/up.sh
 - **Initial Admin Username**: `admin`
 - **Initial Admin Password**: `AdminPassword123!`
 
----
-
 ## 5. Operations & Testing Scripts
 
 - **Start Environment**: `bash scripts/up.sh`
 - **Health Check**: `bash scripts/healthcheck.sh`
 - **登录端点验证**: `bash resources/login.sh`
 - **环境重置与清理**: `bash scripts/reset.sh`
-
----
 
 ## 6. Directory Structure & Files
 

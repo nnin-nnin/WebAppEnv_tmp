@@ -2,15 +2,11 @@
 
 This directory delivers the native multi-container Docker Compose deployment for **Alfresco Community Edition (ACS)**, pinned to version `26.3.0.19` (Alfresco Repository) / `26.2.0` (Alfresco Content Services topology).
 
----
-
 ## Architecture Overview
 
 - **Native Multi-Container Topology**: The application (Alfresco Content Repository), web management client (Alfresco Share), database (PostgreSQL), search engine (Elasticsearch), message broker (ActiveMQ), transform engine (Transform Core AIO), and reverse proxy gateway (Nginx) run in isolated containers.
 - Decoupled containers communicate through the internal Compose bridge network via service hostnames (`postgres`, `elasticsearch`, `activemq`).
 - Zero manual database setup, SQL schema imports, or Docker network configurations are required.
-
----
 
 ## 1. Prerequisites
 
@@ -18,8 +14,6 @@ This directory delivers the native multi-container Docker Compose deployment for
 - **Docker Compose**: v2.0.0+
 - **Target Platform**: `linux/amd64` (ARM64 hosts supported via emulation)
 - **Memory Requirements**: Minimum 6GB host RAM allocated to Docker daemon
-
----
 
 ## 2. Quick Start
 
@@ -39,8 +33,6 @@ Or execute the provided lifecycle orchestration script:
 bash scripts/up.sh
 ```
 
----
-
 ## 3. Access & Credentials
 
 - **Main Gateway / Nginx Proxy**: `http://localhost:18006/`
@@ -53,8 +45,6 @@ bash scripts/up.sh
 - **Username**: `admin`
 - **Password**: `admin`
 - **Role**: `ALFRESCO_ADMINISTRATORS` (Super Administrator)
-
----
 
 ## 4. Service Topology
 
@@ -70,8 +60,6 @@ bash scripts/up.sh
 | `batch-indexing` | Elasticsearch batch indexer | `docker.io/alfresco/alfresco-elasticsearch-batch-indexing:5.7.0` | Internal |
 | `content-app` | Content App modern web UI | `alfresco/alfresco-content-app:8.0.0` | Internal 8080 |
 | `control-center` | Control Center administration console | `quay.io/alfresco/alfresco-control-center:11.0.0` | Internal 8080 |
-
----
 
 ## 5. Verification & Operational Commands
 
@@ -99,8 +87,6 @@ Stop and clean all containers, networks, and named volumes:
 bash scripts/reset.sh
 ```
 
----
-
 ## 6. Directory Structure
 
 ```text
@@ -122,8 +108,6 @@ bash scripts/reset.sh
     ├── healthcheck.sh        # Health check script
     └── reset.sh              # Cleanup and reset script
 ```
-
----
 
 ## 7. Differences with Official Compose
 

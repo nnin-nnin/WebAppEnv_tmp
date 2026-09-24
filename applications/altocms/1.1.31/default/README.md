@@ -5,16 +5,12 @@
 > [!NOTE]
 > 本环境采用原生多容器 topology（非 All-in-One 单容器），应用服务与数据库服务各自运行在独立的 Docker 容器中，并通过 Docker Compose 自动创建的私有网络互相通信。
 
----
-
 ## 1. Prerequisites
 
 - **Docker Engine**: v20.10+
 - **Docker Compose**: v2.0+
 - **Target Platform**: `linux/amd64`
 - **网络要求**: 宿主机可访问 Docker Hub 拉取镜像，宿主机开放 `18007` 端口。
-
----
 
 ## 2. Quick Start
 
@@ -36,8 +32,6 @@ bash scripts/up.sh
 
 接收者不需要执行源码构建、数据库手工安装、创建 Docker 网络或手动导入 SQL，容器启动后即可直接使用。
 
----
-
 ## 3. 服务访问与初始账号
 
 - **浏览器入口**: [http://localhost:18007/](http://localhost:18007/)
@@ -47,8 +41,6 @@ bash scripts/up.sh
 - **角色类型**: 系统管理员 (administrator, user_role=3)
 
 登录后可直接进入 AltoCMS 管理后台及全功能社区主页。
-
----
 
 ## 4. 拓扑与服务说明
 
@@ -61,8 +53,6 @@ bash scripts/up.sh
 - **持久化**:
   - `application-data`: 挂载 `/var/www/html/uploads` 保存上传资源。
   - `database-data`: 挂载 `/var/lib/mysql` 保存数据库数据。
-
----
 
 ## 5. 验收与验证
 
@@ -84,8 +74,6 @@ bash resources/login.sh
 bash resources/register.sh testuser benchmark-only testuser@example.com
 ```
 
----
-
 ## 6. Environment Reset
 
 ```bash
@@ -93,8 +81,6 @@ bash scripts/reset.sh
 ```
 
 `reset.sh` 只清理当前 Compose 项目的容器、网络与命名卷，不会删除镜像或干扰宿主机其他容器。
-
----
 
 ## 7. Directory Structure
 
@@ -120,8 +106,6 @@ altocms_1.1.31/
     ├── healthcheck.sh                 # 完整验收脚本
     └── reset.sh                       # 项目重置脚本
 ```
-
----
 
 ## 8. 官方 Compose 与交付 Compose 的差异
 

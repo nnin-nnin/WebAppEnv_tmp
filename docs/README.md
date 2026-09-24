@@ -13,8 +13,6 @@ Every application version is housed in an isolated, decoupled directory containi
 
 Source code trees and raw image tarballs are excluded from version control to prevent repository bloat. Users launch target environments with a single Docker command; containers pull pre-built immutable images from Docker Hub, initialize all services into steady state, and enable immediate browser and API interaction with zero setup wizards.
 
----
-
 ## 2. Directory Layout & Deliverable Specification
 
 Each environment suite resides in `applications/<application-name>/<version>/<optional-variant>/`:
@@ -41,8 +39,6 @@ applications/<application-name>/<version>/<optional-variant>/
 | `image/` | Image metadata (`image.json`). Image binaries are hosted on Docker Hub under `yorem/<app>:<version>`. |
 
 The end deliverable is a self-contained, immediately actionable runtime topology. Containers encapsulate their own application runtimes (PHP, Node, Java, Python), database engines (MySQL/MariaDB, PostgreSQL), and pre-seeded database states.
-
----
 
 ## 3. Automation Tools (`code/`)
 
@@ -90,8 +86,6 @@ python3 code/codex_environment_runner.py \
   --admin-password placeholder \
   --validate-only
 ```
-
----
 
 ## 4. Verification Protocol & Mitigating Environmental False Positives
 
@@ -156,8 +150,6 @@ Restart the running container:
 docker restart <container-id>
 ```
 Re-verify web entrypoint and re-authenticate. Confirm that database tables, users, and state persist across container restarts.
-
----
 
 ## 5. Walkthrough Example: EspoCRM 8.2.5
 

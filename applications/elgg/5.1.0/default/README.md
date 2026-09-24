@@ -5,16 +5,12 @@
 > [!NOTE]
 > 本环境为原生多容器 Compose 部署。应用服务（Elgg / Nginx + PHP-FPM）与数据库服务（MariaDB 10.5）分别运行在独立的容器中，并通过 Compose 专有网络通信。接收者无需手动执行 Web 安装向导或手动导入 SQL 脚本，启动即可直接使用。
 
----
-
 ## 1. Prerequisites
 
 - **Docker Engine**: v20.10.0+
 - **Docker Compose**: v2.0.0+
 - **Target Platform**: `linux/amd64`
 - **网络要求**: 宿主机需可用端口 `18560`
-
----
 
 ## 2. Quick Start (Docker Hub Delivery)
 
@@ -31,8 +27,6 @@ Or use the provided launch script:
 ./scripts/up.sh
 ```
 
----
-
 ## 3. Access & Default Credentials
 
 - **前台主页地址**: [http://localhost:18560](http://localhost:18560)
@@ -42,8 +36,6 @@ Or use the provided launch script:
 
 登录成功后，即可使用 Elgg 进行社交网络应用测试、用户管理与功能验证。
 
----
-
 ## 4. Service Architecture
 
 This environment consists of 2 core decoupled services:
@@ -52,8 +44,6 @@ This environment consists of 2 core decoupled services:
 | :--- | :--- | :--- | :--- |
 | **app** | Elgg 5.1.0 Web 界面与 PHP 业务运行时 | `yorem/elgg:5.1.0@sha256:30c4f12bd7a5bd7ceba3fb79696d179bf2561fe0d4cba1e06dd18a4473a78bdb` | `linux/amd64` |
 | **db** | MariaDB 10.5 关系型数据库 | `mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984` | `linux/amd64` |
-
----
 
 ## 5. Verification & Helper Tools
 
@@ -69,8 +59,6 @@ This environment consists of 2 core decoupled services:
 ./resources/login.sh admin AdminPassword123!
 ```
 
----
-
 ## 6. Environment Reset
 
 Reset environment and clean up containers, networks, and data volumes for this Compose project:
@@ -84,8 +72,6 @@ Or execute manually:
 ```bash
 docker compose -f docker/compose.yaml down -v --remove-orphans
 ```
-
----
 
 ## 7. Directory Structure
 
