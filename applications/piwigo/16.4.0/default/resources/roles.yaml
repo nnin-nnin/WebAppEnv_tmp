@@ -1,0 +1,7 @@
+roles:
+  - role: Administrator
+    description: Full administrative privileges on Piwigo
+  - role: Generic
+    description: Standard registered user
+  - role: Guest
+    description: Anonymous visitor

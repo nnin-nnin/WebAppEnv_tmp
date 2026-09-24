@@ -1,0 +1,48 @@
+name: piwigo-16-4-0
+
+services:
+  app:
+    image: yorem/piwigo:16.4.0@sha256:a64c3a58a9d4ba0664b4f8af2e3abeeae5a91635a34070c410e88e80ebf5ee23
+    platform: linux/amd64
+    ports:
+      - "18567:80"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    volumes:
+      - ../resources/init-config.sh:/custom-cont-init.d/01-config.sh:ro
+      - app-config:/config
+      - app-gallery:/gallery
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      - MYSQL_ROOT_PASSWORD=piwigoroot
+      - MYSQL_DATABASE=piwigo
+      - MYSQL_USER=piwigo
+      - MYSQL_PASSWORD=piwigopass
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  app-config:
+  app-gallery:
+  db-data:

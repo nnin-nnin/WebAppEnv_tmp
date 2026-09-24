@@ -1,0 +1,10 @@
+name: jenkins_2_479_1
+services:
+  app:
+    image: yorem/jenkins:2.479.1@sha256:c1e4c349365f6d16d88595b2c5f7e8ff39b8ae1d061f62420bac193b4b9616d0
+    platform: linux/amd64
+    environment:
+      JAVA_OPTS: "-Djenkins.install.runSetupWizard=false"
+    ports:
+      - "18581:8080"
+    restart: unless-stopped

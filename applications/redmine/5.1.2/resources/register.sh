@@ -9,7 +9,7 @@ new_username=$1
 new_email=$2
 new_password=$3
 display_name="${4:-$new_username}"
-base_url="${REDMINE_URL:-http://127.0.0.1:18512}"
+base_url="${REDMINE_URL:-http://127.0.0.1:18511}"
 admin_username="${REDMINE_USERNAME:-admin}"
 : "${REDMINE_PASSWORD:?请通过受控环境变量 REDMINE_PASSWORD 提供管理员密码}"
 
@@ -48,4 +48,3 @@ if grep -Eiq 'already exists|已经存在|must be filled|不能为空|is invalid
 fi
 grep -Fq "$new_username" "$work_dir/result" || { echo 'Redmine 用户创建结果未确认' >&2; exit 1; }
 echo "Redmine 普通用户创建成功：$new_username"
-

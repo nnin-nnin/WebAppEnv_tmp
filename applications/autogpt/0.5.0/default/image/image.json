@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/autogpt",
+    "tag": "0.5.0",
+    "digest": "sha256:3b4f5df6c7bf50236feb5168eb5d6962dfc2367ef05c03a7d7f2b6708fdc738b",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

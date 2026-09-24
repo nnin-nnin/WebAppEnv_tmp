@@ -1,0 +1,97 @@
+[
+    {
+        "Id": "sha256:708a76cc3a707e5a8dc935762e406b687dcf2b7602f23268c00d4b29078e8303",
+        "RepoTags": [
+            "yorem/joomla:6.1.2"
+        ],
+        "RepoDigests": [
+            "yorem/joomla@sha256:708a76cc3a707e5a8dc935762e406b687dcf2b7602f23268c00d4b29078e8303"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-05T01:46:23.003621297Z",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=AFD8691FDAEDF03BDF6E460563F15A9B715376CA 9D7F99A0CB8F05C8A6958D6256A97AF7600A39A6 0616E93D95AF471243E26761770426E17EBBB3DD",
+                "PHP_VERSION=8.4.24",
+                "PHP_URL=https://www.php.net/distributions/php-8.4.24.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.4.24.tar.xz.asc",
+                "PHP_SHA256=e127be09a8506f4327c5cfa78a614b00d210714484ec215ce0011b4a03c00731",
+                "JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK=1",
+                "JOOMLA_VERSION=6.1.2",
+                "JOOMLA_SHA512=ed4f9ff27329726ece46e3ebab71aeef57f88a7c218f5236d22d4029ac3bd1b615d066d38f5edeabc421ed88153aaface8947e29a49dc06889a4d08207627d3b"
+            ],
+            "Entrypoint": [
+                "/entrypoint.sh"
+            ],
+            "Cmd": [
+                "apache2-foreground"
+            ],
+            "Volumes": {
+                "/var/www/html": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "Labels": {
+                "maintainer": "Llewellyn van der Merwe <llewellyn.van-der-merwe@community.joomla.org> (@Llewellynvdm), Harald Leithner <harald.leithner@community.joomla.org> (@HLeithner)"
+            },
+            "StopSignal": "SIGWINCH"
+        },
+        "Architecture": "arm64",
+        "Variant": "v8",
+        "Os": "linux",
+        "Size": 271843418,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:c01c35a040a25a51cd473910e3212a46d85fb700a6467c687f231d7edd47cbc1",
+                "sha256:89fb86b56afe2603c11b7ac03f1f88c4ba389abd8bd0e9c8270a3a046d0c6ca9",
+                "sha256:5fa311ef456eec5b068c3c29444bfd7ebd2ce6e56a414cf9b66c14d048ca36f1",
+                "sha256:299aa3cd28a40c561bdb8a278f06a7228de1f4146606e09e37e662502e026432",
+                "sha256:483eaea5c2029c4140dd4ecf8328b6def70ccb038eca887fa8b0cab9d4b0bfcd",
+                "sha256:71f9365c54852d9a5f06a1c679a947ab889bb765bd6143744c51dce2788c4fad",
+                "sha256:4f89b2d94a80384536f83c63a441e7d6d4daa06fd4d9a5829c9c3b21e858aaf5",
+                "sha256:a960db3c518c8efbd55de41073ec766980f37fca2c1dbfce878399b5eb22c7c8",
+                "sha256:2c925ec73c69606ccdc6905dc0e7ea3599bbcf301e688d2f18acebd45a95ab4b",
+                "sha256:2fd208d8be0dd099d38ad0ac38ac07de1da327c8036b39ece6937f13aac2b5c2",
+                "sha256:a9262d47f2ebba0d9e8acc76de3b89f3bc183fbe58950010422f5f8411b65eb7",
+                "sha256:9333a9c79637af80cb655df3faf4da32568ef46bd5d915ac70bd27d7eb79a259",
+                "sha256:1d7d27d666500a93fdb62961f67fdceaffac63bac18d85e59dc01bb7f62e63aa",
+                "sha256:0910f23cfac6ce2db3b503a9e48592b6f6c9684f4bbddeb4e5fb2697a5ee49b1",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:4bf2b6db3ddcd3a9ad3a46f3e065aaeb93d0f4270386b1fca2503cd9e1fdee06",
+                "sha256:71397810e33391b02f3ca92a273b101f88f677ec47de3a5bc55b28456709e439",
+                "sha256:77197a57f27770fa03827597e34b8091f462afb4c4554ba3183f7c36a726bcc5",
+                "sha256:cab86ddb38bc1c073e0990a9d5b3f85564025940422b30bd5ea9412f09c37145",
+                "sha256:a8a8ecfd22c7dcca7d3502562949ba7d7278d0dfcac0782adf59b3563c894181",
+                "sha256:79294c856c1f54277be78a6fa0b4fe659bbb28cd8021e43f00fbe0c5544a1dda",
+                "sha256:5dc14e212f8ed4cb22d3f0a2e23a42bca4398800ea55182eecb34a1c95664948",
+                "sha256:f7e7df9a45c22a51fd098945b1e165f2c69358ed6cadc64c7450fd3011b2a692"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-09-23T10:12:33.57922756Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:708a76cc3a707e5a8dc935762e406b687dcf2b7602f23268c00d4b29078e8303",
+            "size": 734
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/yorem/joomla"
+                }
+            ]
+        }
+    }
+]

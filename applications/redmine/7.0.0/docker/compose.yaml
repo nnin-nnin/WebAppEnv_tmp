@@ -1,0 +1,16 @@
+services:
+  application:
+    image: yorem/redmine:7.0.0@sha256:4572153f69b511a5b9f0a4ef7d194b9e2ec00713f9961769fd95fbc0b0248cd7
+    ports:
+      - "18512:80"
+    volumes:
+      - redmine-files:/usr/src/redmine/files
+      - redmine-log:/usr/src/redmine/log
+      - redmine-tmp:/usr/src/redmine/tmp
+      - redmine-db:/var/lib/mysql
+
+volumes:
+  redmine-files:
+  redmine-log:
+  redmine-tmp:
+  redmine-db:

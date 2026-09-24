@@ -1,0 +1,51 @@
+name: suitecrm_8_0_0
+
+services:
+  mariadb:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: suitecrm_root_pass
+      MYSQL_DATABASE: suitecrm
+      MYSQL_USER: suitecrm
+      MYSQL_PASSWORD: suitecrm_password
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u suitecrm -psuitecrm_password --silent || exit 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - db_data:/var/lib/mysql
+
+  suitecrm:
+    image: yorem/suitecrm:8.0.0@sha256:7460deff1f12410c9d56980a269afda009b080eb3b525411cf0cb52044db1bb0
+    platform: linux/amd64
+    ports:
+      - "18608:80"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_NAME=suitecrm
+      - DB_USER=suitecrm
+      - DB_PASSWORD=suitecrm_password
+      - DATABASE_SERVER_VERSION=10.11.2-MariaDB
+      - SUITECRM_ADMIN_USER=admin
+      - SUITECRM_ADMIN_PASSWORD=AdminPassword123!
+      - SITE_URL=http://localhost:18608/
+      - SUITECRM_DEMO_DATA=no
+      - SUITECRM_IGNORE_SYSTEM_CHECK_WARNINGS=true
+    volumes:
+      - suitecrm_data:/var/lib/suitecrm
+      - ../resources/disable-intl.ini:/usr/local/etc/php/conf.d/docker-php-ext-intl.ini:ro
+      - ../resources/zzz-custom.ini:/usr/local/etc/php/conf.d/zzz-custom.ini:ro
+      - ../resources/intl_compat.php:/usr/local/share/suitecrm/intl_compat.php:ro
+
+volumes:
+  db_data:
+  suitecrm_data:

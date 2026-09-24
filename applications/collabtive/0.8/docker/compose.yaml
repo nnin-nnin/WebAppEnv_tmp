@@ -1,0 +1,34 @@
+name: collabtive-0-8
+services:
+  application:
+    image: yorem/collabtive:1.2@sha256:9d4e1521e31e7880407f151ae310c8d0c07be257d220b9c2a03f8c871a163e96
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "18088:80"
+    volumes:
+      - application-data:/var/www/html/files
+    restart: unless-stopped
+
+  db:
+    image: mysql:5.7@sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: collabtive
+      MYSQL_USER: collabtive
+      MYSQL_PASSWORD: collabtive
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  application-data:
+  database-data:

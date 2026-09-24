@@ -1,0 +1,14 @@
+services:
+  application:
+    image: yorem/wordpress:6.7.6@sha256:6816b112eb6bf0fcc47624b4e30df6847a0292f731b12686a1ef202e28b7a723
+    platform: linux/amd64
+    ports:
+      - "18513:80"
+    volumes:
+      - wordpress-data:/var/www/html/wp-content
+      - wordpress-db:/var/lib/mysql
+
+volumes:
+  wordpress-data:
+  wordpress-db:
+

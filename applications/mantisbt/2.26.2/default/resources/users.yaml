@@ -1,0 +1,15 @@
+users:
+  - username: administrator
+    password: root
+    email: root@localhost
+    role: administrator
+    enabled: true
+    purpose: "Default MantisBT administrator account"
+    creation_method: "Database seed during initialization"
+  - username: admin
+    password: root
+    email: admin@localhost
+    role: administrator
+    enabled: true
+    purpose: "Secondary administrator account for verification"
+    creation_method: "Database seed during initialization"

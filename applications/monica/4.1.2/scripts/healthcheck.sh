@@ -4,7 +4,7 @@ set -euo pipefail
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 project_dir="$(cd -- "$script_dir/.." && pwd)"
 compose_file="$project_dir/docker/compose.yaml"
-base_url="${APP_URL:-http://localhost:18086}"
+base_url="${APP_URL:-http://localhost:18097}"
 
 cd "$project_dir"
 docker compose -f "$compose_file" config --quiet

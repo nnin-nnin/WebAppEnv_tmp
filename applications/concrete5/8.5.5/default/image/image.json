@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/concrete5:8.5.5",
+    "tag": "8.5.5",
+    "digest": "sha256:6b83b4f8dae4e855bc8246d708d882f91636979798ee623a027510c9d5dde39a",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

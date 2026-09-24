@@ -1,0 +1,11 @@
+name: rocketmq_5_3_4
+services:
+  app:
+    image: yorem/rocketmq:5.3.4@sha256:a6976cd5841facfda294616a0b8797e7f41fa0292d51ad4e46b2ff224ce64995
+    command: sh mqnamesrv
+    environment:
+      JAVA_OPT_EXT: "-Xms256m -Xmx256m -Xmn128m"
+    platform: linux/amd64
+    ports:
+      - "18594:9876"
+    restart: unless-stopped

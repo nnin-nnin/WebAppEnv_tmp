@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: benchmark-only
+    type: admin
+    enabled: true
+    purpose: Initial default administrator account
+    creation_method: Database seed initialization

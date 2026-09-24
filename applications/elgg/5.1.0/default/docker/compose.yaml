@@ -1,0 +1,69 @@
+name: elgg-5-1-0
+
+services:
+  app:
+    image: yorem/elgg:5.1.0@sha256:30c4f12bd7a5bd7ceba3fb79696d179bf2561fe0d4cba1e06dd18a4473a78bdb
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18560}:80"
+    environment:
+      ELGG_DOMAIN: "${ELGG_DOMAIN:-localhost}"
+      ELGG_DBHOST: db
+      ELGG_DBUSER: elgg
+      ELGG_DBPASSWORD: benchmark-only-password
+      ELGG_DBNAME: elgg
+      ELGG_DBPORT: 3306
+      HOST_PORT: "${HOST_PORT:-18560}"
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        if [ ! -f /demyx/index.php ]; then
+          echo "Initializing Elgg codebase..."
+          cp -R /etc/demyx/elgg/* /demyx/
+        fi
+        mkdir -p /demyx/elgg-config
+        if [ ! -f /demyx/elgg-config/settings.php ]; then
+          echo "Applying preconfigured settings.php..."
+          cp /resources/initial-data/settings.php /demyx/elgg-config/settings.php
+          chmod 644 /demyx/elgg-config/settings.php
+        fi
+        mkdir -p /demyx/caches
+        chown -R demyx:demyx /demyx
+        exec dumb-init demyx
+    volumes:
+      - app-data:/demyx
+      - ../resources/initial-data/settings.php:/resources/initial-data/settings.php:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: benchmark-only-root
+      MYSQL_DATABASE: elgg
+      MYSQL_USER: elgg
+      MYSQL_PASSWORD: benchmark-only-password
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+volumes:
+  app-data:
+  db-data:

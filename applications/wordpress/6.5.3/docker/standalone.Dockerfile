@@ -1,2 +1,2 @@
-FROM asteriskax001/sop-wordpress:6.5.3
+FROM yorem/wordpress:6.5.3
 

@@ -1,0 +1,26 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/weblate",
+    "tag": "5.7.0",
+    "digest": "sha256:380fe1248868b07949911e32d479911a3561e7ca0010981a4a2cd168f636779f",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "database",
+    "image": "postgres",
+    "tag": "16-alpine",
+    "digest": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "cache",
+    "image": "redis",
+    "tag": "7-alpine",
+    "digest": "sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

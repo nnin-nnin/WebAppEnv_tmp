@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/codiad",
+    "tag": "2.8.4",
+    "digest": "sha256:cc90f1708971eb94345fe5c22d1ac58082aa439e76768e47284dcb6cad863916",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

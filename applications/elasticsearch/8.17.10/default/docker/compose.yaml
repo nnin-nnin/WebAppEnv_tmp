@@ -1,0 +1,13 @@
+name: elasticsearch-8-17-10
+
+services:
+  elasticsearch:
+    image: yorem/elasticsearch:8.17.10@sha256:301047b72827de2cbfa8aaa61c8110589a66ecd5189b9822a4fdd9854bb3a64b
+    platform: linux/amd64
+    ports:
+      - "18584:9200"
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    restart: unless-stopped

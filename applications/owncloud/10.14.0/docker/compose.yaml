@@ -1,6 +1,6 @@
 services:
   application:
-    image: asteriskax001/sop-owncloud:10.14.0
+    image: yorem/owncloud:10.14.0@sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d
     ports:
       - "18524:80"
     volumes:

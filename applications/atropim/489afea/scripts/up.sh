@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-image_name="${ATROPIM_IMAGE:-nnin/sop-atropim:489afea}"
+image_name="${ATROPIM_IMAGE:-yorem/atropim:489afea}"
 container_name="${ATROPIM_CONTAINER:-atropim-489afea}"
 host_port="${ATROPIM_PORT:-18083}"
 

@@ -1,0 +1,36 @@
+name: ruoyi-483
+services:
+  application:
+    image: yorem/ruoyi:4.8.3@sha256:09b46ea2f540b71e2353d1a0605a0d493d9764d53f12556c175f49b107cc5369
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_DRUID_MASTER_URL=jdbc:mysql://db:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+      - RUOYI_PROFILE=/var/lib/ruoyi/uploadPath
+      - SHIRO_USER_CAPTCHAENABLED=false
+    ports:
+      - "127.0.0.1:18080:80"
+    volumes:
+      - application-data:/var/lib/ruoyi/uploadPath
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0.36@sha256:c59dec7e9b0bb144816e4bb32586910777886bf5ec3f2623b546e2cf242ef8db
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: ry
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/initial-data:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -ppassword || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  application-data:
+  database-data:

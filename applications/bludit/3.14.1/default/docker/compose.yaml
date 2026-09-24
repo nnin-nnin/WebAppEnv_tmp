@@ -1,0 +1,8 @@
+name: bludit_3_14_1
+services:
+  web:
+    image: yorem/bludit:3.14.1@sha256:383e1ba4c6fbc85a499ac42b73d4bfbc0eee097904d6865e3cbe72644571fc41
+    platform: linux/amd64
+    ports:
+    - 18534:80
+    restart: unless-stopped

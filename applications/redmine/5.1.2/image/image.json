@@ -2,12 +2,10 @@
     {
         "Id": "sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60",
         "RepoTags": [
-            "asteriskax001/sop-redmine:5.1.2",
-            "nnin/sop-redmine:5.1.2"
+            "yorem/redmine:5.1.2"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-redmine@sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60",
-            "nnin/sop-redmine@sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60"
+            "yorem/redmine@sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T03:12:47.803899959+08:00",
@@ -90,16 +88,12 @@
             ]
         },
         "Metadata": {
-            "LastTagTime": "2026-08-06T16:43:00.416221985Z"
+            "LastTagTime": "2026-09-23T08:28:06.03556062Z"
         },
         "Descriptor": {
             "mediaType": "application/vnd.oci.image.index.v1+json",
             "digest": "sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60",
-            "size": 856,
-            "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-redmine:5.1.2",
-                "org.opencontainers.image.ref.name": "5.1.2"
-            }
+            "size": 856
         }
     }
 ]

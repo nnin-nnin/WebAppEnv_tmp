@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/xoops",
+    "tag": "2.5.10",
+    "digest": "sha256:2125e1cb300a67e4ef1ea8d3916e490303572a9487f9234223658779da94b358",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

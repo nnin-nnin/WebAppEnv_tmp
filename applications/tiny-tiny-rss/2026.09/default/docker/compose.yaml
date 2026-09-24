@@ -1,0 +1,40 @@
+name: tiny_tiny_rss_2026_09_default
+
+services:
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ttrss
+      POSTGRES_PASSWORD: ttrss_password
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ttrss -d postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    image: yorem/tiny-tiny-rss:2026.09@sha256:bd09e5ea34d832be5477b1b925032d9c3d43e8942e539cdb682971ae37552f89
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18593:80"
+    environment:
+      DB_TYPE: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ttrss
+      DB_NAME: ttrss
+      DB_PASS: ttrss_password
+      SELF_URL_PATH: http://localhost:18593/
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:

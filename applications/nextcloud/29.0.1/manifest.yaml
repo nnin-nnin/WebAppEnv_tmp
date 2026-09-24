@@ -21,7 +21,7 @@ runtime:
   api_entry: http://127.0.0.1:18522/ocs/v1.php/cloud/
 delivery:
   port: 18522
-  image: asteriskax001/sop-nextcloud:29.0.1
+  image: yorem/nextcloud:29.0.1@sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19
   image_metadata: image/image.json
   components:
     - Nextcloud 29.0.1 application source and bundled frontend
@@ -42,7 +42,7 @@ accounts:
     register: resources/register.sh
 scripts:
   build: scripts/build.sh
-  start: docker run -d -p 18522:80 asteriskax001/sop-nextcloud:29.0.1
+  start: docker run -d -p 18522:80 yorem/nextcloud:29.0.1
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
 docker:

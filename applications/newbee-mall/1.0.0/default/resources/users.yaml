@@ -1,0 +1,13 @@
+users:
+  - username: admin
+    password: "123456"
+    type: admin
+    enabled: true
+    purpose: "初始管理员账号"
+    creation: "数据库 seed 初始化 (newbee_mall_schema.sql)"
+  - username: newbee-admin1
+    password: "123456"
+    type: admin
+    enabled: true
+    purpose: "管理员1"
+    creation: "数据库 seed 初始化"

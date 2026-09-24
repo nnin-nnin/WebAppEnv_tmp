@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/roundcube",
+    "tag": "1.7.4",
+    "digest": "sha256:6fe5dc2c00770c11d1fe857f4b6d23fc6c6f4a87b3e3a1b1b76331540af9dadf",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

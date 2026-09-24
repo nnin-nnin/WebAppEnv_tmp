@@ -1,0 +1,46 @@
+name: forkcms-5-12-0
+
+services:
+  app:
+    image: yorem/forkcms:5.12.0@sha256:768ed5dd37dc06fcd7d4ab1dbce6f1a6a5d5a4eacd48fa413f270dd7d26344e4
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18542}:80"
+    environment:
+      FORK_ENV: prod
+      FORK_DEBUG: 0
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../resources/initial-data/parameters.yml:/var/www/html/app/config/parameters.yml:ro
+      - ../resources/initial-data/.env:/var/www/html/.env:ro
+      - ../resources/initial-data/autoload.php:/var/www/html/autoload.php:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: benchmark-only-root
+      MYSQL_DATABASE: forkcms
+      MYSQL_USER: forkcms
+      MYSQL_PASSWORD: benchmark-only
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

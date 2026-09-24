@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/b2evolution",
+    "tag": "7.2.5",
+    "digest": "sha256:5114441520b88263ac63b274113078dcd64d9138e56bac98939b82e7856d2eec",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/shopware",
+    "tag": "6.7.2",
+    "digest": "sha256:1fcadd4fb6a227ee72f81290f213625e5117d9c27c1d7a713c8291bffc63b0f3",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/phpbb",
+    "tag": "3.3.17",
+    "platform": "linux/amd64",
+    "archive": "phpbb-3.3.17-linux-amd64.tar",
+    "digest": "sha256:df8123f1de8912bbc6e4a25362aab9f09f6c26fd20e873d4a998a048939acf1b"
+  },
+  {
+    "service": "db",
+    "image": "mysql",
+    "tag": "8.0.35",
+    "platform": "linux/amd64",
+    "archive": "mysql-8.0.35-linux-amd64.tar",
+    "digest": "sha256:9095b039775474d4a652430c1bab0db55d48d7d1885278566152927e4844e84b"
+  }
+]

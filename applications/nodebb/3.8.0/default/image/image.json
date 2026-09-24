@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/nodebb",
+    "tag": "3.8.0",
+    "digest": "sha256:b4fe01a21f73c7f0012105c9af0622a4f0fd9ef720e79fbe112dce4a4cea48e4",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "redis",
+    "image": "redis",
+    "tag": "7-alpine",
+    "digest": "sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

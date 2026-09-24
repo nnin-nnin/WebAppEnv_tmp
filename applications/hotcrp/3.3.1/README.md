@@ -9,7 +9,7 @@
 ```sh
 sha256sum -c image/SHA256SUMS
 docker load -i image/hotcrp-3.3.1-linux-amd64.tar
-docker run -d -p 18403:80 asteriskax001/sop-hotcrp:3.3.1
+docker run -d -p 18403:80 yorem/hotcrp:3.3.1
 ```
 
 接收者只需要执行 `docker load` 和 `docker run`。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库初始化脚本或 Web Installer。
@@ -17,7 +17,7 @@ docker run -d -p 18403:80 asteriskax001/sop-hotcrp:3.3.1
 如需使用可读的命名卷，也可以将最后一条替换为：
 
 ```sh
-docker run -d --name hotcrp -p 18403:80 -v hotcrp-db:/var/lib/mysql -v hotcrp-docs:/var/www/html/docs asteriskax001/sop-hotcrp:3.3.1
+docker run -d --name hotcrp -p 18403:80 -v hotcrp-db:/var/lib/mysql -v hotcrp-docs:/var/www/html/docs yorem/hotcrp:3.3.1
 ```
 
 ## 访问和账号
@@ -47,7 +47,7 @@ HOTCRP_BASE_URL=http://127.0.0.1:18403 resources/register.sh user@example.com Ex
 
 ```sh
 HOTCRP_RESET_CONFIRM=yes scripts/reset.sh
-docker run -d --name hotcrp -p 18403:80 -v hotcrp-db:/var/lib/mysql -v hotcrp-docs:/var/www/html/docs asteriskax001/sop-hotcrp:3.3.1
+docker run -d --name hotcrp -p 18403:80 -v hotcrp-db:/var/lib/mysql -v hotcrp-docs:/var/www/html/docs yorem/hotcrp:3.3.1
 ```
 
 如果使用了其他容器或卷名，可通过 `HOTCRP_CONTAINER_NAME`、`HOTCRP_DB_VOLUME` 和 `HOTCRP_DOCS_VOLUME` 覆盖。重置后的初始账号恢复为 `admin@hotcrp.local` / `benchmark-only`。

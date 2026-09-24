@@ -1,0 +1,46 @@
+name: phpbb-3-3-17
+services:
+  application:
+    image: yorem/phpbb:3.3.17@sha256:df8123f1de8912bbc6e4a25362aab9f09f6c26fd20e873d4a998a048939acf1b
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_NAME: phpbb
+      DB_USER: phpbb
+      DB_PASS: phpbb_pass
+      ADMIN_PASSWORD: adminpassword
+      HOST_PORT: 38080
+    ports:
+      - "127.0.0.1:38080:80"
+    volumes:
+      - application-data:/var/www/html
+      - ./opcache.ini:/usr/local/etc/php/conf.d/zz-disable-opcache.ini:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mysql:8.0.35@sha256:9095b039775474d4a652430c1bab0db55d48d7d1885278566152927e4844e84b
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: phpbb
+      MYSQL_USER: phpbb
+      MYSQL_PASSWORD: phpbb_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - database-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  application-data:
+  database-data:

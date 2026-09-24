@@ -1,0 +1,10 @@
+name: smf_2_0_18
+services:
+  web:
+    image: yorem/smf:2.0.18@sha256:c7d11ec40cf06104a0511295919024bd5f4d7a613edea3e9e9752caa1440d54b
+    platform: linux/amd64
+    tty: true
+    stdin_open: true
+    ports:
+      - "18622:80"
+    restart: unless-stopped

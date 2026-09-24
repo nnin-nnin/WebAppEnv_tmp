@@ -1,0 +1,36 @@
+application: octobercms
+version: 3.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/octobercms/october
+  commit: a66ea3079efa041ec51d492d3f81bfe3b7e297ea
+runtime:
+  php: '8.4'
+  web_server: apache
+  database: mariadb
+ports:
+  host_port: 18605
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/octobercms:3.0.0
+    tag: 3.0.0
+    digest: sha256:775852dc4c7cba6f6e48b81f4a970d8a6c3afc001c36a185a11049276903a8c3
+    platform: linux/amd64

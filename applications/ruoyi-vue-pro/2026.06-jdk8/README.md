@@ -8,8 +8,8 @@
 
 ```bash
 cd ruoyi-vue-pro_2026.06-jdk8
-docker pull yorem/sop-ruoyi-vue-pro:2026.06-jdk8
-docker run -d -p 18087:80 yorem/sop-ruoyi-vue-pro:2026.06-jdk8
+docker pull yorem/ruoyi-vue-pro:2026.06-jdk8
+docker run -d -p 18087:80 yorem/ruoyi-vue-pro:2026.06-jdk8
 ```
 
 本地完整交付目录中如果存在 `image/ruoyi-vue-pro-2026.06-jdk8-linux-amd64.tar`，也可以使用该归档加载镜像；GitHub 仓库不保存这个大文件，Docker Hub 镜像是公开交付来源。
@@ -71,7 +71,7 @@ docker exec <container-id> redis-cli -h127.0.0.1 ping
 
 ```bash
 RUOYI_CONTAINER_NAME=ruoyi-vue-pro scripts/reset.sh --yes
-docker run -d --name ruoyi-vue-pro -p 18087:80 yorem/sop-ruoyi-vue-pro:2026.06-jdk8
+docker run -d --name ruoyi-vue-pro -p 18087:80 yorem/ruoyi-vue-pro:2026.06-jdk8
 ```
 
 `reset.sh` 会删除目标容器及其 MySQL/Redis 数据卷；这是有意的破坏性重置，不能恢复。只删除容器而不删除数据卷不会恢复到初始 seed。

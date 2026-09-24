@@ -1,13 +1,14 @@
 services:
   application:
-    image: asteriskax001/sop-dolibarr:19.0.2
+    image: yorem/dolibarr:19.0.2@sha256:587d236e59491a455fc1e879ce5b4376806f2ee2e3092028f6ec244a5bcc63d3
+    platform: linux/amd64
     ports:
-      - "18525:80"
+      - "18527:80"
     volumes:
       - application-data:/var/www/html/documents
       - application-db:/var/lib/mysql
+      - ./opcache.ini:/usr/local/etc/php/conf.d/zz-disable-opcache.ini:ro
 
 volumes:
   application-data:
   application-db:
-

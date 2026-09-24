@@ -1,0 +1,99 @@
+[
+    {
+        "Id": "sha256:004c2da991d835c426fbcb57ac98beaee1b7feeb6ceaa16f5bb80857eaafc7fd",
+        "RepoTags": [
+            "yorem/wordpress:7.0.3-aio"
+        ],
+        "RepoDigests": [],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-10T23:59:49.518678581+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=39B641343D8C104B2B146DC3F9C39DC0B9698544 E60913E4DF209907D8E30D96659A97C9CF2A795A 1198C0117593497A5EC5C199286AF1F9897469DC",
+                "PHP_VERSION=8.2.33",
+                "PHP_URL=https://www.php.net/distributions/php-8.2.33.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.2.33.tar.xz.asc",
+                "PHP_SHA256=fbdeace9b38220436a4c8fd79b900df92878151db145e641750743a283b514c1"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/wordpress-entrypoint"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/wp-content": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/usr/local/bin/wordpress-healthcheck"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 60000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 378643365,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6f94328331290cbd81edab450664d42da7b64c191416c9346cd5d28c84f76035",
+                "sha256:520cef94fddd7bce34543fc2033aff94b69feadd61aaeb07552b06f37729e343",
+                "sha256:44a4e125ba2055d0e90637d1cb6089ba35e1c941d546b47df9d607f5c3d53d87",
+                "sha256:4e8cef09369d33641e18ee9597617c7de06ce63ed8d436f87d44ef6fb08fcecd",
+                "sha256:29481f3048494ec904536fa10f5ee1527f8399dd5f1ae1c7eb965c25dd34872b",
+                "sha256:f25aab00e164407ac81d6bd0b0d5ee75dd515c9fb547512bd321afbfdb1d6f40",
+                "sha256:ab2f8a3c92bd945e8985ffd1f224a12de0a71184a93cbeb43fb8b3278b5596f0",
+                "sha256:6868d6efb32fb7b237810d84f7d4c9ebcdafa3482eafc6f3fc256b8ff36397d6",
+                "sha256:d03c82b32e206f498190d898a674c54eb9f7f32de2aae7b5c6baa6e0a5dd1374",
+                "sha256:debf45f7f6315881f64a807304359403b9354ea0afc256fb175bbd4a0f7fc411",
+                "sha256:43a640568f6eb7134f0e1ddbcec05ca9ced3fdd228d3abf5f0d0b0fdf0003e63",
+                "sha256:0948ecfffff16fd5669c2103fb34e95274b8f8e5fba07c65598c4dd4ee16ae1a",
+                "sha256:cb86faa0f299836de83b904c7cacb295c7ae592bfecf5395857de1f7b3081220",
+                "sha256:7e32378fe82e6f28d9ad8445b0eb028801db24a0edfb1720c1f6c471c3524511",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:d4536047bf9f351eaa9aa94da59c785c91cb4e1fc8de282e649dbe5787fb6de4",
+                "sha256:4cef5d4b4d1caea18065da40fa40475031a8edcdd1e19ae7d80bd95e055c68f7",
+                "sha256:683fb209986d1aed999ef8db1007f7818bfefa47a49ac4e42c1996c3f8f73904",
+                "sha256:39afc448d5fe85f645ad06cad1b0e8ca8b776f03a10f9683884be0a29eb4a17b",
+                "sha256:2dbd524bf9338a69cf49449e148f33df3f422a6be7785fc1015dadd11f91cdaf",
+                "sha256:6ea01f733b50ebcd43426b27c466fef9940c64f5a3f379dd6997d29f2a27aa65",
+                "sha256:79d0fda22e065ab67e3903b520929844fc7b2f7493a5766ce04ece47e0799a60",
+                "sha256:7d29e8c77c1cf4bafd9c18783c58dcbc120f80afac38cd0e5c307191ca2024cc",
+                "sha256:81b73d4115d651450b7f9d54bfaa40430c7860d7838facd6d8533abeb16e4ceb",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-10T15:59:57.237307283Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:004c2da991d835c426fbcb57ac98beaee1b7feeb6ceaa16f5bb80857eaafc7fd",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "yreymnfee8ifd48dtgvcd7d8b",
+                    "CreatedAt": "2026-08-10T23:59:57.239858933+08:00"
+                }
+            ]
+        }
+    }
+]

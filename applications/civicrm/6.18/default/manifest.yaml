@@ -1,0 +1,75 @@
+application:
+  name: CiviCRM
+  version: "6.18"
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for CiviCRM 6.18 Standalone with MariaDB 10.11 database."
+
+deployment:
+  mode: native_compose
+  notes: "Native multi-container Docker Compose deployment for CiviCRM Standalone and MariaDB."
+  compose_file: docker/compose.yaml
+  project_name: civicrm-6-18
+  host_port: 18599
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+target:
+  platform: linux/amd64
+  compose_project: civicrm-6-18
+  compose_file: docker/compose.yaml
+  host_port: 18599
+  browser_url: http://localhost:18599/
+  login_url: http://localhost:18599/civicrm/login
+
+source:
+  repository: https://github.com/civicrm/civicrm-core
+  tag: 6.18.1
+  commit: 5e09c0172e03c60f7010e29a8f5a2850cc652c5c
+  source_yaml: source/source.yaml
+  checksums: source/SHA256SUMS
+  availability: github_only
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "CiviCRM Standalone Web Application"
+    image: yorem/civicrm:6.18@sha256:c5609b727a78c21ceaee5774a463e5136102aed3aa4d92ad3b56e3e9e074ba09
+    tag: "6.18"
+    digest: sha256:c5609b727a78c21ceaee5774a463e5136102aed3aa4d92ad3b56e3e9e074ba09
+    platform: linux/amd64
+    ports:
+      - "18599:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    tag: "10.11"
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+
+ports:
+  host_port: 18599
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

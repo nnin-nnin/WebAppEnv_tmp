@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 APP_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$APP_ROOT"
-IMAGE='asteriskax001/sop-dolibarr:19.0.2'
+IMAGE='yorem/dolibarr:19.0.2'
 ARCHIVE='image/dolibarr-19.0.2-linux-amd64.tar'
 
 if [[ -z "${DOLIBARR_INITIAL_ADMIN_PASSWORD:-}" ]]; then

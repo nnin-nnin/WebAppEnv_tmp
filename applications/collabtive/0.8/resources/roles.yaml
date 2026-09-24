@@ -1,0 +1,13 @@
+roles:
+  - name: Admin
+    permissions: "Full access (projects, tasks, milestones, messages, files, timetracker, admin)"
+    purpose: "System administration and unrestricted project management"
+    relation: "Assigned to the initial admin account"
+  - name: User
+    permissions: "Can add/edit items but cannot delete or close projects"
+    purpose: "Standard project participant"
+    relation: "Available to assign to newly created users"
+  - name: Client
+    permissions: "Read-only access or limited visibility"
+    purpose: "Client viewing access"
+    relation: "Available to assign to clients"

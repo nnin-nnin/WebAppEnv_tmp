@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-container_name="${HOTCRP_CONTAINER_NAME:-hotcrp}"
-db_volume="${HOTCRP_DB_VOLUME:-hotcrp-db}"
-docs_volume="${HOTCRP_DOCS_VOLUME:-hotcrp-docs}"
-port="${HOTCRP_PORT:-18403}"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$DIR"
 
-docker run -d \
-  --name "$container_name" \
-  -p "$port:80" \
-  -v "$db_volume:/var/lib/mysql" \
-  -v "$docs_volume:/var/www/html/docs" \
-  asteriskax001/sop-hotcrp:3.3.1
+docker compose -f docker/compose.yaml up -d
+
+# Wait for service to be healthy
+for i in {1..30}; do
+  if bash scripts/healthcheck.sh >/dev/null 2>&1; then
+    echo "HotCRP 3.3.1 服务已成功启动并通过健康检查。"
+    exit 0
+  fi
+  sleep 2
+done
+
+echo "HotCRP 启动超时。" >&2
+exit 1

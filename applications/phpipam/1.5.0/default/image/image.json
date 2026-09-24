@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/phpipam",
+    "tag": "1.5.0",
+    "digest": "sha256:baab8c632f4d6a7835047fababfea23401030d75e3e71fdd7df404ca05f1dcf2",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

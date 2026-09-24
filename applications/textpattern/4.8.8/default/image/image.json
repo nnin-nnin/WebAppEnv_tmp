@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/textpattern",
+    "tag": "4.8.8",
+    "digest": "sha256:e788b4271fb9212069ca83f492e7072448c7287a9870bfea477f4caf7c8b7845",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 : "${MAUTIC_ADMIN_PASSWORD:?Set MAUTIC_ADMIN_PASSWORD through the controlled credential channel for image initialization}"
-image_name=asteriskax001/sop-mautic:5.0.4
+image_name=yorem/mautic:5.0.4
 archive=image/mautic-5.0.4-linux-amd64.tar
 mkdir -p image
 

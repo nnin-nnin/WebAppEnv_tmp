@@ -1,0 +1,36 @@
+application: carbon-forum
+version: 5.9.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/lincanbin/Carbon-Forum
+  commit: 55d98f4e4a8c3442c61bfe0a5844c32f22145cd9
+runtime:
+  php: '5.5'
+  web_server: nginx
+  database: mysql-5.5
+ports:
+  host_port: 18583
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/carbon-forum:5.9.0
+    tag: 5.9.0
+    digest: sha256:c4029348d19c785a9e32310140111e89e5825fe5e8ed14e8a80de34a4a697ca3
+    platform: linux/amd64

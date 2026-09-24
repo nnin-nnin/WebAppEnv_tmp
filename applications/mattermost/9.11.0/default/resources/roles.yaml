@@ -1,0 +1,5 @@
+roles:
+  - role: admin
+    description: System Administrator with full administrative privileges
+  - role: member
+    description: Regular team member

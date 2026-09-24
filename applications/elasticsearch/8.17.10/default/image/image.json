@@ -1,0 +1,10 @@
+[
+  {
+    "service": "elasticsearch",
+    "image": "yorem/elasticsearch",
+    "tag": "8.17.10",
+    "digest": "sha256:301047b72827de2cbfa8aaa61c8110589a66ecd5189b9822a4fdd9854bb3a64b",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

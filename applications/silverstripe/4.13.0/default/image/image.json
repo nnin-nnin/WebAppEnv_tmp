@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/silverstripe",
+    "tag": "4.13.0",
+    "digest": "sha256:747b9510af880e8f5799f240e096df6e63ce1b0972ff9c4051387222b14c0ef0",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: adminpassword
+    type: admin
+    enabled: true
+    description: "Initial administrator account"
+    creation_method: "CLI installer"

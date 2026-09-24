@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/dokuwiki",
+    "tag": "2024.7.14",
+    "digest": "sha256:87aa3e7cdc34154a25a5a404281a32e2c876f2314e795b1fc5647e309e28897f",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

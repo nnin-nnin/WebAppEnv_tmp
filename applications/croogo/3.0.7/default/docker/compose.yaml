@@ -1,0 +1,12 @@
+name: croogo_3_0_7
+services:
+  web:
+    image: yorem/croogo:3.0.7@sha256:783002c2427a0afdca5d4dfc563c27dd267f5ed9985360db5c4448847e718f18
+    platform: linux/amd64
+    ports:
+      - "18624:80"
+    environment:
+      - DEBUG=true
+    tty: true
+    stdin_open: true
+    restart: unless-stopped

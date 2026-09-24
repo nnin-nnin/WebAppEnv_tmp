@@ -1,3 +1,8 @@
 sources:
   - repository: https://github.com/fluxbb/fluxbb.git
+    tag: fluxbb-1.5.11
+    tag_object: 0e37a7800d53267bf46d04498afa2d92a6be1471
     commit: 3909815c00f859fd565ca9e7bdcd254dba23c585
+    acquisition: GitHub codeload archive at the immutable commit
+    archive: fluxbb-1.5.11-3909815c.tar.gz
+    sha256: 040edb4d7f3c4fd7cbf78d5fbd82647b66ebe296a7c80047646de84fc3899147

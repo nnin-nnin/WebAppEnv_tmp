@@ -1,0 +1,36 @@
+application: orocrm
+version: 4.2.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/oroinc/crm-application
+  commit: 5de6ccdc000e7c8fd4b3b07478fb706e551579a5
+runtime:
+  php: '8.3'
+  web_server: php-built-in
+  database: sqlite
+ports:
+  host_port: 18627
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  orocrm:
+    image: yorem/orocrm:4.2.0@sha256:3433bb80b2fe6bf1e2ca012b5ef83644d9901e6a5b81d879d996fd1a392ae134
+    tag: 4.2.0
+    digest: sha256:3433bb80b2fe6bf1e2ca012b5ef83644d9901e6a5b81d879d996fd1a392ae134
+    platform: linux/amd64

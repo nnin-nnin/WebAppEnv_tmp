@@ -2,12 +2,10 @@
     {
         "Id": "sha256:b45fb686c2bd6740307433eb0d3a028f249ef6ef35d489b3ee1154f7af51df81",
         "RepoTags": [
-            "asteriskax001/sop-mediawiki:1.41.1",
-            "nnin/sop-mediawiki:1.41.1"
+            "yorem/mediawiki:1.41.1"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-mediawiki@sha256:b45fb686c2bd6740307433eb0d3a028f249ef6ef35d489b3ee1154f7af51df81",
-            "nnin/sop-mediawiki@sha256:b45fb686c2bd6740307433eb0d3a028f249ef6ef35d489b3ee1154f7af51df81"
+            "yorem/mediawiki:1.41.1@sha256:b45fb686c2bd6740307433eb0d3a028f249ef6ef35d489b3ee1154f7af51df81"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T14:56:51.21289064+08:00",
@@ -93,7 +91,7 @@
             "digest": "sha256:b45fb686c2bd6740307433eb0d3a028f249ef6ef35d489b3ee1154f7af51df81",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-mediawiki:1.41.1",
+                "io.containerd.image.name": "docker.io/yorem/mediawiki:1.41.1",
                 "org.opencontainers.image.ref.name": "1.41.1"
             }
         }

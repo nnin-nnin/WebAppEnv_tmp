@@ -24,7 +24,7 @@ runtime:
 delivery:
   all_in_one: true
   architecture: single-image-single-container
-  image: asteriskax001/sop-mediawiki:1.41.1
+  image: yorem/mediawiki:1.41.1@sha256:b45fb686c2bd6740307433eb0d3a028f249ef6ef35d489b3ee1154f7af51df81
   image_metadata: image/image.json
   contains:
     - MediaWiki fixed source and Composer runtime dependencies
@@ -51,7 +51,7 @@ scripts:
   container_healthcheck: scripts/healthcheck-container.sh
   reset: scripts/reset.sh
 
-recommended_run: docker run -d -p 18519:80 asteriskax001/sop-mediawiki:1.41.1
+recommended_run: docker run -d -p 18519:80 yorem/mediawiki:1.41.1
 credential_policy: 初始管理员密码只由受控渠道提供，用于镜像初始化和动态验收；不得写入交付文件或镜像环境变量。
 source_metadata_file: source/source.yaml
 source_availability: upstream_repository_only

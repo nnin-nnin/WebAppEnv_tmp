@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/smf",
+    "tag": "2.0.18",
+    "digest": "sha256:c7d11ec40cf06104a0511295919024bd5f4d7a613edea3e9e9752caa1440d54b",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

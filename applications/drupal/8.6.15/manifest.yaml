@@ -29,8 +29,8 @@ build:
   base_image: docker.io/library/drupal:8.6.15-apache@sha256:6494e8cdd709bed5f6cb8452611ece78d239a4bba47ff199cf768bb36b1e9753
   source_used_by_dockerfile: true
   build_platform: linux/amd64
-  application_image: yorem/sop-drupal:8.6.15
-  local_application_image: sop/drupal:8.6.15
+  application_image: yorem/drupal:8.6.15@sha256:1f4eec3187e2678f98d5ce2792124b0952bc67fb443ee40a330ac56e8d9de56b
+  local_application_image: yorem/drupal:8.6.15
   database_image: postgres:10.23-bullseye
 
 compose:
@@ -52,14 +52,14 @@ image_delivery:
   method: DOCKER_HUB
   metadata: image/image.json
   prepare_script: scripts/load-images.sh
-  application_image: yorem/sop-drupal:8.6.15
+  application_image: yorem/drupal:8.6.15@sha256:1f4eec3187e2678f98d5ce2792124b0952bc67fb443ee40a330ac56e8d9de56b
   database_image: postgres:10.23-bullseye
   note: "The GitHub repository stores image metadata; runtime images are pulled from Docker Hub. Local tar archives are optional build outputs."
 
 services:
   - name: application
     role: "Long-running Drupal Apache web application"
-    image: yorem/sop-drupal:8.6.15
+    image: yorem/drupal:8.6.15@sha256:1f4eec3187e2678f98d5ce2792124b0952bc67fb443ee40a330ac56e8d9de56b
     platform: linux/amd64
     source: "source/drupal-8.6.15 through docker/Dockerfile"
     ports:
@@ -70,7 +70,7 @@ services:
     healthcheck: "HTTP GET http://127.0.0.1/ inside the container"
   - name: installer
     role: "One-shot idempotent Drupal schema and administrator initializer"
-    image: yorem/sop-drupal:8.6.15
+    image: yorem/drupal:8.6.15@sha256:1f4eec3187e2678f98d5ce2792124b0952bc67fb443ee40a330ac56e8d9de56b
     platform: linux/amd64
     source: "source/drupal-8.6.15 through docker/Dockerfile"
     depends_on:

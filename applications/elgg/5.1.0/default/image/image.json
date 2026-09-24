@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/elgg:5.1.0",
+    "tag": "5.1.0",
+    "digest": "sha256:30c4f12bd7a5bd7ceba3fb79696d179bf2561fe0d4cba1e06dd18a4473a78bdb",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

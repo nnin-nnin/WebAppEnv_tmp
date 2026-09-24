@@ -1,0 +1,68 @@
+application:
+  name: b2evolution
+  version: 7.2.5
+  type: full_web_application
+  description: "b2evolution is a comprehensive open-source Content Management System (CMS) featuring multi-blog capabilities, community forums, photo galleries, and user management."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（b2evolution / PHP 7.4 Nginx）与数据库服务（MariaDB 10.11）分别运行在独立容器中，并通过专有网络相互通信。"
+  compose_file: docker/compose.yaml
+  project_name: b2evolution-7-2-5
+  host_port: 18587
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/b2evolution/b2evolution
+    commit: a7920fa31b433793ff59c14f70e6f01f613f595f
+    tag: 7.2.5
+    source_yaml: source/source.yaml
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime"
+    image: yorem/b2evolution:7.2.5@sha256:5114441520b88263ac63b274113078dcd64d9138e56bac98939b82e7856d2eec
+    digest: "sha256:5114441520b88263ac63b274113078dcd64d9138e56bac98939b82e7856d2eec"
+    platform: linux/amd64
+    ports:
+      - "18587:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.11)"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    digest: "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"
+    volumes:
+      - db-data
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin AdminPassword123!"
+  reset: "./scripts/reset.sh"

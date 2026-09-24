@@ -1,0 +1,50 @@
+name: anchorcms-0127
+
+services:
+  application:
+    image: yorem/anchorcms:0.12.7@sha256:5009aa26cb72247ecb3493e08f5cb7a0d08c6e9d47dba5fb69358a67fe2f0d4b
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: anchor_cms
+      DB_USER: anchor
+      DB_PASS: benchmark-only
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: benchmark-only
+      ADMIN_EMAIL: admin@example.com
+    ports:
+      - "${HOST_PORT:-18009}:80"
+    volumes:
+      - application-data:/var/www/html/anchor/config
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:80/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: benchmark-only-root
+      MYSQL_DATABASE: anchor_cms
+      MYSQL_USER: anchor
+      MYSQL_PASSWORD: benchmark-only
+    volumes:
+      - database-data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  application-data:
+  database-data:

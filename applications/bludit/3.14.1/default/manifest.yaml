@@ -1,0 +1,36 @@
+application: bludit
+version: 3.14.1
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/bludit/bludit
+  commit: e5a7735360c1bfe62b38cb02881b07952ddf2211
+runtime:
+  php: '7.2'
+  web_server: nginx
+  database: flat-file
+ports:
+  host_port: 18534
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/bludit:3.14.1
+    tag: 3.14.1
+    digest: sha256:383e1ba4c6fbc85a499ac42b73d4bfbc0eee097904d6865e3cbe72644571fc41
+    platform: linux/amd64

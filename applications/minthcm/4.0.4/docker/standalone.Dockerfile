@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=asteriskax001/sop-minthcm:4.0.4-base
+ARG BASE_IMAGE=yorem/minthcm:4.0.4
 FROM ${BASE_IMAGE}
 
 LABEL org.opencontainers.image.title="MintHCM all-in-one standalone"

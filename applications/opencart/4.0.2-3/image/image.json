@@ -2,12 +2,10 @@
     {
         "Id": "sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c",
         "RepoTags": [
-            "asteriskax001/sop-opencart:4.0.2-3",
-            "nnin/sop-opencart:4.0.2-3"
+            "yorem/opencart:4.0.2-3"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-opencart@sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c",
-            "nnin/sop-opencart@sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c"
+            "yorem/opencart@sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T18:59:50.143303173+08:00",
@@ -79,16 +77,19 @@
             ]
         },
         "Metadata": {
-            "LastTagTime": "2026-08-07T05:46:41.977861177Z"
+            "LastTagTime": "2026-09-23T08:28:06.058976973Z"
         },
         "Descriptor": {
             "mediaType": "application/vnd.oci.image.index.v1+json",
             "digest": "sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c",
-            "size": 856,
-            "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-opencart:4.0.2-3",
-                "org.opencontainers.image.ref.name": "4.0.2-3"
-            }
+            "size": 856
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/yorem/opencart"
+                }
+            ]
         }
     }
 ]

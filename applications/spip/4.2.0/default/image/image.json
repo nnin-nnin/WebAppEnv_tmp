@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/spip:4.2.0",
+    "tag": "4.2.0",
+    "digest": "sha256:7516d1e529971a6653e746f9004c719735daa973d389c36e46c75dfbe93b74bf",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

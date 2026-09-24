@@ -1,0 +1,35 @@
+application: jenkins
+version: 2.479.1
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/jenkinsci/jenkins
+  commit: e94816cc9f887342805f610c097e4b94a10011e7
+runtime:
+  language: java
+  server: jetty
+ports:
+  host_port: 18581
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/jenkins:2.479.1@sha256:c1e4c349365f6d16d88595b2c5f7e8ff39b8ae1d061f62420bac193b4b9616d0
+    tag: 2.479.1
+    digest: sha256:c1e4c349365f6d16d88595b2c5f7e8ff39b8ae1d061f62420bac193b4b9616d0
+    platform: linux/amd64

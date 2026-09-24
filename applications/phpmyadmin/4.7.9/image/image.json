@@ -2,12 +2,10 @@
     {
         "Id": "sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8",
         "RepoTags": [
-            "asteriskax001/sop-phpmyadmin:4.7.9",
-            "nnin/sop-phpmyadmin:4.7.9"
+            "yorem/phpmyadmin:4.7.9"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-phpmyadmin@sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8",
-            "nnin/sop-phpmyadmin@sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8"
+            "yorem/phpmyadmin:4.7.9@sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-05T10:24:25.153510199+08:00",
@@ -91,7 +89,7 @@
             "size": 4233,
             "annotations": {
                 "config.digest": "sha256:107f717bafcb8bb71f5de0215c13aeae232870844df3bd01a2c191960a39e3d9",
-                "io.containerd.image.name": "docker.io/nnin/sop-phpmyadmin:4.7.9",
+                "io.containerd.image.name": "docker.io/yorem/phpmyadmin:4.7.9",
                 "org.opencontainers.image.ref.name": "4.7.9"
             }
         }

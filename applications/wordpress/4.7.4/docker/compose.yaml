@@ -1,7 +1,7 @@
 services:
   application:
     platform: linux/amd64
-    image: nnin/sop-wordpress:4.7.4
+    image: yorem/wordpress:4.7.4@sha256:7033eeb76569cbcbf24bc721dc2247b87dc231a48c697dda9a06ec6334472901
     ports:
       - "18084:80"
     volumes:

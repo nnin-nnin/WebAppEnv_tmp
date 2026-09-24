@@ -14,7 +14,7 @@ platform:
   web_server: Nginx 1.22 with Puma 6.x
   frontend_build_command: 不适用；Redmine 5.1.2 使用源码随附的发布静态资源
   static_assets: source/redmine/public（镜像内由 Nginx 直接提供）
-  browser_entrypoint: http://127.0.0.1:18512/
+  browser_entrypoint: http://127.0.0.1:18511/
 
 database:
   engine: MariaDB 10.11 (same container)
@@ -24,9 +24,9 @@ database:
 delivery:
   all_in_one: true
   description: 单镜像、单容器，内部包含 Redmine、Nginx、Puma、Ruby 运行时和 MariaDB 数据库服务
-  image: asteriskax001/sop-redmine:5.1.2
+  image: yorem/redmine:5.1.2@sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60
   metadata: image/image.json
-  port: 18512
+  port: 18511
   internal_port: 80
   frontend: 镜像包含 Redmine 原生页面和本地静态资源，Nginx 将动态请求转发到同容器 127.0.0.1:3000 的 Puma
 
@@ -44,6 +44,6 @@ scripts:
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
 
-recommended_run: docker run -d -p 18512:80 asteriskax001/sop-redmine:5.1.2
+recommended_run: docker compose -f docker/compose.yaml up -d
 source_metadata_file: source/source.yaml
 source_availability: upstream_repository_only

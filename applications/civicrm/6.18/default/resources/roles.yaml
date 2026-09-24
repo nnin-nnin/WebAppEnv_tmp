@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over CiviCRM configuration, contacts, and data
+    purpose: System administration
+    associated_accounts:
+      - admin

@@ -8,54 +8,49 @@
 
 ```bash
 cd applications/gitlab/16.11.2-ce.0
-docker run -d --name gitlab-16.11.2-ce.0 \
-  -p 18527:80 \
-  -v gitlab-16.11.2-ce.0-config:/etc/gitlab \
-  -v gitlab-16.11.2-ce.0-logs:/var/log/gitlab \
-  -v gitlab-16.11.2-ce.0-data:/var/opt/gitlab \
-  asteriskax001/sop-gitlab:16.11.2-ce.0
+docker compose -f docker/compose.yaml up -d
 ```
 
-接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本或 Web Installer，也不需要单独启动数据库。
+Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、bootstrap 脚本或 Web Installer，也不需要单独启动数据库。
 
 ## 访问和账号
 
-- 浏览器入口：`http://127.0.0.1:18527/`
+- 浏览器入口：`http://127.0.0.1:18528/`
 - 登录后预期进入 GitLab 的项目/组导航和应用首页，而不是状态页或 API 文档。
 - 初始管理员用户名：`admin`
 - 角色：实例管理员（Administrator）
-- 初始管理员密码：`WcGit!26-lP4yN8C`。该密码由容器启动时的 `GITLAB_INITIAL_ADMIN_PASSWORD` 注入；镜像本身不烘焙密码，运行时必须传入该环境变量，否则 Omnibus 会自行生成随机 root 密码。
+- 初始管理员密码：`WcGit!26-lP4yN8C`。该密码由容器启动时的 `GITLAB_INITIAL_ADMIN_PASSWORD` 注入；运行时需传入该环境变量，默认已由 compose.yaml 配置。
 
 ## 验证
 
 宿主机 HTTP 验证：
 
 ```bash
-GITLAB_URL=http://127.0.0.1:18527 ./scripts/healthcheck.sh
+GITLAB_URL=http://127.0.0.1:18528 ./scripts/healthcheck.sh
 ```
 
 真实登录接口验证：
 
 ```bash
-GITLAB_URL=http://127.0.0.1:18527 GITLAB_USERNAME=admin GITLAB_PASSWORD='WcGit!26-lP4yN8C' ./resources/login.sh
+GITLAB_URL=http://127.0.0.1:18528 GITLAB_USERNAME=admin GITLAB_PASSWORD='WcGit!26-lP4yN8C' ./resources/login.sh
 ```
 
 普通用户创建使用 GitLab 已验证的 REST API，需要管理员在受控渠道提供 API token：
 
 ```bash
-GITLAB_URL=http://127.0.0.1:18527 GITLAB_ADMIN_TOKEN='<GitLab 个人访问令牌>' \
+GITLAB_URL=http://127.0.0.1:18528 GITLAB_ADMIN_TOKEN='<GitLab 个人访问令牌>' \
   ./resources/register.sh ordinary ordinary@example.invalid
 ```
 
 ## 重置
 
-重置是破坏性操作，仅在确认后执行：
+重置是破坏性操作：
 
 ```bash
-RESET_CONFIRM=YES ./scripts/reset.sh
+./scripts/reset.sh
 ```
 
-脚本会停止并删除本交付容器及其三个命名卷。删除后按“启动”章节重新执行 `docker run`，应用会重新初始化。
+脚本会停止并删除本交付容器及其命名卷。删除后按“启动”章节重新执行 `docker compose up -d`，应用会重新初始化。
 
 ## 文件说明
 

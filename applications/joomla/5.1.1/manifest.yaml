@@ -23,7 +23,7 @@ runtime:
   browser_entry: http://127.0.0.1:18211/
   administrator_entry: http://127.0.0.1:18211/administrator/
 delivery:
-  image: asteriskax001/sop-joomla:5.1.1
+  image: yorem/joomla:5.1.1@sha256:7287c440475adb0d35dada0ac970f37798bbeff801a0cdb48d68dbf240d26128
   archive: image/joomla-5.1.1-linux-amd64.tar
   metadata: image/image.json
   image_checksums: image/SHA256SUMS
@@ -42,4 +42,4 @@ operations:
   entrypoint: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18211:80 asteriskax001/sop-joomla:5.1.1
+recommended_run: docker run -d -p 18211:80 yorem/joomla:5.1.1

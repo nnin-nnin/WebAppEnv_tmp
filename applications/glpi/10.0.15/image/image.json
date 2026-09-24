@@ -2,12 +2,10 @@
     {
         "Id": "sha256:1f60883f24640fc1197b428340a5878b31b9ceec26cbdfb85527fbb25eda7e9d",
         "RepoTags": [
-            "asteriskax001/sop-glpi:10.0.15",
-            "nnin/sop-glpi:10.0.15"
+            "yorem/glpi:10.0.15"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-glpi@sha256:1f60883f24640fc1197b428340a5878b31b9ceec26cbdfb85527fbb25eda7e9d",
-            "nnin/sop-glpi@sha256:1f60883f24640fc1197b428340a5878b31b9ceec26cbdfb85527fbb25eda7e9d"
+            "yorem/glpi:10.0.15@sha256:1f60883f24640fc1197b428340a5878b31b9ceec26cbdfb85527fbb25eda7e9d"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T13:01:00.342670759+08:00",
@@ -91,7 +89,7 @@
             "digest": "sha256:1f60883f24640fc1197b428340a5878b31b9ceec26cbdfb85527fbb25eda7e9d",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-glpi:10.0.15",
+                "io.containerd.image.name": "docker.io/yorem/glpi:10.0.15",
                 "org.opencontainers.image.ref.name": "10.0.15"
             }
         }

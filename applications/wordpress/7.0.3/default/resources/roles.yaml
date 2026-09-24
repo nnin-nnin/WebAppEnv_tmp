@@ -1,0 +1,4 @@
+roles:
+  - name: Administrator
+    permissions: Full access to manage WordPress site
+    purpose: Manage site content, plugins, themes, and users

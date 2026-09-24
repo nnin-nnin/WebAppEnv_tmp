@@ -1,0 +1,13 @@
+- username: admin
+  password: changeme1234
+  email: admin@example.com
+  type: admin
+  enabled: true
+  description: Initial administrator account, automatically created during setup script execution.
+
+- username: testuser
+  password: testuser1234
+  email: testuser@example.com
+  type: user
+  enabled: true
+  description: Regular user, can be created via resources/register.sh which uses artisan CLI under the hood.

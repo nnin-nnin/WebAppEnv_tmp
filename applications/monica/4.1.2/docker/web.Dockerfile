@@ -1,4 +1,4 @@
-ARG APP_IMAGE=yorem/sop-monica-app:4.1.2
+ARG APP_IMAGE=yorem/monica:4.1.2-app
 FROM ${APP_IMAGE} AS monica
 
 FROM nginx:1.26.0-alpine

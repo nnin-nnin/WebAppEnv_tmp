@@ -1,0 +1,36 @@
+application: silverstripe
+version: 4.13.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/silverstripe/silverstripe-cms
+  commit: e52fab6db8106dc6ad9dd2a9a5170cb54fae5591
+runtime:
+  php: '7.0'
+  web_server: apache
+  database: mariadb
+ports:
+  host_port: 18619
+  container_port: 80
+credentials:
+  admin_username: admin@example.com
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/silverstripe:4.13.0@sha256:747b9510af880e8f5799f240e096df6e63ce1b0972ff9c4051387222b14c0ef0
+    tag: 4.13.0
+    digest: sha256:747b9510af880e8f5799f240e096df6e63ce1b0972ff9c4051387222b14c0ef0
+    platform: linux/amd64

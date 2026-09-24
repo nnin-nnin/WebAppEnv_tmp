@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: admin
+    role: Administrator
+    type: admin
+    enabled: true
+    purpose: Primary administrator account for Concrete5

@@ -1,0 +1,54 @@
+application:
+  name: advocate-office-management-system
+  version: 1.0.0
+  type: full_web_app
+  deployment_mode: native_compose
+
+compose:
+  file_path: docker/compose.yaml
+  project_name: advocate-office-1.0.0
+  services:
+    - name: app
+      role: application
+      image: yorem/advocate-office:1.0.0@sha256:0b66490ac63c09ca9332f9ba6cb48b27d322e8cc1602c60f6a7f259ad15c365f
+      digest: sha256:0b66490ac63c09ca9332f9ba6cb48b27d322e8cc1602c60f6a7f259ad15c365f
+      platform: linux/amd64
+      ports:
+        - "18004:80"
+      dependencies:
+        - db
+    - name: db
+      role: database
+      image: mysql:8.0.36
+      digest: sha256:65ce0889751900d2dd5fc5aa5a5fb59073d401fc43df2eae6bd6afb18e7626dd
+      platform: linux/amd64
+      ports: []
+
+source:
+  backend:
+    repository: https://github.com/RCLDevelopers/Advocate-office-management-system
+    commit: 317cd4f4fbcbe387a8e0343075819130d7ba9c3e
+
+delivery:
+  mode: DOCKERHUB
+  docker_hub_namespace: yorem
+  images:
+    - service: app
+      image: yorem/advocate-office:1.0.0@sha256:0b66490ac63c09ca9332f9ba6cb48b27d322e8cc1602c60f6a7f259ad15c365f
+      tag: 1.0.0
+      digest: sha256:0b66490ac63c09ca9332f9ba6cb48b27d322e8cc1602c60f6a7f259ad15c365f
+      platform: linux/amd64
+    - service: db
+      image: mysql:8.0.36
+      tag: 8.0.36
+      digest: sha256:65ce0889751900d2dd5fc5aa5a5fb59073d401fc43df2eae6bd6afb18e7626dd
+      platform: linux/amd64
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login_script: resources/login.sh
+  register_script: resources/register.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+recommended_start_command: docker compose -f docker/compose.yaml up -d

@@ -1,0 +1,10 @@
+name: silverstripe_4_13_0
+services:
+  web:
+    image: yorem/silverstripe:4.13.0@sha256:747b9510af880e8f5799f240e096df6e63ce1b0972ff9c4051387222b14c0ef0
+    platform: linux/amd64
+    ports:
+      - "18619:80"
+    tty: true
+    stdin_open: true
+    restart: unless-stopped

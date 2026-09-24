@@ -1,0 +1,7 @@
+users:
+  - username: "admin@example.com"
+    password: "adminpassword"
+    type: "admin"
+    enabled: true
+    purpose: "Initial administrator account"
+    creation_method: "Environment variables (IN_USER_EMAIL, IN_PASSWORD) on container startup"

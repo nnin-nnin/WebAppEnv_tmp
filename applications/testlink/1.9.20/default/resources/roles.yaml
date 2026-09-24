@@ -1,0 +1,36 @@
+roles:
+  - name: administrator
+    permissions:
+      - mgt_users
+      - mgt_view_user
+      - system_configuration
+      - mgt_view_events
+      - mgt_print_req
+      - testproject_user_role_assignment
+    purpose: "Full administrative access to TestLink"
+    associated_accounts:
+      - admin
+  - name: leader
+    permissions:
+      - testproject_planning
+      - testplan_planning
+      - testplan_milestone_overview
+      - testproject_metrics_dashboard
+    purpose: "Test lead and project management"
+    associated_accounts: []
+  - name: senior_tester
+    permissions:
+      - testplan_execute
+      - testproject_view
+    purpose: "Senior testing and test design"
+    associated_accounts: []
+  - name: tester
+    permissions:
+      - testplan_execute
+    purpose: "Test execution"
+    associated_accounts: []
+  - name: guest
+    permissions:
+      - testproject_view
+    purpose: "Read-only access"
+    associated_accounts: []

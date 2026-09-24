@@ -1,0 +1,57 @@
+name: matomo-5-13-0
+
+services:
+  app:
+    image: yorem/matomo:5.13.0@sha256:5031e36f42a13e9bd8afc748b3eb61170f59dcff8d9901e9c8843673935820bf
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18563}:80"
+    environment:
+      MATOMO_DATABASE_HOST: db
+      MATOMO_DATABASE_ADAPTER: mysql
+      MATOMO_DATABASE_USERNAME: matomo
+      MATOMO_DATABASE_PASSWORD: matomo_pass
+      MATOMO_DATABASE_DBNAME: matomo
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - app-data:/var/www/html
+      - ../resources/config:/matomo-init-config:ro
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        /entrypoint.sh true
+        cp /matomo-init-config/config.ini.php /var/www/html/config/config.ini.php
+        chown www-data:www-data /var/www/html/config/config.ini.php
+        chmod 644 /var/www/html/config/config.ini.php
+        exec /entrypoint.sh apache2-foreground
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:80/index.php | grep -E '^(200|302)$' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: matomo_pass
+      MYSQL_DATABASE: matomo
+      MYSQL_USER: matomo
+      MYSQL_PASSWORD: matomo_pass
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  app-data:
+  db-data:

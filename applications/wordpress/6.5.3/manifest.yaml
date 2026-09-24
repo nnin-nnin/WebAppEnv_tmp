@@ -16,7 +16,7 @@ runtime:
   browser_entry: http://127.0.0.1:18513/
   administrator_entry: http://127.0.0.1:18513/wp-admin/
 delivery:
-  image: asteriskax001/sop-wordpress:6.5.3
+  image: yorem/wordpress:6.5.3@sha256:f4ccc154623599cd25843081ef340cdfdfdaa08d86adcce0c0586c6b95f71eb7
   metadata: image/image.json
   all_in_one: 单镜像、单容器，内部包含 WordPress、Apache、PHP、MariaDB、数据库初始化和初始账号。
   web_application: 镜像内包含 WordPress 真实前台、后台静态资源和 PHP 后端；浏览器请求由同一容器内的 Apache 提供。
@@ -33,6 +33,6 @@ operations:
   entrypoint: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18513:80 asteriskax001/sop-wordpress:6.5.3
+recommended_run: docker run -d -p 18513:80 yorem/wordpress:6.5.3
 source_metadata_file: source/source.yaml
 source_availability: upstream_repository_only

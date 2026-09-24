@@ -1,0 +1,47 @@
+name: webid-1-2-2
+services:
+  application:
+    image: yorem/webid:1.2.2@sha256:0c581a9010430311afb6e3c7f6c5e0e8ae705db341bf02ca4c3782d3e0e0d65a
+    platform: linux/amd64
+    ports:
+      - "127.0.0.1:18086:80"
+    environment:
+      DB_HOST: db
+      MYSQL_USER: webid
+      MYSQL_PASSWORD: webidpassword
+      MYSQL_DATABASE: webid
+      APP_URL: http://127.0.0.1:18086/
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: password123
+      ADMIN_EMAIL: admin@example.com
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - application-data:/var/www/html/uploaded
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  db:
+    image: mysql:5.7@sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: webid
+      MYSQL_USER: webid
+      MYSQL_PASSWORD: webidpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - database-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  application-data:
+  database-data:

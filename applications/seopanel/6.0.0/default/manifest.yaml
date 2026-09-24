@@ -1,0 +1,41 @@
+application: seopanel
+version: 6.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/seopanel/Seo-Panel
+  commit: 7a4d9840564c
+runtime:
+  php: '8.1'
+  web_server: apache
+  database: mariadb
+ports:
+  host_port: 18552
+  container_port: 80
+credentials:
+  admin_username: spadmin
+  admin_password: spadmin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/seopanel:6.0.0
+    tag: 6.0.0
+    digest: sha256:7a4d9840564c6081375d2a9fabc52ac57539d0730c3c5042912adc88afec0c9d
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5
+    tag: 10.5
+    digest: sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64

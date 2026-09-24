@@ -1,0 +1,10 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over organization, users, roles, and settings
+    purpose: Primary system management role
+    associated_accounts:
+      - admin
+  - name: Member
+    description: Standard member user with access to modules and public information
+    purpose: Regular organization member role
+    associated_accounts: []

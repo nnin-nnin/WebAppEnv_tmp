@@ -1,0 +1,35 @@
+application: icms
+version: 7.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/idreamsoft/iCMS
+  commit: 0573dd0ff3f9afb73b0165d25f37e293b5b07e4a
+runtime:
+  python: '3.9'
+  web_server: python-http
+ports:
+  host_port: 18633
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/icms:7.0.0@sha256:ff2ee8d77f89a768b1b0a2cda9b4b90ed396e9aa813d0874d0f08ba81209d0cb
+    tag: 7.0.0
+    digest: sha256:ff2ee8d77f89a768b1b0a2cda9b4b90ed396e9aa813d0874d0f08ba81209d0cb
+    platform: linux/amd64

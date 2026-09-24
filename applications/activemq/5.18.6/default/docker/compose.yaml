@@ -1,0 +1,8 @@
+name: activemq_5_18_6
+services:
+  app:
+    image: yorem/activemq:5.18.6@sha256:4ad56da52396f628bfb1af314e467daff35cdfc6f77ddce5aa27e614663f0c3a
+    platform: linux/amd64
+    ports:
+      - "18572:8161"
+    restart: unless-stopped

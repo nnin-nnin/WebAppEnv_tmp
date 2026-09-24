@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "https://jetty.org/configure_10_0.dtd">
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+  <New id="jaasLoginService" class="org.eclipse.jetty.security.jaas.JAASLoginService">
+    <Set name="name">ActiveMQRealm</Set>
+    <Set name="loginModuleName">activemq</Set>
+    <Set name="roleClassNames">
+      <Array type="java.lang.String">
+        <Item>org.apache.activemq.jaas.GroupPrincipal</Item>
+      </Array>
+    </Set>
+  </New>
+
+  <Call name="insertHandler">
+    <Arg>
+      <New class="org.eclipse.jetty.server.handler.InetAccessHandler">
+        <Set name="handler">
+
+          <New id="consoleSecurityHandler" class="org.eclipse.jetty.security.SecurityHandler$PathMapped">
+            <Set name="loginService"><Ref refid="jaasLoginService"/></Set>
+            <Set name="identityService">
+              <New class="org.eclipse.jetty.security.DefaultIdentityService"/>
+            </Set>
+            <Set name="authenticator">
+              <New class="org.eclipse.jetty.security.authentication.BasicAuthenticator"/>
+            </Set>
+
+            <Call name="put">
+              <Arg>/admin/*</Arg>
+              <Arg>
+                <Call class="org.eclipse.jetty.security.Constraint" name="from">
+                  <Arg><Array type="java.lang.String"><Item>admins</Item></Array></Arg>
+                </Call>
+              </Arg>
+            </Call>
+
+            <Call name="put">
+              <Arg>/api/jolokia/*</Arg>
+              <Arg>
+                <Call class="org.eclipse.jetty.security.Constraint" name="from">
+                  <Arg><Array type="java.lang.String"><Item>admins</Item></Array></Arg>
+                </Call>
+              </Arg>
+            </Call>
+
+            <Call name="put">
+              <Arg>/*</Arg>
+              <Arg>
+                <Call class="org.eclipse.jetty.security.Constraint" name="from">
+                  <Arg>
+                    <Array type="java.lang.String">
+                      <Item>users</Item>
+                      <Item>admins</Item>
+                    </Array>
+                  </Arg>
+                </Call>
+              </Arg>
+            </Call>
+          </New>
+        </Set>
+
+        <Call name="include">
+          <Arg>
+            <Array type="java.lang.String">
+              <Item>127.0.0.1</Item>
+              <Item>::1</Item>
+              <Item>0.0.0.0/0</Item>
+              <Item>::/0</Item>
+            </Array>
+          </Arg>
+        </Call>
+      </New>
+    </Arg>
+  </Call>
+
+</Configure>

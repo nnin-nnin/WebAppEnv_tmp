@@ -20,7 +20,7 @@ code="$(curl --max-time 15 -sS -L -o "$body" -w '%{http_code}' -b "$cookie" -c "
 if [[ "$code" == 2* ]] && grep -Eiq 'Dashboard|wp-admin-bar|Welcome to WordPress' "$body"; then
   echo "WordPress 登录成功：$user"
 else
-  echo "WordPress 登录失败（HTTP $code）" >&2
+  echo "WordPress 登录失败（HTTP ${code}）" >&2
   exit 1
 fi
 

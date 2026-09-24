@@ -1,0 +1,7 @@
+roles:
+  - role: root
+    description: Superadministrator with full system privileges
+  - role: admin
+    description: Administrator with management privileges
+  - role: editor
+    description: Content editor

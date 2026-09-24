@@ -1,0 +1,53 @@
+name: admidio-5.0.14
+
+services:
+  app:
+    image: yorem/admidio:5.0.14@sha256:28be67a1ec6b148c57799d95b486bb886df000d9c32fb6c66fa4bdd41510ffa2
+    platform: linux/amd64
+    ports:
+      - "18003:80"
+    environment:
+      ADMIDIO_DB_HOST: db
+      ADMIDIO_DB_PORT: 3306
+      ADMIDIO_DB_NAME: admidio
+      ADMIDIO_DB_USER: admidio
+      ADMIDIO_DB_PASSWORD: benchmark-only
+      ADMIDIO_ROOT_PATH: "http://localhost:18003"
+      TZ: "UTC"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - admidio-files:/var/www/html/adm_my_files
+      - admidio-plugins:/var/www/html/adm_plugins
+      - admidio-themes:/var/www/html/themes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/index.php"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.11.8@sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: benchmark-only
+      MYSQL_DATABASE: admidio
+      MYSQL_USER: admidio
+      MYSQL_PASSWORD: benchmark-only
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  admidio-files:
+  admidio-plugins:
+  admidio-themes:
+  database-data:

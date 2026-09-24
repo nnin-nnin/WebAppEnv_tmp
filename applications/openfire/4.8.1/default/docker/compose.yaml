@@ -1,0 +1,12 @@
+name: openfire-4-8-1
+
+services:
+  app:
+    image: yorem/openfire:4.8.1@sha256:b1accad7cc3d5dca4eaccf98943f085592b883c7ef409677db6adff290ca7526
+    platform: linux/amd64
+    ports:
+      - "18557:9090"
+    volumes:
+      - ../resources/openfire.xml:/etc/openfire/openfire.xml:ro
+      - ../resources/openfire_hsqldb.sql:/usr/share/openfire/resources/database/openfire_hsqldb.sql:ro
+    restart: unless-stopped

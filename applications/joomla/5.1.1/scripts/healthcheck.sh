@@ -5,7 +5,12 @@ set -Eeuo pipefail
 #   容器内（镜像 HEALTHCHECK 或 docker exec）：默认 http://127.0.0.1:80，并附加检查 MariaDB；
 #   宿主机：设置 JOOMLA_URL=http://127.0.0.1:18211 后只做 HTTP 层检查。
 
-BASE_URL="${JOOMLA_URL:-http://127.0.0.1:80}"
+if [ -f /.dockerenv ] || [ "${IN_CONTAINER:-0}" = "1" ]; then
+  DEFAULT_PORT=80
+else
+  DEFAULT_PORT=18211
+fi
+BASE_URL="${JOOMLA_URL:-http://127.0.0.1:${DEFAULT_PORT}}"
 
 body=$(mktemp)
 trap 'rm -f "$body"' EXIT

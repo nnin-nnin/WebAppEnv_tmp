@@ -1,0 +1,68 @@
+application:
+  name: XOOPS
+  version: 2.5.10
+  type: full_web_application
+  description: "XOOPS is an extensible, OO (Object Oriented), easy to use dynamic web content management system written in PHP."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（XOOPS / PHP 5.6 Apache）与数据库服务（MariaDB 10.11）分别运行在独立容器中，并通过专有网络相互通信。"
+  compose_file: docker/compose.yaml
+  project_name: xoops-2-5-10
+  host_port: 18602
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/XOOPS/XoopsCore25
+    commit: aaecebae79f1840f46ed323475ceab2c3356a1ad
+    tag: v2.5.10
+    source_yaml: source/source.yaml
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime"
+    image: yorem/xoops:2.5.10@sha256:2125e1cb300a67e4ef1ea8d3916e490303572a9487f9234223658779da94b358
+    digest: "sha256:2125e1cb300a67e4ef1ea8d3916e490303572a9487f9234223658779da94b358"
+    platform: linux/amd64
+    ports:
+      - "18602:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.11)"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    digest: "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"
+    volumes:
+      - db-data
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin AdminPassword123!"
+  reset: "./scripts/reset.sh"

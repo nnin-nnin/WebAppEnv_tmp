@@ -1,0 +1,10 @@
+name: e107_2_3_0
+services:
+  web:
+    image: yorem/e107:2.3.0@sha256:6baef73c3a1157016cab45401bd036286f5ed40f4482dfedc33d1a4eaa926a86
+    platform: linux/amd64
+    ports:
+      - "18604:80"
+    tty: true
+    stdin_open: true
+    restart: unless-stopped

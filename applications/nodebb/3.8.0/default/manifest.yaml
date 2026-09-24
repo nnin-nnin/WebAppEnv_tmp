@@ -1,0 +1,41 @@
+application: nodebb
+version: 3.8.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/NodeBB/NodeBB
+  commit: b4fe01a21f73
+runtime:
+  node: "18.17.0"
+  database: redis:7-alpine
+ports:
+  host_port: 18565
+  container_port: 4567
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/nodebb:3.8.0@sha256:b4fe01a21f73c7f0012105c9af0622a4f0fd9ef720e79fbe112dce4a4cea48e4
+    tag: 3.8.0
+    digest: sha256:b4fe01a21f73c7f0012105c9af0622a4f0fd9ef720e79fbe112dce4a4cea48e4
+    platform: linux/amd64
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    tag: 7-alpine
+    digest: sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64

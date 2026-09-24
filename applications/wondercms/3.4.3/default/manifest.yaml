@@ -1,0 +1,36 @@
+application: wondercms
+version: 3.4.3
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/robiso/wondercms
+  commit: db6563154fc3b8a388844026adea0f279a8c9e75
+runtime:
+  php: '8.4'
+  web_server: apache
+  database: flat-file
+ports:
+  host_port: 18590
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/wondercms:3.4.3
+    tag: 3.4.3
+    digest: sha256:8b5bc657ac5d6fa38bd4e6cb5dc561390861ad36970576ba9bdac5708ee7e14a
+    platform: linux/amd64

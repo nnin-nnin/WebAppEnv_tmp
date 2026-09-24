@@ -1,0 +1,13 @@
+services:
+  application:
+    image: yorem/dolibarr:20.0.4@sha256:2a9a85473aebaef20cbfbcd71c0932aecb856e2430ae8e480014a4a4bc99ccf4
+    ports:
+      - "18525:80"
+    volumes:
+      - application-data:/var/www/html/documents
+      - application-db:/var/lib/mysql
+
+volumes:
+  application-data:
+  application-db:
+

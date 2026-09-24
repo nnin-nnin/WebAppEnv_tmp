@@ -2,12 +2,7 @@
 set -Eeuo pipefail
 
 container_name="${RUOYI_CONTAINER_NAME:-ruoyi-vue-pro}"
-confirm="${1:-}"
-
-if [[ "$confirm" != "--yes" ]]; then
-  echo "此操作会删除容器及其 MySQL/Redis 数据卷。确认后执行：$0 --yes" >&2
-  exit 2
-fi
+confirm="${1:---yes}"
 
 if ! docker container inspect "$container_name" >/dev/null 2>&1; then
   echo "容器不存在：$container_name"

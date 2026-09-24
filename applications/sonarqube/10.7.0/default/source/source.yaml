@@ -1,0 +1,4 @@
+repository: https://github.com/SonarSource/sonarqube
+commit: 9e1fded16c1dc80f886af1db4413cbe78a245d7f
+version: 10.7.0
+tag: 10.7.0.96327

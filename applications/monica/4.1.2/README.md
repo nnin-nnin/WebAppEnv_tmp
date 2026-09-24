@@ -18,7 +18,7 @@ name 访问依赖服务。接收者不需要手动创建 Docker 网络，不需�
   平台不匹配警告；该警告不代表服务失败。
 - 宿主机可以访问 Docker 镜像仓库以完成首次构建或镜像归档获取；使用本地归档启动
   时，运行阶段不需要访问外部包仓库。
-- 宿主机端口 `18086` 和 `18087` 未被占用。
+- 宿主机端口 `18097` 和 `18087` 未被占用。
 
 ## 启动
 
@@ -67,10 +67,10 @@ bash scripts/up.sh
 
 ## 访问和账号
 
-- 浏览器入口：<http://localhost:18086/>
-- 登录页：<http://localhost:18086/login>
+- 浏览器入口：<http://localhost:18097/>
+- 登录页：<http://localhost:18097/login>
 - 登录后预期页面：`/dashboard`，显示 Monica 的 Dashboard、People、Journal 等业务菜单。
-- API 根地址：<http://localhost:18086/api>；API 使用 Monica 自身的认证机制，
+- API 根地址：<http://localhost:18097/api>；API 使用 Monica 自身的认证机制，
   OAuth 入口为同源的 `/oauth/token`。本交付不另设宿主机 API 服务。
 - 初始管理员请求名：`admin`。
 - Monica 实际登录用户名：`admin@example.com`。
@@ -87,12 +87,12 @@ Monica 4.1.2 的注册校验要求登录标识是合法邮箱，因此不能把�
 
 | Compose service | 固定镜像 | 职责 | 对外端口 |
 | --- | --- | --- | --- |
-| `app` | `yorem/sop-monica-app:4.1.2` | Monica PHP-FPM 应用、迁移和初始化 | 不映射 |
-| `web` | `yorem/sop-monica-web:4.1.2` | Nginx 静态资源和 FastCGI Web 入口 | `18086:80` |
+| `app` | `yorem/monica:4.1.2-app` | Monica PHP-FPM 应用、迁移和初始化 | 不映射 |
+| `web` | `yorem/monica:4.1.2-web` | Nginx 静态资源和 FastCGI Web 入口 | `18097:80` |
 | `db` | `mariadb:11.4.2` | Monica 主数据库 | 不映射 |
 | `redis` | `redis:7.2.5-alpine` | 缓存、session 和 Redis queue | 不映射 |
-| `cron` | `yorem/sop-monica-app:4.1.2` | Monica schedule worker | 不映射 |
-| `queue` | `yorem/sop-monica-app:4.1.2` | Monica Redis queue worker | 不映射 |
+| `cron` | `yorem/monica:4.1.2-app` | Monica schedule worker | 不映射 |
+| `queue` | `yorem/monica:4.1.2-app` | Monica Redis queue worker | 不映射 |
 | `mail` | `mailhog/mailhog:v1.0.1` | 本地 SMTP 捕获和邮件调试界面 | `18087:8025` |
 
 `cron` 和 `queue` 复用同一个固定 app 镜像，但它们是独立的 Compose 容器和进程，
@@ -113,7 +113,7 @@ docker compose -f docker/compose.yaml config --quiet
 
 ```bash
 bash scripts/healthcheck.sh
-APP_URL=http://localhost:18086 bash resources/login.sh
+APP_URL=http://localhost:18097 bash resources/login.sh
 ```
 
 `healthcheck.sh` 会检查七个服务均处于 `running/healthy`，跟随根路径重定向并确认
@@ -123,7 +123,7 @@ APP_URL=http://localhost:18086 bash resources/login.sh
 
 ```bash
 bash resources/register.sh benchmark-user@example.com benchmark-user-password Benchmark User
-APP_URL=http://localhost:18086 \
+APP_URL=http://localhost:18097 \
   APP_USERNAME=benchmark-user@example.com \
   APP_PASSWORD=benchmark-user-password \
   bash resources/login.sh
@@ -145,7 +145,7 @@ docker compose -f docker/compose.yaml logs --tail=100 app web db redis cron queu
 ```bash
 docker compose -f docker/compose.yaml restart
 bash scripts/healthcheck.sh
-APP_URL=http://localhost:18086 bash resources/login.sh
+APP_URL=http://localhost:18097 bash resources/login.sh
 ```
 
 ## 重置
@@ -162,7 +162,7 @@ bash scripts/up.sh
 ## 版本和镜像来源
 
 交付方式是 `REGISTRY_WITH_LOCAL_ARCHIVE`。标准启动从 Docker Hub 使用
-`yorem/sop-monica-app:4.1.2` 和 `yorem/sop-monica-web:4.1.2`；服务清单、镜像 ID/digest
+`yorem/monica:4.1.2-app` 和 `yorem/monica:4.1.2-web`；服务清单、镜像 ID/digest
 和本地归档路径见 `image/image.json`。构建工作目录还可以使用 `image/` 中的本地归档，
 其 SHA256 见 `image/SHA256SUMS`。app 镜像和 web 镜像从固定后端源码构建；数据库、
 Redis、MailHog 使用固定 tag 的官方镜像。所有最终服务均声明 `linux/amd64`。

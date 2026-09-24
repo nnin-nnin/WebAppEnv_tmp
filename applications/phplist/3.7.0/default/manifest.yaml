@@ -1,0 +1,81 @@
+application:
+  name: phpList
+  version: 3.7.0
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for phpList 3.7.0 with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: phplist-3-7-0
+  compose_file: docker/compose.yaml
+  host_port: 18568
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18568/lists/admin/
+  login_url: http://127.0.0.1:18568/lists/admin/
+
+source:
+  repository: https://github.com/phpList/phplist3
+  fixed_ref: 3.7.0
+  immutable_commit: f69dc97cd3a6705dffb2c7e6c8c5b534bac05e02
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: phplist-3-7-0
+  services:
+    - app
+    - db
+  volumes:
+    - app-data
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/phplist:3.7.0@sha256:bff120331712d67ffa81d83da149bc39650649f4d7b47ac73863bed501692048
+  database_image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "Long-running phpList web application"
+    image: yorem/phplist:3.7.0@sha256:bff120331712d67ffa81d83da149bc39650649f4d7b47ac73863bed501692048
+    tag: 3.7.0
+    digest: sha256:bff120331712d67ffa81d83da149bc39650649f4d7b47ac73863bed501692048
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18568}:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    tag: 10.11
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+
+ports:
+  host_port: 18568
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

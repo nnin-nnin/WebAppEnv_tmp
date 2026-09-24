@@ -1,0 +1,9 @@
+name: chatdev_1_0_0
+services:
+  web:
+    image: yorem/chatdev:1.0.0@sha256:efab15b2c5fe982f18f67ed15812ad595239cba321139582b09837fda198db24
+    platform: linux/amd64
+    ports:
+      - "18613:8000"
+    restart: unless-stopped
+    command: python3 /chatdev/visualizer/app.py

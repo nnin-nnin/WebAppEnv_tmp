@@ -1,0 +1,18 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/magento:2.2.7",
+    "tag": "2.2.7",
+    "digest": "sha256:920f0dd512a25de1992cd444d3edc56e6131f840e65ae1ba3262aa276ed5304e",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "mysql",
+    "image": "mysql:5.7",
+    "tag": "5.7",
+    "digest": "sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

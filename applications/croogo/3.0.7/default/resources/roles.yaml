@@ -1,0 +1,6 @@
+roles:
+  - name: SuperAdmin
+    description: Full administrative privileges over system configuration, users, nodes, and content
+    purpose: Primary system management role
+    associated_accounts:
+      - croogo

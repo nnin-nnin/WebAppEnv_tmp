@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/typo3:11.5.0",
+    "tag": "11.5.0",
+    "digest": "sha256:7436d068b583c1dae2dd37ebca973b957de5371fe2acfdf9239598c3a8dbda25",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

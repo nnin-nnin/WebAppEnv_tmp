@@ -1,0 +1,49 @@
+name: seopanel-6-0-0
+
+services:
+  app:
+    image: yorem/seopanel:6.0.0@sha256:7a4d9840564c6081375d2a9fabc52ac57539d0730c3c5042912adc88afec0c9d
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18552}:80"
+    environment:
+      HOST_PORT: "${HOST_PORT:-18552}"
+      DB_HOST: db
+      DB_NAME: seopanel
+      DB_USER: seopanel
+      DB_PASSWORD: seopanelpass
+    volumes:
+      - ../resources/sp-config.php:/var/www/html/config/sp-config.php:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:80/login.php || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: seopanelrootpass
+      MYSQL_DATABASE: seopanel
+      MYSQL_USER: seopanel
+      MYSQL_PASSWORD: seopanelpass
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/01-seopanel.sql:/docker-entrypoint-initdb.d/01-seopanel.sql:ro
+      - ../resources/initial-data/02-textlang.sql:/docker-entrypoint-initdb.d/02-textlang.sql:ro
+      - ../resources/initial-data/03-custom.sql:/docker-entrypoint-initdb.d/03-custom.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

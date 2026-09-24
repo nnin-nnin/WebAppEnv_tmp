@@ -1,0 +1,9 @@
+name: dolphinscheduler_3_2_1_default
+
+services:
+  app:
+    image: yorem/dolphinscheduler:3.2.1@sha256:4b23c4a8ba51271fc938709a986b9a885a8e8f10a3c85c4daec72e83ea0f5ebc
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18585:12345"

@@ -22,7 +22,7 @@ runtime:
   port: 18517
   internal_port: 80
 image:
-  name: asteriskax001/sop-limesurvey:6.5.3
+  name: yorem/limesurvey:6.5.3
   all_in_one: true
   architecture: linux/amd64
   components:
@@ -46,6 +46,6 @@ scripts:
   start: scripts/up.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18517:80 asteriskax001/sop-limesurvey:6.5.3
+recommended_run: docker run -d -p 18517:80 yorem/limesurvey:6.5.3
 source_metadata_file: source/source.yaml
 source_availability: upstream_repository_only

@@ -2,12 +2,10 @@
     {
         "Id": "sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d",
         "RepoTags": [
-            "asteriskax001/sop-owncloud:10.14.0",
-            "nnin/sop-owncloud:10.14.0"
+            "yorem/owncloud:10.14.0"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-owncloud@sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d",
-            "nnin/sop-owncloud@sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d"
+            "yorem/owncloud:10.14.0@sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T19:34:36.897401902+08:00",
@@ -107,7 +105,7 @@
             "size": 4429,
             "annotations": {
                 "config.digest": "sha256:b62e7593a8d2125d3a7fca43d3737b0cbc3a9880911887498fc50ef079285dd4",
-                "io.containerd.image.name": "docker.io/nnin/sop-owncloud:10.14.0",
+                "io.containerd.image.name": "docker.io/yorem/owncloud:10.14.0",
                 "org.opencontainers.image.ref.name": "10.14.0"
             }
         }

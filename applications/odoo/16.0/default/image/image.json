@@ -1,0 +1,18 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/odoo",
+    "tag": "16.0",
+    "digest": "sha256:99cde0c810d80e93a0284d985d6e586553783368196715c845a7aa1caa02ec8c",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "postgres",
+    "tag": "15-alpine",
+    "digest": "sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

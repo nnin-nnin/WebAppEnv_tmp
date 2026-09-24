@@ -1,0 +1,54 @@
+name: microweber_2_0_0
+
+services:
+  app:
+    image: yorem/microweber:2.0.0@sha256:9d35f22fda485a37fb51a438b51ab7818e667200979209289e40cde81b027c3e
+    platform: linux/amd64
+    ports:
+      - 18545:80
+    environment:
+      APP_KEY: "base64:WWhtSk1ENTNhVXo4U1IwMDR6TDZKTmQydEVHajI4MjI="
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: microweber
+      DB_USERNAME: microweber
+      DB_PASSWORD: AdminPassword123!
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../resources/initial-data/microweber.php:/var/www/html/config/microweber.php:ro
+      - ../resources/initial-data/app.php:/var/www/html/config/app.php:ro
+      - ../resources/initial-data/php.ini:/usr/local/etc/php/conf.d/zz-custom.ini:ro
+      - app-storage:/var/www/html/storage
+      - app-userfiles:/var/www/html/userfiles
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:80/"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: microweber
+      MYSQL_USER: microweber
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  app-storage:
+  app-userfiles:
+  db-data:

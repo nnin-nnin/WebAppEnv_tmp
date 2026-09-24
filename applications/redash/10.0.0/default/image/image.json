@@ -1,0 +1,34 @@
+[
+  {
+    "service": "server",
+    "image": "yorem/redash",
+    "tag": "10.0.0",
+    "digest": "sha256:9392753c03767453f3a803eea0f6f57b52163dac8814dd13a1724dc4037132cf",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "init",
+    "image": "yorem/redash",
+    "tag": "10.0.0",
+    "digest": "sha256:9392753c03767453f3a803eea0f6f57b52163dac8814dd13a1724dc4037132cf",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "postgres",
+    "tag": "15-alpine",
+    "digest": "sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "redis",
+    "image": "redis",
+    "tag": "7-alpine",
+    "digest": "sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

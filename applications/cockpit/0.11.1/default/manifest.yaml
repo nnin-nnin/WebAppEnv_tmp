@@ -1,0 +1,36 @@
+application: cockpit
+version: 0.11.1
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/agentejo/cockpit
+  commit: 0d01412e1209468c23f0f4c49eccf959059e415e
+runtime:
+  php: '7.4'
+  web_server: apache
+  database: sqlite
+ports:
+  host_port: 18580
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/cockpit:0.11.1
+    tag: 0.11.1
+    digest: sha256:641230d3b2b1ec14ee603fe495379fa2da037bde087aa635962ddc6aaf31ad66
+    platform: linux/amd64

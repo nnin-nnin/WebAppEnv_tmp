@@ -7,7 +7,7 @@ IMAGE_DIR="$ROOT_DIR/image"
 cd "$IMAGE_DIR"
 
 if [[ ! -s SHA256SUMS ]]; then
-  docker pull --platform linux/amd64 yorem/sop-drupal:8.6.15
+  docker pull --platform linux/amd64 yorem/drupal:8.6.15
   docker pull --platform linux/amd64 postgres:10.23-bullseye
   echo "Docker Hub service images are ready"
   exit 0
@@ -23,6 +23,8 @@ for archive in \
   docker load --input "$archive"
 done
 
-docker tag sop/drupal:8.6.15 yorem/sop-drupal:8.6.15
+if docker image inspect sop/drupal:8.6.15 >/dev/null 2>&1; then
+  docker tag sop/drupal:8.6.15 yorem/drupal:8.6.15
+fi
 
 echo "All local Drupal 8.6.15 service images loaded"

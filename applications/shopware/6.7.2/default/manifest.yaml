@@ -1,0 +1,36 @@
+application: shopware
+version: 6.7.2
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/shopware/shopware
+  commit: d91c1446a9b1c7db32db05f0e01aa861534d6edd
+runtime:
+  php: '8.3'
+  web_server: apache
+  database: mysql
+ports:
+  host_port: 18595
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: shopware
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/shopware:6.7.2
+    tag: 6.7.2
+    digest: sha256:1fcadd4fb6a227ee72f81290f213625e5117d9c27c1d7a713c8291bffc63b0f3
+    platform: linux/amd64

@@ -1,0 +1,15 @@
+name: grav_1_7_46
+services:
+  web:
+    image: yorem/grav:1.7.46@sha256:aa3284ede27aef5f16c69b97d97ab370d0508fdeb6ea09896eb3c3250079a1b8
+    platform: linux/amd64
+    ports:
+    - 18570:80
+    entrypoint:
+    - /bin/bash
+    - -c
+    - |
+      sed -i 's/\\;/+/g' /usr/local/bin/docker-entrypoint.sh
+      sed -i 's/opcache.enable = 1/opcache.enable = 0/g' /usr/local/etc/php/conf.d/php-grav.ini
+      exec /usr/local/bin/docker-entrypoint.sh apache2-foreground
+    restart: unless-stopped

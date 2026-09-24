@@ -1,0 +1,4 @@
+- name: Administrator
+  permissions: All permissions
+  purpose: Full system administration
+  relationship_to_initial_account: The initial admin account has this role.

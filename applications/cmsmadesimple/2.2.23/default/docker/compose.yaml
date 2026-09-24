@@ -1,0 +1,58 @@
+name: cmsmadesimple-2-2-23
+
+services:
+  app:
+    image: yorem/cmsmadesimple:2.2.23@sha256:855c5e536bf99b202a3d7a3e94af59283c17b5cb092c4d6d2dc5fef9287aa65c
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18553}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        if [ ! -f /var/www/html/index.php ]; then
+          echo "Extracting CMS Made Simple codebase..."
+          php -r 'Phar::loadPhar("cmsms-2.2.22-install.php", "cmsms.phar"); copy("phar://cmsms.phar/data/data.tar.gz", "/tmp/data.tar.gz"); system("tar -xzf /tmp/data.tar.gz -C /var/www/html");'
+        fi
+        mkdir -p /var/www/html/tmp/cache /var/www/html/tmp/templates_c
+        chown -R www-data:www-data /var/www/html/tmp
+        chmod -R 777 /var/www/html/tmp
+        exec docker-php-entrypoint apache2-foreground
+    volumes:
+      - ../resources/initial-data/config.php:/var/www/html/config.php:ro
+      - ../resources/initial-data/php.ini:/usr/local/etc/php/conf.d/zz-custom.ini:ro
+      - app-cache:/var/www/html/tmp/cache
+      - app-templates_c:/var/www/html/tmp/templates_c
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: cmsms
+      MYSQL_USER: cmsms
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  app-cache:
+  app-templates_c:
+  db-data:

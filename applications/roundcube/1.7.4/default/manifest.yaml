@@ -1,0 +1,36 @@
+application: roundcube
+version: 1.7.4
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/roundcube/roundcubemail
+  commit: 0d05c37a6e565b1ff0f3a4472081f20a64d569a1
+runtime:
+  php: 8.4.25
+  web_server: apache
+  database: sqlite
+ports:
+  host_port: 18562
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/roundcube:1.7.4
+    tag: 1.7.4
+    digest: sha256:6fe5dc2c00770c11d1fe857f4b6d23fc6c6f4a87b3e3a1b1b76331540af9dadf
+    platform: linux/amd64

@@ -1,0 +1,5 @@
+users:
+  - username: install
+    password: install
+    role: admin
+    description: Initial technical administrator account

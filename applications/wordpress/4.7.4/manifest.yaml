@@ -25,12 +25,12 @@ runtime:
   web_server: Apache
   database: MariaDB 10.5
   http_port: 18084
-  startup: docker run -d --platform linux/amd64 --name wordpress-4.7.4 -p 18084:80 nnin/sop-wordpress:4.7.4
+  startup: docker run -d --platform linux/amd64 --name wordpress-4.7.4 -p 18084:80 yorem/wordpress:4.7.4
   url: http://localhost:18084
 
 docker:
   image:
-    name: nnin/sop-wordpress:4.7.4
+    name: yorem/wordpress:4.7.4
     role: all-in-one WordPress benchmark environment
     contains:
       - Apache and PHP 7.4
@@ -40,9 +40,9 @@ docker:
   compose_file: docker/compose.yaml
   published:
     registry: docker.io
-    repository: nnin/sop-wordpress
+    repository: yorem/wordpress:4.7.4
     tag: 4.7.4
-    reference: docker.io/nnin/sop-wordpress:4.7.4
+    reference: docker.io/yorem/wordpress:4.7.4
     digest: sha256:1dc13acd6f13584a7e6e742c05832ecf4efd1115e274c62b2559dc90500d921f
     metadata: image/image.json
 

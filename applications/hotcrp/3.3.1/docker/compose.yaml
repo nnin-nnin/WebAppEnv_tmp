@@ -1,12 +1,13 @@
 services:
   application:
-    image: asteriskax001/sop-hotcrp:3.3.1
+    image: yorem/hotcrp:3.3.1@sha256:9f4d451e78c315f79d6fc56d57f2e965ef6eafae4115fce424e7b7037b7e6e97
     platform: linux/amd64
     ports:
       - "18403:80"
     volumes:
       - application-db:/var/lib/mysql
       - application-data:/var/www/html/docs
+      - ./opcache.ini:/usr/local/etc/php/conf.d/zz-disable-opcache.ini:ro
 
 volumes:
   application-db:

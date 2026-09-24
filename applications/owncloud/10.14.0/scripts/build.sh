@@ -9,9 +9,9 @@ mkdir -p image
 
 docker build --platform linux/amd64 --provenance=false \
   --secret id=admin_password,env=CODEX_ADMIN_PASSWORD \
-  --tag asteriskax001/sop-owncloud:10.14.0 \
+  --tag yorem/owncloud:10.14.0 \
   --file docker/Dockerfile .
 
-docker save --output image/owncloud-10.14.0-linux-amd64.tar asteriskax001/sop-owncloud:10.14.0
-docker image inspect asteriskax001/sop-owncloud:10.14.0 > image/image.json
+docker save --output image/owncloud-10.14.0-linux-amd64.tar yorem/owncloud:10.14.0
+docker image inspect yorem/owncloud:10.14.0 > image/image.json
 sha256sum image/owncloud-10.14.0-linux-amd64.tar image/image.json > image/SHA256SUMS

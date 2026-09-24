@@ -1,0 +1,50 @@
+name: phpipam-1-5-0
+
+services:
+  app:
+    image: yorem/phpipam:1.5.0@sha256:baab8c632f4d6a7835047fababfea23401030d75e3e71fdd7df404ca05f1dcf2
+    platform: linux/amd64
+    ports:
+      - "18544:80"
+    environment:
+      IPAM_DATABASE_HOST: db
+      IPAM_DATABASE_USER: phpipam
+      IPAM_DATABASE_PASS: phpipamadmin
+      IPAM_DATABASE_NAME: phpipam
+      IPAM_DATABASE_PORT: 3306
+      IPAM_DATABASE_WEBHOST: '%'
+      IPAM_DISABLE_INSTALLER: 1
+      TZ: UTC
+    volumes:
+      - ../resources/opcache.ini:/etc/php83/conf.d/00_opcache.ini:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:80/"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: phpipam
+      MYSQL_USER: phpipam
+      MYSQL_PASSWORD: phpipamadmin
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/01-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ../resources/initial-data/02-init.sql:/docker-entrypoint-initdb.d/02-init.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  db-data:

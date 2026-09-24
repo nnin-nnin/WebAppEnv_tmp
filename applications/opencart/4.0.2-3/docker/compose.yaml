@@ -1,9 +1,13 @@
+name: opencart-4-0-2-3
+
 services:
   application:
-    image: asteriskax001/sop-opencart:4.0.2-3
+    image: yorem/opencart:4.0.2-3@sha256:47645ef839b41db6c6caff456260e13a19413a44163c16079be5befd7fc9223c
+    platform: linux/amd64
     ports:
       - "18523:80"
     volumes:
+      - ./opcache.ini:/usr/local/etc/php/conf.d/zz-disable-opcache.ini:ro
       - application-db:/var/lib/mysql
 
 volumes:

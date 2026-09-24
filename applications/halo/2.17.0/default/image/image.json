@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/halo",
+    "tag": "2.17.0",
+    "digest": "sha256:a888e68eb89ad6c9c19d2e91361c58c540e291525d485f4542243c408b17bae8",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

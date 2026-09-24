@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-if [[ "${1:-}" != "--yes" ]]; then
-  echo "此操作会删除指定容器及其命名数据卷。确认后执行：$0 --yes [CONTAINER]" >&2
-  exit 2
-fi
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$DIR"
 
-container="${2:-oscommerce-242}"
-if docker inspect "$container" >/dev/null 2>&1; then
-  docker rm -f "$container" >/dev/null
+docker compose -f docker/compose.yaml down -v --remove-orphans >/dev/null 2>&1 || true
+
+# Also remove any stray standalone container
+if docker inspect oscommerce-242 >/dev/null 2>&1; then
+  docker rm -f oscommerce-242 >/dev/null 2>&1 || true
 fi
 
 for volume in oscommerce-db oscommerce-work; do
-  if docker volume inspect "$volume" >/dev/null 2>&1; then
-    docker volume rm "$volume" >/dev/null
-  fi
+  docker volume rm "$volume" >/dev/null 2>&1 || true
 done
 
-echo "已重置 $container 及其命名数据卷；请重新执行 README 中的 docker run。"
+echo "已重置 osCommerce 2.4.2 容器及数据卷。"

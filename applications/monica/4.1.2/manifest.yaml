@@ -67,20 +67,20 @@ runtime:
   database: MariaDB 11.4.2
   cache: Redis 7.2.5
   mail_capture: MailHog 1.0.1
-  public_url: http://localhost:18086/
-  mail_ui_url: http://localhost:18087/
+  public_url: http://localhost:18097/
+  mail_ui_url: null
   container_web_port: 80
   container_fpm_port: 9000
-  api_url: http://localhost:18086/api
+  api_url: http://localhost:18097/api
   startup_initialization: "Official monica:update migration flow, Passport key creation, and idempotent official account:create CLI for admin@example.com"
   database_seed: "No SQL seed file; schema is initialized by the official Monica migration command against the Compose db service"
 
 services:
   - name: app
     role: "Monica PHP-FPM application and first-account initialization"
-    image: yorem/sop-monica-app:4.1.2
-    tag: 4.1.2
-    digest: "recorded in image/image.json after linux/amd64 build"
+    image: yorem/monica:4.1.2-app
+    tag: 4.1.2-app
+    digest: "sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f"
     platform: linux/amd64
     source: "Local build from source/monica-4.1.2 and docker/Dockerfile"
     ports: []
@@ -96,13 +96,13 @@ services:
       - hash_salt
   - name: web
     role: "Official Nginx FastCGI gateway and static frontend"
-    image: yorem/sop-monica-web:4.1.2
-    tag: 4.1.2
-    digest: "recorded in image/image.json after linux/amd64 build"
+    image: yorem/monica:4.1.2-web
+    tag: 4.1.2-web
+    digest: "sha256:3c3f075fde9b58e80996ba3c4e24b3d2594a535b71455bb8529cab3b6f014d4a"
     platform: linux/amd64
     source: "Local build from app image, docker/web.Dockerfile, and official full-example nginx.conf"
     ports:
-      - 18086:80
+      - 18097:80
     depends_on:
       - app: service_healthy
     healthcheck: "GET /login through Nginx"
@@ -134,8 +134,8 @@ services:
       - redis-data:/data
   - name: cron
     role: "Monica schedule worker"
-    image: yorem/sop-monica-app:4.1.2
-    tag: 4.1.2
+    image: yorem/monica:4.1.2-app
+    tag: 4.1.2-app
     digest: "same local app image digest recorded in image/image.json"
     platform: linux/amd64
     source: "Shared fixed app image and official 4.x cron.sh"
@@ -147,8 +147,8 @@ services:
       - app-data:/var/www/html/storage
   - name: queue
     role: "Monica Redis queue worker"
-    image: yorem/sop-monica-app:4.1.2
-    tag: 4.1.2
+    image: yorem/monica:4.1.2-app
+    tag: 4.1.2-app
     digest: "same local app image digest recorded in image/image.json"
     platform: linux/amd64
     source: "Shared fixed app image and official 4.x queue.sh"
@@ -165,8 +165,7 @@ services:
     digest: "recorded in image/image.json after linux/amd64 pull"
     platform: linux/amd64
     source: "MailHog image used by the official development Compose topology"
-    ports:
-      - 18087:8025
+    ports: []
     depends_on: []
     healthcheck: "GET /api/v2/messages"
     volumes: []
@@ -176,8 +175,8 @@ delivery:
   registry: docker.io
   namespace: yorem
   registry_images:
-    app: yorem/sop-monica-app:4.1.2
-    web: yorem/sop-monica-web:4.1.2
+    app: yorem/monica:4.1.2-app
+    web: yorem/monica:4.1.2-web
   image_metadata: image/image.json
   image_checksum_file: image/SHA256SUMS
   archives:

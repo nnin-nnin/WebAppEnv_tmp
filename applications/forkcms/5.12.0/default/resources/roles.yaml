@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over modules, users, settings, and pages
+    purpose: Primary system management role
+    associated_accounts:
+      - admin@fork-cms.com

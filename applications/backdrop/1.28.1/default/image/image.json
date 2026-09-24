@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/backdrop",
+    "tag": "1.28.1",
+    "digest": "sha256:7ded870a1c2bb66be6a4455bce73264a9e4a50600dde374845898ed9ada470ff",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

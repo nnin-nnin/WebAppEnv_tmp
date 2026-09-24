@@ -1,0 +1,9 @@
+name: autogpt_0_5_0_default
+
+services:
+  web:
+    image: yorem/autogpt:0.5.0@sha256:3b4f5df6c7bf50236feb5168eb5d6962dfc2367ef05c03a7d7f2b6708fdc738b
+    platform: linux/amd64
+    ports:
+      - "18620:3000"
+    restart: unless-stopped

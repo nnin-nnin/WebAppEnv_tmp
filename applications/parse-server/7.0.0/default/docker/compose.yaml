@@ -1,0 +1,34 @@
+name: parse_server_7_0_0
+
+services:
+  db:
+    image: mongo:5.0@sha256:41108d183e972dcbf98d09ed83f6cfc89a471a3f15d06f9d64a95e45d9db8dd2
+    platform: linux/amd64
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'db.runCommand(\"ping\").ok' | mongo localhost:27017/test --quiet"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    volumes:
+      - db-data:/data/db
+
+  app:
+    image: yorem/parse-server:7.0.0@sha256:60cf7ec922406b9998a688fb5ca5d800d95ed8baaf7be7a689de65db36e63744
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18558:1337"
+    environment:
+      - PARSE_SERVER_APPLICATION_ID=parse-server
+      - PARSE_SERVER_MASTER_KEY=AdminPassword123!
+      - PARSE_SERVER_DATABASE_URI=mongodb://db:27017/parse
+      - PARSE_SERVER_URL=http://localhost:1337/parse
+      - PARSE_SERVER_MASTER_KEY_IPS=0.0.0.0/0,::/0
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db-data:

@@ -1,0 +1,6 @@
+backend:
+  repository: "https://github.com/apache/inlong"
+  commit: "d348b01bda8e64a8743799bff52d9293aad18753"
+frontend:
+  repository: "https://github.com/apache/inlong"
+  commit: "d348b01bda8e64a8743799bff52d9293aad18753"

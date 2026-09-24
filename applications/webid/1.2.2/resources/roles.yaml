@@ -1,0 +1,9 @@
+roles:
+  - name: Administrator
+    permissions: "Full system administration, settings configuration, auction management, user management."
+    description: "Has full control over the WeBid system via the admin control panel."
+    relationship: "Assigned to the initial admin account."
+  - name: User
+    permissions: "Can buy, sell, place bids, and manage own profile."
+    description: "Standard registered user."
+    relationship: "Default role for newly registered accounts."

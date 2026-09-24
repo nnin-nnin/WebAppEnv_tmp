@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/openfire",
+    "tag": "4.8.1",
+    "digest": "sha256:b1accad7cc3d5dca4eaccf98943f085592b883c7ef409677db6adff290ca7526",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

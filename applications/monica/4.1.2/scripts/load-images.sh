@@ -26,10 +26,10 @@ done
 # registry names used by the Compose file after loading, including when the
 # registry tag already points to an older local image.
 if docker image inspect sop/monica-app:4.1.2 >/dev/null 2>&1; then
-  docker tag sop/monica-app:4.1.2 yorem/sop-monica-app:4.1.2
+  docker tag sop/monica-app:4.1.2 yorem/monica:4.1.2-app
 fi
 if docker image inspect sop/monica-web:4.1.2 >/dev/null 2>&1; then
-  docker tag sop/monica-web:4.1.2 yorem/sop-monica-web:4.1.2
+  docker tag sop/monica-web:4.1.2 yorem/monica:4.1.2-web
 fi
 
 echo "All Monica 4.1.2 service images loaded"

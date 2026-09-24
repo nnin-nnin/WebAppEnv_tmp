@@ -2,12 +2,10 @@
     {
         "Id": "sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b",
         "RepoTags": [
-            "asteriskax001/sop-minthcm:4.0.4",
-            "nnin/sop-minthcm:4.0.4"
+            "yorem/minthcm:4.0.4"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-minthcm@sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b",
-            "nnin/sop-minthcm@sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b"
+            "yorem/minthcm@sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b"
         ],
         "Created": "2026-08-07T01:33:54.938788336+08:00",
         "Config": {
@@ -99,16 +97,19 @@
             ]
         },
         "Metadata": {
-            "LastTagTime": "2026-08-07T05:45:20.009677294Z"
+            "LastTagTime": "2026-09-23T09:00:26.142248229Z"
         },
         "Descriptor": {
             "mediaType": "application/vnd.oci.image.manifest.v1+json",
             "digest": "sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b",
-            "size": 6590,
-            "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-minthcm:4.0.4",
-                "org.opencontainers.image.ref.name": "4.0.4"
-            }
+            "size": 6590
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/yorem/minthcm"
+                }
+            ]
         }
     }
 ]

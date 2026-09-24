@@ -1,0 +1,102 @@
+[
+    {
+        "Id": "sha256:1ccf28bcc162b88da7ac2175cd5e6653b9623f9f97ec7b25b5903054c69d0847",
+        "RepoTags": [
+            "yorem/dolibarr:23.0.3"
+        ],
+        "RepoDigests": [
+            "yorem/dolibarr:23.0.3@sha256:1ccf28bcc162b88da7ac2175cd5e6653b9623f9f97ec7b25b5903054c69d0847"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-11T00:12:12.049560041+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=39B641343D8C104B2B146DC3F9C39DC0B9698544 E60913E4DF209907D8E30D96659A97C9CF2A795A 1198C0117593497A5EC5C199286AF1F9897469DC",
+                "PHP_VERSION=8.2.20",
+                "PHP_URL=https://www.php.net/distributions/php-8.2.20.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.2.20.tar.xz.asc",
+                "PHP_SHA256=4474cc430febef6de7be958f2c37253e5524d5c5331a7e1765cd2d2234881e50",
+                "DEBIAN_FRONTEND=noninteractive",
+                "APACHE_DOCUMENT_ROOT=/var/www/html/htdocs"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/dolibarr-entrypoint"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/documents": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "/usr/local/bin/dolibarr-healthcheck"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 30000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 378424820,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:32148f9f6c5aadfa167ee7b146b9703c59307049d68b090c19db019fd15c5406",
+                "sha256:612b0f444e867dbf43550ac8f90a757eacc37f09314c650c2cbbafea54302f87",
+                "sha256:19adf6ebb0bdd9033baaa8e6f0b15aed3426db4a60dba6fd6eb82a4d0f1a5b71",
+                "sha256:030e470e5f11662db3eb3bf3b846a842aa249341a2289b42161623c9732a2593",
+                "sha256:390716dfffcdc18f57b5d091f30e16dd564bb098cabdaf9f1ca0258db3fa7f9c",
+                "sha256:dda304899549478f5e1e4824cd00cf20ee4ba4dbd721a56054f64ae9ca2f6d31",
+                "sha256:7219ec81843464a9201683322093a87a02743472f7d7f22c49b5e053da9aed76",
+                "sha256:b29bd1fad0ea01d225ba5549ae478e7ef7d4ce4762f0d14ae3607e0eceb26432",
+                "sha256:ec2ff4862285caaaf70bf268207a0bcd57bf9ffc3a1b2c5d6ca1e9b80ecd816e",
+                "sha256:0a81f20850c9ea971ea22c8689fd5b6c482bde87ca834813f09fb75d0c592749",
+                "sha256:dd5ec051df1ad133e74c0f4c58acb8a068d480d39d03339daaff2f5e3f204b97",
+                "sha256:cea7474c7a34b5a9fdb1d408a78611ac3e20975089f5cef665b502102243eb27",
+                "sha256:a6454eb3267390730f0182afe3c331f7900b4cc6dd15f138998eeba5f813c3ea",
+                "sha256:ef49c9f820373af6c01e02565fb20ade9bab40bd3729737a1d5c29df54c6a7f7",
+                "sha256:45f6deba202815cc9bb9d5ba604a72f3eac9409c55b86cdbc96f1808c6f997b1",
+                "sha256:b38296ed47b66a8175123c08a00661706ec7362438a35a86202fe3bccde2bb86",
+                "sha256:b1757cc914aa4fb4337005e7f60562c133abfa1079d9c492d3a5776e8fb8b74b",
+                "sha256:b4e81c33d18e622df0406a1deef1b07fe80cf10694bdc274dd83bc7641254f2f",
+                "sha256:385d517b1849608d359570717a2a053801caf8fe96ca09c57cd574cf29d1f0a4",
+                "sha256:09f13e6bc6f8bd655762a5cf26e608b023f1fd919d871c83eabf104710dacbe8",
+                "sha256:383b51b37a46c6c344edc90fc04729196ea162735bfb875f4d507a4de7486532"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-10T16:16:56.971690731Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:1ccf28bcc162b88da7ac2175cd5e6653b9623f9f97ec7b25b5903054c69d0847",
+            "size": 4427,
+            "annotations": {
+                "config.digest": "sha256:cb27bf8c7a70238ddfcffdea3765a86719d80188dc4bfe01f6986018c095ad80"
+            }
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "8b69u7x1hwafhku3kus9m34un",
+                    "CreatedAt": "2026-08-11T00:16:56.974713618+08:00"
+                }
+            ]
+        }
+    }
+]

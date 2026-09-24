@@ -1,0 +1,10 @@
+name: activemq_6_1_4
+services:
+  app:
+    image: yorem/activemq:6.1.4@sha256:1cacfbd9c08ad437c5e1177a9f1217e7c7ada62a64065128acd1a81866a03711
+    platform: linux/amd64
+    ports:
+      - "18614:8161"
+    volumes:
+      - ../resources/jetty-security.xml:/opt/apache-activemq/conf/jetty/jetty-security.xml:ro
+    restart: unless-stopped

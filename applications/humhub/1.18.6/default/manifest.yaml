@@ -1,0 +1,81 @@
+application:
+  name: HumHub
+  version: 1.18.6
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for HumHub 1.18.6 with MariaDB 10.11 database."
+
+target:
+  platform: linux/amd64
+  compose_project: humhub-1-18-6
+  compose_file: docker/compose.yaml
+  host_port: 18564
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18564/
+  login_url: http://127.0.0.1:18564/user/auth/login
+
+source:
+  repository: https://github.com/humhub/humhub
+  fixed_ref: 1.18.6
+  immutable_commit: 870e35a44dd8
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: humhub-1-18-6
+  services:
+    - app
+    - db
+  volumes:
+    - app-data
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/humhub:1.18.6@sha256:9978bff0d2b9f7efe2dce3d8344d6b31e3c1da561367e971d6803551a0a1c589
+  database_image: mariadb:10.11.8@sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "HumHub FrankenPHP web application"
+    image: yorem/humhub:1.18.6@sha256:9978bff0d2b9f7efe2dce3d8344d6b31e3c1da561367e971d6803551a0a1c589
+    tag: 1.18.6
+    digest: sha256:9978bff0d2b9f7efe2dce3d8344d6b31e3c1da561367e971d6803551a0a1c589
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18564}:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.11.8@sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f
+    tag: 10.11.8
+    digest: sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f
+    platform: linux/amd64
+
+ports:
+  host_port: 18564
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

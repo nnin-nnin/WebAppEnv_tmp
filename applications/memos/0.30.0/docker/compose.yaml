@@ -1,0 +1,12 @@
+services:
+  memos:
+    image: yorem/memos:0.30.0@sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a
+    platform: linux/amd64
+    ports:
+      - "5230:5230"
+    volumes:
+      - memos-data:/var/opt/memos
+    restart: unless-stopped
+
+volumes:
+  memos-data:

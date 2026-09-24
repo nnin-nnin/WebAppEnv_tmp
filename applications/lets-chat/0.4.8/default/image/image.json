@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/lets-chat",
+    "tag": "0.4.8",
+    "digest": "sha256:5b923d428176250653530fdac8a9f925043f30c511b77701662d7f8fab74961c",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "mongo",
+    "image": "mongo",
+    "tag": "4.4",
+    "digest": "sha256:4be76f674fc4b27859816811b8baa3c51830eb1dbf4ca81a51e26b79edd662ef",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

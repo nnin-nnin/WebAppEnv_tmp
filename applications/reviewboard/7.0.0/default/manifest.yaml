@@ -1,0 +1,83 @@
+application:
+  name: Review Board
+  version: 7.0.0
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for Review Board 7.0.0 code review tool with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: reviewboard-7-0-0
+  compose_file: docker/compose.yaml
+  host_port: 18596
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18596/
+  login_url: http://127.0.0.1:18596/account/login/
+
+source:
+  repository: https://github.com/reviewboard/reviewboard
+  fixed_ref: release-7.0
+  immutable_commit: ed91aa5add1cfc689be121b4dc9ad9d47fe12a66
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: reviewboard-7-0-0
+  services:
+    - app
+    - db
+  volumes:
+    - reviewboard-site
+    - reviewboard-db
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/reviewboard:7.0.0@sha256:e536c8a52058319567967aeefb107906cf680c590b612821b506b7d96542e3c0
+  database_image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    service_name: app
+    role: "Review Board web application service"
+    image: yorem/reviewboard:7.0.0@sha256:e536c8a52058319567967aeefb107906cf680c590b612821b506b7d96542e3c0
+    digest: "sha256:e536c8a52058319567967aeefb107906cf680c590b612821b506b7d96542e3c0"
+    platform: linux/amd64
+    ports:
+      - "18596:8080"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s http://127.0.0.1:8080/account/login/ || exit 1"
+  db:
+    service_name: db
+    role: "MariaDB 10.11 relational database service"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    digest: "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "healthcheck.sh --connect --innodb_initialized"
+
+ports:
+  host_port: 18596
+  container_port: 8080
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

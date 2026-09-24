@@ -1,0 +1,35 @@
+application: rocketmq
+version: 5.3.4
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/apache/rocketmq
+  commit: 63d20eb92a4a
+runtime:
+  language: java
+  server: rocketmq
+ports:
+  host_port: 18594
+  container_port: 9876
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/rocketmq:5.3.4
+    tag: 5.3.4
+    digest: sha256:a6976cd5841facfda294616a0b8797e7f41fa0292d51ad4e46b2ff224ce64995
+    platform: linux/amd64

@@ -1,0 +1,42 @@
+application: rconfig
+version: 6.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/rconfig/rconfig
+  commit: d2dfcf1db21b
+runtime:
+  php: '8.4'
+  web_server: apache
+  database: mariadb
+ports:
+  host_port: 18551
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/rconfig:6.0.0
+    tag: 6.0.0
+    digest: sha256:99f7f31fd09a3bd247075661da77389e30df4d789b1f5b6ad100f4c0b9153148
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5
+    tag: 10.5
+    digest: sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64

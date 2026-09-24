@@ -1,0 +1,68 @@
+application:
+  name: NewBee Mall
+  version: 1.0.0
+  type: full_web_application
+  description: "NewBee Mall is an open source e-commerce system built with Spring Boot."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（NewBee Mall / Spring Boot 2.7.5）与数据库服务（MySQL 8.0.35）分别运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: newbee-mall-1-0-0
+  host_port: 18586
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/newbee-ltd/newbee-mall
+    commit: a069069b07027613bf0e7f571736be86f431faee
+    tag: 1.0.0
+    source_yaml: source/source.yaml
+
+services:
+  application:
+    service_name: application
+    role: "Web Application & Spring Boot Runtime"
+    image: yorem/newbee-mall:1.0.0@sha256:ad016fb1454bb256b6508f6f1b74ff773014e75fbcc9e6a3c0a644abf0f21dff
+    digest: "sha256:ad016fb1454bb256b6508f6f1b74ff773014e75fbcc9e6a3c0a644abf0f21dff"
+    platform: linux/amd64
+    ports:
+      - "18586:28080"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s -o /dev/null http://localhost:28080/ || exit 1"
+  db:
+    service_name: db
+    role: "Relational Database (MySQL 8.0.35)"
+    image: mysql:8.0.35@sha256:9095b039775474d4a652430c1bab0db55d48d7d1885278566152927e4844e84b
+    digest: "sha256:9095b039775474d4a652430c1bab0db55d48d7d1885278566152927e4844e84b"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mysqladmin ping -h localhost -u root -prootpassword || exit 1"
+    volumes:
+      - database-data
+
+credentials:
+  admin_username: admin
+  admin_password: "123456"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh"
+  reset: "./scripts/reset.sh"

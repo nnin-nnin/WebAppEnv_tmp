@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/webid:1.2.2@sha256:0c581a9010430311afb6e3c7f6c5e0e8ae705db341bf02ca4c3782d3e0e0d65a",
+    "tag": "1.2.2",
+    "digest": "sha256:0c581a9010430311afb6e3c7f6c5e0e8ae705db341bf02ca4c3782d3e0e0d65a",
+    "platform": "linux/amd64",
+    "archive": "webid-1.2.2-linux-amd64.tar"
+  },
+  {
+    "service": "db",
+    "image": "mysql",
+    "tag": "5.7",
+    "digest": "sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb",
+    "platform": "linux/amd64",
+    "archive": "not-included-dockerhub"
+  }
+]

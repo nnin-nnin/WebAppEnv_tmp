@@ -17,7 +17,7 @@ runtime:
   browser_entrypoint: http://localhost:18521/
   api_entrypoint: http://localhost:18521/webservice/rest/server.php
 delivery:
-  image: asteriskax001/sop-moodle:4.4.0
+  image: yorem/moodle:4.4.0@sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12
   all_in_one: true
   architecture: single-image-single-container
   components:
@@ -42,7 +42,7 @@ operations:
   entrypoint: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18521:80 asteriskax001/sop-moodle:4.4.0
+recommended_run: docker compose -f docker/compose.yaml up -d
 notes: 单镜像、单容器、内部包含 Moodle 应用服务和 MariaDB 数据库服务的 all-in-one 环境；运行时数据库连接使用 127.0.0.1，完整 Web 前端由同一容器直接提供。
 source_metadata_file: source/source.yaml
 source_availability: upstream_repository_only

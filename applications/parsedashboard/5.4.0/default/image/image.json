@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/parsedashboard",
+    "tag": "5.4.0",
+    "digest": "sha256:f5137e104f09ce484ceede1890d28b885c7923a71d1e3777dcb59bb2e6d544cd",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

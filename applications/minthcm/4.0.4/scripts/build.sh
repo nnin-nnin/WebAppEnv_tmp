@@ -2,8 +2,8 @@
 set -Eeuo pipefail
 
 ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-BASE_IMAGE=asteriskax001/sop-minthcm:4.0.4-base
-FINAL_IMAGE=asteriskax001/sop-minthcm:4.0.4
+BASE_IMAGE=yorem/minthcm:4.0.4-base
+FINAL_IMAGE=yorem/minthcm:4.0.4
 INIT_NAME=minthcm-build-init-4-0-4
 TAR_PATH="${ROOT_DIR}/image/minthcm-4.0.4-linux-amd64.tar"
 

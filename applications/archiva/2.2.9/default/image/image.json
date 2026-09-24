@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/archiva",
+    "tag": "2.2.9",
+    "digest": "sha256:bb9d6f06fa0071b4dff365102d1ee205134f7543927979108a11fa05d9b2358d",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

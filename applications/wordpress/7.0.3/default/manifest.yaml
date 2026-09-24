@@ -1,0 +1,49 @@
+application: wordpress
+version: 7.0.3
+type: full_web_application
+deployment_mode: native_compose
+project_name: wordpress-7-0-3
+compose_file: docker/compose.yaml
+official_compose_source: Constructed from standard Docker Library images
+
+source:
+  repository: https://github.com/WordPress/wordpress-develop
+  commit: 2c261c16cd148b4e16d338e8abd59a027651c5f0
+
+services:
+  application:
+    name: application
+    role: WordPress web and PHP application
+    image: yorem/wordpress:7.0.3@sha256:c6c286c52f1e182c210864b79e5039af4f30e8c802f1fa10db207b033ee67761
+    digest: sha256:c6c286c52f1e182c210864b79e5039af4f30e8c802f1fa10db207b033ee67761
+    platform: linux/amd64
+    ports:
+      - "28080:80"
+    depends_on:
+      - db
+    volumes:
+      - application-data
+
+  db:
+    name: db
+    role: MySQL Database for WordPress
+    image: mysql:8.0.35
+    digest: sha256:c6812f0dcd978b589d9d3b90c20bd5e4a799deab4fd492985e0a076c5be1ee40
+    platform: linux/amd64
+    volumes:
+      - database-data
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_start_command: docker compose -p wordpress-7-0-3 -f docker/compose.yaml up -d
+
+delivery_method: DOCKERHUB
+resources: resources/
+
+notes: >
+  This environment is a native multi-container Docker Compose deployment.
+  The WordPress application and MySQL database run in separate containers.
+  MySQL 8.0.35 is used because MySQL 8.4.4 exits during initialization under
+  the current linux/amd64 Colima emulation environment.

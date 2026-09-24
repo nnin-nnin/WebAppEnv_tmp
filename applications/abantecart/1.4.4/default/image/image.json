@@ -1,0 +1,18 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/abantecart:1.4.4",
+    "tag": "1.4.4",
+    "digest": "sha256:cc035b050892bcbe89ffffeed4f0ef1222606990025e7be003c8c99167a25ca4",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.6",
+    "digest": "sha256:4ba945cc3998b4443d6c6937d9890bb4cf642229f3d95377369645c567a59b91",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

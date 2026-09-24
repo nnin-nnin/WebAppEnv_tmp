@@ -1,0 +1,59 @@
+name: reviewboard-7-0-0
+
+services:
+  app:
+    image: yorem/reviewboard:7.0.0@sha256:e536c8a52058319567967aeefb107906cf680c590b612821b506b7d96542e3c0
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18596}:8080"
+    environment:
+      DATABASE_TYPE: mysql
+      DATABASE_NAME: reviewboard
+      DATABASE_SERVER: db
+      DATABASE_USERNAME: reviewboard
+      DATABASE_PASSWORD: AdminPassword123!
+      WAIT_FOR_DB: "yes"
+      DOMAIN: localhost
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        sed -i 's/--cache-type=memcached/--cache-type=file/' /docker-entrypoint.sh
+        sed -i 's/--cache-info=\"\$$MEMCACHED_SERVER\"/--cache-info=\/tmp\/rbcache --allow-non-empty-sitedir/' /docker-entrypoint.sh
+        sed -i 's/--admin-password=admin/--admin-password=AdminPassword123!/' /docker-entrypoint.sh
+        mkdir -p /tmp/rbcache
+        chown -R reviewboard:reviewboard /tmp/rbcache
+        exec /docker-entrypoint.sh /serve.sh
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - reviewboard-site:/site
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s http://127.0.0.1:8080/account/login/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: reviewboard
+      MYSQL_USER: reviewboard
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - reviewboard-db:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  reviewboard-site:
+  reviewboard-db:

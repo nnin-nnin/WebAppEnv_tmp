@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative control over SuiteCRM system and data
+    purpose: System administration
+    associated_accounts:
+      - admin

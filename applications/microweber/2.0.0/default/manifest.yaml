@@ -1,0 +1,42 @@
+application: microweber
+version: 2.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/microweber/microweber
+  commit: 9d35f22fda48
+runtime:
+  php: '8.2'
+  web_server: apache
+  database: mariadb
+ports:
+  host_port: 18545
+  container_port: 80
+credentials:
+  admin_username: admin@benchmark.local
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/microweber:2.0.0
+    tag: 2.0.0
+    digest: sha256:9d35f22fda485a37fb51a438b51ab7818e667200979209289e40cde81b027c3e
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5
+    tag: 10.5
+    digest: sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64

@@ -26,7 +26,7 @@ runtime:
     - Imagick
     - cron
   http_port: 18083
-  startup: docker run -d --platform linux/amd64 -p 18083:80 nnin/sop-atropim:489afea
+  startup: docker run -d --platform linux/amd64 -p 18083:80 yorem/atropim:489afea
   url: http://localhost:18083
 
 dependencies:
@@ -53,7 +53,7 @@ dependencies:
 
 docker:
   image:
-    name: nnin/sop-atropim:489afea
+    name: yorem/atropim:489afea
     role: all-in-one AtroPIM environment
     contains:
       - Apache and PHP 7.4
@@ -63,9 +63,9 @@ docker:
   compose_file: docker/compose.yaml
   published:
     registry: docker.io
-    repository: nnin/sop-atropim
+    repository: yorem/atropim:489afea
     tag: 489afea
-    reference: docker.io/nnin/sop-atropim:489afea
+    reference: docker.io/yorem/atropim:489afea
     digest: sha256:9ea9af1abaf04b71e2be575ffea0be112770bf3736670925a7bfac02b83500de
     metadata: image/image.json
 

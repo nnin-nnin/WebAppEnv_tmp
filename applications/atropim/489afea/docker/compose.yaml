@@ -3,7 +3,7 @@ name: atropim_489afea
 services:
   app:
     platform: linux/amd64
-    image: nnin/sop-atropim:489afea
+    image: yorem/atropim:489afea@sha256:eebac45fd6fa9624ca47515b4a7bd7b3baaf0e25a6c31e77e7321970111c0faa
     ports:
       - "18083:80"
     volumes:

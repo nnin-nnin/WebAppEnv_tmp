@@ -1,8 +1,13 @@
+name: gitlab-16-11-2
+
 services:
   application:
-    image: asteriskax001/sop-gitlab:16.11.2-ce.0
+    image: yorem/gitlab:16.11.2-ce.0@sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c
     ports:
-      - "18527:80"
+      - "18528:80"
+    environment:
+      GITLAB_OMNIBUS_CONFIG: "external_url 'http://127.0.0.1:18528'; nginx['listen_port']=80; nginx['listen_https']=false; nginx['worker_processes']=2; nginx['worker_connections']=1024; letsencrypt['enable']=false; prometheus_monitoring['enable']=false; puma['worker_processes']=2; puma['min_threads']=1; puma['max_threads']=4; sidekiq['concurrency']=5; gitlab_rails['monitoring_whitelist']=['0.0.0.0/0','::/0']"
+      GITLAB_INITIAL_ADMIN_PASSWORD: ${GITLAB_INITIAL_ADMIN_PASSWORD:-WcGit!26-lP4yN8C}
     volumes:
       - gitlab-config:/etc/gitlab
       - gitlab-logs:/var/log/gitlab

@@ -1,0 +1,36 @@
+application: dreamfactory
+version: 5.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/dreamfactorysoftware/dreamfactory
+  commit: 61004db1b029f675368a344ee147cdc90f404ae7
+runtime:
+  php: '8.5'
+  web_server: nginx
+  database: sqlite
+ports:
+  host_port: 18597
+  container_port: 80
+credentials:
+  admin_username: admin@example.com
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/dreamfactory:5.0.0
+    tag: 5.0.0
+    digest: sha256:1974c821d2a1eebe1d9b7ab11a9ba4d5587755a628f4e339907b6394e9757aeb
+    platform: linux/amd64

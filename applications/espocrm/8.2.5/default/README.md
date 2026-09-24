@@ -11,7 +11,7 @@ docker run -d \
   --platform linux/amd64 \
   --name espocrm-8.2.5 \
   -p 18092:80 \
-  nnin/sop-espocrm:8.2.5
+  yorem/espocrm:8.2.5
 ```
 
 镜像内已经包含 Apache、PHP 8.2、MariaDB 10.6.27、EspoCRM 8.2.5、应用配置和初始数据库。容器启动时会自动启动数据库和 Web server，不需要执行 `build.sh`、`bootstrap.sh` 或 Web Installer。

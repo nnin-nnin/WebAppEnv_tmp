@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: benchmark-only
+    role: Administrator
+    type: admin
+    enabled: true
+    purpose: Primary administrator account for SPIP benchmark and management
+    creation_method: Initial auto-install entrypoint provisioning

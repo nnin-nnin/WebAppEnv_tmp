@@ -1,6 +1,6 @@
 # iTop 3.1.1 all-in-one 应用环境
 
-本目录交付 iTop 3.1.1 的 `linux/amd64` 单镜像、单容器完整 Web 应用环境。最终镜像为 `asteriskax001/sop-itop:3.1.1`，内部包含 iTop 后端和真实浏览器 UI、PHP 8.1、Apache 以及 MariaDB。
+本目录交付 iTop 3.1.1 的 `linux/amd64` 单镜像、单容器完整 Web 应用环境。最终镜像为 `yorem/itop:3.1.1`，内部包含 iTop 后端和真实浏览器 UI、PHP 8.1、Apache 以及 MariaDB。
 
 ## 启动
 
@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/itop/3.1.1
-docker run -d -p 18515:80 asteriskax001/sop-itop:3.1.1
+docker run -d -p 18515:80 yorem/itop:3.1.1
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库脚本或 Web Installer。
@@ -36,7 +36,7 @@ ITOP_URL=http://127.0.0.1:18515 ITOP_USER=admin ITOP_PASSWORD='WcITop!26-bL9hS5C
 
 ```bash
 scripts/reset.sh
-docker run -d -p 18515:80 asteriskax001/sop-itop:3.1.1
+docker run -d -p 18515:80 yorem/itop:3.1.1
 ```
 
 执行前请备份需要保留的业务数据。

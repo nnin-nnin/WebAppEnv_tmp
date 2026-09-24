@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: admin_password
+    role: Administrator
+    enabled: true
+    purpose: Initial administrator account
+    creation_method: "Bundled WordPress web installer invoked by resources/login.sh"

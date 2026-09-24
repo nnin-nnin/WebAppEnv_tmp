@@ -7,7 +7,7 @@ if [[ $# -ne 2 ]]; then
 fi
 : "${GITLAB_ADMIN_TOKEN:?Set GITLAB_ADMIN_TOKEN from the controlled credential channel}"
 : "${GITLAB_NEW_USER_PASSWORD:?Set GITLAB_NEW_USER_PASSWORD from the controlled credential channel}"
-url="${GITLAB_URL:-http://127.0.0.1:18527}"
+url="${GITLAB_URL:-http://127.0.0.1:18528}"
 username="$1"
 email="$2"
 

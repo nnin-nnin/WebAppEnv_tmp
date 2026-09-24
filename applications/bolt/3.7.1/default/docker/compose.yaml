@@ -1,0 +1,31 @@
+name: bolt-371
+
+services:
+  bolt:
+    image: yorem/bolt:3.7.1@sha256:2f0a5e35f49ba6749845b8cc113c9cf9b0caa78a12179bd76eae59d86bd4dc1f
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18589}:80"
+    volumes:
+      - bolt-data:/var/www/html/app/database
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        sed -i 's/2015/80/g' /etc/Caddyfile
+        (
+          sleep 2
+          su -s /bin/sh www-data -c "php /var/www/html/vendor/bin/nut database:update" >/dev/null 2>&1 || true
+          su -s /bin/sh www-data -c "php /var/www/html/vendor/bin/nut user:add admin Admin admin@example.com benchmark-only root -e" >/dev/null 2>&1 || true
+        ) &
+        exec /usr/local/bin/caddy --conf /etc/Caddyfile
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -f http://127.0.0.1:80/bolt/login || curl -s -f http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 5s
+
+volumes:
+  bolt-data:

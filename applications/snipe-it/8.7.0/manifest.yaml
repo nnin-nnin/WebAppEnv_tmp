@@ -1,0 +1,58 @@
+application: Snipe-IT
+version: 8.7.0
+type: Web Application
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+project_name: snipeit-8-7-0
+delivery_method: DOCKERHUB
+source:
+  backend:
+    repository: https://github.com/yorem/snipe-it:8.7.0.git
+    commit: 1d05a7ce11e6bf9448c067ac3ffbe5e63882888e
+services:
+  app:
+    image: yorem/snipe-it:8.7.0@sha256:a0e339af3b0ced99df19d51bc62bbed322df89f5d841cab2cafcee46a192574c
+    platform: linux/amd64
+    description: Snipe-IT application service (PHP/Apache)
+    ports:
+    - 127.0.0.1:8000:80
+    depends_on:
+    - db
+    - redis
+    volumes:
+    - application-data:/var/lib/snipeit
+    digest: sha256:a89f8c61fc36de5bb1c29a48649a1f1e9711d1a5fe9627e74eba9880cfaff7ea
+  db:
+    image: mariadb:11.4.7
+    platform: linux/amd64
+    description: Database service
+    volumes:
+    - database-data:/var/lib/mysql
+    digest: sha256:39596f079862334be04f4231664862e55d4febe54309cc62f750f2297de85b06
+  redis:
+    image: redis:7.4.0
+    platform: linux/amd64
+    description: Redis caching service
+    volumes:
+    - redis-data:/data
+    digest: sha256:6725a7dc7a44a6486b9d0a5172b10ccaf0c2ea600df87c0b93450d0e7769297f
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+  register: resources/register.sh
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+recommended_start_command: docker compose -p snipeit-8-7-0 -f docker/compose.yaml up -d
+differences_from_official_compose:
+- Combined .env properties into docker/compose.yaml environment section for deterministic
+  delivery.
+- Added strict platform declarations (linux/amd64).
+- Explicitly defined fixed version for MariaDB and Redis, not latest.
+- Removed dev setups and unused local port mappings.
+- Bound port to 127.0.0.1.
+recommendations:
+- Use scripts/up.sh to start, which automates the initialization of the database and
+  creates the first admin account.

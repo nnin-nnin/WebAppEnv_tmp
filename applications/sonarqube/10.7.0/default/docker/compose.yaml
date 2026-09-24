@@ -1,0 +1,11 @@
+name: sonarqube-10-7-0
+
+services:
+  sonarqube:
+    image: yorem/sonarqube:10.7.0@sha256:a6f6e13d2805751f22bbd8f31e18f104fcc87aec14b4ccfb588c5b916c56ee07
+    platform: linux/amd64
+    ports:
+      - "18607:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    restart: unless-stopped

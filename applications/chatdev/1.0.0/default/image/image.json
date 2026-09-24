@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/chatdev",
+    "tag": "1.0.0",
+    "digest": "sha256:efab15b2c5fe982f18f67ed15812ad595239cba321139582b09837fda198db24",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

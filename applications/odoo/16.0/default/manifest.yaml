@@ -1,0 +1,41 @@
+application: odoo
+version: "16.0"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/odoo/odoo
+  commit: 611eba59d920d86985fb83b9a64bfd7020c68105
+runtime:
+  python: "3.9"
+  database: postgres:15-alpine
+ports:
+  host_port: 18612
+  container_port: 8069
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  web:
+    image: yorem/odoo:16.0@sha256:99cde0c810d80e93a0284d985d6e586553783368196715c845a7aa1caa02ec8c
+    tag: "16.0"
+    digest: sha256:99cde0c810d80e93a0284d985d6e586553783368196715c845a7aa1caa02ec8c
+    platform: linux/amd64
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    tag: 15-alpine
+    digest: sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64

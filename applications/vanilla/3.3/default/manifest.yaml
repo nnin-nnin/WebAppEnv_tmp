@@ -1,0 +1,41 @@
+application: vanilla
+version: '3.3'
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/vanilla/vanilla
+  commit: f7a60408544d9f67a2169622d99d3e8e2e92c2f8
+runtime:
+  php: '8.4'
+  web_server: apache
+  database: mariadb
+ports:
+  host_port: 18603
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/vanilla:3.3
+    tag: '3.3'
+    digest: sha256:10189e501ee3759bcd6093caee0ffefe378ab3d021b4c2c35bcc9f16d35124b8
+    platform: linux/amd64
+  db:
+    image: mariadb:10.11
+    tag: '10.11'
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64

@@ -1,0 +1,6 @@
+backend:
+  repository: "https://github.com/usememos/memos"
+  commit: "2036c1ffc1b0a1e1fa6a473738c2a5ef520df67f"
+frontend:
+  repository: "https://github.com/usememos/memos"
+  commit: "2036c1ffc1b0a1e1fa6a473738c2a5ef520df67f"

@@ -1,6 +1,6 @@
 services:
   application:
-    image: asteriskax001/sop-fluxbb:1.5.11
+    image: yorem/fluxbb:1.5.11@sha256:9294cf1f2562d6ad7e27b50d8557478a09a138acc1a88b64724f600ddec22ae2
     ports:
       - "18311:80"
     volumes:

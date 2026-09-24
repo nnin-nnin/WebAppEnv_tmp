@@ -1,7 +1,7 @@
 #!/bin/bash
 set -Eeuo pipefail
 cd "$(dirname "$0")/.."
-image='asteriskax001/sop-fluxbb:1.5.11'
+image='yorem/fluxbb:1.5.11'
 tar_path='image/fluxbb-1.5.11-linux-amd64.tar'
 docker build --platform linux/amd64 --file docker/Dockerfile --tag "$image" .
 rm -f "$tar_path"

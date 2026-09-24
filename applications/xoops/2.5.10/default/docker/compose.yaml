@@ -1,0 +1,50 @@
+name: xoops-2-5-10
+
+services:
+  app:
+    image: yorem/xoops:2.5.10@sha256:2125e1cb300a67e4ef1ea8d3916e490303572a9487f9234223658779da94b358
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18602}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../resources/initial-data/mainfile.php:/var/www/html/mainfile.php:ro
+      - ../resources/initial-data/secure.php:/var/www/xoops_data/data/secure.php:ro
+      - ../resources/initial-data/license.php:/var/www/xoops_data/data/license.php:ro
+      - ../resources/initial-data/xoopsconfig.php:/var/www/xoops_data/configs/xoopsconfig.php:ro
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        rm -rf /var/www/html/install
+        exec docker-php-entrypoint apache2-foreground
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: xoops
+      MYSQL_USER: xoops
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

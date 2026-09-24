@@ -1,0 +1,68 @@
+application:
+  name: Elgg
+  version: 5.1.0
+  type: full_web_application
+  description: "Elgg is an open source social networking engine."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（Elgg / Nginx + PHP-FPM）与数据库服务（MariaDB 10.5）分别运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: elgg-5-1-0
+  host_port: 18560
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/Elgg/Elgg
+    commit: 30c4f12bd7a5
+    tag: 5.1.0
+    source_yaml: source/source.yaml
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime (Elgg 5.1.0)"
+    image: yorem/elgg:5.1.0@sha256:30c4f12bd7a5bd7ceba3fb79696d179bf2561fe0d4cba1e06dd18a4473a78bdb
+    digest: "sha256:30c4f12bd7a5bd7ceba3fb79696d179bf2561fe0d4cba1e06dd18a4473a78bdb"
+    platform: linux/amd64
+    ports:
+      - "18560:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.5)"
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    digest: "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"
+    volumes:
+      - db-data
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin AdminPassword123!"
+  reset: "./scripts/reset.sh"

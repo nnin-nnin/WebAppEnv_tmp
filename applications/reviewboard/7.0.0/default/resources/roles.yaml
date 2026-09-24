@@ -1,0 +1,5 @@
+roles:
+  - role: admin
+    description: "System administrator with full administrative access"
+  - role: reviewer
+    description: "Standard code review and submission user"

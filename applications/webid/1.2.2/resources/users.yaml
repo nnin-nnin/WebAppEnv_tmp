@@ -1,0 +1,17 @@
+users:
+  - username: admin
+    email: admin@example.com
+    password: password123
+    role: Administrator
+    type: Admin
+    enabled: true
+    description: "Initial administrator account automatically created during installation."
+    creation_method: "Auto-created by installation script in container entrypoint."
+  - username: testuser
+    email: testuser@example.com
+    password: password123
+    role: User
+    type: User
+    enabled: true
+    description: "Standard user account for testing auctions and bidding."
+    creation_method: "Created via frontend registration API (resources/register.sh)."

@@ -1,0 +1,10 @@
+roles:
+  - name: admin
+    permissions: 所有权限
+    purpose: 系统管理员
+    relation: 初始账号admin默认拥有此角色
+
+  - name: common
+    permissions: 普通权限
+    purpose: 普通系统用户
+    relation: 新创建用户默认关联此角色

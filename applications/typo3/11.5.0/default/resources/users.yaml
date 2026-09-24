@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: benchmark-only
+    role: Administrator
+    type: admin
+    enabled: true
+    purpose: Primary administrator account for TYPO3 benchmark and management
+    creation_method: Initial installer / system provisioning

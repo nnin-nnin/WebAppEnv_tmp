@@ -1,0 +1,44 @@
+name: wordpress-7-0-3
+services:
+  application:
+    image: yorem/wordpress:7.0.3@sha256:c6c286c52f1e182c210864b79e5039af4f30e8c802f1fa10db207b033ee67761
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress_password
+      WORDPRESS_DB_NAME: wordpress
+    ports:
+      - "28080:80"
+    volumes:
+      - application-data:/var/www/html
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "php -r '$$s=@fsockopen(\"127.0.0.1\",80); exit($$s ? 0 : 1);'"]
+      start_period: 1m
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mysql:8.0.35@sha256:c6812f0dcd978b589d9d3b90c20bd5e4a799deab4fd492985e0a076c5be1ee40
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress_password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - database-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  application-data:
+  database-data:

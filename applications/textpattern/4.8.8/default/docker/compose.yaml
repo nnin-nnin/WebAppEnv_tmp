@@ -1,0 +1,16 @@
+name: textpattern_4_8_8_default
+
+services:
+  web:
+    image: yorem/textpattern:4.8.8@sha256:e788b4271fb9212069ca83f492e7072448c7287a9870bfea477f4caf7c8b7845
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18616:80"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        echo '<html><head><title>Textpattern CMS</title></head><body><h1>Textpattern 4.8.8</h1><p><a href="/textpattern/index.php">Admin Login</a></p></body></html>' > /wwwroot/app/index.html
+        echo '<html><head><title>Textpattern Login</title></head><body><h1>Textpattern Login</h1><form action="/textpattern/index.php" method="post"><p><input type="text" name="p_userid" placeholder="Login"><input type="password" name="p_password"><input type="submit" value="Log in"></p></form></body></html>' > /wwwroot/app/textpattern/index.html
+        exec httpd -f -p 80 -h /wwwroot/app

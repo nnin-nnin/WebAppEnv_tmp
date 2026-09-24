@@ -1,0 +1,59 @@
+application_name: SpringBlade
+version: 5.0.1
+type: 完整 Web 应用
+deployment_mode: native_compose
+deployment_type: all-in-one
+delivery_method: DOCKERHUB
+delivery_status: verified cold start and restart with Docker Hub image
+dockerhub_namespace: yorem
+dockerhub_repository: yorem/springblade:5.0.1@sha256:fd84a9b745d7928818e89ca3ee64ff6dab8c7c6c550666071485d836f0cc2509
+dockerhub_tag: 5.0.1
+dockerhub_digest: sha256:fd84a9b745d7928818e89ca3ee64ff6dab8c7c6c550666071485d836f0cc2509
+backend:
+  repository: https://github.com/chillzhuang/SpringBlade
+  commit: e4c98e4f8c07e57f16ece5ea50d00a697515d1eb
+frontend:
+  repository: https://github.com/chillzhuang/Saber
+  commit: 8da0528a1dd3849c052a129d032430bf6ebdaeb3
+  build_command: "npm run build:prod"
+platform: linux/amd64
+runtime_versions:
+  java: "21"
+  nodejs: "18"
+web_server: nginx
+database_version: mysql-8
+host_port: "18090"
+image_name: yorem/springblade:5.0.1@sha256:fd84a9b745d7928818e89ca3ee64ff6dab8c7c6c550666071485d836f0cc2509
+image_digest: sha256:fd84a9b745d7928818e89ca3ee64ff6dab8c7c6c550666071485d836f0cc2509
+image_components:
+  - SpringBlade-boot
+  - Saber (Frontend)
+  - Java 21
+  - Nginx
+  - MySQL Server 8
+  - Redis Server
+image_archive: image/springblade-5.0.1-linux-amd64.tar
+resources:
+  - resources/users.yaml
+  - resources/roles.yaml
+  - resources/login.sh
+  - resources/register.sh
+  - resources/initial-data/database-seed.sql
+scripts:
+  - scripts/build.sh
+  - scripts/entrypoint.sh
+  - scripts/up.sh
+  - scripts/healthcheck.sh
+  - scripts/reset.sh
+image_platform: linux/amd64
+docker_run_command: "docker run -d --platform linux/amd64 --name springblade-all-in-one -p 8080:80 yorem/springblade:5.0.1@sha256:fd84a9b745d7928818e89ca3ee64ff6dab8c7c6c550666071485d836f0cc2509"
+compose_start_command: "docker compose -f docker/compose.yaml pull && docker compose -f docker/compose.yaml up -d"
+verification:
+  cold_start: passed
+  restart: passed
+  homepage_http: 200
+  admin_login: passed
+  user_creation: passed
+notes: |
+  该镜像是单镜像、单容器、内部包含应用服务和数据库服务的 all-in-one 环境；按当前交付要求视为可接受的 Compose 环境。
+  前端静态资源被打包进 Nginx 目录，后端 API 通过 Nginx 的 `/api/` 路径反向代理。

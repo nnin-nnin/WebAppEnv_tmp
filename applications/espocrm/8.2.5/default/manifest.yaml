@@ -22,12 +22,12 @@ runtime:
   web_server: Apache
   database: MariaDB 10.6
   http_port: 18092
-  startup: docker run -d --platform linux/amd64 -p 18092:80 nnin/sop-espocrm:8.2.5
+  startup: docker run -d --platform linux/amd64 -p 18092:80 yorem/espocrm:8.2.5
   url: http://localhost:18092
 
 docker:
   image:
-    name: nnin/sop-espocrm:8.2.5
+    name: yorem/espocrm:8.2.5
     role: all-in-one EspoCRM environment
     contains:
       - Apache and PHP 8.2
@@ -37,9 +37,9 @@ docker:
   compose_file: docker/compose.yaml
   published:
     registry: docker.io
-    repository: nnin/sop-espocrm
+    repository: yorem/espocrm:8.2.5
     tag: 8.2.5
-    reference: docker.io/nnin/sop-espocrm:8.2.5
+    reference: docker.io/yorem/espocrm:8.2.5
     digest: sha256:382dc7b2ee5b9ccfd9bb74076eb9300c54538d90cafa18793e97be92ef8ac7b8
     metadata: image/image.json
 

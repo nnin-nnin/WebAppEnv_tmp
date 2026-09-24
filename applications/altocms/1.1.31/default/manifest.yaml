@@ -1,0 +1,119 @@
+id: altocms_1.1.31
+application: AltoCMS
+version: 1.1.31
+artifact_type: ready_application_environment
+status: native_compose_ready
+application_type: complete_web_application
+deployment_mode: native_compose
+deployment_statement: "This is a native multi-container Docker Compose deployment, not an all-in-one single-container deployment. Application and database run in independent containers and communicate through the Compose network."
+
+documentation:
+  readme: README.md
+  compose_file: docker/compose.yaml
+  recommended_start: "docker compose -f docker/compose.yaml pull && docker compose -f docker/compose.yaml up -d"
+
+compose:
+  project_name: altocms_1_1_31
+  standard_entrypoint: docker/compose.yaml
+  service_names:
+    - app
+    - db
+  network: "Compose-created default network; containers communicate via service names (db)"
+  volumes:
+    - application-data
+    - database-data
+  external_dependencies: false
+
+official_compose:
+  development: null
+  status: "Official repository does not provide Docker Compose configuration. Defined standard native Compose topology with separate app and db services."
+
+source:
+  backend:
+    repository: https://github.com/altocms/altocms
+    ref: 1.1.31
+    commit: d9f47c2f99d7aa13dc60e7181e632ce6697182af
+  frontend:
+    repository: null
+    commit: null
+    note: "Frontend assets (Smarty templates, CSS, JS) are bundled within the main repository."
+  metadata: source/source.yaml
+
+runtime:
+  platform: linux/amd64
+  php: 7.4
+  web_server: Apache 2.4
+  database: MariaDB 10.6
+  public_url: http://localhost:18007/
+  container_web_port: 80
+  container_db_port: 3306
+  database_seed: resources/initial-data/database-seed.sql
+
+services:
+  - name: app
+    role: "AltoCMS PHP 7.4 Apache Web Application"
+    image: yorem/altocms:1.1.31@sha256:dba679c075830d8b05fdf96967465cdc47ce47152a8a669a35ca0c8dc5182806
+    tag: 1.1.31
+    digest: sha256:dba679c075830d8b05fdf96967465cdc47ce47152a8a669a35ca0c8dc5182806
+    platform: linux/amd64
+    source: "Built from fixed source commit d9f47c2f99d7aa13dc60e7181e632ce6697182af and docker/Dockerfile"
+    ports:
+      - 18007:80
+    depends_on:
+      - db: service_healthy
+    healthcheck: "HTTP GET / returns 200 OK"
+    volumes:
+      - application-data:/var/www/html/uploads
+
+  - name: db
+    role: "MariaDB Relational Database"
+    image: mariadb:10.6
+    tag: 10.6
+    digest: sha256:4ba945cc3998b4443d6c6937d9890bb4cf642229f3d95377369645c567a59b91
+    platform: linux/amd64
+    source: "Official MariaDB 10.6 image"
+    ports: []
+    depends_on: []
+    healthcheck: "mysqladmin ping"
+    volumes:
+      - database-data:/var/lib/mysql
+
+delivery:
+  mode: DOCKERHUB
+  registry: docker.io
+  namespace: yorem
+  registry_images:
+    app: yorem/altocms:1.1.31
+    db: mariadb:10.6
+  start_command: "docker compose -f docker/compose.yaml up -d"
+  health_command: "bash scripts/healthcheck.sh"
+  reset_command: "bash scripts/reset.sh"
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  database_seed: resources/initial-data/database-seed.sql
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+initial_account:
+  username: admin
+  password: benchmark-only
+  role: administrator
+  creation: "Initialized via resources/initial-data/database-seed.sql into prefix_user with salted password hash and role=3"
+
+official_vs_delivery:
+  - "Official repo does not contain Dockerfile or Docker Compose configs; delivery defines a standard multi-container topology (app + db)."
+  - "Application and database run in separate containers connected via Compose default network."
+  - "Pre-populated database seed ensures zero-install startup with pre-configured admin user admin / benchmark-only."
+  - "All image tags are pinned and built for linux/amd64."
+
+known_limitations:
+  - "Benchmark-only credentials (admin / benchmark-only) are stored in database seed and configuration files."
+  - "ARM64 host systems rely on Docker linux/amd64 emulation mode."

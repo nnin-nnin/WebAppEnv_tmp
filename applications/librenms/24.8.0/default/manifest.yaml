@@ -1,0 +1,80 @@
+application:
+  name: LibreNMS
+  version: 24.8.0
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for LibreNMS 24.8.0 network monitoring system with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: librenms-24-8-0
+  compose_file: docker/compose.yaml
+  host_port: 18588
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18588/
+  login_url: http://127.0.0.1:18588/login
+
+source:
+  repository: https://github.com/librenms/librenms
+  fixed_ref: 24.8.0
+  immutable_commit: f6fe0cf2da7c386b7d44cc523420b07e26b5561d
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: librenms-24-8-0
+  services:
+    - app
+    - db
+  volumes:
+    - librenms-data
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/librenms:24.8.0@sha256:ef05e8b4b8e30a62abff9342deeb26cc59353a4d83565b04861385867e1cee2e
+  database_image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "LibreNMS network monitoring web application"
+    image: yorem/librenms:24.8.0@sha256:ef05e8b4b8e30a62abff9342deeb26cc59353a4d83565b04861385867e1cee2e
+    tag: 24.8.0
+    digest: sha256:ef05e8b4b8e30a62abff9342deeb26cc59353a4d83565b04861385867e1cee2e
+    platform: linux/amd64
+    ports:
+      - "18588:8000"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    tag: 10.11
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+
+ports:
+  host_port: 18588
+  container_port: 8000
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

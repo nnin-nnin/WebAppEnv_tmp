@@ -3,7 +3,7 @@ name: espocrm_8_2_5
 services:
   espocrm:
     platform: linux/amd64
-    image: nnin/sop-espocrm:8.2.5
+    image: yorem/espocrm:8.2.5@sha256:8f09e6d0997966bbcee3c323a1c572c6f06aeb09f3586e873272afe387750ee3
     ports:
       - "18092:80"
     volumes:

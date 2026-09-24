@@ -1,0 +1,6 @@
+- username: admin
+  password: pass
+  type: admin
+  enabled: true
+  purpose: Initial administrator created via environment variables during compose up.
+  creation_method: Environment Variables (OE_USER, OE_PASS)

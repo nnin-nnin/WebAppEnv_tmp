@@ -1,14 +1,20 @@
+name: minthcm-4-0-4
+
 services:
   application:
-    image: asteriskax001/sop-minthcm:4.0.4
+    image: yorem/minthcm:4.0.4@sha256:15d6134f5a18e201890a8bd31426ea6edc17fbb030c245de0863fb06f78bbb6b
+    platform: linux/amd64
+    environment:
+      - _JAVA_OPTIONS=-Djdk.lang.Process.launchMechanism=vfork
     ports:
       - "18520:80"
     volumes:
+      - ./opcache.ini:/usr/local/etc/php/conf.d/zz-disable-opcache.ini:ro
       - minthcm-data:/var/www/MintHCM/legacy/upload
       - minthcm-db:/var/lib/mysql
-      - minthcm-search:/var/lib/elasticsearch
+      - minthcm-es:/var/lib/elasticsearch
 
 volumes:
   minthcm-data:
   minthcm-db:
-  minthcm-search:
+  minthcm-es:

@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-name="${REDMINE_CONTAINER:-redmine-5.1.2}"
-if docker container inspect "$name" >/dev/null 2>&1; then
-  docker rm -fv "$name" >/dev/null
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$DIR"
+
+docker compose -f docker/compose.yaml down -v --remove-orphans
+
+if docker inspect redmine-5.1.2 >/dev/null 2>&1; then
+  docker rm -fv redmine-5.1.2 >/dev/null 2>&1 || true
 fi
+
 for volume in redmine-files redmine-log redmine-tmp redmine-db; do
   if docker volume inspect "$volume" >/dev/null 2>&1; then
-    docker volume rm "$volume" >/dev/null
+    docker volume rm "$volume" >/dev/null 2>&1 || true
   fi
 done
-echo "已重置 $name 及其明确命名的 Redmine 数据卷；下次启动会从镜像内置数据恢复。"
+
+echo "已重置 Redmine 5.1.2 容器及数据卷。"

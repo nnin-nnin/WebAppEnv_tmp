@@ -2,12 +2,10 @@
     {
         "Id": "sha256:1b70db6bcdd103dbd5ef2a63f271e1608170758e2ecf0fba4c91dc7aaadbb469",
         "RepoTags": [
-            "asteriskax001/sop-leantime:3.1.4",
-            "nnin/sop-leantime:3.1.4"
+            "yorem/leantime:3.1.4"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-leantime@sha256:1b70db6bcdd103dbd5ef2a63f271e1608170758e2ecf0fba4c91dc7aaadbb469",
-            "nnin/sop-leantime@sha256:1b70db6bcdd103dbd5ef2a63f271e1608170758e2ecf0fba4c91dc7aaadbb469"
+            "yorem/leantime:3.1.4@sha256:1b70db6bcdd103dbd5ef2a63f271e1608170758e2ecf0fba4c91dc7aaadbb469"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T13:22:20.427304965+08:00",
@@ -91,7 +89,7 @@
             "digest": "sha256:1b70db6bcdd103dbd5ef2a63f271e1608170758e2ecf0fba4c91dc7aaadbb469",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-leantime:3.1.4",
+                "io.containerd.image.name": "docker.io/yorem/leantime:3.1.4",
                 "org.opencontainers.image.ref.name": "3.1.4"
             }
         }

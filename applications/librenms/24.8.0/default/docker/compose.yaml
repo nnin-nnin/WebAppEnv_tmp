@@ -1,0 +1,50 @@
+name: librenms-24-8-0
+
+services:
+  app:
+    image: yorem/librenms:24.8.0@sha256:ef05e8b4b8e30a62abff9342deeb26cc59353a4d83565b04861385867e1cee2e
+    platform: linux/amd64
+    ports:
+      - "18588:8000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: librenms
+      DB_USER: librenms
+      DB_PASSWORD: librenmspassword
+      DB_TIMEOUT: 60
+      TZ: UTC
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - librenms-data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://localhost:8000/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: librenms
+      MARIADB_USER: librenms
+      MARIADB_PASSWORD: librenmspassword
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  librenms-data:
+  db-data:

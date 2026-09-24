@@ -1,0 +1,51 @@
+name: b2evolution-7-2-5
+
+services:
+  app:
+    image: yorem/b2evolution:7.2.5@sha256:5114441520b88263ac63b274113078dcd64d9138e56bac98939b82e7856d2eec
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18587}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        cp /etc/nginx/custom/b2evolution.conf /etc/nginx/sites-enabled/b2evolution.conf
+        rm -f /etc/nginx/conf.d/localhost.conf
+        exec supervisord
+    volumes:
+      - ../resources/initial-data/b2evolution.conf:/etc/nginx/custom/b2evolution.conf:ro
+      - ../resources/initial-data/_basic_config.php:/srv/www/htdocs/b2evolution/conf/config-link-dir/_basic_config.php:ro
+      - media-data:/srv/www/htdocs/b2evolution/media
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: b2evolution
+      MYSQL_USER: b2evolution
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:
+  media-data:

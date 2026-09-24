@@ -56,7 +56,7 @@ docker:
       - nginx
       - redis-server
   image:
-    name: yorem/sop-ruoyi-vue-pro:2026.06-jdk8
+    name: yorem/ruoyi-vue-pro:2026.06-jdk8
     role: "ruoyi-vue-pro 2026.06-jdk8 完整 Web 应用环境"
     contains:
       - Java 8 runtime and Spring Boot backend
@@ -91,8 +91,8 @@ scripts:
   reset: scripts/reset.sh
 
 delivery:
-  image_reference: yorem/sop-ruoyi-vue-pro:2026.06-jdk8
+  image_reference: yorem/ruoyi-vue-pro:2026.06-jdk8
   archive_path: image/ruoyi-vue-pro-2026.06-jdk8-linux-amd64.tar
-  recommended_run: "docker run -d -p 18087:80 yorem/sop-ruoyi-vue-pro:2026.06-jdk8"
+  recommended_run: "docker run -d -p 18087:80 yorem/ruoyi-vue-pro:2026.06-jdk8"
   browser_acceptance: "打开根地址显示真实 Vue3 登录页，使用 admin/admin123 登录后进入首页"
   runtime_network_downloads: false

@@ -1,0 +1,17 @@
+initial_admin:
+  username: admin
+  email: admin@example.com
+  password: benchmark-only
+  user_type: administrator
+  enabled: true
+  purpose: Default system administrator account for site management and benchmarking.
+  creation_method: Initialized via database-seed.sql into prefix_user with salted hash and role=3 (Admin).
+
+test_user_template:
+  username: testuser
+  email: testuser@example.com
+  password: benchmark-only
+  user_type: ordinary_user
+  enabled: true
+  purpose: Ordinary community user for benchmark verification.
+  creation_method: Created programmatically via resources/register.sh.

@@ -1,0 +1,9 @@
+roles:
+  - name: Admin
+    permissions:
+      - Administer Airflow
+      - View DAGs
+      - Trigger DAGs
+      - Manage Connections
+    purpose: 系统管理员角色
+    relation_to_initial_account: 初始管理员 admin 拥有 Admin 角色

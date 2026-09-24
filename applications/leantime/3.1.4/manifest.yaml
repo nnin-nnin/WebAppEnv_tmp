@@ -20,7 +20,7 @@ frontend:
   api_connection: 同一容器内的 PHP 应用入口，使用相对路径请求后端
 delivery:
   mode: 单镜像、单容器、all-in-one；内部同时包含 Leantime Web 服务和 MariaDB 服务
-  image: asteriskax001/sop-leantime:3.1.4
+  image: yorem/leantime:3.1.4@sha256:1b70db6bcdd103dbd5ef2a63f271e1608170758e2ecf0fba4c91dc7aaadbb469
   metadata: image/image.json
   exposed_port: 18516
   internal_web_port: 80
@@ -43,7 +43,7 @@ scripts:
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
 recommended_run:
-  command: docker run -d -p 18516:80 asteriskax001/sop-leantime:3.1.4
+  command: docker run -d -p 18516:80 yorem/leantime:3.1.4
   browser_url: http://127.0.0.1:18516/
   admin_username: admin
   admin_credentials: 由受控渠道保存，不写入 manifest

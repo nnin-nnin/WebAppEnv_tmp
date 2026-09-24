@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/admidio:5.0.14",
+    "tag": "5.0.14",
+    "digest": "sha256:28be67a1ec6b148c57799d95b486bb886df000d9c32fb6c66fa4bdd41510ffa2",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11.8",
+    "digest": "sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

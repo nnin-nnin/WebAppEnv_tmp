@@ -1,0 +1,18 @@
+[
+  {
+    "service": "sugarcrm",
+    "image": "yorem/sugarcrm:6.5.26",
+    "tag": "6.5.26",
+    "digest": "sha256:29d1acc6b5d9aae26baa279b7373b9b75780c619756a4b4160e8a1fc3be98f85",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mysql:5.7",
+    "tag": "5.7",
+    "digest": "sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

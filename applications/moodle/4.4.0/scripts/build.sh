@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 app_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-image_name='asteriskax001/sop-moodle:4.4.0'
+image_name='yorem/moodle:4.4.0'
 secret_file="$(mktemp)"
 cleanup() { rm -f "$secret_file"; }
 trap cleanup EXIT

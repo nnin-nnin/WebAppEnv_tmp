@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: AdminPassword123!
+    email: admin@example.com
+    role: admin
+    enabled: true
+    purpose: "Default system administrator account"
+    creation_method: "Automated rb-site install initialization"

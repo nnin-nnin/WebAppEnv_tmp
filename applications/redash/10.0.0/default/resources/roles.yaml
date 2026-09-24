@@ -1,0 +1,5 @@
+roles:
+  - role: admin
+    description: System Administrator with full administrative privileges
+  - role: default
+    description: Default user role with query and dashboard access

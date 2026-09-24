@@ -1,16 +1,14 @@
 [
     {
-        "Id": "sha256:909ed760754bf9cdcf7b07ab78aa373b14458e9afcf87668be0175ebb75b8bd5",
+        "Id": "sha256:9294cf1f2562d6ad7e27b50d8557478a09a138acc1a88b64724f600ddec22ae2",
         "RepoTags": [
-            "asteriskax001/sop-fluxbb:1.5.11",
-            "nnin/sop-fluxbb:1.5.11"
+            "yorem/fluxbb:1.5.11"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-fluxbb@sha256:909ed760754bf9cdcf7b07ab78aa373b14458e9afcf87668be0175ebb75b8bd5",
-            "nnin/sop-fluxbb@sha256:909ed760754bf9cdcf7b07ab78aa373b14458e9afcf87668be0175ebb75b8bd5"
+            "yorem/fluxbb:1.5.11@sha256:9294cf1f2562d6ad7e27b50d8557478a09a138acc1a88b64724f600ddec22ae2"
         ],
         "Comment": "buildkit.dockerfile.v0",
-        "Created": "2026-08-05T15:10:20.875981111+08:00",
+        "Created": "2026-08-14T14:24:58.964324778+08:00",
         "Config": {
             "ExposedPorts": {
                 "80/tcp": {}
@@ -57,7 +55,7 @@
         },
         "Architecture": "amd64",
         "Os": "linux",
-        "Size": 201153188,
+        "Size": 201154410,
         "RootFS": {
             "Type": "layers",
             "Layers": [
@@ -75,29 +73,26 @@
                 "sha256:6ec4d4ce53cc16cb2c806d8a7ff92fa660c8d1c61e06d129264b001fdfcfa2d0",
                 "sha256:cc45506c444753c370f98084471e834058d4e91c31b37c7eac966ba8a3185446",
                 "sha256:5dc98019746790eed1758d7135e1ca091171e1b8c9fdb6f6edbfd836893ba5e9",
-                "sha256:c67414dba5225317b7395f8b7048ebc759e951c62e925e122e76e2c7cbbc362f",
-                "sha256:ae0323ad2ce03eb2958e57bc3c48b8b42c572aad580bf62a234db112fe11a584",
-                "sha256:37d172eb176b1ee7afa8756ed78dd0d97f0e5a6bb2e712e3c526b41ce34076c7",
-                "sha256:f3ddab42ce1817cf297640d60c06146ea8ce6202e67127a03e54b85c8f365b77",
-                "sha256:bfe5e78d4085d944ead0505ec9fc3c5ae5d049b4a338a6edef203a9cb3666c94"
+                "sha256:b798a18bc15149806f4c51292f91379aebd9be920ac3edc37052b3a3c194b03d",
+                "sha256:8f4e0562eb72dc784cee0ebd5cb38e7c6c71f45291499086e27f041be666fed0",
+                "sha256:2cd7023b0cf01efd67c5fb854a7ff3fa7c6c7573115c7ee8ce364a66fb6fbcd4",
+                "sha256:c315aa89aac61a0fdc34cdaf2ccbe6037152066d166d893e61772f9469f6eaf9",
+                "sha256:1a94c4d38421131bd26f2a8150e56e1ae62d777a37f3e8de7d676d36c5241fa3"
             ]
         },
         "Metadata": {
-            "LastTagTime": "2026-08-06T04:21:00.242220143Z"
+            "LastTagTime": "2026-08-14T06:25:01.783797446Z"
         },
         "Descriptor": {
             "mediaType": "application/vnd.oci.image.index.v1+json",
-            "digest": "sha256:909ed760754bf9cdcf7b07ab78aa373b14458e9afcf87668be0175ebb75b8bd5",
-            "size": 856,
-            "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-fluxbb:1.5.11",
-                "org.opencontainers.image.ref.name": "1.5.11"
-            }
+            "digest": "sha256:9294cf1f2562d6ad7e27b50d8557478a09a138acc1a88b64724f600ddec22ae2",
+            "size": 856
         },
         "Identity": {
-            "Pull": [
+            "Build": [
                 {
-                    "Repository": "docker.io/asteriskax001/sop-fluxbb"
+                    "Ref": "w17f34i0k2fjzjl4bfmu1rvik",
+                    "CreatedAt": "2026-08-14T14:25:01.786036071+08:00"
                 }
             ]
         }

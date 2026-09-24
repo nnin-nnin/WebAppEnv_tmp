@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/invoiceplane",
+    "tag": "1.5.9",
+    "digest": "sha256:0d05a1fab61b1b5f7d3469b997893f048e9e613d1c07bc44c9d4b44d1a8ba2b0",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

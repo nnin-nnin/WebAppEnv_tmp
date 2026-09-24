@@ -1,0 +1,9 @@
+roles:
+  - name: admin
+    permissions:
+      - full_access
+      - manage_cases
+      - manage_clients
+      - manage_acts
+      - manage_courts
+    purpose: Administrator role with full control over cases and system configuration

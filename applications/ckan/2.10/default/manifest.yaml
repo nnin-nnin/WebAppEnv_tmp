@@ -1,0 +1,53 @@
+application: ckan
+version: "2.10"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/ckan/ckan.git
+  commit: f8ecd87cee4cd95751e093f0d788c33502e2edc8
+runtime:
+  python: "3.10"
+  database: postgres:16-alpine
+  search: ckan/ckan-solr:2.10-solr9
+  cache: redis:7-alpine
+ports:
+  host_port: 18598
+  container_port: 5000
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/ckan:2.10@sha256:6c0609f11ff23ca0e9a8f30c632733b91b9e55aea0c54861f8cbc0d85f09e78f
+    tag: "2.10"
+    digest: sha256:6c0609f11ff23ca0e9a8f30c632733b91b9e55aea0c54861f8cbc0d85f09e78f
+    platform: linux/amd64
+  db:
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    tag: 16-alpine
+    digest: sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    platform: linux/amd64
+  solr:
+    image: ckan/ckan-solr:2.10-solr9@sha256:f94e2ce1cee7530f040bf596152289719e66c47ae84cb1e7bdfb9844e73ee609
+    tag: 2.10-solr9
+    digest: sha256:f94e2ce1cee7530f040bf596152289719e66c47ae84cb1e7bdfb9844e73ee609
+    platform: linux/amd64
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    tag: 7-alpine
+    digest: sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64

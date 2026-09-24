@@ -1,0 +1,35 @@
+application: parsedashboard
+version: 5.4.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/parse-community/parse-dashboard
+  commit: eb95460ba00b
+runtime:
+  language: node
+  server: node
+ports:
+  host_port: 18592
+  container_port: 4040
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/parsedashboard:5.4.0@sha256:f5137e104f09ce484ceede1890d28b885c7923a71d1e3777dcb59bb2e6d544cd
+    tag: 5.4.0
+    digest: sha256:f5137e104f09ce484ceede1890d28b885c7923a71d1e3777dcb59bb2e6d544cd
+    platform: linux/amd64

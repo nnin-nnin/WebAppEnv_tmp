@@ -1,0 +1,5 @@
+roles:
+  - name: administrator
+    permissions: full access to ACP (Admin Control Panel)
+    description: "System administrator with full control over forum settings, users, and groups"
+    associated_user: admin

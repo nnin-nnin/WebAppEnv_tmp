@@ -30,7 +30,7 @@ web:
   static_asset_directory: "catalog/public"
   api_connection: "不适用：商城使用同一 PHP 应用的页面请求，数据库通过容器内 127.0.0.1 连接"
 delivery:
-  image: "asteriskax001/sop-oscommerce:2.4.2"
+  image: "yorem/oscommerce:2.4.2@sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494"
   port: 18402
   all_in_one: true
   architecture: "单镜像、单容器；内部包含 Apache、PHP、osCommerce 和 MariaDB"
@@ -55,7 +55,7 @@ scripts:
   healthcheck: "scripts/healthcheck.sh"
   reset: "scripts/reset.sh"
 run:
-  recommended: "docker run -d -p 18402:80 asteriskax001/sop-oscommerce:2.4.2"
+  recommended: "docker compose -f docker/compose.yaml up -d"
   database_host_inside_container: "127.0.0.1"
   browser_login:
     username: "admin"

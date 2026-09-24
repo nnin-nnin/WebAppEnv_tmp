@@ -1,0 +1,8 @@
+users:
+  - username: admin@example.com
+    password: AdminPassword123!
+    role: Administrator
+    type: admin
+    enabled: true
+    purpose: Primary administrator user for benchmark and system administration
+    creation_method: Initial database seed and inithook configuration

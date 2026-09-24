@@ -4,7 +4,7 @@ set -Eeuo pipefail
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 project_dir="$(cd -- "$script_dir/.." && pwd)"
 image_dir="$project_dir/image"
-image_name="yorem/sop-ruoyi-vue-pro:2026.06-jdk8"
+image_name="yorem/ruoyi-vue-pro:2026.06-jdk8"
 archive_name="ruoyi-vue-pro-2026.06-jdk8-linux-amd64.tar"
 archive_path="$image_dir/$archive_name"
 metadata_path="$image_dir/image.json"

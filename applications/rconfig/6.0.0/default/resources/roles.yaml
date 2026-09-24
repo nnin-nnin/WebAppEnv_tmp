@@ -1,0 +1,5 @@
+roles:
+  - role: admin
+    description: Administrator with full access
+  - role: user
+    description: Standard user

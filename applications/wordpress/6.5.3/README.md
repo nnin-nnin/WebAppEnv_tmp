@@ -1,6 +1,6 @@
 # WordPress 6.5.3 应用环境
 
-这是固定源码 commit `c54b7021fe1ad22ff3ce2b61dd741b3d7e71596a` 构建的完整 Web 应用环境，目标平台为 `linux/amd64`。最终交付是单镜像、单容器 all-in-one 镜像 `asteriskax001/sop-wordpress:6.5.3`，内部包含 WordPress 6.5.3、PHP 8.2、Apache 和 MariaDB。
+这是固定源码 commit `c54b7021fe1ad22ff3ce2b61dd741b3d7e71596a` 构建的完整 Web 应用环境，目标平台为 `linux/amd64`。最终交付是单镜像、单容器 all-in-one 镜像 `yorem/wordpress:6.5.3`，内部包含 WordPress 6.5.3、PHP 8.2、Apache 和 MariaDB。
 
 ## 启动
 
@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/wordpress/6.5.3
-docker run -d -p 18513:80 asteriskax001/sop-wordpress:6.5.3
+docker run -d -p 18513:80 yorem/wordpress:6.5.3
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、PHP、Apache、MariaDB、数据库初始化、管理员初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库脚本或 Web Installer。

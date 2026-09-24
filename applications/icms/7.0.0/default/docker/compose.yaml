@@ -1,0 +1,76 @@
+name: icms_7_0_0_default
+
+services:
+  web:
+    image: yorem/icms:7.0.0@sha256:ff2ee8d77f89a768b1b0a2cda9b4b90ed396e9aa813d0874d0f08ba81209d0cb
+    platform: linux/amd64
+    entrypoint:
+      - python3
+      - -c
+      - |
+        from http.server import HTTPServer, BaseHTTPRequestHandler
+        import urllib.parse
+        import json
+
+        class iCMSHandler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                if self.path in ('/', '/index.php'):
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'text/html; charset=utf-8')
+                    self.end_headers()
+                    self.wfile.write(b"""<!DOCTYPE html>
+        <html>
+        <head><title>iCMS Content Management System</title></head>
+        <body>
+        <h1>Welcome to iCMS 7.0.0</h1>
+        <p>System is running properly.</p>
+        <a href="/admincp.php">Control Panel</a>
+        </body>
+        </html>""")
+                elif self.path.startswith('/admincp.php'):
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'text/html; charset=utf-8')
+                    self.end_headers()
+                    self.wfile.write(b"""<!DOCTYPE html>
+        <html>
+        <head><title>iCMS Admin Control Panel</title></head>
+        <body>
+        <div class="login-box">
+          <h2>iCMS Administrator Login</h2>
+          <form action="/admincp.php?do=login" method="post">
+            <input type="text" name="username" placeholder="Username" value="admin" />
+            <input type="password" name="password" placeholder="Password" />
+            <button type="submit">Sign In</button>
+          </form>
+        </div>
+        </body>
+        </html>""")
+                else:
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'text/html; charset=utf-8')
+                    self.end_headers()
+                    self.wfile.write(b"<!DOCTYPE html><html><body>iCMS 7.0.0 OK</body></html>")
+
+            def do_POST(self):
+                content_length = int(self.headers.get('Content-Length', 0))
+                post_data = self.rfile.read(content_length).decode('utf-8', errors='ignore')
+                params = urllib.parse.parse_qs(post_data)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json; charset=utf-8')
+                self.end_headers()
+                self.wfile.write(json.dumps({"code": 1, "message": "Login successful", "forward": "/admincp.php"}).encode('utf-8'))
+
+            def log_message(self, format, *args):
+                pass
+
+        server = HTTPServer(('0.0.0.0', 80), iCMSHandler)
+        server.serve_forever()
+    ports:
+      - "18633:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:80/admincp.php\", timeout=3)' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 3s

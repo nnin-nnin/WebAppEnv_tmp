@@ -1,0 +1,52 @@
+application_name: phpBB
+version: 3.3.17
+application_type: web_application
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+compose_project_name: phpbb-3.3.17
+official_compose_source: 官方无生产环境 Compose，仅有 .devcontainer 开发环境。自行编写 Compose 和 Dockerfile。
+source_repository:
+  backend:
+    url: https://github.com/phpbb/phpbb
+    commit: 74a864a9f6288edc4d0abb3c6c1e1471fef12d8f
+services:
+  application:
+    name: application
+    role: phpbb web and app
+    image: yorem/phpbb
+    tag: 3.3.17
+    digest: sha256:df8123f1de8912bbc6e4a25362aab9f09f6c26fd20e873d4a998a048939acf1b
+    platform: linux/amd64
+    source: docker/Dockerfile
+    ports:
+    - 127.0.0.1:38080:80
+    dependencies:
+    - db
+    healthcheck: curl
+    volumes:
+    - application-data:/var/www/html
+  db:
+    name: db
+    role: database
+    image: mysql
+    tag: 8.0.35
+    digest: sha256:9095b039775474d4a652430c1bab0db55d48d7d1885278566152927e4844e84b
+    platform: linux/amd64
+    source: docker hub
+    ports: []
+    healthcheck: mysqladmin ping
+    volumes:
+    - database-data:/var/lib/mysql
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+images_archive:
+  image_json: image/image.json
+  sha256sums: image/SHA256SUMS
+resources:
+- resources/users.yaml
+- resources/roles.yaml
+- resources/login.sh
+- resources/register.sh
+compose_commands:
+  recommended_start: docker compose -f docker/compose.yaml up -d
+differences_from_official: 官方没有生产 Compose，自行基于 php:8.3-apache 编写，并打包为本地镜像。

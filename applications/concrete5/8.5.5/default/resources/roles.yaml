@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over Concrete5 configuration and content
+    purpose: System administration
+    associated_accounts:
+      - admin

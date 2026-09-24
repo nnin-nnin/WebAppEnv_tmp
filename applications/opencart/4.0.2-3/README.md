@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/opencart/4.0.2-3
-docker run -d -p 18523:80 asteriskax001/sop-opencart:4.0.2-3
+docker run -d -p 18523:80 yorem/opencart:4.0.2-3
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、运行时、数据库、初始化数据和启动逻辑；不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库初始化脚本或 Web Installer。
@@ -53,7 +53,7 @@ OPENCART_REGISTER_PASSWORD='Verify-User-2026!' resources/register.sh "test-$(dat
 
 ```bash
 scripts/reset.sh
-docker run -d -p 18523:80 asteriskax001/sop-opencart:4.0.2-3
+docker run -d -p 18523:80 yorem/opencart:4.0.2-3
 ```
 
 若使用 Compose 的 `application-db` 卷，需按接收者的卷管理策略另外移除该卷后再启动，才能清空持久化数据库。

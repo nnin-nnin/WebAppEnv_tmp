@@ -1,0 +1,36 @@
+application: dokuwiki
+version: 2024.7.14
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/dokuwiki/dokuwiki
+  commit: e674707568da10ecfdba47a1c21acccefd168ff9
+runtime:
+  php: '8.3'
+  web_server: nginx
+  database: flat-file
+ports:
+  host_port: 18561
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/dokuwiki:2024.7.14
+    tag: 2024.7.14
+    digest: sha256:87aa3e7cdc34154a25a5a404281a32e2c876f2314e795b1fc5647e309e28897f
+    platform: linux/amd64

@@ -1,0 +1,48 @@
+application: weblate
+version: 5.7.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/WeblateOrg/weblate
+  commit: 89ac2d424e2a20d7e3a39b4644697ccaf1054898
+runtime:
+  language: python
+  framework: django
+  database: postgres:16-alpine
+  cache: redis:7-alpine
+ports:
+  host_port: 18600
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/weblate:5.7.0@sha256:380fe1248868b07949911e32d479911a3561e7ca0010981a4a2cd168f636779f
+    tag: 5.7.0
+    digest: sha256:380fe1248868b07949911e32d479911a3561e7ca0010981a4a2cd168f636779f
+    platform: linux/amd64
+  database:
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    tag: 16-alpine
+    digest: sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    platform: linux/amd64
+  cache:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    tag: 7-alpine
+    digest: sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64

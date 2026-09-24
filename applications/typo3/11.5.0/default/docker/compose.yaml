@@ -1,0 +1,44 @@
+name: typo3-11-5-0
+
+services:
+  app:
+    image: yorem/typo3:11.5.0@sha256:7436d068b583c1dae2dd37ebca973b957de5371fe2acfdf9239598c3a8dbda25
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-18623}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        rm -f /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+        exec docker-php-entrypoint apache2-foreground
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: typo3_db_root_pass
+      MYSQL_DATABASE: typo3
+      MYSQL_USER: typo3
+      MYSQL_PASSWORD: typo3_password
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

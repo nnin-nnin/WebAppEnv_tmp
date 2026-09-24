@@ -1,0 +1,104 @@
+application:
+  name: OrangeHRM
+  version: 5.7.0
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for OrangeHRM 5.7.0 with MariaDB 10.11 database."
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署，不是 all-in-one 单容器部署。应用服务（Web/PHP）与数据库服务（MariaDB）分别运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: orangehrm-5-7-0
+  host_port: 18566
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+target:
+  platform: linux/amd64
+  compose_project: orangehrm-5-7-0
+  compose_file: docker/compose.yaml
+  host_port: 18566
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18566/
+  login_url: http://127.0.0.1:18566/web/index.php/auth/login
+
+source:
+  repository: https://github.com/orangehrm/orangehrm
+  fixed_ref: v5.7
+  immutable_commit: 194a751e23977d76374386f2e405ac68eeed6904
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: orangehrm-5-7-0
+  services:
+    - app
+    - db
+  volumes:
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/orangehrm:5.7.0@sha256:a2f811f926b6267f693185a8a59622da38044c0d2d4b22a43f5693dffe3eb29f
+  database_image: mariadb:10.11.8@sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "OrangeHRM Web and PHP Application"
+    image: yorem/orangehrm:5.7.0@sha256:a2f811f926b6267f693185a8a59622da38044c0d2d4b22a43f5693dffe3eb29f
+    tag: 5.7.0
+    digest: sha256:a2f811f926b6267f693185a8a59622da38044c0d2d4b22a43f5693dffe3eb29f
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18566}:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB 10.11 Database"
+    image: mariadb:10.11.8@sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f
+    tag: 10.11.8
+    digest: sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f
+    platform: linux/amd64
+
+ports:
+  host_port: 18566
+  container_port: 80
+
+credentials:
+  admin_username: Admin
+  admin_password: Ohrm@1423
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "bash scripts/up.sh"
+  healthcheck: "bash scripts/healthcheck.sh"
+  login: "bash resources/login.sh"
+  reset: "bash scripts/reset.sh"
+
+differences_from_official:
+  - "引入 MariaDB 10.11 作为独立数据库服务，通过 Docker Compose 桥接网络通信。"
+  - "通过 resources/initial-data/database-seed.sql 自动完成数据库建表与初始管理员账号配置，做到开箱即用。"
+  - "挂载 resources/Conf.php 自动化配置数据库连接，支持环境变量动态控制。"
+
+known_limitations:
+  - "ARM64 宿主机运行 linux/amd64 容器时可能有架构警告，不影响功能。"

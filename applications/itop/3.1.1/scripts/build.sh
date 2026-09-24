@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 cd "$(dirname "$0")/.."
-IMAGE=asteriskax001/sop-itop:3.1.1
+IMAGE=yorem/itop:3.1.1
 ARCHIVE=itop-3.1.1-linux-amd64.tar
 if [ -z "${ITOP_ADMIN_PASSWORD:-}" ]; then
   echo '构建需要通过受控环境变量 ITOP_ADMIN_PASSWORD 提供初始化凭据。' >&2

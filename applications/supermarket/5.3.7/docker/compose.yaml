@@ -1,0 +1,58 @@
+version: '3.8'
+name: supermarket
+
+services:
+  application:
+    image: yorem/supermarket:5.3.7@sha256:64912e2c4d2a2853ef8680d790ca02068e8590f573e688ac04b2517c29f8bac4
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://supermarket:supermarket_password@db:5432/supermarket_production
+      - DB_USERNAME=supermarket
+      - DB_PASSWORD=supermarket_password
+      - REDIS_URL=redis://redis:6379/0
+      - RAILS_ENV=production
+      - PORT=80
+      - MOCK_AUTH=true
+      - SECRET_KEY_BASE=dummy_secret_key_base_for_test
+    ports:
+      - "18095:80"
+    volumes:
+      - application-data:/app/public/system
+      - ./entrypoint.sh:/usr/local/bin/entrypoint.sh
+    restart: unless-stopped
+
+  db:
+    image: postgres:13.19@sha256:4fb98c9f8967255fcd3b7b880b0ce0e37fb84ce452074692db81c4aba656125e
+    platform: linux/amd64
+    environment:
+      - POSTGRES_USER=supermarket
+      - POSTGRES_PASSWORD=supermarket_password
+      - POSTGRES_DB=supermarket_production
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U supermarket -d supermarket_production"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:6.2.5@sha256:e9a53447991cd99110cab61ac75bb72e63de87acfde382570e3369f7dc073c2c
+    platform: linux/amd64
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  application-data:
+  database-data:
+  redis-data:

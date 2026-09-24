@@ -11,7 +11,7 @@ docker run -d \
   --platform linux/amd64 \
   --name wordpress-4.7.4 \
   -p 18084:80 \
-  nnin/sop-wordpress:4.7.4
+  yorem/wordpress:4.7.4
 ```
 
 镜像内已经包含 Apache、PHP 7.4、MariaDB 10.5、WordPress 4.7.4、应用配置和初始数据库。容器启动时会自动启动数据库和 Web server，并完成 WordPress 安装；不需要执行 `build.sh`、Compose、bootstrap 脚本或 Web Installer。

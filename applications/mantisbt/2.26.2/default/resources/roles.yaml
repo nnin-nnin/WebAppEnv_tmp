@@ -1,0 +1,44 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_projects
+      - manage_users
+      - manage_custom_fields
+      - manage_plugins
+      - manage_configuration
+    purpose: "Full administrative access to MantisBT"
+    associated_accounts:
+      - administrator
+      - admin
+  - name: manager
+    permissions:
+      - manage_projects
+      - manage_versions
+      - manage_categories
+    purpose: "Project management role"
+    associated_accounts: []
+  - name: developer
+    permissions:
+      - view_issues
+      - report_issues
+      - update_issues
+      - resolve_issues
+    purpose: "Developer role for resolving bugs"
+    associated_accounts: []
+  - name: updater
+    permissions:
+      - view_issues
+      - update_issues
+    purpose: "Issue updating role"
+    associated_accounts: []
+  - name: reporter
+    permissions:
+      - view_issues
+      - report_issues
+    purpose: "Issue reporting role"
+    associated_accounts: []
+  - name: viewer
+    permissions:
+      - view_issues
+    purpose: "Read-only access"
+    associated_accounts: []

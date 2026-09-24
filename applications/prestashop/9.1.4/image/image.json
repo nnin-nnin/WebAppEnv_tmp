@@ -1,1 +1,115 @@
-{"image":"[asteriskax001/sop-prestashop:9.1.4 nnin/sop-prestashop:9.1.4]","id":"sha256:483befaaf88fe85854a8f5f8b98912045ff895f7cd4c7e1187b54f6b8f68b973","created":"2026-08-05T17:35:17.127371736+08:00","architecture":"amd64","os":"linux","size":1188847377}
+[
+    {
+        "Id": "sha256:483befaaf88fe85854a8f5f8b98912045ff895f7cd4c7e1187b54f6b8f68b973",
+        "RepoTags": [
+            "yorem/prestashop:9.1.4"
+        ],
+        "RepoDigests": [
+            "yorem/prestashop@sha256:483befaaf88fe85854a8f5f8b98912045ff895f7cd4c7e1187b54f6b8f68b973"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-05T17:35:17.127371736+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c",
+                "PHP_INI_DIR=/usr/local/etc/php",
+                "APACHE_CONFDIR=/etc/apache2",
+                "APACHE_ENVVARS=/etc/apache2/envvars",
+                "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+                "PHP_LDFLAGS=-Wl,-O1 -pie",
+                "GPG_KEYS=1198C0117593497A5EC5C199286AF1F9897469DC C28D937575603EB4ABB725861C0779DC5C0A9DE4 AFD8691FDAEDF03BDF6E460563F15A9B715376CA",
+                "PHP_VERSION=8.3.33",
+                "PHP_URL=https://www.php.net/distributions/php-8.3.33.tar.xz",
+                "PHP_ASC_URL=https://www.php.net/distributions/php-8.3.33.tar.xz.asc",
+                "PHP_SHA256=e293ed620cec74651bb4a071317892a478aa6840fab22db45c72d77cd42f9676",
+                "APACHE_DOCUMENT_ROOT=/var/www/html",
+                "COMPOSER_ALLOW_SUPERUSER=1",
+                "COMPOSER_MEMORY_LIMIT=-1",
+                "APP_ENV=prod",
+                "PS_DEV_MODE=0",
+                "PS_FOLDER_ADMIN=admin-dev",
+                "PS_FOLDER_INSTALL=install-dev"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/prestashop-entrypoint"
+            ],
+            "Volumes": {
+                "/var/lib/mysql": {},
+                "/var/www/html/app/config": {},
+                "/var/www/html/download": {},
+                "/var/www/html/img": {},
+                "/var/www/html/upload": {},
+                "/var/www/html/var": {}
+            },
+            "WorkingDir": "/var/www/html",
+            "StopSignal": "SIGWINCH",
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/usr/local/bin/prestashop-healthcheck"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 60000000000,
+                "Retries": 12
+            },
+            "Shell": [
+                "/bin/bash",
+                "-o",
+                "pipefail",
+                "-c"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 1188847377,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6f94328331290cbd81edab450664d42da7b64c191416c9346cd5d28c84f76035",
+                "sha256:e28b4ed2dbb73ed1502b288f0c0e25c7397890065b459dc6ecb88a438a74e4b4",
+                "sha256:673e7b971f778392dbcbbbaffbefa8e32aeeb0e3f3833aaed0a4cfd029ddd150",
+                "sha256:e372bfdf0f46283ae9205bd8d4b5d98451ac9478ef581dee9ac69d184d8cf940",
+                "sha256:a848f55781d5cc1b80417857b6ea37885acae3db9c07819e5f178952292e15fc",
+                "sha256:157c68175643650eba54132d31ff5f844c377086f6cce360037ee4a2403f7837",
+                "sha256:6bbcb94f1b837b1b7ffeb572a00c9b60e2ae598843c4487d7b3b09e55a7499dc",
+                "sha256:95a9745a4aadecfba8f2aa5aac0c489b2094260557854075ed48e38460b8fb43",
+                "sha256:5f24810669d26187976f4aa2c5a142bbc3922f0aa10f4a16992dd95873e75d15",
+                "sha256:09c65a531c19cf26f9e0c18dc5a6b9b9437d63b08f3b7b079e3e19d32d67a450",
+                "sha256:e031425c8c4c4c285f6c9d253bca1aab53ab0f543341d40df455236e1557c4cb",
+                "sha256:852e48099358157cc382902a5601bb29fe4cd5d6f8b6d7233d169a6e5a875b79",
+                "sha256:d73ad7be234739355ef43678cfcd988e7ba3873b7eef421af352852d7ee40e13",
+                "sha256:bb94f1c409d55e4e62be47be46b938e6ae575229df87be8db40278b8295f579c",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:f92210d9e5e0328fcc1ea48f34da318a5289b45c62729369d103c19c968acc4b",
+                "sha256:a103d7c4abe41a800b2ffcb8ef936a79c90c43145c91e6ad4f923f9784177841",
+                "sha256:8b8d13cdc22635c90e0f3b49ae2e7f9ac8e117dfef2f834c51c896f0dd01b6b9",
+                "sha256:71291bfcac12acad7b8056011458e04e8643da83209a533fc1bbd31d4d32cdf6",
+                "sha256:f5ddd884b8a7a0c1beba7ce8144d45ad94455d240891da4357366f687ac7128e",
+                "sha256:ed4d41ad1c0fbf1deb0562c52ef404f900444bdfd094df7da4a6da3e5835c107",
+                "sha256:92e6e5c3c1f5d5b02e4ebdf422ee6ebb6be6e8e7bda2d1926fea4cc849a7c542",
+                "sha256:2743c1f0b8b493f2cf278d1ef0e1671285a24d9d4882d9b6749cccee02104faf"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-09-23T09:00:26.108850634Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:483befaaf88fe85854a8f5f8b98912045ff895f7cd4c7e1187b54f6b8f68b973",
+            "size": 856
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/yorem/prestashop"
+                }
+            ]
+        }
+    }
+]

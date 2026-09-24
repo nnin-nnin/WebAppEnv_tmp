@@ -1,0 +1,27 @@
+name: vanilla-33
+
+services:
+  app:
+    image: yorem/vanilla:3.3@sha256:10189e501ee3759bcd6093caee0ffefe378ab3d021b4c2c35bcc9f16d35124b8
+    platform: linux/amd64
+    ports:
+      - "18603:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: vanilla_root_pass
+      MYSQL_DATABASE: vanilla
+      MYSQL_USER: vanilla
+      MYSQL_PASSWORD: vanilla_password
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped

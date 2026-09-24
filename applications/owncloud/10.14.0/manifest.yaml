@@ -21,7 +21,7 @@ frontend:
 delivery:
   target_port: 18524
   container_port: 80
-  image: asteriskax001/sop-owncloud:10.14.0
+  image: yorem/owncloud:10.14.0@sha256:6bed2a62a42d0cd9e6d15c13116c46186fb9ce7a9792c365dc500cd2fa55845d
   all_in_one: true
   description: 单镜像、单容器；内部包含 ownCloud、Apache、PHP 和 MariaDB，数据库通过 127.0.0.1:3306 连接
   components:
@@ -45,6 +45,6 @@ scripts:
   entrypoint: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d --name owncloud-10-14-0 -p 18524:80 asteriskax001/sop-owncloud:10.14.0
+recommended_run: docker run -d --name owncloud-10-14-0 -p 18524:80 yorem/owncloud:10.14.0
 source_metadata_file: source/source.yaml
 source_availability: upstream_repository_only

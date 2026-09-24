@@ -1,0 +1,41 @@
+application: piwigo
+version: 16.4.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/Piwigo/Piwigo
+  commit: bef1a4ac424b4e986589e4cfc9f4d134f1b16f15
+runtime:
+  php: '8.4'
+  web_server: nginx
+  database: mariadb
+ports:
+  host_port: 18567
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/piwigo:16.4.0
+    tag: 16.4.0
+    digest: sha256:a64c3a58a9d4ba0664b4f8af2e3abeeae5a91635a34070c410e88e80ebf5ee23
+    platform: linux/amd64
+  db:
+    image: mariadb:10.11
+    tag: 10.11
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64

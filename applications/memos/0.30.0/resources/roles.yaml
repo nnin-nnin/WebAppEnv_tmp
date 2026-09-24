@@ -1,0 +1,5 @@
+roles:
+  - name: ADMIN
+    description: "System administrator with full access"
+  - name: USER
+    description: "Regular user with limited access"

@@ -1,8 +1,10 @@
+name: redmine-5-1-2
+
 services:
   application:
-    image: asteriskax001/sop-redmine:5.1.2
+    image: yorem/redmine:5.1.2@sha256:d406bb68a7f705f9ec97e1ac1f62e73dd1c487fabf414bf254c0c05ee2ea6a60
     ports:
-      - "18512:80"
+      - "18511:80"
     volumes:
       - redmine-files:/usr/src/redmine/files
       - redmine-log:/usr/src/redmine/log

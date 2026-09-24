@@ -1,0 +1,120 @@
+application:
+  name: Apache InLong
+  version: 2.4.0
+  type: web
+deployment:
+  mode: native_compose
+  compose_file: docker/compose.yaml
+  project_name: apache-inlong-2-4-0
+  delivery_method: DOCKERHUB
+source:
+  backend_repository: https://github.com/apache/inlong
+  backend_commit: d348b01bda8e64a8743799bff52d9293aad18753
+  frontend_repository: https://github.com/apache/inlong
+  frontend_commit: d348b01bda8e64a8743799bff52d9293aad18753
+services:
+- name: manager
+  role: manager
+  image: inlong/manager
+  tag: 2.4.0
+  platform: linux/amd64
+  ports:
+  - '8083'
+  digest: sha256:9ab827e87b9d26bef9d852db771521a5ddcfe0215ea695a73ed93bdbc4c07028
+- name: dashboard
+  role: dashboard
+  image: inlong/dashboard
+  tag: 2.4.0
+  platform: linux/amd64
+  ports:
+  - '80'
+  digest: sha256:b52780aec9b5a4b667b5f2c7f9807e89d7a322f63420493c5ca082c530c29f62
+- name: dataproxy
+  role: dataproxy
+  image: inlong/dataproxy
+  tag: 2.4.0
+  platform: linux/amd64
+  ports:
+  - '46801'
+  - '46802'
+  digest: sha256:f8c9050b3b856f76bc75339158c511cb79cba34f87e45e0634ac0034bf78c124
+- name: agent
+  role: agent
+  image: inlong/agent
+  tag: 2.4.0
+  platform: linux/amd64
+  digest: sha256:a51aecce52d137afb8db73c587e0199e3a3c7e2a76818499686a5fce586801a8
+- name: audit
+  role: audit
+  image: inlong/audit
+  tag: 2.4.0
+  platform: linux/amd64
+  ports:
+  - '10080'
+  - '10081'
+  digest: sha256:73deb283034ebd7011386c431475b72b35695d7f48ebd6b677d9a395c4f94f4c
+- name: mysql
+  role: database
+  image: mysql
+  tag: 8.0.28
+  platform: linux/amd64
+  ports:
+  - '3306'
+  digest: sha256:fc77d54cacef90ad3d75964837fad0f2a9a368b69e7d799665a3f4e90e600c2d
+- name: pulsar
+  role: message_queue
+  image: apachepulsar/pulsar
+  tag: 2.8.2
+  platform: linux/amd64
+  ports:
+  - '6650'
+  - '8080'
+  digest: sha256:d538416d5afe03360e10d5beb44bdad33d7303d137fc66c264108426875f61c6
+- name: jobmanager
+  role: jobmanager
+  image: apache/flink
+  tag: 1.15-scala_2.12
+  platform: linux/amd64
+  ports:
+  - '8081'
+  digest: sha256:784ef6b2701d6ca6d7f83459bb1d6ff918d10364bb446aa2dae4bf7d43bb4507
+- name: taskmanager
+  role: taskmanager
+  image: apache/flink
+  tag: 1.15-scala_2.12
+  platform: linux/amd64
+  digest: sha256:784ef6b2701d6ca6d7f83459bb1d6ff918d10364bb446aa2dae4bf7d43bb4507
+- name: logcollector
+  role: logcollector
+  image: otel/opentelemetry-collector-contrib
+  tag: 0.110.0
+  platform: linux/amd64
+  digest: sha256:0ed3688bbb02dabc0429ef648ebe3e9c53aca5e7c5a6b1a4a61b9f583b823e36
+- name: loki
+  role: loki
+  image: grafana/loki
+  tag: 3.0.0
+  platform: linux/amd64
+  digest: sha256:757b5fadf816a1396f1fea598152947421fa49cb8b2db1ddd2a6e30fae003253
+- name: grafana
+  role: grafana
+  image: grafana/grafana
+  tag: 11.1.0
+  platform: linux/amd64
+  digest: sha256:079600c9517b678c10cda6006b4487d3174512fd4c6cface37df7822756ed7a5
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: resources/initial-data
+notes:
+- The environment is a native multi-container Docker Compose deployment.
+- The dashboard, manager, dataproxy, agent, audit, mysql, pulsar, jobmanager, and
+  taskmanager services run in separate containers.
+- The original compose used 'tubemq-server:2181' for ZK_URL but InLong uses pulsar
+  in this compose setup.

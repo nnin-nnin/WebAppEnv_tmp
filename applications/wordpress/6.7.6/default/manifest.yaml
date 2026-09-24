@@ -1,0 +1,38 @@
+application:
+  name: WordPress
+  version: 6.7.6
+  type: full_web_application
+  repository: https://github.com/WordPress/WordPress.git
+  commit: ee22b82282c6f7429872df03f2344b29cd062d53
+  frontend_repository: null
+  frontend_commit: null
+platform: linux/amd64
+runtime:
+  language: PHP 8.2 with mysqli, PDO MySQL, intl, mbstring, XML, ZIP, GD and EXIF
+  web_server: Apache HTTP Server 2.4 with mod_rewrite
+  database: MariaDB 11.8.6 Debian trixie package, same container, 127.0.0.1
+  frontend_build_command: null
+  static_assets: WordPress 6.7.6 PHP and web assets
+  browser_entry: http://127.0.0.1:18513/
+  administrator_entry: http://127.0.0.1:18513/wp-admin/
+delivery:
+  image: yorem/wordpress:6.7.6@sha256:6816b112eb6bf0fcc47624b4e30df6847a0292f731b12686a1ef202e28b7a723
+  metadata: image/image.json
+  all_in_one: 单镜像、单容器，内部包含 WordPress、Apache、PHP、MariaDB、数据库初始化和初始账号。
+  web_application: 镜像内包含 WordPress 真实前台、后台静态资源和 PHP 后端；浏览器请求由同一容器内的 Apache 提供。
+  exposed_port: 18513
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: null
+operations:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18513:80 yorem/wordpress:6.7.6
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

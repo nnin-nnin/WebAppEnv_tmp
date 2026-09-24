@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: inlong
+    type: admin
+    enabled: true
+    description: "Initial admin user"
+    creation_method: "database seed (apache_inlong_manager.sql)"

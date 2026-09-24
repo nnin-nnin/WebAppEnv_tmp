@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/serendipity",
+    "tag": "2.0.2",
+    "digest": "sha256:82438cd29c40f2c15cb3fff6e5759a768bcf48f3928bd0236b7dc65677d97519",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

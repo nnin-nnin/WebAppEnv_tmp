@@ -1,0 +1,5 @@
+roles:
+  - name: admin
+    permissions: "全部后台权限"
+    purpose: "后台管理"
+    relation: "admin 初始账号所属角色"

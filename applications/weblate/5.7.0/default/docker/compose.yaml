@@ -1,0 +1,67 @@
+name: weblate_5_7_0_default
+
+services:
+  database:
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: weblate
+      POSTGRES_PASSWORD: weblate_password
+      POSTGRES_DB: weblate
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U weblate -d weblate"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+    volumes:
+      - weblate_db_data:/var/lib/postgresql/data
+
+  cache:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 2s
+    volumes:
+      - weblate_cache_data:/data
+
+  app:
+    image: yorem/weblate:5.7.0@sha256:380fe1248868b07949911e32d479911a3561e7ca0010981a4a2cd168f636779f
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18600:8080"
+    environment:
+      - WEBLATE_SITE_DOMAIN=localhost:18600
+      - WEBLATE_ADMIN_NAME=admin
+      - WEBLATE_ADMIN_EMAIL=admin@example.com
+      - WEBLATE_ADMIN_PASSWORD=AdminPassword123!
+      - POSTGRES_HOST=database
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=weblate
+      - POSTGRES_PASSWORD=weblate_password
+      - POSTGRES_DB=weblate
+      - REDIS_HOST=cache
+      - REDIS_PORT=6379
+      - CLIENT_MAX_BODY_SIZE=100m
+      - WEBLATE_WORKERS=2
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    volumes:
+      - weblate_data:/app/data
+      - weblate_cache:/app/cache
+
+volumes:
+  weblate_db_data:
+  weblate_cache_data:
+  weblate_data:
+  weblate_cache:

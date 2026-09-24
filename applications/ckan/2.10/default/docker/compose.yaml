@@ -1,0 +1,77 @@
+name: ckan_2_10_default
+
+services:
+  db:
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ckan
+      POSTGRES_PASSWORD: ckanpassword
+      POSTGRES_DB: ckan
+    volumes:
+      - ckan_db_data:/var/lib/postgresql/data
+      - ../resources/init-ckan.sql:/docker-entrypoint-initdb.d/init-ckan.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ckan -d ckan"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+      start_period: 3s
+
+  solr:
+    image: ckan/ckan-solr:2.10-solr9@sha256:f94e2ce1cee7530f040bf596152289719e66c47ae84cb1e7bdfb9844e73ee609
+    platform: linux/amd64
+    restart: unless-stopped
+    volumes:
+      - ckan_solr_data:/var/solr
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8983/solr/admin/info/system || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 5s
+
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+      start_period: 2s
+
+  app:
+    image: yorem/ckan:2.10@sha256:6c0609f11ff23ca0e9a8f30c632733b91b9e55aea0c54861f8cbc0d85f09e78f
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18598:5000"
+    environment:
+      CKAN_SQLALCHEMY_URL: postgresql://ckan:ckanpassword@db:5432/ckan
+      CKAN_DATASTORE_WRITE_URL: postgresql://ckan:ckanpassword@db:5432/datastore
+      CKAN_DATASTORE_READ_URL: postgresql://datastore_ro:datastore@db:5432/datastore
+      CKAN_SOLR_URL: http://solr:8983/solr/ckan
+      CKAN_REDIS_URL: redis://redis:6379/1
+      CKAN_SITE_URL: http://localhost:18598
+      CKAN_SYSADMIN_NAME: admin
+      CKAN_SYSADMIN_PASSWORD: AdminPassword123!
+      CKAN_SYSADMIN_EMAIL: admin@example.com
+      CKAN__PLUGINS: "image_view text_view recline_view datastore envvars"
+      UWSGI_OPTS: "--plugin python3,http --socket /tmp/uwsgi.sock --wsgi-file /srv/app/wsgi.py --module wsgi:application --http [::]:5000 --master --enable-threads --lazy-apps -p 2 -L -b 32768 --vacuum --harakiri 60"
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ckan_data:/var/lib/ckan
+
+volumes:
+  ckan_db_data:
+  ckan_solr_data:
+  ckan_data:

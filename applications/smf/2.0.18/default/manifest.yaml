@@ -1,0 +1,36 @@
+application: smf
+version: 2.0.18
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/SimpleMachines/SMF
+  version: 2.0.18
+runtime:
+  php: '7.0'
+  web_server: apache-2.4
+  database: mariadb-10.1
+ports:
+  host_port: 18622
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/smf:2.0.18
+    tag: 2.0.18
+    digest: sha256:c7d11ec40cf06104a0511295919024bd5f4d7a613edea3e9e9752caa1440d54b
+    platform: linux/amd64

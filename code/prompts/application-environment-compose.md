@@ -507,7 +507,7 @@ Compose 项目名称：mall-1.0.3
 初始管理员账号：admin
 初始管理员密码：123456
 镜像交付方式：DOCKERHUB
-Docker Hub 命名空间：nnin/sop
+Docker Hub 命名空间：yorem
 ```
 
 ## 最终验收提示词

@@ -1,0 +1,37 @@
+name: abantecart_1_4_4
+
+services:
+  web:
+    image: yorem/abantecart:1.4.4@sha256:cc035b050892bcbe89ffffeed4f0ef1222606990025e7be003c8c99167a25ca4
+    platform: linux/amd64
+    ports:
+      - "18001:80"
+    environment:
+      - DB_HOST=db
+      - DB_USER=abantecart
+      - DB_PASS=abantecart_pass
+      - DB_NAME=abantecart
+      - ADMIN_USER=admin
+      - ADMIN_PASS=benchmark-only
+      - HTTP_SERVER=http://localhost:18001/
+    depends_on:
+      - db
+    volumes:
+      - web-data:/var/www/html/image
+      - web-cache:/var/www/html/system/cache
+
+  db:
+    image: mariadb:10.6@sha256:4ba945cc3998b4443d6c6937d9890bb4cf642229f3d95377369645c567a59b91
+    platform: linux/amd64
+    environment:
+      - MYSQL_DATABASE=abantecart
+      - MYSQL_USER=abantecart
+      - MYSQL_PASSWORD=abantecart_pass
+      - MYSQL_ROOT_PASSWORD=root_pass
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  web-data:
+  web-cache:
+  db-data:

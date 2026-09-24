@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/octobercms",
+    "tag": "3.0.0",
+    "digest": "sha256:775852dc4c7cba6f6e48b81f4a970d8a6c3afc001c36a185a11049276903a8c3",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

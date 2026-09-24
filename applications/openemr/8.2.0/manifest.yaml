@@ -1,0 +1,68 @@
+application: openemr
+version: 8.2.0
+type: web
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+project_name: openemr-8-2-0
+official_compose_source: https://github.com/yorem/openemr:8.2.0/blob/rel-820/docker/production/docker
+  compose.yml
+backend_repository: https://github.com/yorem/openemr:8.2.0
+backend_commit: 6125a2fd8089c8bcc3848071c1293c60e27a7585
+frontend_repository: 
+frontend_commit: 
+services:
+  openemr:
+    name: openemr
+    role: application
+    image: yorem/openemr:8.2.0@sha256:16bbf0261a6a6fcaa9e9ec0022d4b871d85b86439e03edce2999b29290267790
+    tag: 8.2.0
+    digest: sha256:72b62e608efb3f613404fe86f526048cf88e4db1ccc813ccbf75003d28d65b82
+    platform: linux/amd64
+    source: Docker Hub
+    ports:
+    - 127.0.0.1:8085:80
+    depends_on:
+    - mysql
+    healthcheck: true
+    volumes:
+    - logvolume01
+    - sitevolume
+  mysql:
+    name: mysql
+    role: database
+    image: mysql
+    tag: 8.0.35
+    digest: sha256:c6812f0dcd978b589d9d3b90c20bd5e4a799deab4fd492985e0a076c5be1ee40
+    platform: linux/amd64
+    source: Docker Hub
+    ports: []
+    depends_on: []
+    healthcheck: true
+    volumes:
+    - databasevolume
+versions:
+  runtime: php
+  database: mysql 8.0.35
+  redis: 
+  search: 
+  mq: 
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+delivery_method: DOCKERHUB
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+recommended_startup: docker compose -p openemr-8-2-0 -f docker/compose.yaml up -d
+differences_from_official:
+- Added specific host port mapping 127.0.0.1:8085:80 instead of 80:80 and 443:443
+  to avoid port conflicts and public exposure.
+- Replaced MariaDB with MySQL 8.0.35 because MariaDB initialization is killed by
+  the current linux/amd64 Colima emulation environment; OpenEMR supports MySQL.
+- Replaced https check in compose openemr healthcheck to http since https port is
+  removed.
+limitations:
+- HTTPS is not configured for localhost out of the box in this modified port mapping.

@@ -6,5 +6,5 @@ project_dir="$(cd -- "$script_dir/.." && pwd)"
 compose_file="$project_dir/docker/compose.yaml"
 
 cd "$project_dir"
-docker compose -f "$compose_file" down --volumes --remove-orphans
+docker compose -f "$compose_file" down -v --remove-orphans
 echo "Monica 4.1.2 Compose containers, network, and named volumes removed"

@@ -1,0 +1,41 @@
+application: parse-server
+version: 7.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/parse-community/parse-server
+  commit: 60cf7ec92240
+runtime:
+  node: "20"
+  database: mongo:5.0
+ports:
+  host_port: 18558
+  container_port: 1337
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/parse-server:7.0.0@sha256:60cf7ec922406b9998a688fb5ca5d800d95ed8baaf7be7a689de65db36e63744
+    tag: 7.0.0
+    digest: sha256:60cf7ec922406b9998a688fb5ca5d800d95ed8baaf7be7a689de65db36e63744
+    platform: linux/amd64
+  db:
+    image: mongo:5.0@sha256:41108d183e972dcbf98d09ed83f6cfc89a471a3f15d06f9d64a95e45d9db8dd2
+    tag: "5.0"
+    digest: sha256:41108d183e972dcbf98d09ed83f6cfc89a471a3f15d06f9d64a95e45d9db8dd2
+    platform: linux/amd64

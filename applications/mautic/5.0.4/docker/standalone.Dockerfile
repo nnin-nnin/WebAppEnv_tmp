@@ -1,1 +1,1 @@
-FROM asteriskax001/sop-mautic:5.0.4
+FROM yorem/mautic:5.0.4@sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e

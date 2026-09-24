@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/icms:7.0.0",
+    "tag": "7.0.0",
+    "digest": "sha256:ff2ee8d77f89a768b1b0a2cda9b4b90ed396e9aa813d0874d0f08ba81209d0cb",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

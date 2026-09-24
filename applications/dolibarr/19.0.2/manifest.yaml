@@ -13,10 +13,10 @@ runtime:
 frontend:
   build_command: null
   static_assets: Dolibarr PHP pages and bundled local JavaScript/CSS assets in htdocs
-  browser_entry: http://localhost:18525/
+  browser_entry: http://localhost:18527/
   api_base: same-origin Dolibarr REST endpoints under /api/index.php
-port: 18525
-image: asteriskax001/sop-dolibarr:19.0.2
+port: 18527
+image: yorem/dolibarr:19.0.2@sha256:587d236e59491a455fc1e879ce5b4376806f2ee2e3092028f6ec244a5bcc63d3
 all_in_one: true
 all_in_one_description: 单镜像、单容器；镜像内部包含 Dolibarr 应用服务、Apache、PHP、MariaDB、数据库初始化种子和入口进程，应用通过 127.0.0.1 连接数据库。
 components:
@@ -38,7 +38,7 @@ scripts:
   entrypoint: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18525:80 --name dolibarr-19.0.2 asteriskax001/sop-dolibarr:19.0.2
-notes: 完整 Web 应用；无需独立前端仓库、数据库容器、Compose、运行时联网下载或 Web Installer。
+recommended_run: docker compose -f docker/compose.yaml up -d
+notes: 完整 Web 应用；无需独立前端仓库、数据库容器、运行时联网下载或 Web Installer。
 source_metadata_file: source/source.yaml
 source_availability: upstream_repository_only

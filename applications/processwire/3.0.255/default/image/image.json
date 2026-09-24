@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/processwire",
+    "tag": "3.0.255",
+    "digest": "sha256:76a1f1822aff6e0b8bd0b1a3660b0c1546e4f84c239c762f552c9ed48860c444",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

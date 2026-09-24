@@ -1,0 +1,40 @@
+application: collabtive
+version: master
+type: web
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+project_name: collabtive-master
+source:
+  backend:
+    repository: https://github.com/3logy/Collabtive
+    commit: d185b32fcecbd3745102a39262651fd2827bce6f
+services:
+  application:
+    name: collabtive-admin
+    role: application
+    image: yorem/collabtive:1.2@sha256:9d4e1521e31e7880407f151ae310c8d0c07be257d220b9c2a03f8c871a163e96
+    platform: linux/amd64
+    ports:
+    - 18089:80
+    depends_on:
+    - db
+    digest: sha256:9d4e1521e31e7880407f151ae310c8d0c07be257d220b9c2a03f8c871a163e96
+  db:
+    name: db
+    role: database
+    image: mysql:5.7
+    platform: linux/amd64
+    digest: sha256:7333e4cbebd5cc2f62a31b422718dceda7a5f311d846212f848c1450f9d22cb8
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+image_manifest: image/image.json
+image_checksums: image/SHA256SUMS
+resources: resources
+scripts:
+  build: scripts/build.sh
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  load_images: scripts/load-images.sh
+differences:
+- No official compose file, manually built a native multi-container setup

@@ -1,6 +1,6 @@
 services:
   application:
-    image: asteriskax001/sop-nextcloud:29.0.1
+    image: yorem/nextcloud:29.0.1@sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19
     ports:
       - "18522:80"
     volumes:

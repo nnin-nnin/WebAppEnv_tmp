@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/matomo",
+    "tag": "5.13.0",
+    "digest": "sha256:5031e36f42a13e9bd8afc748b3eb61170f59dcff8d9901e9c8843673935820bf",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

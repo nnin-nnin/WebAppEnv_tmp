@@ -2,12 +2,10 @@
     {
         "Id": "sha256:587d236e59491a455fc1e879ce5b4376806f2ee2e3092028f6ec244a5bcc63d3",
         "RepoTags": [
-            "asteriskax001/sop-dolibarr:19.0.2",
-            "nnin/sop-dolibarr:19.0.2"
+            "yorem/dolibarr:19.0.2"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-dolibarr@sha256:587d236e59491a455fc1e879ce5b4376806f2ee2e3092028f6ec244a5bcc63d3",
-            "nnin/sop-dolibarr@sha256:587d236e59491a455fc1e879ce5b4376806f2ee2e3092028f6ec244a5bcc63d3"
+            "yorem/dolibarr:19.0.2@sha256:587d236e59491a455fc1e879ce5b4376806f2ee2e3092028f6ec244a5bcc63d3"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T00:45:08.055481027+08:00",
@@ -88,7 +86,7 @@
             "digest": "sha256:587d236e59491a455fc1e879ce5b4376806f2ee2e3092028f6ec244a5bcc63d3",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-dolibarr:19.0.2",
+                "io.containerd.image.name": "docker.io/yorem/dolibarr:19.0.2",
                 "org.opencontainers.image.ref.name": "19.0.2"
             }
         }

@@ -1,0 +1,42 @@
+name: nodebb_3_8_0_default
+
+services:
+  app:
+    image: yorem/nodebb:3.8.0@sha256:b4fe01a21f73c7f0012105c9af0622a4f0fd9ef720e79fbe112dce4a4cea48e4
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18565:4567"
+    command: sh -c "if [ ! -f config.json ]; then ./nodebb setup; fi; node ./nodebb start"
+    environment:
+      - NODE_ENV=production
+      - NODEBB_URL=http://localhost:18565
+      - NODEBB_PORT=4567
+      - NODEBB_ADMIN_USERNAME=admin
+      - NODEBB_ADMIN_PASSWORD=AdminPassword123!
+      - NODEBB_ADMIN_EMAIL=admin@benchmark.local
+      - NODEBB_DB=redis
+      - NODEBB_DB_HOST=redis
+      - NODEBB_DB_PORT=6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - nodebb-data:/usr/src/app/public/uploads
+
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+    volumes:
+      - redis-data:/data
+
+volumes:
+  nodebb-data:
+  redis-data:

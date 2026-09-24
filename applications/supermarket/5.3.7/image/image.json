@@ -1,0 +1,26 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/supermarket",
+    "tag": "5.3.7",
+    "platform": "linux/amd64",
+    "archive": "supermarket-5.3.7-linux-amd64.tar",
+    "digest": "sha256:64912e2c4d2a2853ef8680d790ca02068e8590f573e688ac04b2517c29f8bac4"
+  },
+  {
+    "service": "db",
+    "image": "postgres",
+    "tag": "13.19",
+    "platform": "linux/amd64",
+    "archive": "postgres-13.19-linux-amd64.tar",
+    "digest": "sha256:4fb98c9f8967255fcd3b7b880b0ce0e37fb84ce452074692db81c4aba656125e"
+  },
+  {
+    "service": "redis",
+    "image": "redis",
+    "tag": "6.2.5",
+    "platform": "linux/amd64",
+    "archive": "redis-6.2.5-linux-amd64.tar",
+    "digest": "sha256:e9a53447991cd99110cab61ac75bb72e63de87acfde382570e3369f7dc073c2c"
+  }
+]

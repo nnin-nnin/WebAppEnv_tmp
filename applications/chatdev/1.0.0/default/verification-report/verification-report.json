@@ -1,0 +1,102 @@
+{
+  "target_dir": "applications/chatdev/1.0.0/default",
+  "application": "ChatDev",
+  "version": "1.0.0",
+  "timestamp": "2026-09-24T00:50:00+08:00",
+  "verdict": "passed",
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "warning": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  "checks": [
+    {
+      "id": "static.structure.required_paths",
+      "name": "交付目录与规范文件完整性",
+      "category": "static",
+      "status": "passed",
+      "message": "所有标准规范文件均已就绪 (manifest, compose, source, scripts, resources)",
+      "duration_ms": 0.05,
+      "evidence": {
+        "checked_count": 11
+      }
+    },
+    {
+      "id": "static.manifest.contract",
+      "name": "manifest.yaml 契约规范性",
+      "category": "static",
+      "status": "passed",
+      "message": "manifest.yaml 格式合法且正确声明 native_compose",
+      "duration_ms": 0.65,
+      "evidence": {
+        "application": "chatdev",
+        "version": "1.0.0",
+        "delivery_method": "DOCKERHUB"
+      }
+    },
+    {
+      "id": "static.compose.specs",
+      "name": "docker/compose.yaml 规范性",
+      "category": "static",
+      "status": "passed",
+      "message": "compose 规范合法，定义了 1 个符合 linux/amd64 标准的服务 (web)",
+      "duration_ms": 0.25,
+      "evidence": {
+        "services": [
+          "web"
+        ]
+      }
+    },
+    {
+      "id": "static.scripts.syntax",
+      "name": "Shell 脚本权限与语法校验 (bash -n)",
+      "category": "static",
+      "status": "passed",
+      "message": "全部 4 个 Shell 脚本均具备可执行权限且语法正确",
+      "duration_ms": 11.2,
+      "evidence": {
+        "checked_scripts": [
+          "reset.sh",
+          "up.sh",
+          "healthcheck.sh",
+          "login.sh"
+        ]
+      }
+    },
+    {
+      "id": "static.host_path.leak",
+      "name": "宿主机绝对路径脱敏排查",
+      "category": "static",
+      "status": "passed",
+      "message": "所有交付文本文件均已干净脱敏，无宿主机路径泄漏",
+      "duration_ms": 0.5,
+      "evidence": {}
+    },
+    {
+      "id": "static.ruby.validator",
+      "name": "权威 Ruby 验证器 (validate_compose_delivery.rb)",
+      "category": "static",
+      "status": "passed",
+      "message": "通过 Web应用环境仓库 官方权威验证器校验 (PASS)",
+      "duration_ms": 50.0,
+      "evidence": {}
+    },
+    {
+      "id": "dynamic.runtime_verify",
+      "name": "动态实机全流程验证",
+      "category": "dynamic",
+      "status": "passed",
+      "message": "实机动态验证通过 (up -> healthcheck -> login -> reset)，耗时 11.81s",
+      "duration_ms": 11810.0,
+      "evidence": {
+        "status": "PASS",
+        "stage": "login",
+        "ports": [
+          18613
+        ]
+      }
+    }
+  ]
+}

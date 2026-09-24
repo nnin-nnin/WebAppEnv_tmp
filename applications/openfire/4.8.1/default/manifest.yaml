@@ -1,0 +1,36 @@
+application: openfire
+version: 4.8.1
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/igniterealtime/Openfire
+  commit: b1accad7cc3d
+runtime:
+  java: '8'
+  web_server: jetty
+  database: hsqldb
+ports:
+  host_port: 18557
+  container_port: 9090
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/openfire:4.8.1
+    tag: 4.8.1
+    digest: sha256:b1accad7cc3d5dca4eaccf98943f085592b883c7ef409677db6adff290ca7526
+    platform: linux/amd64

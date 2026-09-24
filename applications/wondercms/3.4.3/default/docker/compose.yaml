@@ -1,0 +1,15 @@
+name: wondercms_3_4_3
+services:
+  web:
+    image: yorem/wondercms:3.4.3@sha256:8b5bc657ac5d6fa38bd4e6cb5dc561390861ad36970576ba9bdac5708ee7e14a
+    platform: linux/amd64
+    ports:
+    - 18590:80
+    restart: unless-stopped
+    command:
+    - bash
+    - -c
+    - |
+      echo 'opcache.jit=0' > /usr/local/etc/php/conf.d/disable-jit.ini
+      rm -f /var/run/apache2/apache2.pid /run/apache2/apache2.pid 2>/dev/null
+      exec apache2-foreground

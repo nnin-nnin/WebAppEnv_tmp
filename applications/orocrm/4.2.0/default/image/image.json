@@ -1,0 +1,10 @@
+[
+  {
+    "service": "orocrm",
+    "image": "yorem/orocrm:4.2.0",
+    "tag": "4.2.0",
+    "digest": "sha256:3433bb80b2fe6bf1e2ca012b5ef83644d9901e6a5b81d879d996fd1a392ae134",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

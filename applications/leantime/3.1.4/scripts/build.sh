@@ -4,7 +4,7 @@ set -Eeuo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_root"
 
-image="asteriskax001/sop-leantime:3.1.4"
+image="yorem/leantime:3.1.4"
 archive="image/leantime-3.1.4-linux-amd64.tar"
 
 if [[ -z "${LEANTIME_ADMIN_PASSWORD:-}" ]]; then

@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/mybb",
+    "tag": "1.8.38",
+    "digest": "sha256:be8291c090a8aa7fb97da68e3be1767cd2663b619297fa618add4fc92d4e570d",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

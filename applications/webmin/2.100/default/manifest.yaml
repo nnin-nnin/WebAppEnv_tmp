@@ -1,0 +1,35 @@
+application: webmin
+version: 2.100
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/webmin/webmin
+  commit: 2d900e88c87b543180656aabcdce2104b83af6ad
+runtime:
+  language: perl
+  web_server: miniserv
+ports:
+  host_port: 18626
+  container_port: 10000
+credentials:
+  admin_username: root
+  admin_password: password
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  webmin:
+    image: yorem/webmin:2.100
+    tag: 2.100
+    digest: sha256:2bf950170b970f943e5c03d8146f69ae72ba8764274dd553fd6383f8b78690f8
+    platform: linux/amd64

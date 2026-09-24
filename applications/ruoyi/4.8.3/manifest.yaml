@@ -1,0 +1,68 @@
+application: RuoYi
+version: 4.8.3
+type: 完整 Web 应用
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+compose_project_name: ruoyi-4.8.3
+official_compose_source: None (Official repo does not provide Compose file)
+source:
+  repository: https://github.com/yangzongzhuan/RuoYi
+  commit: 15e3a929ced99ff7cd55ddc727573f84498e2f5c
+  frontend_repository: 
+  frontend_commit: 
+services:
+- name: application
+  role: 应用服务
+  image: yorem/ruoyi:4.8.3@sha256:09b46ea2f540b71e2353d1a0605a0d493d9764d53f12556c175f49b107cc5369
+  tag: 4.8.3
+  digest: sha256:09b46ea2f540b71e2353d1a0605a0d493d9764d53f12556c175f49b107cc5369
+  platform: linux/amd64
+  source: 本地源码构建
+  ports:
+  - 18080:80
+  depends_on:
+  - db
+  healthcheck: None
+  volumes:
+  - application-data:/var/lib/ruoyi/uploadPath
+- name: db
+  role: 数据库服务
+  image: mysql
+  tag: 8.0.36
+  digest: sha256:c59dec7e9b0bb144816e4bb32586910777886bf5ec3f2623b546e2cf242ef8db
+  platform: linux/amd64
+  source: Docker Hub
+  ports: []
+  depends_on: []
+  healthcheck:
+  - CMD
+  - mysqladmin
+  - ping
+  - "-h"
+  - localhost
+  volumes:
+  - database-data:/var/lib/mysql
+  - "../resources/initial-data:/docker-entrypoint-initdb.d"
+dependencies:
+  runtime: Java 17
+  database: MySQL 8.0.36
+  redis: 
+  search: 
+  mq: 
+scripts:
+  build: scripts/build.sh
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  load_images: scripts/load-images.sh
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+image_manifest: image/image.json
+image_checksum: image/SHA256SUMS
+resources_dir: resources
+recommended_start_command: docker compose -f docker/compose.yaml up -d
+compose_diff: 官方未提供 Compose。已添加 MySQL 并配置 Java 应用通过环境变量使用 db 容器，并使用 SHIRO_USER_CAPTCHAENABLED=false
+  禁用图形验证码方便验证。
+known_limitations: ''
+note: 该环境是原生多容器 Docker Compose 部署，不是 all-in-one 单容器部署。应用、数据库分别运行在独立容器中，并通过 Compose
+  网络通信。

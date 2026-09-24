@@ -1,0 +1,12 @@
+name: plone-5-2-14
+
+services:
+  plone:
+    image: yorem/plone:5.2.14@sha256:e73ae6e9864e43d4d49169f9fda09012d48c7720e8e204a8b0304b764600923b
+    platform: linux/amd64
+    ports:
+      - "18617:8080"
+    environment:
+      SITE: Plone
+      PROFILES: "plone.app.caching:default"
+    restart: unless-stopped

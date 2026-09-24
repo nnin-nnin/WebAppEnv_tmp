@@ -1,0 +1,9 @@
+name: bonita_7_15_0_default
+
+services:
+  app:
+    image: yorem/bonita:7.15.0@sha256:f6aaf48f37370e408b5ebde6614731fce62613f203f1d701843d65b3aaf202b6
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18578:8080"

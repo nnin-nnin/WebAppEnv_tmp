@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: WcWord!26-aQ6nT3F
+    user_type: administrator
+    enabled: true
+    purpose: WordPress 初始管理员及动态验收账号
+

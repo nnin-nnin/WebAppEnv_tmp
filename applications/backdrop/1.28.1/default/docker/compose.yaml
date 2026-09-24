@@ -1,0 +1,60 @@
+name: backdrop-1-28-1
+
+services:
+  app:
+    image: yorem/backdrop:1.28.1@sha256:7ded870a1c2bb66be6a4455bce73264a9e4a50600dde374845898ed9ada470ff
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18571}:80"
+    environment:
+      BACKDROP_DB_HOST: db
+      BACKDROP_DB_NAME: backdrop
+      BACKDROP_DB_USER: backdrop
+      BACKDROP_DB_PASSWORD: backdrop_pass
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - app-files:/var/www/html/files
+      - ../resources/config/pcre.ini:/usr/local/etc/php/conf.d/pcre.ini:ro
+      - ../resources/config/settings.php:/var/www/html/settings.php:ro
+      - ../resources/initial-data/files:/var/www/html-init-files:ro
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        if [ ! -d /var/www/html/files/config ]; then
+          echo "Initializing Backdrop files..."
+          cp -a /var/www/html-init-files/* /var/www/html/files/
+          chown -R www-data:www-data /var/www/html/files
+        fi
+        exec /entrypoint.sh apache2-foreground
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://localhost:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: backdrop_pass
+      MYSQL_DATABASE: backdrop
+      MYSQL_USER: backdrop
+      MYSQL_PASSWORD: backdrop_pass
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  app-files:
+  db-data:

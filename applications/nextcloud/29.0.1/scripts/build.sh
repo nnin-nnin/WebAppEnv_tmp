@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-IMAGE=asteriskax001/sop-nextcloud:29.0.1
+IMAGE=yorem/nextcloud:29.0.1
 TAR_PATH="$ROOT_DIR/image/nextcloud-29.0.1-linux-amd64.tar"
 SECRET_FILE=$(mktemp)
 cleanup() { rm -f "$SECRET_FILE"; }

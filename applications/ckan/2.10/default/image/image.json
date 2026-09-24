@@ -1,0 +1,34 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/ckan",
+    "tag": "2.10",
+    "digest": "sha256:6c0609f11ff23ca0e9a8f30c632733b91b9e55aea0c54861f8cbc0d85f09e78f",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "postgres",
+    "tag": "16-alpine",
+    "digest": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "solr",
+    "image": "ckan/ckan-solr",
+    "tag": "2.10-solr9",
+    "digest": "sha256:f94e2ce1cee7530f040bf596152289719e66c47ae84cb1e7bdfb9844e73ee609",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "redis",
+    "image": "redis",
+    "tag": "7-alpine",
+    "digest": "sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

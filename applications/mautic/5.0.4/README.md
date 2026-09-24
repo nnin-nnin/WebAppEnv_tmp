@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/mautic/5.0.4
-docker run -d --name mautic-5-0-4 -p 18518:80 asteriskax001/sop-mautic:5.0.4
+docker compose -f docker/compose.yaml up -d
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化数据和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、Web Installer、数据库初始化脚本或单独启动数据库容器。
@@ -51,8 +51,7 @@ MAUTIC_URL=http://localhost:18518 MAUTIC_USERNAME=admin MAUTIC_PASSWORD='WcMauti
 默认容器没有外部数据库；重置会移除指定容器及其容器内可写数据。执行前必须显式确认：
 
 ```bash
-MAUTIC_RESET_CONFIRM=YES MAUTIC_CONTAINER=mautic-5-0-4 scripts/reset.sh
-docker run -d --name mautic-5-0-4 -p 18518:80 asteriskax001/sop-mautic:5.0.4
+scripts/reset.sh
 ```
 
 重置后的管理员账号仍为 `admin`，密码与上文一致。

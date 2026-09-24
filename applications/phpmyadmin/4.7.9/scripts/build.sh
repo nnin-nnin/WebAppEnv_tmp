@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-IMAGE="asteriskax001/sop-phpmyadmin:4.7.9"
+IMAGE="yorem/phpmyadmin:4.7.9"
 ARCHIVE="$ROOT_DIR/image/phpmyadmin-4.7.9-linux-amd64.tar"
 cd "$ROOT_DIR"
 

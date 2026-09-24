@@ -1,0 +1,12 @@
+name: shopware_6_7_2
+services:
+  web:
+    image: yorem/shopware:6.7.2@sha256:1fcadd4fb6a227ee72f81290f213625e5117d9c27c1d7a713c8291bffc63b0f3
+    platform: linux/amd64
+    ports:
+      - "18595:80"
+    environment:
+      - SHOP_DOMAIN=localhost:18595
+    volumes:
+      - ./boot_start.sh:/var/www/boot_start.sh:ro
+    restart: unless-stopped

@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: admin123
+    type: admin
+    enabled: true
+    purpose: 初始系统管理员
+    creation: 数据库预置 (ry_*.sql)

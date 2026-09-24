@@ -1,6 +1,6 @@
 name: drupal-8615
 
-x-drupal-image: &drupal-image "yorem/sop-drupal:8.6.15"
+x-drupal-image: &drupal-image "yorem/drupal:8.6.15"
 
 services:
   db:

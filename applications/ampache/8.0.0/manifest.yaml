@@ -1,0 +1,19 @@
+application: ampache
+version: 8.0.0
+type: web
+deployment: native_compose
+source:
+  repository: https://github.com/yorem/ampache:8.0.0
+  commit: afc54482f5be647e536769768a9d543e02fc6049
+compose_file: docker/compose.yaml
+project_name: ampache-8.0.0
+services:
+  ampache:
+    image: yorem/ampache:8.0.0@sha256:c3bfa6d8c5dba525574da03694f8d4ff3eee4d70a72a219af32eff3d88048ca4
+    platform: linux/amd64
+    depends_on:
+      - db
+  db:
+    image: mariadb:10.6
+    platform: linux/amd64
+delivery: docker_hub

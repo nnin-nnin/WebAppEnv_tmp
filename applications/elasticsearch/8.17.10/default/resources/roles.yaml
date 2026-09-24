@@ -1,0 +1,3 @@
+roles:
+  - role: superuser
+    description: Superuser with full administrative access to all cluster features and data

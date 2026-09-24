@@ -18,7 +18,7 @@ runtime:
   external_port: 18518
   api_base: http://localhost:18518/api
 image:
-  name: asteriskax001/sop-mautic:5.0.4
+  name: yorem/mautic:5.0.4@sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e
   all_in_one: true
   description: 单镜像、单容器；内部包含 Mautic、Apache、PHP 8.1 和 MariaDB 11.8 服务
   frontend_included: true
@@ -37,7 +37,7 @@ scripts:
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
 delivery:
-  recommended_run: docker run -d --name mautic-5-0-4 -p 18518:80 asteriskax001/sop-mautic:5.0.4
+  recommended_run: docker compose -f docker/compose.yaml up -d
   internal_initialization: 镜像内部自动启动 MariaDB、保留初始化数据库并启动 Apache；不需要 Compose、安装器或外部数据库
 source_metadata_file: source/source.yaml
 source_availability: upstream_repository_only

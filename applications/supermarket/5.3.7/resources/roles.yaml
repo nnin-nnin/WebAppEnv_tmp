@@ -1,0 +1,4 @@
+roles:
+  - name: admin
+    permissions: "Full system access to manage cookbooks, users, and tools."
+    description: "System administrator role."

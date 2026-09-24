@@ -1,6 +1,0 @@
-users:
-  - username: admin
-    password: benchmark-only
-    type: admin
-    enabled: true
-    purpose: 初始管理员与验收账号

@@ -1,0 +1,36 @@
+name: altocms_1_1_31
+
+services:
+  app:
+    image: yorem/altocms:1.1.31@sha256:dba679c075830d8b05fdf96967465cdc47ce47152a8a669a35ca0c8dc5182806
+    platform: linux/amd64
+    ports:
+      - "18007:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - application-data:/var/www/html/uploads
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.6@sha256:4ba945cc3998b4443d6c6937d9890bb4cf642229f3d95377369645c567a59b91
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: altocms_root_pass
+      MYSQL_DATABASE: altocms
+      MYSQL_USER: altocms
+      MYSQL_PASSWORD: altocms_pass
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  application-data:
+  database-data:

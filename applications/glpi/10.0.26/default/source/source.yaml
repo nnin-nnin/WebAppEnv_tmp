@@ -1,0 +1,4 @@
+sources:
+  - repository: https://github.com/glpi-project/glpi
+    commit: 17b6d8de504deb8fa14825a86824f0f1cac9e10d
+

@@ -1,0 +1,70 @@
+name: civicrm-6-18
+
+services:
+  app:
+    image: yorem/civicrm:6.18@sha256:c5609b727a78c21ceaee5774a463e5136102aed3aa4d92ad3b56e3e9e074ba09
+    platform: linux/amd64
+    ports:
+      - "18599:80"
+    environment:
+      CIVICRM_DB_USER: civicrm
+      CIVICRM_DB_PASSWORD: civicrm_password
+      CIVICRM_DB_HOST: db
+      CIVICRM_DB_PORT: 3306
+      CIVICRM_DB_NAME: civicrm
+      CIVICRM_UF_BASEURL: "http://localhost:18599"
+      CIVICRM_ADMIN_USER: admin
+      CIVICRM_ADMIN_PASS: Admin123456!
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        set -e
+        echo 'opcache.enable=0' > /usr/local/etc/php/conf.d/disable-opcache.ini
+        until mariadb-admin ping -h "$$CIVICRM_DB_HOST" -u "$$CIVICRM_DB_USER" -p"$$CIVICRM_DB_PASSWORD" --silent; do
+          echo "Waiting for database connection..."
+          sleep 2
+        done
+        if [ ! -f /var/www/html/private/civicrm.settings.php ]; then
+          echo "Installing CiviCRM..."
+          civicrm-docker-install
+        fi
+        chown -R www-data:www-data /var/www/html/private /var/www/html/public /var/www/html/ext
+        exec apache2-foreground
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - civicrm_private:/var/www/html/private
+      - civicrm_public:/var/www/html/public
+      - civicrm_ext:/var/www/html/ext
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://localhost:80/civicrm/login || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: civicrm
+      MYSQL_USER: civicrm
+      MYSQL_PASSWORD: civicrm_password
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  civicrm_private:
+  civicrm_public:
+  civicrm_ext:
+  db_data:

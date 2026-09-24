@@ -1,0 +1,42 @@
+name: sugarcrm_6_5_26
+
+services:
+  db:
+    image: mysql:5.7@sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: sugarcrm_root_password
+      MYSQL_DATABASE: sugarcrm
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -uroot -psugarcrm_root_password --silent || exit 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - db_data:/var/lib/mysql
+
+  sugarcrm:
+    image: yorem/sugarcrm:6.5.26@sha256:29d1acc6b5d9aae26baa279b7373b9b75780c619756a4b4160e8a1fc3be98f85
+    platform: linux/amd64
+    ports:
+      - "18629:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST_NAME: db
+      DATABASE_NAME: sugarcrm
+      DB_USER_NAME: root
+      DB_PASSWORD: sugarcrm_root_password
+      DB_TYPE: mysql
+      DB_TCP_PORT: "3306"
+      DB_MANAGER: MysqlManager
+    volumes:
+      - ../resources/config_si.php:/var/www/html/config_si.php:ro
+
+volumes:
+  db_data:

@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/croogo",
+    "tag": "3.0.7",
+    "digest": "sha256:783002c2427a0afdca5d4dfc563c27dd267f5ed9985360db5c4448847e718f18",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

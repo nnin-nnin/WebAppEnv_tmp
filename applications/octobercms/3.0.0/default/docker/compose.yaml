@@ -1,0 +1,12 @@
+name: octobercms_3_0_0
+
+services:
+  web:
+    image: yorem/octobercms:3.0.0@sha256:775852dc4c7cba6f6e48b81f4a970d8a6c3afc001c36a185a11049276903a8c3
+    platform: linux/amd64
+    ports:
+      - "18605:80"
+    volumes:
+      - ./entrypoint-override.sh:/entrypoint-override.sh:ro
+    entrypoint: ["/bin/bash", "/entrypoint-override.sh"]
+    restart: unless-stopped

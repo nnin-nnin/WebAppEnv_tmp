@@ -1,0 +1,35 @@
+application: crushftp
+version: 10.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/NetLah/docker-crushftp
+  commit: 10.8.0_4
+runtime:
+  language: java
+  java: '17'
+ports:
+  host_port: 18634
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/crushftp:10.0.0@sha256:d6eca9c6a3a9d09debde37590ce91b3b1f8bb7587368639cc847487515e67d03
+    tag: 10.0.0
+    digest: sha256:d6eca9c6a3a9d09debde37590ce91b3b1f8bb7587368639cc847487515e67d03
+    platform: linux/amd64

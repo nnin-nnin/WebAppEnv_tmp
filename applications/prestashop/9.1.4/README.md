@@ -1,6 +1,6 @@
 # PrestaShop 9.1.4 应用环境
 
-这是固定源码 commit `4f7653032a0605d8dfc16515a5f3aea62dcef9b1` 构建的完整 Web 应用环境，目标平台为 `linux/amd64`。最终交付物是单镜像、单容器的 all-in-one 镜像 `asteriskax001/sop-prestashop:9.1.4`，容器内部同时运行 Apache/PHP、PrestaShop 和 MariaDB。
+这是固定源码 commit `4f7653032a0605d8dfc16515a5f3aea62dcef9b1` 构建的完整 Web 应用环境，目标平台为 `linux/amd64`。最终交付物是单镜像、单容器的 all-in-one 镜像 `yorem/prestashop:9.1.4`，容器内部同时运行 Apache/PHP、PrestaShop 和 MariaDB。
 
 ## 启动
 
@@ -10,7 +10,7 @@
 cd prestashop_9.1.4
 sha256sum --check image/SHA256SUMS
 docker load -i image/prestashop-9.1.4-linux-amd64.tar
-docker run -d -p 18401:80 asteriskax001/sop-prestashop:9.1.4
+docker run -d -p 18401:80 yorem/prestashop:9.1.4
 ```
 
 源码来源和固定 commit 记录在 `source/source.yaml`；当前轻量交付目录不包含源码快照，标准使用方式不需要源码校验：
@@ -53,7 +53,7 @@ resources/register.sh buyer@example.com 'Buyer-Only-2026' Buyer Example
 ```bash
 CONTAINER_NAME=<docker ps 显示的容器 ID 或名称> scripts/reset.sh --yes
 docker load -i image/prestashop-9.1.4-linux-amd64.tar
-docker run -d -p 18401:80 asteriskax001/sop-prestashop:9.1.4
+docker run -d -p 18401:80 yorem/prestashop:9.1.4
 ```
 
 不执行重置时，重启同一容器会复用已有数据库和 `app/config/parameters.php`，不会重复安装或覆盖数据。需要长期保存数据时，可按 `docker/compose.yaml` 中的应用服务卷映射启动；Compose 不是交付启动的必要条件，且其中只有一个 service。

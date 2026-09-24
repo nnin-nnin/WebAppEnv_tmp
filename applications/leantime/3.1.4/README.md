@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/leantime/3.1.4
-docker run -d -p 18516:80 asteriskax001/sop-leantime:3.1.4
+docker run -d -p 18516:80 yorem/leantime:3.1.4
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、前端、依赖、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、安装脚本、数据库初始化脚本或 Web Installer。

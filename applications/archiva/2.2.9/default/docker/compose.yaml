@@ -1,0 +1,9 @@
+name: archiva_2_2_9_default
+
+services:
+  web:
+    image: yorem/archiva:2.2.9@sha256:bb9d6f06fa0071b4dff365102d1ee205134f7543927979108a11fa05d9b2358d
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18615:8080"

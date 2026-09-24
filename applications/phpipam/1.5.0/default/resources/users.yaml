@@ -1,0 +1,5 @@
+users:
+  - username: Admin
+    password: ipamadmin
+    role: Administrator
+    description: Initial administrator account

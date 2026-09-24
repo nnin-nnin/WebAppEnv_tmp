@@ -1,0 +1,41 @@
+application: magento
+version: 2.2.7
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/magento/magento2
+  commit: 32e14dbda4da211f86fc25ef62a42378448fa434
+runtime:
+  php: '7.0'
+  web_server: apache
+  database: mysql:5.7
+ports:
+  host_port: 18636
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/magento:2.2.7@sha256:920f0dd512a25de1992cd444d3edc56e6131f840e65ae1ba3262aa276ed5304e
+    tag: 2.2.7
+    digest: sha256:920f0dd512a25de1992cd444d3edc56e6131f840e65ae1ba3262aa276ed5304e
+    platform: linux/amd64
+  mysql:
+    image: mysql:5.7@sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    tag: "5.7"
+    digest: sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    platform: linux/amd64

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-image="asteriskax001/sop-glpi:10.0.15"
+image="yorem/glpi:10.0.15"
 container="${GLPI_CONTAINER:-}"
 if [[ -z "$container" ]]; then
-    mapfile -t candidates < <(docker ps -a --filter "ancestor=$image" --format '{{.ID}}')
+    candidates=($(docker ps -a --filter "ancestor=$image" --format '{{.ID}}'))
     if [[ "${#candidates[@]}" -ne 1 ]]; then
         echo '请设置 GLPI_CONTAINER 为要重置的 GLPI 容器名或 ID' >&2
         exit 2

@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/anchorcms:0.12.7",
+    "tag": "0.12.7",
+    "digest": "sha256:5009aa26cb72247ecb3493e08f5cb7a0d08c6e9d47dba5fb69358a67fe2f0d4b",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

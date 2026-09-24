@@ -1,0 +1,8 @@
+- username: admin
+  password: "123456"
+  type: admin
+  created_by: "system_init"
+- username: user
+  password: "123456"
+  type: normal
+  created_by: "admin_api"

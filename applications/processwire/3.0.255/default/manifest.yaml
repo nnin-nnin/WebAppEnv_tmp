@@ -1,0 +1,81 @@
+application:
+  name: ProcessWire
+  version: 3.0.255
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for ProcessWire 3.0.255 with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: processwire-3-0-255
+  compose_file: docker/compose.yaml
+  host_port: 18554
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18554/
+  login_url: http://127.0.0.1:18554/processwire/
+
+source:
+  repository: https://github.com/processwire/processwire
+  fixed_ref: 3.0.255
+  immutable_commit: 76a1f1822aff
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: processwire-3-0-255
+  services:
+    - app
+    - db
+  volumes:
+    - app-data
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/processwire:3.0.255@sha256:76a1f1822aff6e0b8bd0b1a3660b0c1546e4f84c239c762f552c9ed48860c444
+  database_image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "Long-running ProcessWire web application"
+    image: yorem/processwire:3.0.255@sha256:76a1f1822aff6e0b8bd0b1a3660b0c1546e4f84c239c762f552c9ed48860c444
+    tag: 3.0.255
+    digest: sha256:76a1f1822aff6e0b8bd0b1a3660b0c1546e4f84c239c762f552c9ed48860c444
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18554}:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    tag: 10.5
+    digest: sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+
+ports:
+  host_port: 18554
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

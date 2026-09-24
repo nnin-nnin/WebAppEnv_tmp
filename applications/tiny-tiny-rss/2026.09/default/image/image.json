@@ -1,0 +1,18 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/tiny-tiny-rss",
+    "tag": "2026.09",
+    "digest": "sha256:bd09e5ea34d832be5477b1b925032d9c3d43e8942e539cdb682971ae37552f89",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "postgres",
+    "tag": "15-alpine",
+    "digest": "sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

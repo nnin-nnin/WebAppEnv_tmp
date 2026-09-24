@@ -1,0 +1,41 @@
+application: tiny-tiny-rss
+version: "2026.09"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/tt-rss/tt-rss
+  commit: 820aeae2ce957c075568b9e7cec28c44f33cfc8a
+runtime:
+  php: "8.5"
+  database: postgres:15-alpine
+ports:
+  host_port: 18593
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: password
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  web:
+    image: yorem/tiny-tiny-rss:2026.09@sha256:bd09e5ea34d832be5477b1b925032d9c3d43e8942e539cdb682971ae37552f89
+    tag: "2026.09"
+    digest: sha256:bd09e5ea34d832be5477b1b925032d9c3d43e8942e539cdb682971ae37552f89
+    platform: linux/amd64
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    tag: 15-alpine
+    digest: sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64

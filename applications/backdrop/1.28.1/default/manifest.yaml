@@ -1,0 +1,81 @@
+application:
+  name: Backdrop CMS
+  version: 1.28.1
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for Backdrop CMS 1.28.1 with MariaDB 10.11 database."
+
+target:
+  platform: linux/amd64
+  compose_project: backdrop-1-28-1
+  compose_file: docker/compose.yaml
+  host_port: 18571
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18571/
+  login_url: http://127.0.0.1:18571/user/login
+
+source:
+  repository: https://github.com/backdrop/backdrop
+  fixed_ref: 1.28.1
+  immutable_commit: 1f0dd9519a440977a1c7b9704645d3a9a3df8ae7
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: backdrop-1-28-1
+  services:
+    - app
+    - db
+  volumes:
+    - app-files
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/backdrop:1.28.1@sha256:7ded870a1c2bb66be6a4455bce73264a9e4a50600dde374845898ed9ada470ff
+  database_image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "Backdrop CMS web application"
+    image: yorem/backdrop:1.28.1@sha256:7ded870a1c2bb66be6a4455bce73264a9e4a50600dde374845898ed9ada470ff
+    tag: 1.28.1
+    digest: sha256:7ded870a1c2bb66be6a4455bce73264a9e4a50600dde374845898ed9ada470ff
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18571}:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    tag: 10.11
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+
+ports:
+  host_port: 18571
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: admin123
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

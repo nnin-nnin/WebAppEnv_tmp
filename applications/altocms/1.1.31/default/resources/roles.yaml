@@ -1,0 +1,12 @@
+roles:
+  - name: administrator
+    role_id: 3
+    description: Full system administrator with access to admin control panel, plugin management, and site settings.
+    associated_accounts:
+      - admin
+
+  - name: ordinary_user
+    role_id: 1
+    description: Regular registered user capable of writing blog topics, commenting, and personal profile management.
+    associated_accounts:
+      - testuser

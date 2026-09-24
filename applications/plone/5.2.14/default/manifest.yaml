@@ -1,0 +1,36 @@
+application: plone
+version: 5.2.14
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/plone/Products.CMFPlone
+  commit: 25832b68101cb9e1910f6a5816c054305a2f4ead
+runtime:
+  python: '3.8'
+  web_server: waitress
+  cms: plone
+ports:
+  host_port: 18617
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  plone:
+    image: yorem/plone:5.2.14
+    tag: 5.2.14
+    digest: sha256:e73ae6e9864e43d4d49169f9fda09012d48c7720e8e204a8b0304b764600923b
+    platform: linux/amd64

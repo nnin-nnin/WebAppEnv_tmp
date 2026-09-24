@@ -1,0 +1,12 @@
+name: roundcube_1_7_4
+services:
+  web:
+    image: yorem/roundcube:1.7.4@sha256:6fe5dc2c00770c11d1fe857f4b6d23fc6c6f4a87b3e3a1b1b76331540af9dadf
+    platform: linux/amd64
+    ports:
+      - "18562:80"
+    environment:
+      - ROUNDCUBEMAIL_DB_TYPE=sqlite
+      - ROUNDCUBEMAIL_DEFAULT_HOST=localhost
+      - ROUNDCUBEMAIL_SMTP_SERVER=localhost
+    restart: unless-stopped

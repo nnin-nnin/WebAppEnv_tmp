@@ -1,0 +1,8 @@
+name: carbon_forum_5_9_0
+services:
+  web:
+    image: yorem/carbon-forum:5.9.0@sha256:c4029348d19c785a9e32310140111e89e5825fe5e8ed14e8a80de34a4a697ca3
+    platform: linux/amd64
+    ports:
+      - "18583:80"
+    restart: unless-stopped

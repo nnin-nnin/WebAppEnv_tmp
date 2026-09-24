@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/microweber",
+    "tag": "2.0.0",
+    "digest": "sha256:9d35f22fda485a37fb51a438b51ab7818e667200979209289e40cde81b027c3e",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

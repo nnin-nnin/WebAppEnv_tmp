@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-IMAGE="asteriskax001/sop-oscommerce:2.4.2"
+IMAGE="yorem/oscommerce:2.4.2"
 ARCHIVE="image/oscommerce-2.4.2-linux-amd64.tar"
 
 mkdir -p image

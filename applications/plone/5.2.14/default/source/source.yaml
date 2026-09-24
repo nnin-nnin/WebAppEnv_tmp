@@ -1,0 +1,4 @@
+repository: https://github.com/plone/Products.CMFPlone
+commit: 25832b68101cb9e1910f6a5816c054305a2f4ead
+version: 5.2.14
+tag: 5.2.14

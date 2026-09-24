@@ -30,7 +30,7 @@ if [ "$roles_status" != 200 ]; then
 fi
 
 role_id="$(grep -Eo '"id":[0-9]+,"name":"Sales Team"[^}]*"isAdmin":false' "$roles_file" \
-  | sed -nE 's/.*"id":([0-9]+).*/\1/p' | head -n 1)"
+  | sed -nE 's/.*"id":([0-9]+).*/\1/p' | head -n 1 || true)"
 
 if [ -z "$role_id" ]; then
   role_id="$(curl -sS -o "$roles_file" -w '%{http_code}' \

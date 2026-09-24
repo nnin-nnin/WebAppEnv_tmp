@@ -1,0 +1,36 @@
+application: archiva
+version: 2.2.9
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/apache/archiva
+  commit: f8e7fc29cff887f0ac58128e95b0fba5edc0035d
+runtime:
+  java: '8'
+  web_server: jetty
+  database: derby
+ports:
+  host_port: 18615
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/archiva:2.2.9
+    tag: 2.2.9
+    digest: sha256:bb9d6f06fa0071b4dff365102d1ee205134f7543927979108a11fa05d9b2358d
+    platform: linux/amd64

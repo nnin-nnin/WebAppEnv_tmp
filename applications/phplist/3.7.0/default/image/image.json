@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/phplist",
+    "tag": "3.7.0",
+    "digest": "sha256:bff120331712d67ffa81d83da149bc39650649f4d7b47ac73863bed501692048",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

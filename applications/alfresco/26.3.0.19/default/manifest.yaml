@@ -1,0 +1,119 @@
+application_name: Alfresco
+version: 26.3.0.19
+application_type: full_web_application
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+project_name: alfresco-26.3.0.19
+
+official_compose_source:
+  repository: https://github.com/Alfresco/acs-deployment
+  path: docker-compose/community-compose.yaml
+
+source_repository:
+  url: https://github.com/Alfresco/alfresco-community-repo
+  commit: a826bc61c22066267f951e9682e4d21aa6f491e8
+  tag: 26.3.0.19
+
+delivery_method: DOCKERHUB
+docker_hub_namespace: yorem
+
+main_application_image:
+  image: yorem/alfresco
+  tag: 26.3.0.19
+  digest: sha256:bddb4e96b0452208ae836993b12b35afad596e9fabf71ccb814d4f86383c18db
+  platform: linux/amd64
+  pushed: true
+
+services:
+  - service_name: alfresco
+    role: Content Repository Application Server
+    image: yorem/alfresco:26.3.0.19
+    digest: sha256:bddb4e96b0452208ae836993b12b35afad596e9fabf71ccb814d4f86383c18db
+    platform: linux/amd64
+    depends_on:
+      - postgres
+      - elasticsearch
+      - activemq
+
+  - service_name: share
+    role: Web Management Client Interface
+    image: docker.io/alfresco/alfresco-share:26.2.0
+    digest: sha256:887ff27d2c3df4fc57064372957b447a1d1d86d634cb38d948ea4d8c83e298e3
+    platform: linux/amd64
+    depends_on:
+      - alfresco
+
+  - service_name: postgres
+    role: Relational Database
+    image: postgres:17.4-alpine
+    digest: sha256:7f47493a52c0fb359a68a5c3ed6cf6d45e54d588506144e05b1c5a14d5e75141
+    platform: linux/amd64
+
+  - service_name: elasticsearch
+    role: Search Subsystem Index Server
+    image: elasticsearch:8.17.10
+    digest: sha256:1f7a0c64e6b528b7e28b8cf4f36dbb84c8a202a0a2df367f08c3ef051ef4045c
+    platform: linux/amd64
+
+  - service_name: activemq
+    role: Message Broker
+    image: docker.io/alfresco/alfresco-activemq:6.2.6-jre17-rockylinux8
+    digest: sha256:2df9ae94cdac77a3d3c7b64b18f6f5df5dfbf3dfceaa8a90184b23838bb5e466
+    platform: linux/amd64
+
+  - service_name: transform-core-aio
+    role: All-In-One Content Transformation Engine
+    image: alfresco/alfresco-transform-core-aio:5.4.3
+    digest: sha256:f1262d141e6c3826048dc268c7ffbfcebeea0b91d2ebfa32bfef185966607e0b
+    platform: linux/amd64
+
+  - service_name: batch-indexing
+    role: Elasticsearch Batch Indexing Engine
+    image: docker.io/alfresco/alfresco-elasticsearch-batch-indexing:5.7.0
+    digest: sha256:73981882d2c161962325997b6a10052309ceaeeddd352c39dcaedb44e73b22fb
+    platform: linux/amd64
+
+  - service_name: content-app
+    role: Alfresco Content App Web UI
+    image: alfresco/alfresco-content-app:8.0.0
+    digest: sha256:bb15bf2ee9bdfb13f890cf2c62c3e410f92b7bd5aeecb5d84c6bc9c5fefddc2a
+    platform: linux/amd64
+
+  - service_name: control-center
+    role: Alfresco Control Center Admin UI
+    image: quay.io/alfresco/alfresco-control-center:11.0.0
+    digest: sha256:c02d1847e0aef2caeaec9482436d4dfecfaec075ebf1f31f96aa50085bd2a632
+    platform: linux/amd64
+
+  - service_name: proxy
+    role: Reverse Proxy Gateway (Nginx)
+    image: nginx:1.27-alpine
+    digest: sha256:4ffdb2b3394602f232491a6136d2e67dfed36bf5563914a8497fa2ec6f2382f6
+    platform: linux/amd64
+    ports:
+      - "18006:8080"
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login_script: resources/login.sh
+  register_script: resources/register.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+recommended_start_command: |
+  docker compose -f docker/compose.yaml pull
+  docker compose -f docker/compose.yaml up -d
+
+differences_from_official: |
+  1. 使用固定版本的镜像标签并推送到 Docker Hub `yorem/alfresco:26.3.0.19`。
+  2. 使用 Nginx 替代原本依赖 `/var/run/docker.sock` 的 Traefik 代理，消除 Docker Socket 挂载安全隐患，完全符合规范第 318 条要求。
+  3. 将对外访问端口固定映射为指定端口 18006。
+  4. 整合官方 commons/base.yaml 并统一在单一 docker/compose.yaml 文件中管理所有服务。
+
+known_limitations: |
+  1. 必须在系统给定的 7.7GB 内存范围内运行，各容器调整了内存 limit 与 JVM 堆内存比例。
+  2. 首次启动初始化数据库与索引约需 60-120 秒。

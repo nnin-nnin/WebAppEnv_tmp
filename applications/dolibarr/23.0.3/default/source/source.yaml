@@ -1,0 +1,4 @@
+sources:
+  - repository: https://github.com/Dolibarr/dolibarr
+    commit: 36001c855242d6d4f83d600c2e5a8586d73878d6
+

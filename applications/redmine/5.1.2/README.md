@@ -1,6 +1,6 @@
 # Redmine 5.1.2 应用环境
 
-这是固定源码 commit `77574d948e60fa926e49f49bb589f341459dfa2d` 构建的完整 Redmine Web 应用环境，目标平台为 `linux/amd64`。最终交付物是单镜像、单容器 all-in-one 镜像 `asteriskax001/sop-redmine:5.1.2`，容器内部包含 Redmine、Ruby/Rails、Puma、Nginx 和 MariaDB。
+这是固定源码 commit `77574d948e60fa926e49f49bb589f341459dfa2d` 构建的完整 Redmine Web 应用环境，目标平台为 `linux/amd64`。最终交付物是单镜像、单容器 all-in-one 镜像 `yorem/redmine:5.1.2`，容器内部包含 Redmine、Ruby/Rails、Puma、Nginx 和 MariaDB。
 
 ## 启动
 
@@ -8,15 +8,21 @@
 
 ```bash
 cd applications/redmine/5.1.2
-docker run -d -p 18512:80 asteriskax001/sop-redmine:5.1.2
+docker compose -f docker/compose.yaml up -d
 ```
 
-接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库初始化脚本或 Web Installer。若需要跨容器删除持久化数据，可使用下文的 `scripts/reset.sh`；单纯 `docker restart` 不会丢失数据。
+或者使用启动脚本：
+
+```bash
+scripts/up.sh
+```
+
+接收者只需要执行启动命令，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、bootstrap 脚本、数据库初始化脚本或 Web Installer。若需要跨容器删除持久化数据，可使用下文的 `scripts/reset.sh`；单纯 `docker restart` 不会丢失数据。
 
 ## 访问和账号
 
-- 浏览器入口：<http://127.0.0.1:18512/>
-- 登录页：<http://127.0.0.1:18512/login>
+- 浏览器入口：<http://127.0.0.1:18511/>
+- 登录页：<http://127.0.0.1:18511/login>
 - 初始用户名：`admin`
 - 初始角色：Administrator（系统管理员）
 - 初始密码：`WcRed!26-nK9vT5J`
@@ -28,13 +34,13 @@ docker run -d -p 18512:80 asteriskax001/sop-redmine:5.1.2
 宿主机 HTTP 健康检查：
 
 ```bash
-REDMINE_URL=http://127.0.0.1:18512/ scripts/healthcheck.sh
+REDMINE_URL=http://127.0.0.1:18511/ scripts/healthcheck.sh
 ```
 
 登录脚本使用 Redmine 真实登录表单和 CSRF token：
 
 ```bash
-REDMINE_URL=http://127.0.0.1:18512 \
+REDMINE_URL=http://127.0.0.1:18511 \
 REDMINE_USERNAME=admin \
 REDMINE_PASSWORD='WcRed!26-nK9vT5J' \
 resources/login.sh
@@ -43,7 +49,7 @@ resources/login.sh
 Redmine 没有默认开启的公开注册接口；`resources/register.sh` 使用管理员登录后的真实 `/users/new` 用户创建表单创建普通用户：
 
 ```bash
-REDMINE_URL=http://127.0.0.1:18512 \
+REDMINE_URL=http://127.0.0.1:18511 \
 REDMINE_USERNAME=admin \
 REDMINE_PASSWORD='WcRed!26-nK9vT5J' \
 resources/register.sh demo demo@example.invalid 'Verify-User-2026!' Demo
@@ -58,9 +64,7 @@ resources/register.sh demo demo@example.invalid 'Verify-User-2026!' Demo
 以下命令会删除脚本明确列出的容器和命名数据卷，属于有意的数据重置操作：
 
 ```bash
-container_name=$(docker ps --filter ancestor=asteriskax001/sop-redmine:5.1.2 --format '{{.Names}}' | head -n 1)
-REDMINE_CONTAINER="${container_name:-redmine-5.1.2}" scripts/reset.sh
-docker run -d -p 18512:80 asteriskax001/sop-redmine:5.1.2
+scripts/reset.sh
 ```
 
 重置脚本会删除目标容器的匿名数据卷，以及脚本明确列出的命名数据卷；重置后数据库从镜像内置的已迁移数据恢复，初始管理员账号仍由受控渠道提供的凭据使用。
@@ -69,7 +73,7 @@ docker run -d -p 18512:80 asteriskax001/sop-redmine:5.1.2
 
 - `manifest.yaml`：应用版本、固定 commit、运行时、镜像、端口和脚本元数据。
 - `source/`：仅保存上游仓库链接和固定 commit 哈希的 `source.yaml`；源码快照不随本目录交付。
-- `docker/`：构建 Dockerfile 和单服务 Compose 辅助配置；Compose 不是启动必需项。
+- `docker/`：构建 Dockerfile 和 Compose 编排配置。
 - `resources/`：用户、角色、真实登录/用户创建脚本和容器配置；`users.yaml` 中记录了初始管理员账号和密码。
 - `scripts/`：构建、入口进程管理、宿主机 HTTP 健康检查、辅助启动和重置脚本。
 - `image/`：仅保存镜像元数据 `image.json`；镜像本体从 Docker Hub 获取，tar 和校验和不提交到仓库。

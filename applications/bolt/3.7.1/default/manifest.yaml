@@ -1,0 +1,88 @@
+application:
+  name: Bolt
+  version: 3.7.1
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native Docker Compose deployment for Bolt CMS 3.7.1 with embedded SQLite database and Caddy web server."
+
+target:
+  platform: linux/amd64
+  compose_project: bolt-371
+  compose_file: docker/compose.yaml
+  host_port: 18589
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18589/
+  login_url: http://127.0.0.1:18589/bolt/login
+
+source:
+  repository: https://github.com/bolt/bolt
+  fixed_ref: 3.7.1
+  immutable_commit: e46638dc59da2c3f899e9132d455cbcda9260e89
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: bolt-371
+  services:
+    - bolt
+  volumes:
+    - bolt-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/bolt:3.7.1@sha256:2f0a5e35f49ba6749845b8cc113c9cf9b0caa78a12179bd76eae59d86bd4dc1f
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: bolt
+    role: "Bolt CMS web application with Caddy and PHP-FPM"
+    image: yorem/bolt:3.7.1@sha256:2f0a5e35f49ba6749845b8cc113c9cf9b0caa78a12179bd76eae59d86bd4dc1f
+    digest: sha256:2f0a5e35f49ba6749845b8cc113c9cf9b0caa78a12179bd76eae59d86bd4dc1f
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18589}:80"
+    healthcheck: "curl -s -f http://127.0.0.1:80/bolt/login || curl -s -f http://127.0.0.1:80/ || exit 1"
+
+initialization:
+  database: "Automated schema creation and admin seeding via container entrypoint."
+  idempotence: "Checks database and creates admin user if missing."
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin
+    password: benchmark-only
+    email: admin@example.com
+    role: root
+    creation_method: "Seeded into users table via nut CLI in container entrypoint"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+
+operations:
+  start: bash scripts/up.sh
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - source_checksum
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+  final_state: "After scripts/up.sh, bolt container reports healthy status."
+
+known_limits:
+  - "Bolt 3.7.1 is designed for research and benchmarking."
+  - "Images target linux/amd64 platform."
+
+consistency_statement: "This is a native Docker Compose environment running Bolt CMS on Caddy/PHP-FPM with embedded SQLite."

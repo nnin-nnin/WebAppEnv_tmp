@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-container_name=minthcm-4-0-4
-image=asteriskax001/sop-minthcm:4.0.4
-host_port=18520
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+cd "${APP_DIR}"
 
-if docker inspect "$container_name" >/dev/null 2>&1; then
-    state=$(docker inspect -f '{{.State.Status}}' "$container_name")
-    if [ "$state" != running ]; then
-        docker start "$container_name"
-    fi
-else
-    docker run --name "$container_name" -d -p "$host_port":80 "$image"
-fi
+docker compose -f docker/compose.yaml up -d
+
+echo "等待 MintHCM 服务就绪..."
+for i in $(seq 1 60); do
+  if bash "${APP_DIR}/scripts/healthcheck.sh" >/dev/null 2>&1; then
+    echo "MintHCM 服务已就绪 (第 $i 次检查成功)"
+    exit 0
+  fi
+  sleep 3
+done
+
+echo "MintHCM 未能在限定时间内就绪" >&2
+bash "${APP_DIR}/scripts/healthcheck.sh" || true
+exit 1

@@ -1,0 +1,4 @@
+backend_repository: https://github.com/yorem/invoiceninja:5.13.30
+backend_commit: 79cce332a786810d6ace6a6eaa3e06fd818a9407
+frontend_repository: https://github.com/yorem/invoiceninja:5.13.30
+frontend_commit: 79cce332a786810d6ace6a6eaa3e06fd818a9407

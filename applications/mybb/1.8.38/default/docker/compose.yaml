@@ -1,0 +1,35 @@
+name: mybb-1838
+
+services:
+  app:
+    image: yorem/mybb:1.8.38@sha256:be8291c090a8aa7fb97da68e3be1767cd2663b619297fa618add4fc92d4e570d
+    platform: linux/amd64
+    ports:
+      - "18543:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../resources/initial-data/opcache.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini:ro
+      - ../resources/initial-data/config.php:/var/www/html/inc/config.php:ro
+      - ../resources/initial-data/settings.php:/var/www/html/inc/settings.php:ro
+      - ../resources/initial-data/lock:/var/www/html/install/lock:ro
+    command: ["--skip-old-files", "php", "-S", "0.0.0.0:80", "-t", "/var/www/html"]
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: mybb_root_pass
+      MYSQL_DATABASE: mybb
+      MYSQL_USER: mybb
+      MYSQL_PASSWORD: mybb_password
+    volumes:
+      - ../resources/initial-data/mybb.sql:/docker-entrypoint-initdb.d/01-mybb.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped

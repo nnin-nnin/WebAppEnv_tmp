@@ -1,0 +1,64 @@
+name: invoiceplane-1-5-9
+
+services:
+  app:
+    image: yorem/invoiceplane:1.5.9@sha256:0d05a1fab61b1b5f7d3469b997893f048e9e613d1c07bc44c9d4b44d1a8ba2b0
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${HOST_PORT:-18541}:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: invoiceplane
+      DB_USER: invoiceplane
+      DB_PASS: invoiceplane
+      INVOICEPLANE_URL: http://localhost:${HOST_PORT:-18541}
+      INVOICEPLANE_PHP_FPM_HOST: 127.0.0.1
+      INVOICEPLANE_PHP_FPM_PORT: 9000
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        source /etc/docker-invoiceplane/runtime/functions
+        initialize_system
+        configure_invoiceplane
+        invoiceplane_set_param "SETUP_COMPLETED" "true"
+        invoiceplane_set_param "DISABLE_SETUP" "true"
+        invoiceplane_set_param "ENCRYPTION_KEY" "base64:TeVh4tormO9kAcBIEi4olzuP94njSjdrOAuA6VGrvUM="
+        configure_nginx
+        /usr/sbin/php-fpm7.0 -F &
+        exec /usr/sbin/nginx -c /etc/nginx/nginx.conf -g 'daemon off;'
+    volumes:
+      - app-data:/var/lib/invoiceplane
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- --header=\"Host: localhost:${HOST_PORT:-18541}\" http://127.0.0.1/sessions/login >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: invoiceplane
+      MYSQL_USER: invoiceplane
+      MYSQL_PASSWORD: invoiceplane
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  app-data:
+  db-data:

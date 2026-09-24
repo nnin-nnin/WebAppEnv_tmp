@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over TYPO3 backend, pages, content, extensions, and configuration
+    purpose: Primary TYPO3 administrative role
+    associated_accounts:
+      - admin

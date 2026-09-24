@@ -1,0 +1,17 @@
+name: parsedashboard_5_4_0
+
+services:
+  app:
+    image: yorem/parsedashboard:5.4.0@sha256:f5137e104f09ce484ceede1890d28b885c7923a71d1e3777dcb59bb2e6d544cd
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18592:4040"
+    environment:
+      PARSE_DASHBOARD_ALLOW_INSECURE_HTTP: "1"
+      PARSE_DASHBOARD_USER_ID: "admin"
+      PARSE_DASHBOARD_USER_PASSWORD: "AdminPassword123!"
+      PARSE_DASHBOARD_APP_NAME: "DefaultApp"
+      PARSE_DASHBOARD_APP_ID: "myAppId"
+      PARSE_DASHBOARD_MASTER_KEY: "myMasterKey"
+      PARSE_DASHBOARD_SERVER_URL: "http://localhost:18592/parse"

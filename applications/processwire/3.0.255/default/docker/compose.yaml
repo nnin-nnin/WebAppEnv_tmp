@@ -1,0 +1,64 @@
+name: processwire-3-0-255
+
+services:
+  app:
+    image: yorem/processwire:3.0.255@sha256:76a1f1822aff6e0b8bd0b1a3660b0c1546e4f84c239c762f552c9ed48860c444
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18554}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: processwire
+      DB_USER: processwire
+      DB_PASS: processwire
+    volumes:
+      - app-data:/var/www/html/site
+      - ../resources/initial-data:/initial-data:ro
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        rm -f /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+        if [ ! -d /var/www/html/site/assets ]; then
+          cp -rT /var/www/html/site-blank /var/www/html/site
+          mkdir -p /var/www/html/site/assets/cache /var/www/html/site/assets/files /var/www/html/site/assets/logs /var/www/html/site/assets/sessions /var/www/html/site/assets/backups
+          touch /var/www/html/site/assets/installed.php
+          rm -rf /var/www/html/site/install
+          rm -f /var/www/html/install.php
+        fi
+        cp /initial-data/config.php /var/www/html/site/config.php
+        chown -R www-data:www-data /var/www/html/site
+        exec /scripts/run.sh
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/processwire/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: processwire
+      MYSQL_USER: processwire
+      MYSQL_PASSWORD: processwire
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  app-data:
+  db-data:

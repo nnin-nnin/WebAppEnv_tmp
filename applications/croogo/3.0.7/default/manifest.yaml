@@ -1,0 +1,36 @@
+application: croogo
+version: 3.0.7
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/croogo/croogo
+  commit: fed562da121d21241d5883a7803bea10dc978a9d
+runtime:
+  php: '7.4'
+  web_server: apache
+  database: sqlite
+ports:
+  host_port: 18624
+  container_port: 80
+credentials:
+  admin_username: croogo
+  admin_password: croogo
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/croogo:3.0.7@sha256:783002c2427a0afdca5d4dfc563c27dd267f5ed9985360db5c4448847e718f18
+    tag: 3.0.7
+    digest: sha256:783002c2427a0afdca5d4dfc563c27dd267f5ed9985360db5c4448847e718f18
+    platform: linux/amd64

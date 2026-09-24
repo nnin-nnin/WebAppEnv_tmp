@@ -1,0 +1,8 @@
+name: cockpit_0_11_1
+services:
+  web:
+    image: yorem/cockpit:0.11.1@sha256:641230d3b2b1ec14ee603fe495379fa2da037bde087aa635962ddc6aaf31ad66
+    platform: linux/amd64
+    ports:
+    - "18580:80"
+    restart: unless-stopped

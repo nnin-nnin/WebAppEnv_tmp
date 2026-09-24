@@ -4,13 +4,13 @@
 
 ## 启动
 
-从仓库根目录进入本目录后执行：
+在本目录执行：
 
 ```bash
-cd fluxbb_1.5.11
 (cd image && sha256sum -c SHA256SUMS)
+(cd source && sha256sum -c SHA256SUMS)
 docker load -i image/fluxbb-1.5.11-linux-amd64.tar
-docker run -d --name fluxbb-1.5.11 -p 18311:80 asteriskax001/sop-fluxbb:1.5.11
+docker run -d --platform linux/amd64 --name fluxbb-1.5.11 -p 18311:80 yorem/fluxbb:1.5.11
 ```
 
 接收者只需要 `docker load` 和 `docker run`。镜像已经包含应用、数据库、初始数据、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库导入或 Web Installer。
@@ -49,7 +49,7 @@ scripts/reset.sh fluxbb-1.5.11
 ## 文件说明
 
 - `manifest.yaml`：应用、源码、运行时、组件、镜像和脚本元数据。
-- `source/`：仅保存 GitHub 仓库链接和固定 commit 哈希的 `source/source.yaml`；源码快照不随本目录交付。
+- `source/`：固定 commit 的 FluxBB 源码快照、GitHub provenance 和源码归档校验和。
 - `docker/`：最终 Dockerfile、辅助 standalone Dockerfile 和单服务 Compose 配置。
 - `resources/`：账号、角色、真实登录/注册脚本；初始化数据库已作为镜像内预初始化数据交付。
 - `scripts/`：构建、单容器入口、初始化、健康检查、启动辅助和重置脚本。

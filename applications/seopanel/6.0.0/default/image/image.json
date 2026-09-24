@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/seopanel",
+    "tag": "6.0.0",
+    "digest": "sha256:7a4d9840564c6081375d2a9fabc52ac57539d0730c3c5042912adc88afec0c9d",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

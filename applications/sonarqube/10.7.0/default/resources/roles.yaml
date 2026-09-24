@@ -1,0 +1,10 @@
+- role: Administrators
+  permissions:
+    - Administer
+    - Administer Quality Gates
+    - Administer Quality Profiles
+    - Provision Projects
+    - Execute Analysis
+  purpose: System administration and governance
+  users:
+    - admin

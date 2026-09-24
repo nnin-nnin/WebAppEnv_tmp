@@ -1,0 +1,6 @@
+- username: admin
+  password: benchmark-only
+  type: admin
+  enabled: true
+  purpose: "Initial Administrator account for Axelor Open Suite management."
+  creation_method: "Seeded into PostgreSQL database auth_user table during database initialization / bootstrap."

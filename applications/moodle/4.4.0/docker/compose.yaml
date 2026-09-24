@@ -1,11 +1,13 @@
 services:
   application:
-    image: asteriskax001/sop-moodle:4.4.0
+    image: yorem/moodle:4.4.0@sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12
+    platform: linux/amd64
     ports:
       - "18521:80"
     volumes:
       - moodle-data:/var/www/moodledata
       - moodle-db:/var/lib/mysql
+      - ./opcache.ini:/usr/local/etc/php/conf.d/zz-disable-opcache.ini:ro
 
 volumes:
   moodle-data:

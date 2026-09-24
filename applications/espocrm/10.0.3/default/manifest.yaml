@@ -1,0 +1,57 @@
+id: espocrm_10.0.3
+application: EspoCRM
+version: 10.0.3
+artifact_type: ready_application_environment
+status: ready
+
+documentation:
+  readme: README.md
+
+source:
+  repository: https://github.com/espocrm/espocrm
+  ref: 10.0.3
+  commit: 42dc989e63f62682752431b31cfc21aef7740fc8
+  metadata_file: source/source.yaml
+  availability: github_only
+  acquisition: fixed_commit_archive
+
+runtime:
+  platform: linux/amd64
+  language: PHP
+  language_version: 8.2
+  web_server: Apache
+  database: MariaDB 10.6
+  http_port: 18093
+  startup: docker run -d --platform linux/amd64 -p 18093:80 yorem/espocrm:10.0.3
+  url: http://localhost:18093
+
+docker:
+  image:
+    name: yorem/espocrm:10.0.3
+    role: all-in-one EspoCRM environment
+    contains:
+      - Apache and PHP 8.2
+      - MariaDB 10.6.27
+      - Preinstalled EspoCRM 10.0.3
+      - Initial application data and database
+  compose_file: docker/compose.yaml
+  published:
+    registry: docker.io
+    repository: yorem/espocrm:10.0.3
+    tag: 10.0.3
+    reference: docker.io/yorem/espocrm:10.0.3
+    metadata: image/image.json
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  application_data: resources/initial-data/app-data
+  database_seed: resources/initial-data/espocrmdb.sql
+  login: resources/login.sh
+  register: resources/register.sh
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

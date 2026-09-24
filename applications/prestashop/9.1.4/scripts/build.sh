@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-IMAGE_NAME=asteriskax001/sop-prestashop:9.1.4
+IMAGE_NAME=yorem/prestashop:9.1.4
 BASE_IMAGE=php:8.3.33-apache-bookworm
 BASE_DIGEST=sha256:973e11c67c1c81e7811077a0efa0f910cf903af0ba972cab6ba0c0e15913c771
 

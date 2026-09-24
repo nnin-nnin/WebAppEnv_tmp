@@ -1,0 +1,55 @@
+name: phplist-3-7-0
+
+services:
+  app:
+    image: yorem/phplist:3.7.0@sha256:bff120331712d67ffa81d83da149bc39650649f4d7b47ac73863bed501692048
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18568}:80"
+    environment:
+      PHPLIST_DATABASE_HOST: db
+      PHPLIST_DATABASE_PORT: 3306
+      PHPLIST_DATABASE_NAME: phplist
+      PHPLIST_DATABASE_USER: phplist
+      PHPLIST_DATABASE_PASSWORD: AdminPassword123!
+      PHPLIST_SECRET: phplistsecretkey12345
+      ADMIN_NAME: admin
+      ADMIN_PASSWORD: AdminPassword123!
+      ADMIN_EMAIL: admin@example.com
+      ORGANISATION_NAME: phpList
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - app-data:/var/www/phpList3/public_html/lists/uploadimages
+      - ../resources/initial-data/php.ini:/etc/php/8.2/apache2/conf.d/99-pcre.ini:ro
+      - ../resources/initial-data/php.ini:/etc/php/8.2/cli/conf.d/99-pcre.ini:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "php -r 'exit(strpos(@file_get_contents(\"http://127.0.0.1/lists/admin/\"), \"phpList\") !== false ? 0 : 1);'"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: phplist
+      MYSQL_USER: phplist
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  app-data:
+  db-data:

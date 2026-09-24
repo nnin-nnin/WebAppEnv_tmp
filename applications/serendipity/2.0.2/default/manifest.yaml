@@ -1,0 +1,41 @@
+application: serendipity
+version: 2.0.2
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/s9y/Serendipity
+  commit: 82438cd29c40
+runtime:
+  php: '5.6'
+  web_server: apache
+  database: mariadb
+ports:
+  host_port: 18555
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/serendipity:2.0.2
+    tag: 2.0.2
+    digest: sha256:82438cd29c40f2c15cb3fff6e5759a768bcf48f3928bd0236b7dc65677d97519
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5
+    tag: 10.5
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

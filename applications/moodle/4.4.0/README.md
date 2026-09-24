@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/moodle/4.4.0
-docker run -d -p 18521:80 asteriskax001/sop-moodle:4.4.0
+docker run -d -p 18521:80 yorem/moodle:4.4.0
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库初始化脚本或 Web Installer。需要持久化数据时，可在 `docker run` 中额外挂载 `/var/www/moodledata` 和 `/var/lib/mysql`；不挂载时数据仍保存在容器可写层。
@@ -40,7 +40,7 @@ MOODLE_URL=http://localhost:18521 MOODLE_USERNAME=admin MOODLE_PASSWORD='WcMood!
 创建普通用户（参数为用户名、密码、邮箱，可选名和姓）：
 
 ```bash
-MOODLE_CONTAINER=$(docker ps --filter ancestor=asteriskax001/sop-moodle:4.4.0 --format '{{.ID}}' | head -n 1) resources/register.sh learner 'Verify-User-2026!' learner@example.invalid Learner One
+MOODLE_CONTAINER=$(docker ps --filter ancestor=yorem/moodle:4.4.0 --format '{{.ID}}' | head -n 1) resources/register.sh learner 'Verify-User-2026!' learner@example.invalid Learner One
 ```
 
 容器内部数据库探针由 Docker `HEALTHCHECK` 定义；宿主机健康检查只通过公开 HTTP 入口验证真实 Moodle 页面。
@@ -67,5 +67,5 @@ MOODLE_CONTAINER=moodle-app MOODLE_DATA_VOLUME=moodle-data MOODLE_DB_VOLUME=mood
 ## 直接启动命令
 
 ```bash
-docker run -d -p 18521:80 asteriskax001/sop-moodle:4.4.0
+docker run -d -p 18521:80 yorem/moodle:4.4.0
 ```

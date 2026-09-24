@@ -1,0 +1,9 @@
+roles:
+  - name: administrator
+    permissions: WordPress 内置站点管理权限
+    purpose: 管理站点设置、文章、页面、用户和主题
+    initial_account: admin
+  - name: subscriber
+    permissions: 阅读内容、管理自己的个人资料
+    purpose: 普通用户创建验收
+

@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/cmsmadesimple",
+    "tag": "2.2.23",
+    "digest": "sha256:855c5e536bf99b202a3d7a3e94af59283c17b5cb092c4d6d2dc5fef9287aa65c",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

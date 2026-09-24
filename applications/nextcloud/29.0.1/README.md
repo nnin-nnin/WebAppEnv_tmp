@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/nextcloud/29.0.1
-docker run -d -p 18522:80 asteriskax001/sop-nextcloud:29.0.1
+docker run -d -p 18522:80 yorem/nextcloud:29.0.1
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、MariaDB、初始化数据和启动逻辑，不需要执行 `build.sh`、Docker Compose、bootstrap 脚本或 Web Installer。
@@ -49,7 +49,7 @@ NEXTCLOUD_USERNAME=acceptance-user NEXTCLOUD_PASSWORD='Verify-User-2026!' resour
 
 ```bash
 scripts/reset.sh
-docker run -d -p 18522:80 asteriskax001/sop-nextcloud:29.0.1
+docker run -d -p 18522:80 yorem/nextcloud:29.0.1
 ```
 
 使用 Compose 或自行挂载 Docker volume 时，如需同时删除持久化数据，明确设置 `RESET_VOLUMES=1 scripts/reset.sh`；删除后再次运行会从镜像内置的初始化数据库恢复。

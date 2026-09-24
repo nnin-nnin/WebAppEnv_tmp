@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/humhub",
+    "tag": "1.18.6",
+    "digest": "sha256:9978bff0d2b9f7efe2dce3d8344d6b31e3c1da561367e971d6803551a0a1c589",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11.8",
+    "digest": "sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

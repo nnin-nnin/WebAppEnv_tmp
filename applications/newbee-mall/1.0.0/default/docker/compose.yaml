@@ -1,0 +1,40 @@
+name: newbee-mall-1-0-0
+services:
+  application:
+    image: yorem/newbee-mall:1.0.0@sha256:ad016fb1454bb256b6508f6f1b74ff773014e75fbcc9e6a3c0a644abf0f21dff
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 28080
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/newbee_mall_db?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    ports:
+      - "18586:28080"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:28080/"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 15s
+
+  db:
+    image: mysql:8.0.35@sha256:9095b039775474d4a652430c1bab0db55d48d7d1885278566152927e4844e84b
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: newbee_mall_db
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  database-data:

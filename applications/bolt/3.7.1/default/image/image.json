@@ -1,0 +1,10 @@
+[
+  {
+    "service": "bolt",
+    "image": "yorem/bolt:3.7.1",
+    "tag": "3.7.1",
+    "digest": "sha256:2f0a5e35f49ba6749845b8cc113c9cf9b0caa78a12179bd76eae59d86bd4dc1f",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

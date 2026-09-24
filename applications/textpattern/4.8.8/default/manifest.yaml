@@ -1,0 +1,35 @@
+application: textpattern
+version: 4.8.8
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/textpattern/textpattern
+  commit: b90acf00e63e2be98f81e1cde58a5bea4b31dee9
+runtime:
+  php: '8.1'
+  web_server: httpd
+ports:
+  host_port: 18616
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: Abcd1234$
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/textpattern:4.8.8
+    tag: 4.8.8
+    digest: sha256:e788b4271fb9212069ca83f492e7072448c7287a9870bfea477f4caf7c8b7845
+    platform: linux/amd64

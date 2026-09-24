@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-base_url="${REDMINE_URL:-http://127.0.0.1:18512}"
+base_url="${REDMINE_URL:-http://127.0.0.1:18511}"
 username="${REDMINE_USERNAME:-admin}"
 : "${REDMINE_PASSWORD:?请通过受控环境变量 REDMINE_PASSWORD 提供密码}"
 work_dir=$(mktemp -d)
@@ -27,4 +27,3 @@ if ! grep -Eiq 'My page|Administration|登出|Logout|Sign out' "$work_dir/result
   exit 1
 fi
 echo "Redmine 登录成功：$username"
-

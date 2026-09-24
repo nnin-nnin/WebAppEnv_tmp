@@ -1,0 +1,4 @@
+repository: https://github.com/elastic/elasticsearch
+commit: e5c4b2af120c131ea2885730f6693cb7d40a0a63
+version: 8.17.10
+tag: v8.17.10

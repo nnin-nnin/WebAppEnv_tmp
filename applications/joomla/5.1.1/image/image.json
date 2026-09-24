@@ -2,12 +2,10 @@
     {
         "Id": "sha256:7287c440475adb0d35dada0ac970f37798bbeff801a0cdb48d68dbf240d26128",
         "RepoTags": [
-            "asteriskax001/sop-joomla:5.1.1",
-            "nnin/sop-joomla:5.1.1"
+            "yorem/joomla:5.1.1"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-joomla@sha256:7287c440475adb0d35dada0ac970f37798bbeff801a0cdb48d68dbf240d26128",
-            "nnin/sop-joomla@sha256:7287c440475adb0d35dada0ac970f37798bbeff801a0cdb48d68dbf240d26128"
+            "yorem/joomla:5.1.1@sha256:7287c440475adb0d35dada0ac970f37798bbeff801a0cdb48d68dbf240d26128"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-05T15:13:21.098863492+08:00",
@@ -96,7 +94,7 @@
             "digest": "sha256:7287c440475adb0d35dada0ac970f37798bbeff801a0cdb48d68dbf240d26128",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-joomla:5.1.1",
+                "io.containerd.image.name": "docker.io/yorem/joomla:5.1.1",
                 "org.opencontainers.image.ref.name": "5.1.1"
             }
         }

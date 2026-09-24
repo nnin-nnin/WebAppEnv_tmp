@@ -10,7 +10,7 @@ compose=(docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE")
 "${compose[@]}" config --quiet
 
 required_images=(
-  yorem/sop-drupal:8.6.15
+  yorem/drupal:8.6.15
   postgres:10.23-bullseye
 )
 

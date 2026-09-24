@@ -1,0 +1,6 @@
+- username: admin
+  password: admin
+  type: admin
+  enabled: true
+  purpose: Default administrator account for SonarQube
+  created_via: System bootstrap initialization

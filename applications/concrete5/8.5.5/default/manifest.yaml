@@ -1,0 +1,66 @@
+application:
+  name: Concrete5
+  version: "8.5.5"
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native Docker Compose deployment for Concrete5 CMS 8.5.5 TurnKey Linux appliance with self-contained MariaDB and Apache."
+
+deployment:
+  mode: native_compose
+  notes: "Native Docker Compose deployment for Concrete5 TurnKey Linux appliance."
+  compose_file: docker/compose.yaml
+  project_name: concrete5-8-5-5
+  host_port: 18618
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+target:
+  platform: linux/amd64
+  compose_project: concrete5-8-5-5
+  compose_file: docker/compose.yaml
+  host_port: 18618
+  browser_url: http://localhost:18618/
+  login_url: http://localhost:18618/index.php/login
+
+source:
+  repository: https://github.com/concretecms/concretecms
+  tag: 8.5.5
+  commit: eb2e83dd9fc3f0eefa748ccc22bc4aed8ef85410
+  source_yaml: source/source.yaml
+  checksums: source/SHA256SUMS
+  availability: github_only
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "Concrete5 CMS Web Application and Database"
+    image: yorem/concrete5:8.5.5@sha256:6b83b4f8dae4e855bc8246d708d882f91636979798ee623a027510c9d5dde39a
+    tag: "8.5.5"
+    digest: sha256:6b83b4f8dae4e855bc8246d708d882f91636979798ee623a027510c9d5dde39a
+    platform: linux/amd64
+    ports:
+      - "18618:80"
+
+ports:
+  host_port: 18618
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: admin
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

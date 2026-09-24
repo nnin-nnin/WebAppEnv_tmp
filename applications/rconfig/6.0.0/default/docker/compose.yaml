@@ -1,0 +1,51 @@
+name: rconfig_6_0_0
+
+services:
+  app:
+    image: yorem/rconfig:6.0.0@sha256:99f7f31fd09a3bd247075661da77389e30df4d789b1f5b6ad100f4c0b9153148
+    platform: linux/amd64
+    ports:
+      - 18551:80
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: rconfig
+      DB_USERNAME: rconfig
+      DB_PASSWORD: AdminPassword123!
+      REDIS_HOST: 127.0.0.1
+      REDIS_PORT: 6379
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../resources/initial-data/.env:/var/www/html/rconfig/.env:ro
+      - ../resources/initial-data/supervisord.conf:/etc/supervisor/supervisord.conf:ro
+      - app-storage:/var/www/html/rconfig/storage
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:80/login || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: rconfig
+      MYSQL_USER: rconfig
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  app-storage:
+  db-data:

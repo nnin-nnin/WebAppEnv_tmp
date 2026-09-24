@@ -1,0 +1,81 @@
+application:
+  name: InvoicePlane
+  version: 1.5.9
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for InvoicePlane 1.5.9 with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: invoiceplane-1-5-9
+  compose_file: docker/compose.yaml
+  host_port: 18541
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18541/
+  login_url: http://127.0.0.1:18541/sessions/login
+
+source:
+  repository: https://github.com/InvoicePlane/InvoicePlane
+  fixed_ref: 1.5.9
+  immutable_commit: 0d05a1fab61b
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: invoiceplane-1-5-9
+  services:
+    - app
+    - db
+  volumes:
+    - app-data
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/invoiceplane:1.5.9@sha256:0d05a1fab61b1b5f7d3469b997893f048e9e613d1c07bc44c9d4b44d1a8ba2b0
+  database_image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "Long-running InvoicePlane web and php-fpm application"
+    image: yorem/invoiceplane:1.5.9@sha256:0d05a1fab61b1b5f7d3469b997893f048e9e613d1c07bc44c9d4b44d1a8ba2b0
+    tag: 1.5.9
+    digest: sha256:0d05a1fab61b1b5f7d3469b997893f048e9e613d1c07bc44c9d4b44d1a8ba2b0
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18541}:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    tag: 10.5
+    digest: sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+
+ports:
+  host_port: 18541
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

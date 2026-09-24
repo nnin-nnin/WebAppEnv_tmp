@@ -1,0 +1,9 @@
+name: dreamfactory_5_0_0
+
+services:
+  web:
+    image: yorem/dreamfactory:5.0.0@sha256:1974c821d2a1eebe1d9b7ab11a9ba4d5587755a628f4e339907b6394e9757aeb
+    platform: linux/amd64
+    ports:
+      - "18597:80"
+    restart: unless-stopped

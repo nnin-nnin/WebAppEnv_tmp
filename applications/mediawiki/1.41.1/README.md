@@ -1,6 +1,6 @@
 # MediaWiki 1.41.1 应用环境
 
-这是 MediaWiki 1.41.1 固定源码 commit `36da63d008b7a2f9de929113b99bc7059831cb90` 的 all-in-one `linux/amd64` 应用环境，并包含与 MediaWiki 1.41 兼容的 Vector 皮肤固定 commit `f5d1b9c2d06403d8b82aaae2afe1d238a8ca9dce`。最终镜像为 `asteriskax001/sop-mediawiki:1.41.1`，单个容器内包含 MediaWiki、Vector 浏览器皮肤、Apache、PHP 8.2 和 MariaDB 11.8.6；前端由镜像内的 PHP ResourceLoader 提供。
+这是 MediaWiki 1.41.1 固定源码 commit `36da63d008b7a2f9de929113b99bc7059831cb90` 的 all-in-one `linux/amd64` 应用环境，并包含与 MediaWiki 1.41 兼容的 Vector 皮肤固定 commit `f5d1b9c2d06403d8b82aaae2afe1d238a8ca9dce`。最终镜像为 `yorem/mediawiki:1.41.1`，单个容器内包含 MediaWiki、Vector 浏览器皮肤、Apache、PHP 8.2 和 MariaDB 11.8.6；前端由镜像内的 PHP ResourceLoader 提供。
 
 ## 启动
 
@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/mediawiki/1.41.1
-docker run -d -p 18519:80 asteriskax001/sop-mediawiki:1.41.1
+docker run -d -p 18519:80 yorem/mediawiki:1.41.1
 ```
 
 如需跨容器删除或重建仍保留数据，可使用 `-v mediawiki-data:/var/www/html/images -v mediawiki-db:/var/lib/mysql`；不加 volume 时，容器重启仍会保留自身文件系统中的数据。

@@ -2,12 +2,12 @@ name: monica_4_1_2
 
 services:
   app:
-    image: yorem/sop-monica-app:4.1.2
+    image: yorem/monica:4.1.2-app
     platform: linux/amd64
     environment:
       APP_ENV: local
       APP_DEBUG: "false"
-      APP_URL: http://localhost:18086
+      APP_URL: http://localhost:18097
       APP_TRUSTED_PROXIES: "*"
       APP_DISABLE_SIGNUP: "true"
       APP_SIGNUP_DOUBLE_OPTIN: "false"
@@ -47,13 +47,13 @@ services:
     restart: unless-stopped
 
   web:
-    image: yorem/sop-monica-web:4.1.2
+    image: yorem/monica:4.1.2-web
     platform: linux/amd64
     depends_on:
       app:
         condition: service_healthy
     ports:
-      - "18086:80"
+      - "18097:80"
     volumes:
       - app-data:/var/www/html/storage:ro
     restart: unless-stopped
@@ -92,7 +92,7 @@ services:
     restart: unless-stopped
 
   cron:
-    image: yorem/sop-monica-app:4.1.2
+    image: yorem/monica:4.1.2-app
     platform: linux/amd64
     command: ["cron.sh"]
     environment:
@@ -124,7 +124,7 @@ services:
     restart: unless-stopped
 
   queue:
-    image: yorem/sop-monica-app:4.1.2
+    image: yorem/monica:4.1.2-app
     platform: linux/amd64
     command: ["queue.sh"]
     environment:
@@ -158,8 +158,6 @@ services:
   mail:
     image: mailhog/mailhog:v1.0.1
     platform: linux/amd64
-    ports:
-      - "18087:8025"
     healthcheck:
       test: ["CMD-SHELL", "wget -Y off -q -O /dev/null http://127.0.0.1:8025/api/v2/messages"]
       interval: 10s

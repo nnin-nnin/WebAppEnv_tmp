@@ -3,8 +3,8 @@ set -Eeuo pipefail
 
 container="${1:-${LEANTIME_CONTAINER:-leantime}}"
 if ! docker container inspect "$container" >/dev/null 2>&1; then
-    echo "找不到容器：$container" >&2
-    exit 1
+    echo "找不到容器：$container"
+    exit 0
 fi
 
 echo "正在删除 Leantime 容器及其匿名数据卷：$container"

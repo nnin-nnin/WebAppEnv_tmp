@@ -1,1 +1,1 @@
-FROM asteriskax001/sop-owncloud:10.14.0
+FROM yorem/owncloud:10.14.0

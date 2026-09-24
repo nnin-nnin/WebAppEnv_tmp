@@ -1,0 +1,57 @@
+services:
+  mysql:
+    restart: always
+    image: mysql:8.0.35@sha256:c6812f0dcd978b589d9d3b90c20bd5e4a799deab4fd492985e0a076c5be1ee40
+    command: ["mysqld", "--character-set-server=utf8mb4"]
+    platform: linux/amd64
+    volumes:
+    - databasevolume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -proot"]
+      start_period: 1m
+      start_interval: 10s
+      interval: 1m
+      timeout: 5s
+      retries: 3
+  openemr:
+    restart: always
+    image: yorem/openemr:8.2.0@sha256:16bbf0261a6a6fcaa9e9ec0022d4b871d85b86439e03edce2999b29290267790
+    platform: linux/amd64
+    ports:
+    - 127.0.0.1:8085:80
+    volumes:
+    - logvolume01:/var/log
+    - sitevolume:/var/www/localhost/htdocs/openemr/sites
+    - ./apache-mutex.conf:/etc/apache2/conf.d/zz-codex-mutex.conf:ro
+    - ./php.ini:/etc/php85/conf.d/zz-codex.ini:ro
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASS: root
+      MYSQL_USER: openemr
+      MYSQL_PASS: openemr
+      OE_USER: admin
+      OE_PASS: pass
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD
+      - /usr/bin/curl
+      - --fail
+      - --insecure
+      - --location
+      - --show-error
+      - --silent
+      - http://localhost/meta/health/readyz
+      start_period: 3m
+      start_interval: 10s
+      interval: 1m
+      timeout: 5s
+      retries: 3
+volumes:
+  logvolume01: {}
+  sitevolume: {}
+  databasevolume: {}

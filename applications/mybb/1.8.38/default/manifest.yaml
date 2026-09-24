@@ -1,0 +1,41 @@
+application: mybb
+version: 1.8.38
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/mybb/mybb
+  commit: b706acfed8665ea3b235b36decffc2cd18e26bc5
+runtime:
+  php: '8.2'
+  web_server: php-builtin
+  database: mariadb
+ports:
+  host_port: 18543
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/mybb:1.8.38
+    tag: 1.8.38
+    digest: sha256:be8291c090a8aa7fb97da68e3be1767cd2663b619297fa618add4fc92d4e570d
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5
+    tag: 10.5
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

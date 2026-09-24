@@ -1,0 +1,4 @@
+roles:
+  - name: administrator
+    description: System Administrator with all permissions
+    relations: admin

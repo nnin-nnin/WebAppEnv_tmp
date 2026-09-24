@@ -1,6 +1,6 @@
 services:
   application:
-    image: asteriskax001/sop-leantime:3.1.4
+    image: yorem/leantime:3.1.4@sha256:1b70db6bcdd103dbd5ef2a63f271e1608170758e2ecf0fba4c91dc7aaadbb469
     ports:
       - "18516:80"
     volumes:

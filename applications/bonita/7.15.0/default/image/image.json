@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/bonita",
+    "tag": "7.15.0",
+    "digest": "sha256:f6aaf48f37370e408b5ebde6614731fce62613f203f1d701843d65b3aaf202b6",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,36 @@
+application: e107
+version: 2.3.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/e107inc/e107
+  commit: 7214b75794f6431a376f6839bca7f30137f45067
+runtime:
+  php: '7.0'
+  web_server: apache
+  database: mariadb
+ports:
+  host_port: 18604
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/e107:2.3.0@sha256:6baef73c3a1157016cab45401bd036286f5ed40f4482dfedc33d1a4eaa926a86
+    tag: 2.3.0
+    digest: sha256:6baef73c3a1157016cab45401bd036286f5ed40f4482dfedc33d1a4eaa926a86
+    platform: linux/amd64

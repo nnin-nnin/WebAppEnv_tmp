@@ -3,3 +3,26 @@
 Thumbs.db
 *.swp
 *~
+
+# 忽略应用源码解压目录与源码快照，仅保留元数据配置文件
+applications/**/source/*
+!applications/**/source/source.yaml
+!applications/**/source/SHA256SUMS
+!applications/**/source/patches
+!applications/**/source/patches/**
+!applications/**/source/.gitignore
+
+# 忽略大型离线镜像与安装包文件
+*.tar
+*.tar.gz
+*.zip
+*.iso
+
+# 忽略临时构建或嵌套的 .git 目录
+applications/**/.git/
+applications/**/build/
+applications/**/dist/
+
+# 本地 Agent 规则文件（不同步到远程仓库）
+AGENTS.md
+*AGENTS.md

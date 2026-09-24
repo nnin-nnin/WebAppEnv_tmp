@@ -1,0 +1,12 @@
+name: codiad_2_8_4
+services:
+  web:
+    image: yorem/codiad:2.8.4@sha256:cc90f1708971eb94345fe5c22d1ac58082aa439e76768e47284dcb6cad863916
+    platform: linux/amd64
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    ports:
+      - "18579:80"
+    restart: unless-stopped

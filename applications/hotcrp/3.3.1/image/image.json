@@ -2,12 +2,10 @@
     {
         "Id": "sha256:9f4d451e78c315f79d6fc56d57f2e965ef6eafae4115fce424e7b7037b7e6e97",
         "RepoTags": [
-            "asteriskax001/sop-hotcrp:3.3.1",
-            "nnin/sop-hotcrp:3.3.1"
+            "yorem/hotcrp:3.3.1"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-hotcrp@sha256:9f4d451e78c315f79d6fc56d57f2e965ef6eafae4115fce424e7b7037b7e6e97",
-            "nnin/sop-hotcrp@sha256:9f4d451e78c315f79d6fc56d57f2e965ef6eafae4115fce424e7b7037b7e6e97"
+            "yorem/hotcrp@sha256:9f4d451e78c315f79d6fc56d57f2e965ef6eafae4115fce424e7b7037b7e6e97"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T00:12:37.00940843+08:00",
@@ -90,7 +88,7 @@
             "digest": "sha256:9f4d451e78c315f79d6fc56d57f2e965ef6eafae4115fce424e7b7037b7e6e97",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-hotcrp:3.3.1",
+                "io.containerd.image.name": "docker.io/yorem/hotcrp:3.3.1",
                 "org.opencontainers.image.ref.name": "3.3.1"
             }
         },

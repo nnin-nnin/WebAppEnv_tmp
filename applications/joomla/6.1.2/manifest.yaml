@@ -1,0 +1,57 @@
+application: joomla
+version: 6.1.2
+type: web
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+project_name: joomla-6-1-2
+delivery_method: dockerhub
+
+source:
+  backend:
+    repository: https://github.com/joomla/joomla-cms
+    commit: c623e73b17c749f4644cb5634f59ca683b69d17b
+  official_compose: https://github.com/joomla/docker-joomla/blob/master/php8.4/apache/docker compose.yml (as reference)
+
+services:
+  joomla:
+    role: application
+    image: yorem/joomla:6.1.2
+    tag: 6.1.2
+    digest: sha256:708a76cc3a707e5a8dc935762e406b687dcf2b7602f23268c00d4b29078e8303
+    ports:
+      - "18535:80"
+    depends_on:
+      - db
+    healthcheck: curl
+    volumes:
+      - joomla-data:/var/www/html
+
+  db:
+    role: database
+    image: mysql:8.0.35
+    tag: 8.0.35
+    digest: sha256:82d43fa55566029f346be6f84374c886ab78f3d390821811434aacb0051a8bf5
+    platform: linux/amd64
+    volumes:
+      - db-data:/var/lib/mysql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+
+differences_from_official:
+  - Add explicit platform: linux/amd64
+  - Add explicit digests for reproducibility
+  - Use depends_on with condition: service_healthy for joomla -> db
+  - Map ports only to 127.0.0.1 (during testing)
+  - Add automated installation environment variables (JOOMLA_SITE_NAME, JOOMLA_ADMIN_USERNAME, etc)
+
+risks:
+  - Port mapping to 127.0.0.1 is for local testing only. In production, change to 0.0.0.0:18535.

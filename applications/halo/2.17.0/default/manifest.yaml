@@ -1,0 +1,35 @@
+application: halo
+version: 2.17.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/halo-dev/halo
+  commit: c5bf1924a60b26d63a594fe0efa0da787eb203f6
+runtime:
+  language: java
+  framework: spring-boot
+ports:
+  host_port: 18582
+  container_port: 8090
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/halo:2.17.0
+    tag: 2.17.0
+    digest: sha256:a888e68eb89ad6c9c19d2e91361c58c540e291525d485f4542243c408b17bae8
+    platform: linux/amd64

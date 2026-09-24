@@ -1,0 +1,14 @@
+diff --git a/ruoyi-admin/pom.xml b/ruoyi-admin/pom.xml
+index 54055e7..83088e8 100644
+--- a/ruoyi-admin/pom.xml
++++ b/ruoyi-admin/pom.xml
+@@ -61,7 +61,8 @@
+                 <groupId>org.springframework.boot</groupId>
+                 <artifactId>spring-boot-maven-plugin</artifactId>
+                 <configuration>
+-                    <addResources>true</addResources>
++
++                    <mainClass>com.ruoyi.RuoYiApplication</mainClass>
+                 </configuration>
+                 <executions>
+                     <execution>

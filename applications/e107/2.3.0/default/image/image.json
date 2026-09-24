@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/e107",
+    "tag": "2.3.0",
+    "digest": "sha256:6baef73c3a1157016cab45401bd036286f5ed40f4482dfedc33d1a4eaa926a86",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

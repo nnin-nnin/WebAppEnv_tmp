@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: benchmark-only
+    role: Administrator
+    type: admin
+    enabled: true
+    purpose: Initial administrator user for benchmark and system administration
+    creation_method: Initial database seed

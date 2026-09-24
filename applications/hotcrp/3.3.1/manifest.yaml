@@ -19,7 +19,7 @@ runtime:
   browser_entry: /
   api_entry: /api
 delivery:
-  image: asteriskax001/sop-hotcrp:3.3.1
+  image: yorem/hotcrp:3.3.1@sha256:9f4d451e78c315f79d6fc56d57f2e965ef6eafae4115fce424e7b7037b7e6e97
   port: 18403
   all_in_one: true
   description: 单镜像、单容器；镜像内部包含 HotCRP、Apache/PHP、MariaDB、schema 初始化、初始账号和入口管理逻辑。数据库只监听容器内 127.0.0.1。
@@ -45,4 +45,4 @@ operations:
   start: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18403:80 asteriskax001/sop-hotcrp:3.3.1
+recommended_run: docker compose -f docker/compose.yaml up -d

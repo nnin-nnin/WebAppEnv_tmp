@@ -1,0 +1,36 @@
+application: zencart
+version: 1.5.7
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/zencart/zencart
+  commit: 0ad1b0990f0d13080fa7c9c79a1c51187ae78afc
+runtime:
+  php: '7.0'
+  web_server: apache
+  database: mariadb:10.1
+ports:
+  host_port: 18625
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: benchmark-only
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/zencart:1.5.7@sha256:8ae9fb25e9d805ce3d578802d43d4a1bea8210dbb83bb776688acd42b3d89e06
+    tag: 1.5.7
+    digest: sha256:8ae9fb25e9d805ce3d578802d43d4a1bea8210dbb83bb776688acd42b3d89e06
+    platform: linux/amd64

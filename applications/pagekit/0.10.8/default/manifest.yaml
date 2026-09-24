@@ -1,0 +1,36 @@
+application: pagekit
+version: 0.10.8
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/pagekit/pagekit
+  commit: 5bcd333002a6f4656c2a4e47e4b5d207b3328746
+runtime:
+  php: '5.5'
+  web_server: nginx
+  database: sqlite
+ports:
+  host_port: 18591
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/pagekit:0.10.8
+    tag: 0.10.8
+    digest: sha256:6e0518a42b95ee85c94288fb137c023caf15962df7f3c5998b87799c9998bd32
+    platform: linux/amd64

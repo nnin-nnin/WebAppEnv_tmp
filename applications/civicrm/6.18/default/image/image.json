@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/civicrm:6.18",
+    "tag": "6.18",
+    "digest": "sha256:c5609b727a78c21ceaee5774a463e5136102aed3aa4d92ad3b56e3e9e074ba09",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb:10.11",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

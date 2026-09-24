@@ -1,0 +1,36 @@
+application: chatdev
+version: 1.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/OpenBMB/ChatDev
+  commit: acb93cf3d15cec5b9ee6eec0850ddd3932164329
+runtime:
+  python: '3.9'
+  framework: flask
+  web_server: werkzeug
+ports:
+  host_port: 18613
+  container_port: 8000
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/chatdev:1.0.0
+    tag: 1.0.0
+    digest: sha256:efab15b2c5fe982f18f67ed15812ad595239cba321139582b09837fda198db24
+    platform: linux/amd64

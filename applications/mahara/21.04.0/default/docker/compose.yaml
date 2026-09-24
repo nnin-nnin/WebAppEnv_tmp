@@ -1,0 +1,10 @@
+name: mahara-21-04-0
+services:
+  web:
+    image: yorem/mahara:21.04.0@sha256:a80ae49437d1abc59ace4c0c9802eb02c51ff8ab2bf543c3ebc7c45c156ebe35
+    platform: linux/amd64
+    ports:
+      - "18621:80"
+    tty: true
+    stdin_open: true
+    restart: unless-stopped

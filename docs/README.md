@@ -58,7 +58,7 @@ python3 code/codex_environment_runner.py \
   --version 8.2.5 \
   --source-repository https://github.com/espocrm/espocrm \
   --commit 06be47c3488c7c369ee879b920ec4c3fc4acbb5d \
-  --image-name nnin/sop-espocrm \
+  --image-name yorem/espocrm \
   --host-port 18092 \
   --workdir .
 ```
@@ -207,7 +207,7 @@ cat resources/users.yaml
 先拉取 Docker Hub 镜像：
 
 ```bash
-docker pull nnin/sop-espocrm:8.2.5
+docker pull yorem/espocrm:8.2.5
 ```
 
 启动容器：
@@ -217,7 +217,7 @@ docker run -d \
   --platform linux/amd64 \
   --name espocrm-8.2.5 \
   -p 18092:80 \
-  nnin/sop-espocrm:8.2.5
+  yorem/espocrm:8.2.5
 ```
 
 查看容器是否正常运行：

@@ -1,0 +1,7 @@
+- name: admin
+  permissions: Super User, view reports, manage licenses, full access
+  description: Automatically assigned to the initial user. Has full access to the system.
+
+- name: user
+  permissions: General user permissions, checkout/checkin assets
+  description: Default role assigned to newly created users, allowing basic self-service.

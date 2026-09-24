@@ -1,0 +1,20 @@
+name: springblade-5-0-1
+
+services:
+  springblade:
+    image: yorem/springblade:5.0.1@sha256:fd84a9b745d7928818e89ca3ee64ff6dab8c7c6c550666071485d836f0cc2509
+    platform: linux/amd64
+    ports:
+      - "18090:80"
+    volumes:
+      - application-db:/var/lib/mysql
+      - application-redis:/var/lib/redis
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1/ >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+volumes:
+  application-db:
+  application-redis:

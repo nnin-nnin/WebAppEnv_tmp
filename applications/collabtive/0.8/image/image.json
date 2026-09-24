@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/collabtive",
+    "tag": "0.8",
+    "platform": "linux/amd64",
+    "archive": "collabtive-0.8-linux-amd64.tar",
+    "digest": "sha256:ddf496b05894be48dc61811db0a99958bc42220066e07a175e253aba2d56e72b"
+  },
+  {
+    "service": "db",
+    "image": "mysql",
+    "tag": "5.7",
+    "platform": "linux/amd64",
+    "archive": "mysql-5.7-linux-amd64.tar",
+    "digest": "sha256:7333e4cbebd5cc2f62a31b422718dceda7a5f311d846212f848c1450f9d22cb8"
+  }
+]

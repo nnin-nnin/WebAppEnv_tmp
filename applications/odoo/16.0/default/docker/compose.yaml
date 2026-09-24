@@ -1,0 +1,39 @@
+name: odoo_16_0_default
+
+services:
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo -d postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    image: yorem/odoo:16.0@sha256:99cde0c810d80e93a0284d985d6e586553783368196715c845a7aa1caa02ec8c
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18612:8069"
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - web_data:/var/lib/odoo
+
+volumes:
+  db_data:
+  web_data:

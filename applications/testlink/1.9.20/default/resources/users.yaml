@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: admin
+    email: admin@localhost
+    role: administrator
+    enabled: true
+    purpose: "Default TestLink administrator account"
+    creation_method: "Database seed during initialization"

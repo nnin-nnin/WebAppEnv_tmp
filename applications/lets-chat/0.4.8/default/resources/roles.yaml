@@ -1,0 +1,5 @@
+roles:
+- role: Administrator
+  description: Administrator with full system privileges
+- role: User
+  description: Regular user

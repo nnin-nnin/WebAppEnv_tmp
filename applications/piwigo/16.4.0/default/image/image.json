@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/piwigo",
+    "tag": "16.4.0",
+    "digest": "sha256:a64c3a58a9d4ba0664b4f8af2e3abeeae5a91635a34070c410e88e80ebf5ee23",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

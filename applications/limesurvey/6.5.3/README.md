@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/limesurvey/6.5.3
-docker run -d -p 18517:80 asteriskax001/sop-limesurvey:6.5.3
+docker run -d -p 18517:80 yorem/limesurvey:6.5.3
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、安装脚本、数据库脚本或 Web Installer。首次启动会在同一容器内初始化 MariaDB 和 LimeSurvey 数据库，可能需要等待一段时间。
@@ -48,7 +48,7 @@ LIMESURVEY_PASSWORD='WcLime!26-sP7yD2H' LIMESURVEY_NEW_PASSWORD='Verify-User-202
 
 ```bash
 LIMESURVEY_CONTAINER=<容器名或ID> ./scripts/reset.sh
-docker run -d -p 18517:80 asteriskax001/sop-limesurvey:6.5.3
+docker run -d -p 18517:80 yorem/limesurvey:6.5.3
 ```
 
 ## 文件说明

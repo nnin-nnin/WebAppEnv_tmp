@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/crushftp",
+    "tag": "10.0.0",
+    "digest": "sha256:d6eca9c6a3a9d09debde37590ce91b3b1f8bb7587368639cc847487515e67d03",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

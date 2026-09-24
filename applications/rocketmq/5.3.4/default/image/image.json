@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/rocketmq",
+    "tag": "5.3.4",
+    "digest": "sha256:a6976cd5841facfda294616a0b8797e7f41fa0292d51ad4e46b2ff224ce64995",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

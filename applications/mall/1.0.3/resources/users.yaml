@@ -1,9 +1,0 @@
-users:
-  - username: admin
-    password: "123456"
-    password_note: "固定交付测试账号；交付 seed 使用 BCrypt 哈希设置为 123456，固定源码原始 SQL 保留在 source/"
-    user_type: administrator
-    enabled: true
-    purpose: "mall-admin 初始管理员"
-    roles:
-      - super-admin

@@ -1,0 +1,47 @@
+name: orangehrm-5-7-0
+
+services:
+  app:
+    image: yorem/orangehrm:5.7.0@sha256:a2f811f926b6267f693185a8a59622da38044c0d2d4b22a43f5693dffe3eb29f
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18566}:80"
+    environment:
+      ORANGEHRM_DATABASE_HOST: db
+      ORANGEHRM_DATABASE_NAME: orangehrm
+      ORANGEHRM_DATABASE_USER: orangehrm
+      ORANGEHRM_DATABASE_PASSWORD: orangehrm_pass
+    volumes:
+      - ../resources/Conf.php:/var/www/html/lib/confs/Conf.php:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/web/index.php/auth/login || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.11.8@sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: orangehrm
+      MYSQL_USER: orangehrm
+      MYSQL_PASSWORD: orangehrm_pass
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+volumes:
+  db-data:

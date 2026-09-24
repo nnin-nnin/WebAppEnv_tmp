@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/ruoyi:4.8.3@sha256:09b46ea2f540b71e2353d1a0605a0d493d9764d53f12556c175f49b107cc5369",
+    "tag": "4.8.3",
+    "platform": "linux/amd64",
+    "archive": "ruoyi-4.8.3-linux-amd64.tar",
+    "digest": "sha256:09b46ea2f540b71e2353d1a0605a0d493d9764d53f12556c175f49b107cc5369"
+  },
+  {
+    "service": "db",
+    "image": "mysql",
+    "tag": "8.0.36",
+    "platform": "linux/amd64",
+    "archive": "mysql-8.0.36-linux-amd64.tar",
+    "digest": "sha256:c59dec7e9b0bb144816e4bb32586910777886bf5ec3f2623b546e2cf242ef8db"
+  }
+]

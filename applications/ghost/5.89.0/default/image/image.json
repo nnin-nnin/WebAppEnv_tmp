@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/ghost",
+    "tag": "5.89.0",
+    "digest": "sha256:7797c81d1148594fb3ce9a89a6f1aeb3efd1c991f9ce6e8bf642b03e16820b17",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

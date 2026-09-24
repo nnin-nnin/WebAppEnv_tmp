@@ -1,0 +1,106 @@
+[
+    {
+        "Id": "sha256:4572153f69b511a5b9f0a4ef7d194b9e2ec00713f9961769fd95fbc0b0248cd7",
+        "RepoTags": [
+            "yorem/redmine:7.0.0"
+        ],
+        "RepoDigests": [
+            "yorem/redmine:7.0.0@sha256:4572153f69b511a5b9f0a4ef7d194b9e2ec00713f9961769fd95fbc0b0248cd7"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-10T23:24:47.293575974+08:00",
+        "Config": {
+            "ExposedPorts": {
+                "3000/tcp": {},
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "RUBY_VERSION=4.0.6",
+                "RUBY_DOWNLOAD_URL=https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.6.tar.xz",
+                "RUBY_DOWNLOAD_SHA256=9c9d121fe3314ea7c801e690b9de981d2b9d12d7849db99c27482468a541ba0a",
+                "GEM_HOME=/usr/local/bundle",
+                "BUNDLE_SILENCE_ROOT_WARNING=1",
+                "BUNDLE_APP_CONFIG=/usr/local/bundle",
+                "GOSU_VERSION=1.19",
+                "RAILS_ENV=production",
+                "HOME=/home/redmine",
+                "REDMINE_VERSION=7.0.0",
+                "REDMINE_DOWNLOAD_URL=https://www.redmine.org/releases/redmine-7.0.0.tar.gz",
+                "REDMINE_DOWNLOAD_SHA256=857e9f8860c31e4c531389e5d93eea26488dba69830484a3b0aa904be615e90a",
+                "RAILS_LOG_TO_STDOUT=true",
+                "RACK_ENV=production",
+                "BUNDLE_WITHOUT=development:test",
+                "REDMINE_DB_HOST=127.0.0.1",
+                "REDMINE_DB_NAME=redmine",
+                "REDMINE_DB_USER=redmine",
+                "REDMINE_DB_PASSWORD=redmine-local-db"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/redmine-entrypoint"
+            ],
+            "Volumes": {
+                "/usr/src/redmine/files": {},
+                "/usr/src/redmine/log": {},
+                "/usr/src/redmine/tmp": {},
+                "/var/lib/mysql": {}
+            },
+            "WorkingDir": "/usr/src/redmine",
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "curl -fsS http://127.0.0.1/ | grep -Eiq 'Redmine|Projects|My page'"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 45000000000,
+                "Retries": 12
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 453313272,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6f94328331290cbd81edab450664d42da7b64c191416c9346cd5d28c84f76035",
+                "sha256:6a139309aece41305dd77db1e56668594865c6a09a42dcc35f4220707d76db72",
+                "sha256:0c03df8970d104e7208cb95e4676398fb5fc7b8671e092235c75a7d48f62a7c1",
+                "sha256:41006659ab4945b2808d9ca8e9f4c919a95ec98ed9cba42d15fd2420c5ecbff4",
+                "sha256:33f21b3c61e7bfed1574137d5a2a08f5ee0aeacbb607aa2e9f9168d55d1669e7",
+                "sha256:65c82816ed81ba51f149f78a5960091db922e6e1756233c55e343d556bba293b",
+                "sha256:7967931a40fe895c134f1fb4dd3a9bae2d00cae9596412247dd8ae980ddcb5a1",
+                "sha256:f7f68000382f11eb5c8195ecc32ca298cad32b007cf869ac32d5bd05edd9c6aa",
+                "sha256:53c48db2fe07fea891ca1ada4dea86a7a0399fbf1dfbebe251daf0ce20561030",
+                "sha256:6992aed09fc2cc6b0cef3eb83adcb7c47aec642f98397b5f097dae7676ca34dd",
+                "sha256:183d1dc230e622ec887e28ea24322122b5eddde8eef0f71ce55c914d56c22b38",
+                "sha256:f52367f42a94a34a8c65b45615be61f8cfb2a222f7c11cb73424852351c615fe",
+                "sha256:c71e2d472c07add837862f13da32f3d342c322589f5799e822f152c4304fd33d",
+                "sha256:3366abf20ec82eed8491ebff63d7879b278ba64f7ba077f179215852bae613da",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:c3abc865b9124ebe03a716f50870b58698b8e7575046b95de0a87dd250ad4eb9",
+                "sha256:45561ba6e94622b1ec6d13db2ecacd1a94a93def256265e4a5ef5d33051a7742",
+                "sha256:f00b3658f0c13d9e0e1ae149084906e7abaaf766a23aefa6af4e91d41626f1c4",
+                "sha256:c15267cabbab2e37bd692191e812044cbbeb70fbe804a2181eb9e14de2f783fc",
+                "sha256:0100ad578dc6b77cc8c67c1adebebed982229e56b99aa856dbe7afe5661cff07"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-10T15:24:47.738694626Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:4572153f69b511a5b9f0a4ef7d194b9e2ec00713f9961769fd95fbc0b0248cd7",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "wi5adjkx05jgxu9x6faq0r93l",
+                    "CreatedAt": "2026-08-10T23:24:47.74420259+08:00"
+                }
+            ]
+        }
+    }
+]

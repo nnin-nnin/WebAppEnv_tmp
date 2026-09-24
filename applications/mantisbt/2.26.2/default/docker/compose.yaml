@@ -1,0 +1,41 @@
+name: mantisbt-2262
+
+services:
+  application:
+    image: yorem/mantisbt:2.26.2@sha256:3378f42363587c99ade2ec06d4c3d8c8a09f9f9cd455b8545a4b573f16fa272a
+    platform: linux/amd64
+    ports:
+      - "18569:80"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    volumes:
+      - ../resources/config_inc.php:/var/www/html/config/config_inc.php:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -L http://127.0.0.1:80/login_page.php || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  mariadb:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: mantis_root_password
+      MYSQL_DATABASE: bugtracker
+      MYSQL_USER: mantisbt
+      MYSQL_PASSWORD: mantisbt_password
+    volumes:
+      - ../resources/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  mariadb-data:

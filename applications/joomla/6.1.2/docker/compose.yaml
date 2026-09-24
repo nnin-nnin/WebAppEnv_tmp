@@ -1,0 +1,53 @@
+name: joomla-6-1-2
+
+services:
+  joomla:
+    image: yorem/joomla:6.1.2@sha256:708a76cc3a707e5a8dc935762e406b687dcf2b7602f23268c00d4b29078e8303
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_USER: joomla
+      JOOMLA_DB_PASSWORD: joomlapassword
+      JOOMLA_DB_NAME: joomla
+      JOOMLA_SITE_NAME: JoomlaSite
+      JOOMLA_ADMIN_USER: "Admin User"
+      JOOMLA_ADMIN_USERNAME: admin
+      JOOMLA_ADMIN_PASSWORD: "12345678password"
+      JOOMLA_ADMIN_EMAIL: admin@example.com
+    ports:
+      - "18535:80"
+    volumes:
+      - joomla-data:/var/www/html
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mysql:8.0.35@sha256:82d43fa55566029f346be6f84374c886ab78f3d390821811434aacb0051a8bf5
+    platform: linux/amd64
+    command:
+      - mysqld
+      - --innodb-buffer-pool-size=128M
+      - --performance-schema=OFF
+    environment:
+      MYSQL_USER: joomla
+      MYSQL_PASSWORD: joomlapassword
+      MYSQL_DATABASE: joomla
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  joomla-data:
+  db-data:

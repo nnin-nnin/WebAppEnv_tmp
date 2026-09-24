@@ -3,8 +3,8 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE_DIR="$ROOT_DIR/image"
-APP_IMAGE="sop/drupal:8.6.15"
-PUBLISHED_APP_IMAGE="yorem/sop-drupal:8.6.15"
+APP_IMAGE="yorem/drupal:8.6.15"
+PUBLISHED_APP_IMAGE="yorem/drupal:8.6.15"
 DB_IMAGE="postgres:10.23-bullseye"
 BASE_IMAGE="docker.io/library/drupal:8.6.15-apache@sha256:6494e8cdd709bed5f6cb8452611ece78d239a4bba47ff199cf768bb36b1e9753"
 

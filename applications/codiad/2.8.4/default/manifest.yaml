@@ -1,0 +1,36 @@
+application: codiad
+version: 2.8.4
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/Codiad/Codiad
+  commit: 06ced3c1292baf55f07b1e3b27266917782a62ba
+runtime:
+  php: '7.2'
+  web_server: nginx
+  database: flat-file
+ports:
+  host_port: 18579
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/codiad:2.8.4
+    tag: 2.8.4
+    digest: sha256:cc90f1708971eb94345fe5c22d1ac58082aa439e76768e47284dcb6cad863916
+    platform: linux/amd64

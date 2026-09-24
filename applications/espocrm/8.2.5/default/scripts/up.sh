@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-image_name="${ESPOCRM_IMAGE:-nnin/sop-espocrm:8.2.5}"
+image_name="${ESPOCRM_IMAGE:-yorem/espocrm:8.2.5}"
 container_name="${ESPOCRM_CONTAINER:-espocrm-8.2.5}"
 host_port="${ESPOCRM_PORT:-18092}"
 

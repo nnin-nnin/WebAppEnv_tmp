@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/forkcms:5.12.0",
+    "tag": "5.12.0",
+    "digest": "sha256:768ed5dd37dc06fcd7d4ab1dbce6f1a6a5d5a4eacd48fa413f270dd7d26344e4",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,19 +1,19 @@
 [
   {
     "service": "app",
-    "image": "yorem/sop-monica-app:4.1.2",
-    "tag": "4.1.2",
+    "image": "yorem/monica:4.1.2-app",
+    "tag": "4.1.2-app",
     "id": "sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
-    "digest": "yorem/sop-monica-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "digest": "yorem/monica:4.1.2-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
     "platform": "linux/amd64",
     "archive": "image/monica-app-4.1.2-linux-amd64.tar"
   },
   {
     "service": "web",
-    "image": "yorem/sop-monica-web:4.1.2",
-    "tag": "4.1.2",
+    "image": "yorem/monica:4.1.2-web",
+    "tag": "4.1.2-web",
     "id": "sha256:3c3f075fde9b58e80996ba3c4e24b3d2594a535b71455bb8529cab3b6f014d4a",
-    "digest": "yorem/sop-monica-web@sha256:3c3f075fde9b58e80996ba3c4e24b3d2594a535b71455bb8529cab3b6f014d4a",
+    "digest": "yorem/monica:4.1.2-web@sha256:3c3f075fde9b58e80996ba3c4e24b3d2594a535b71455bb8529cab3b6f014d4a",
     "platform": "linux/amd64",
     "archive": "image/monica-web-4.1.2-linux-amd64.tar"
   },
@@ -37,19 +37,19 @@
   },
   {
     "service": "cron",
-    "image": "yorem/sop-monica-app:4.1.2",
-    "tag": "4.1.2",
+    "image": "yorem/monica:4.1.2-app",
+    "tag": "4.1.2-app",
     "id": "sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
-    "digest": "yorem/sop-monica-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "digest": "yorem/monica:4.1.2-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
     "platform": "linux/amd64",
     "archive": "image/monica-app-4.1.2-linux-amd64.tar"
   },
   {
     "service": "queue",
-    "image": "yorem/sop-monica-app:4.1.2",
-    "tag": "4.1.2",
+    "image": "yorem/monica:4.1.2-app",
+    "tag": "4.1.2-app",
     "id": "sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
-    "digest": "yorem/sop-monica-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
+    "digest": "yorem/monica:4.1.2-app@sha256:0b70fdf5cce77031ab469ea1af8d5b3bfce8608c1096a7552cf913290619bb6f",
     "platform": "linux/amd64",
     "archive": "image/monica-app-4.1.2-linux-amd64.tar"
   },

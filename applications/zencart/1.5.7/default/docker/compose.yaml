@@ -1,0 +1,10 @@
+name: zencart_1_5_7_default
+
+services:
+  web:
+    image: yorem/zencart:1.5.7@sha256:8ae9fb25e9d805ce3d578802d43d4a1bea8210dbb83bb776688acd42b3d89e06
+    platform: linux/amd64
+    tty: true
+    stdin_open: true
+    ports:
+      - "18625:80"

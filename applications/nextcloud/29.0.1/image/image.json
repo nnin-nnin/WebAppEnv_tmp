@@ -2,12 +2,10 @@
     {
         "Id": "sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19",
         "RepoTags": [
-            "asteriskax001/sop-nextcloud:29.0.1",
-            "nnin/sop-nextcloud:29.0.1"
+            "yorem/nextcloud:29.0.1"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-nextcloud@sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19",
-            "nnin/sop-nextcloud@sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19"
+            "yorem/nextcloud:29.0.1@sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T18:33:39.176371173+08:00",
@@ -89,7 +87,7 @@
             "digest": "sha256:f05cb6590eb02c96dd494f76da98244f10bcf742b01ab5a291c56c295fbc7c19",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-nextcloud:29.0.1",
+                "io.containerd.image.name": "docker.io/yorem/nextcloud:29.0.1",
                 "org.opencontainers.image.ref.name": "29.0.1"
             }
         }

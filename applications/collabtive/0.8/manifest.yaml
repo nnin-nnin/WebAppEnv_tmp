@@ -1,0 +1,57 @@
+application: Collabtive
+version: '0.8'
+type: Web
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+project_name: collabtive-0.8
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source:
+  backend:
+    repository: https://github.com/3logy/Collabtive.git
+    commit: d185b32fcecbd3745102a39262651fd2827bce6f
+services:
+  application:
+    name: application
+    role: application server
+    image: yorem/collabtive
+    tag: '0.8'
+    platform: linux/amd64
+    source: built from source
+    ports:
+    - 18088:80
+    dependencies:
+    - db
+    volumes:
+    - application-data:/var/www/html/files
+    digest: sha256:ddf496b05894be48dc61811db0a99958bc42220066e07a175e253aba2d56e72b
+  db:
+    name: db
+    role: database
+    image: mysql
+    tag: '5.7'
+    platform: linux/amd64
+    source: docker hub
+    volumes:
+    - database-data:/var/lib/mysql
+    digest: sha256:7333e4cbebd5cc2f62a31b422718dceda7a5f311d846212f848c1450f9d22cb8
+scripts:
+  build: scripts/build.sh
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  load_images: scripts/load-images.sh
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  database_seed: resources/initial-data/database-seed.sql
+startup_command: docker compose -f docker/compose.yaml up -d
+notes:
+- The environment is a native multi-container Docker Compose deployment, not an all-in-one
+  container.
+- The application and database run in separate containers communicating over the Compose
+  network.
+- The official source does not provide a Docker Compose file. This environment creates
+  a standardized structure meeting guidelines.

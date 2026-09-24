@@ -1,6 +1,6 @@
 services:
   application:
-    image: yorem/sop-ruoyi-vue-pro:2026.06-jdk8
+    image: yorem/ruoyi-vue-pro:2026.06-jdk8@sha256:3d3461894dfa5c38509a15aa4faec8b1804f04e365b1276fb52f6ea083e924e0
     ports:
       - "18087:80"
     volumes:

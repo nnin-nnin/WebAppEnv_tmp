@@ -1,0 +1,207 @@
+services:
+  mysql:
+    image: mysql:8.0.28@sha256:fc77d54cacef90ad3d75964837fad0f2a9a368b69e7d799665a3f4e90e600c2d
+    platform: "linux/amd64"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=inlong
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=inlong --execute \"SHOW DATABASES;\""
+      timeout: 20s
+      interval: 2s
+      retries: 10
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/initial-data/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    command: --authentication_policy=mysql_native_password
+
+  pulsar:
+    image: apachepulsar/pulsar:2.8.2@sha256:d538416d5afe03360e10d5beb44bdad33d7303d137fc66c264108426875f61c6
+    platform: "linux/amd64"
+    ports:
+      - "6650:6650"
+      - "8082:8080"
+    environment:
+      - PULSAR_MEM=-Xms1g -Xmx1g -XX:MaxDirectMemorySize=1g
+    volumes:
+      - pulsar-data-final:/pulsar/data
+    command: bin/pulsar standalone
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/admin/v2/clusters"]
+      timeout: 10s
+      interval: 5s
+      retries: 30
+
+  manager:
+    image: yorem/inlong:2.4.0-manager@sha256:3e6e06aefa5fed40d42de454f70b5c254701bc48a3f54b59bfae0f3c6fbdae0e
+    platform: linux/amd64
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8083:8083"
+    environment:
+      - JDBC_URL=mysql:3306
+      - USERNAME=root
+      - PASSWORD=inlong
+      - MANAGER_JVM_HEAP_OPTS=-Xms256m -Xmx768m
+      - ZK_URL=pulsar:2181
+      - FLINK_HOST=jobmanager
+      - FLINK_PORT=8081
+      - AUDIT_QUERY_URL=http://audit:10080
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8083/inlong/manager/api/anno/login >/dev/null || exit 1"]
+      start_period: 3m
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  dashboard:
+    image: yorem/inlong:2.4.0-dashboard@sha256:139b2cd513a7564485897f8597f4769f5044ee6dc5140b15defbfce76f1e96bb
+    platform: linux/amd64
+    depends_on:
+      - manager
+    ports:
+      - "80:80"
+    environment:
+      - MANAGER_API_ADDRESS=manager:8083
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost/ || exit 1"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  dataproxy:
+    image: yorem/inlong:2.4.0-dataproxy@sha256:a3ce9438312e1f0826121650d79e038c5045c98433485743c0cf8e1e6a459704
+    platform: linux/amd64
+    depends_on:
+      - manager
+    ports:
+      - "46801:46801"
+      - "46802:46802"
+    environment:
+      - MANAGER_OPENAPI_IP=manager
+      - MANAGER_OPENAPI_PORT=8083
+      - MQ_TYPE=pulsar
+      - ETH_NAME=eth0
+    restart: unless-stopped
+
+  agent:
+    image: yorem/inlong:2.4.0-agent@sha256:f83bd5922d48cdbb567320a0a97565e13a484875a98a0399615405fade2193dd
+    platform: linux/amd64
+    depends_on:
+      - manager
+      - dataproxy
+    environment:
+      - MANAGER_OPENAPI_IP=manager
+      - MANAGER_OPENAPI_PORT=8083
+      - DATAPROXY_IP=dataproxy
+      - DATAPROXY_PORT=46801
+    volumes:
+      - agent-data:/data/collect-data
+    restart: unless-stopped
+
+  audit:
+    image: yorem/inlong:2.4.0-audit@sha256:a9459b6366a9df26ba95f9d1724a8bc1640474b4ae8ccbf2d5d09d816c6dbc4a
+    platform: linux/amd64
+    privileged: true
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - AUDIT_JDBC_URL=mysql:3306
+      - AUDIT_JDBC_USERNAME=root
+      - AUDIT_JDBC_PASSWORD=inlong
+      - AUDIT_JVM_HEAP_OPTS=-Xms256m -Xmx512m
+      - MANAGER_OPENAPI_IP=manager
+      - MANAGER_OPENAPI_PORT=8083
+      - AUDIT_PROXY_ADDRESS=audit:10081
+      - MQ_TYPE=pulsar
+    ports:
+      - "10080:10080"
+      - "10081:10081"
+    restart: unless-stopped
+
+  jobmanager:
+    image: apache/flink:1.15-scala_2.12@sha256:784ef6b2701d6ca6d7f83459bb1d6ff918d10364bb446aa2dae4bf7d43bb4507
+    platform: linux/amd64
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+      - OTEL_EXPORTER_ENDPOINT=logcollector:4317
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    restart: unless-stopped
+
+  taskmanager:
+    image: apache/flink:1.15-scala_2.12@sha256:784ef6b2701d6ca6d7f83459bb1d6ff918d10364bb446aa2dae4bf7d43bb4507
+    platform: linux/amd64
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 2
+      - OTEL_EXPORTER_ENDPOINT=logcollector:4317
+    command: taskmanager
+    restart: unless-stopped
+
+  logcollector:
+    image: otel/opentelemetry-collector-contrib:0.110.0@sha256:0ed3688bbb02dabc0429ef648ebe3e9c53aca5e7c5a6b1a4a61b9f583b823e36
+    platform: linux/amd64
+    volumes:
+      - ../resources/log-system/otel-config.yaml:/otel-config.yaml
+    command: [ "--config=/otel-config.yaml"]
+    profiles: [sort-report]
+    ports:
+      - "4317:4317"
+
+  loki:
+    image: grafana/loki:3.0.0@sha256:757b5fadf816a1396f1fea598152947421fa49cb8b2db1ddd2a6e30fae003253
+    platform: linux/amd64
+    ports:
+      - "3100:3100"
+    profiles: [sort-report]
+    volumes:
+      - ../resources/log-system/loki.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+
+  grafana:
+    image: grafana/grafana:11.1.0@sha256:079600c9517b678c10cda6006b4487d3174512fd4c6cface37df7822756ed7a5
+    platform: linux/amd64
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    profiles: [sort-report]
+
+volumes:
+  database-data:
+  pulsar-data-final:
+  agent-data:

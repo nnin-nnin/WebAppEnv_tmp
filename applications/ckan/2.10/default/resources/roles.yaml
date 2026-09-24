@@ -1,0 +1,7 @@
+roles:
+  - role: admin
+    description: System Administrator with full administrative privileges
+  - role: editor
+    description: Organization editor able to create and edit datasets
+  - role: member
+    description: Regular member with read access

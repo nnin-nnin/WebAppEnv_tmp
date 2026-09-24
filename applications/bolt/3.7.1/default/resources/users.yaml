@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: benchmark-only
+    email: admin@example.com
+    role: root
+    enabled: true
+    purpose: "Initial administrator account for system management"
+    creation_method: "Automated database seed during container entrypoint initialization"

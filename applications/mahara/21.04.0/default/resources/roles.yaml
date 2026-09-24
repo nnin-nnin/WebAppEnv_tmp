@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over site content, users, institutions, groups, and system settings
+    purpose: Primary system management role
+    associated_accounts:
+      - admin

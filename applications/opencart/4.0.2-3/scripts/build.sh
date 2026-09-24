@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-image_name="asteriskax001/sop-opencart:4.0.2-3"
+image_name="yorem/opencart:4.0.2-3"
 secret_file="${OPENCART_ADMIN_PASSWORD_FILE:-}"
 temporary_secret=''
 

@@ -24,7 +24,7 @@ bash scripts/build.sh
 构建脚本会：
 
 1. 使用固定的官方 Drupal 镜像作为基础镜像。
-2. 将准备好的 Drupal 源码写入构建上下文中的 `source/drupal-8.6.15/`，再构建并标记为 `yorem/sop-drupal:8.6.15`。
+2. 将准备好的 Drupal 源码写入构建上下文中的 `source/drupal-8.6.15/`，再构建并标记为 `yorem/drupal:8.6.15`。
 3. 拉取固定版本的 PostgreSQL 10.23 镜像。
 4. 在本机生成可选的镜像 tar 和 `image/image.json`；构建不会自动推送镜像。
 
@@ -43,7 +43,7 @@ cd path/to/drupal_8.6.15
 bash scripts/up.sh
 ```
 
-`scripts/up.sh` 会检查本地镜像；缺少时自动从 Docker Hub 拉取 `yorem/sop-drupal:8.6.15` 和 `postgres:10.23-bullseye`，然后启动 Compose。也可以先执行 `bash scripts/load-images.sh`，该脚本在存在本地归档时加载归档，否则执行 Docker Hub 拉取。
+`scripts/up.sh` 会检查本地镜像；缺少时自动从 Docker Hub 拉取 `yorem/drupal:8.6.15` 和 `postgres:10.23-bullseye`，然后启动 Compose。也可以先执行 `bash scripts/load-images.sh`，该脚本在存在本地归档时加载归档，否则执行 Docker Hub 拉取。
 
 也可以手动执行 Compose：
 
@@ -68,8 +68,8 @@ docker compose --env-file docker/.env -f docker/compose.yaml up -d
 
 | 服务 | 作用 | 镜像 | 对外端口 |
 | --- | --- | --- | --- |
-| `application` | Drupal 8.6.15、Apache 和 PHP 运行时 | `yorem/sop-drupal:8.6.15` | `${DRUPAL_HOST_PORT}:80`，默认 `18090:80` |
-| `installer` | 首次安装数据库和创建管理员，完成后退出 | `yorem/sop-drupal:8.6.15` | 无 |
+| `application` | Drupal 8.6.15、Apache 和 PHP 运行时 | `yorem/drupal:8.6.15` | `${DRUPAL_HOST_PORT}:80`，默认 `18090:80` |
+| `installer` | 首次安装数据库和创建管理员，完成后退出 | `yorem/drupal:8.6.15` | 无 |
 | `db` | PostgreSQL 数据库 | `postgres:10.23-bullseye` | 无 |
 
 应用通过 Compose service name `db` 连接数据库。数据库、站点设置、上传文件、模块、主题和 profile 使用项目命名卷保存。
@@ -80,9 +80,9 @@ docker compose --env-file docker/.env -f docker/compose.yaml up -d
 
 ```bash
 test -s source/source.yaml
-docker pull --platform linux/amd64 yorem/sop-drupal:8.6.15
+docker pull --platform linux/amd64 yorem/drupal:8.6.15
 docker pull --platform linux/amd64 postgres:10.23-bullseye
-docker image inspect yorem/sop-drupal:8.6.15 postgres:10.23-bullseye
+docker image inspect yorem/drupal:8.6.15 postgres:10.23-bullseye
 ```
 
 验证 Compose 和运行服务：
@@ -127,7 +127,7 @@ bash scripts/reset.sh
 - `docker/.env`：研究环境的数据库和初始账号参数。
 - `resources/`：用户、角色、登录、普通用户创建和首次安装脚本。
 - `scripts/build.sh`：构建应用镜像、拉取数据库镜像并生成可选的本地 tar 与元数据。
-- `scripts/publish.sh`：将本地应用镜像推送到 `yorem/sop-drupal:8.6.15`。
+- `scripts/publish.sh`：将本地应用镜像推送到 `yorem/drupal:8.6.15`。
 - `scripts/load-images.sh`：有本地归档时加载归档，否则从 Docker Hub 拉取镜像。
 - `scripts/up.sh`：检查或拉取 Docker Hub 镜像、启动 Compose 并等待健康检查。
 - `scripts/healthcheck.sh`：检查服务、数据库、Drupal 版本、首页和登录页。
@@ -136,10 +136,10 @@ bash scripts/reset.sh
 
 ## Docker Hub 镜像
 
-应用镜像已经发布到 [Docker Hub](https://hub.docker.com/r/yorem/sop-drupal/tags)：
+应用镜像已经发布到 [Docker Hub](https://hub.docker.com/r/yorem/drupal:8.6.15/tags)：
 
 ```text
-yorem/sop-drupal:8.6.15
+yorem/drupal:8.6.15
 ```
 
 数据库使用 Docker Hub 官方镜像：

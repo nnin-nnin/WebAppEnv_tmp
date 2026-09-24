@@ -1,0 +1,52 @@
+application: redash
+version: "10.0.0"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/getredash/redash.git
+  commit: 9c928bd1d3f00c994f37e1a87edaddd646259f56
+runtime:
+  python: "3.7"
+  database: postgres:15-alpine
+  cache: redis:7-alpine
+ports:
+  host_port: 18610
+  container_port: 5000
+credentials:
+  admin_username: admin@example.com
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  server:
+    image: yorem/redash:10.0.0@sha256:9392753c03767453f3a803eea0f6f57b52163dac8814dd13a1724dc4037132cf
+    tag: "10.0.0"
+    digest: sha256:9392753c03767453f3a803eea0f6f57b52163dac8814dd13a1724dc4037132cf
+    platform: linux/amd64
+  init:
+    image: yorem/redash:10.0.0@sha256:9392753c03767453f3a803eea0f6f57b52163dac8814dd13a1724dc4037132cf
+    tag: "10.0.0"
+    digest: sha256:9392753c03767453f3a803eea0f6f57b52163dac8814dd13a1724dc4037132cf
+    platform: linux/amd64
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    tag: 15-alpine
+    digest: sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    tag: 7-alpine
+    digest: sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64

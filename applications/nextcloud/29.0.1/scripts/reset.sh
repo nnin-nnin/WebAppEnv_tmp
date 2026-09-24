@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-IMAGE=asteriskax001/sop-nextcloud:29.0.1
+IMAGE=yorem/nextcloud:29.0.1
 mapfile -t containers < <(docker ps -aq --filter "ancestor=$IMAGE")
 for container in "${containers[@]}"; do
     [[ -n "$container" ]] || continue

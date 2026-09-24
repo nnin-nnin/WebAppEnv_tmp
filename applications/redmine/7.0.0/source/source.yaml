@@ -1,0 +1,7 @@
+sources:
+  - repository: https://github.com/redmine/redmine
+    tag: 7.0.0
+    commit: e192cf1fd10e58bac716cf94b91b0a5ac8df72a1
+    acquisition: git archive of the immutable 7.0.0 tag
+    path: source/redmine
+checksums: source/SHA256SUMS

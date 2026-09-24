@@ -1,0 +1,48 @@
+application:
+  name: memos
+  version: 0.30.0
+  type: full_web
+  description: A privacy-first, lightweight note-taking service
+deployment:
+  mode: native_compose
+  project_name: memos-0-30-0
+  compose_file: docker/compose.yaml
+  delivery_method: DOCKERHUB
+  notes: Memos officially provides a single-service Compose topology using SQLite.
+    It is natively a single-container app without requiring an external DB.
+source:
+  backend_repository: https://github.com/usememos/memos
+  backend_commit: 2036c1ffc1b0a1e1fa6a473738c2a5ef520df67f
+  frontend_repository: Included in backend repository
+  frontend_commit: 2036c1ffc1b0a1e1fa6a473738c2a5ef520df67f
+  official_compose: https://raw.githubusercontent.com/usememos/memos/v0.30.0/scripts/compose.yaml
+services:
+  memos:
+    name: memos
+    role: application
+    image: yorem/memos
+    tag: 0.30.0
+    digest: sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a
+    platform: linux/amd64
+    source: official
+    ports:
+    - 5230:5230
+    depends_on: []
+    volumes:
+    - memos-data
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+  register: resources/register.sh
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+differences_from_official:
+- 'Changed ''image: neosmemo/memos:stable'' to fixed tag ''0.30.0''.'
+- Removed 'container_name' to prevent multi-project conflicts.
+- Changed host bind mount '~/.memos/:/var/opt/memos' to named volume 'memos-data'
+  for better portability.
+- 'Added ''platform: linux/amd64'' for clear architecture target.'
+known_risks: []

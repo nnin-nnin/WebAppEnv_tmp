@@ -1,0 +1,44 @@
+application: Dolibarr
+version: 20.0.4
+application_type: full_web_application
+source_repository: https://github.com/Dolibarr/dolibarr.git
+source_commit: c19b76fca389dece4849de86647f97481aa32bc5
+frontend_repository: null
+frontend_commit: null
+target_platform: linux/amd64
+runtime:
+  php: 8.2
+  web_server: Apache 2.4 with mod_rewrite
+  database: MariaDB 10.11 (same container, bound to 127.0.0.1)
+frontend:
+  build_command: null
+  static_assets: Dolibarr PHP pages and bundled local JavaScript/CSS assets in htdocs
+  browser_entry: http://localhost:18525/
+  api_base: same-origin Dolibarr REST endpoints under /api/index.php
+port: 18525
+image: yorem/dolibarr:20.0.4@sha256:2a9a85473aebaef20cbfbcd71c0932aecb856e2430ae8e480014a4a4bc99ccf4
+all_in_one: true
+all_in_one_description: 单镜像、单容器；镜像内部包含 Dolibarr 应用服务、Apache、PHP、MariaDB、数据库初始化种子和入口进程，应用通过 127.0.0.1 连接数据库。
+components:
+  - Dolibarr 20.0.4 PHP backend and server-rendered web frontend
+  - Apache 2.4 web server with mod_rewrite
+  - PHP 8.2 runtime and required extensions
+  - MariaDB 10.11 database service inside the same container
+  - idempotent initialized database seed with administrator account
+  - local application JavaScript, CSS, fonts and images
+image_metadata: image/image.json
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+recommended_run: docker run -d -p 18525:80 --name dolibarr-20.0.4 yorem/dolibarr:20.0.4
+notes: 完整 Web 应用；无需独立前端仓库、数据库容器、Compose、运行时联网下载或 Web Installer。
+source_metadata_file: source/source.yaml
+source_availability: upstream_repository_only

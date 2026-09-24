@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/activemq",
+    "tag": "5.18.6",
+    "digest": "sha256:4ad56da52396f628bfb1af314e467daff35cdfc6f77ddce5aa27e614663f0c3a",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

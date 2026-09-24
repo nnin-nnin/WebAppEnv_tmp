@@ -1,0 +1,15 @@
+name: espocrm_8_2_5
+
+services:
+  espocrm:
+    platform: linux/amd64
+    image: yorem/espocrm:10.0.3@sha256:8f09e6d0997966bbcee3c323a1c572c6f06aeb09f3586e873272afe387750ee3
+    ports:
+      - "18092:80"
+    volumes:
+      - espocrm_825_files:/var/www/html/data
+      - espocrm_825_db:/var/lib/mysql
+
+volumes:
+  espocrm_825_files:
+  espocrm_825_db:

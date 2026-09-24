@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/reviewboard",
+    "tag": "7.0.0",
+    "digest": "sha256:e536c8a52058319567967aeefb107906cf680c590b612821b506b7d96542e3c0",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

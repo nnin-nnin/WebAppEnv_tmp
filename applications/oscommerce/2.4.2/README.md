@@ -10,7 +10,7 @@
 cd oscommerce_2.4.2
 sha256sum -c image/SHA256SUMS
 docker load -i image/oscommerce-2.4.2-linux-amd64.tar
-docker run -d -p 18402:80 asteriskax001/sop-oscommerce:2.4.2
+docker run -d -p 18402:80 yorem/oscommerce:2.4.2
 ```
 
 接收者只需要 `docker load` 和 `docker run`。镜像内部已经包含应用、数据库、Schema、seed、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap、Web Installer 或单独启动数据库。
@@ -66,4 +66,4 @@ scripts/reset.sh --yes oscommerce-242
 bash scripts/build.sh
 ```
 
-构建只导出 `asteriskax001/sop-oscommerce:2.4.2`，归档为 `image/oscommerce-2.4.2-linux-amd64.tar`。镜像运行时不下载源码、依赖或核心远程资源；仓库中原有的可选 Cookie Consent 代码含有外链，但默认商城核心模板不加载该可选组件。
+构建只导出 `yorem/oscommerce:2.4.2`，归档为 `image/oscommerce-2.4.2-linux-amd64.tar`。镜像运行时不下载源码、依赖或核心远程资源；仓库中原有的可选 Cookie Consent 代码含有外链，但默认商城核心模板不加载该可选组件。

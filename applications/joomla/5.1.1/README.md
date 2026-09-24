@@ -10,7 +10,7 @@
 cd joomla_5.1.1
 sha256sum -c image/SHA256SUMS
 docker load -i image/joomla-5.1.1-linux-amd64.tar
-docker run -d -p 18211:80 --name joomla-5-1-1 asteriskax001/sop-joomla:5.1.1
+docker run -d -p 18211:80 --name joomla-5-1-1 yorem/joomla:5.1.1
 ```
 
 镜像入口会自动初始化 MariaDB、创建 Joomla 数据库和账号、导入 seed，并启动 Apache。数据可通过 `/var/lib/mysql`、`images`、`media`、`cache` 和 `tmp` volume 持久化。
@@ -45,7 +45,7 @@ docker exec joomla-5-1-1 /usr/local/bin/joomla-healthcheck
 
 ```bash
 JOOMLA_CONTAINER=joomla-5-1-1 ./scripts/reset.sh
-docker run -d -p 18211:80 --name joomla-5-1-1 asteriskax001/sop-joomla:5.1.1
+docker run -d -p 18211:80 --name joomla-5-1-1 yorem/joomla:5.1.1
 ```
 
 未显式挂载 volume 时容器删除即清除数据；若使用命名卷，请删除对应数据库卷后再运行以获得全新数据库。
@@ -62,5 +62,5 @@ docker run -d -p 18211:80 --name joomla-5-1-1 asteriskax001/sop-joomla:5.1.1
 ## 直接启动命令
 
 ```bash
-docker load -i image/joomla-5.1.1-linux-amd64.tar && docker run -d -p 18211:80 asteriskax001/sop-joomla:5.1.1
+docker load -i image/joomla-5.1.1-linux-amd64.tar && docker run -d -p 18211:80 yorem/joomla:5.1.1
 ```

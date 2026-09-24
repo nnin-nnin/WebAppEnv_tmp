@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-docker run -d -p 18514:80 asteriskax001/sop-glpi:10.0.15
+docker run --platform linux/amd64 -d -p 18514:80 yorem/glpi:10.0.15
 

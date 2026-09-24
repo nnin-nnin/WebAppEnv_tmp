@@ -1,0 +1,5 @@
+roles:
+  - name: "Admin"
+    permissions: "All permissions"
+    purpose: "System administration"
+    relationship_with_initial_account: "Assigned to the initial user created via environment variables"

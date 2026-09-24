@@ -1,0 +1,5 @@
+users:
+- username: admin
+  password: shopware
+  role: admin
+  description: Default dockware Shopware administrator account

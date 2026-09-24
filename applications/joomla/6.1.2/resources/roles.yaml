@@ -1,0 +1,5 @@
+roles:
+  - name: Super User
+    permissions: "Full administrative access"
+    purpose: "Manage the entire Joomla site, including configuration, users, and extensions."
+    related_account: "admin"

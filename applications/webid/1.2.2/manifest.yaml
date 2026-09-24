@@ -1,0 +1,71 @@
+application: WeBid
+version: 1.2.2
+application_type: complete_web_application
+deployment_mode: native_compose
+compose_file: docker/compose.yaml
+compose_project_name: webid-1.2.2
+official_compose:
+  source: None
+  version: None
+  reason: Official repository does not provide a Docker Compose configuration. Built
+    custom native Compose setup to preserve web and db components.
+source:
+  backend:
+    repository: https://github.com/renlok/WeBid.git
+    commit: 0f9e5b1804472e9b863c637982ff945162953929
+  frontend: 
+services:
+  application:
+    name: application
+    role: application
+    image: yorem/webid:1.2.2@sha256:0c581a9010430311afb6e3c7f6c5e0e8ae705db341bf02ca4c3782d3e0e0d65a
+    tag: 1.2.2
+    platform: linux/amd64
+    source: build
+    digest: sha256:0c581a9010430311afb6e3c7f6c5e0e8ae705db341bf02ca4c3782d3e0e0d65a
+    ports:
+    - 18086:80
+    depends_on:
+    - db
+    healthcheck: true
+    volumes:
+    - application-data
+  db:
+    name: db
+    role: database
+    image: mysql
+    tag: '5.7'
+    platform: linux/amd64
+    source: dockerhub
+    ports: []
+    depends_on: []
+    healthcheck: true
+    volumes:
+    - database-data
+    digest: sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+components:
+  runtime: PHP 5.6 (Apache)
+  database: MySQL 5.7
+  redis: 
+  search: 
+  mq: 
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+delivery_method: DOCKERHUB
+delivery_status: verified cold start with Docker Hub image
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+commands:
+  start: docker compose -f docker/compose.yaml up -d
+notes:
+  differences_from_official: No official Compose file. Built a custom compose file
+    defining the WeBid app (PHP 5.6) and MySQL 5.7 database. The application image
+    was built from the pinned source and published to Docker Hub. Automated the official WeBid web installer inside the container's
+    entrypoint script.
+  known_limitations: The application is quite old. The installer is executed dynamically
+    via background curl requests upon first container startup.

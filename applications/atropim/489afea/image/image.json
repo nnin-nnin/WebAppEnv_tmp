@@ -1,11 +1,11 @@
 {
   "delivery": "docker_hub",
   "registry": "docker.io",
-  "repository": "nnin/sop-atropim",
+  "repository": "yorem/atropim:489afea",
   "tag": "489afea",
-  "reference": "docker.io/nnin/sop-atropim:489afea",
+  "reference": "docker.io/yorem/atropim:489afea",
   "digest": "sha256:9ea9af1abaf04b71e2be575ffea0be112770bf3736670925a7bfac02b83500de",
-  "digest_reference": "docker.io/nnin/sop-atropim@sha256:9ea9af1abaf04b71e2be575ffea0be112770bf3736670925a7bfac02b83500de",
+  "digest_reference": "docker.io/yorem/atropim:489afea@sha256:eebac45fd6fa9624ca47515b4a7bd7b3baaf0e25a6c31e77e7321970111c0faa",
   "platform": "linux/amd64",
   "role": "all-in-one AtroPIM 489afea environment",
   "published_at": "2026-07-30"

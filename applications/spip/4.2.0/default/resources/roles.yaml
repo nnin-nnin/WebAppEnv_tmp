@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over articles, sections, users, plugins, and site configurations
+    purpose: Primary SPIP administrative role
+    associated_accounts:
+      - admin

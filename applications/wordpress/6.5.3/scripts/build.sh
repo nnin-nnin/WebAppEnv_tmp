@@ -12,8 +12,8 @@ printf '%s' "$CODEX_ADMIN_PASSWORD" > "$secret_file"
 
 DOCKER_BUILDKIT=1 docker build --platform linux/amd64 \
   --secret "id=wp_admin_password,src=$secret_file" \
-  -f docker/Dockerfile -t asteriskax001/sop-wordpress:6.5.3 .
-docker save --output image/wordpress-6.5.3-linux-amd64.tar asteriskax001/sop-wordpress:6.5.3
-docker image inspect asteriskax001/sop-wordpress:6.5.3 > image/image.json
+  -f docker/Dockerfile -t yorem/wordpress:6.5.3 .
+docker save --output image/wordpress-6.5.3-linux-amd64.tar yorem/wordpress:6.5.3
+docker image inspect yorem/wordpress:6.5.3 > image/image.json
 sha256sum image/wordpress-6.5.3-linux-amd64.tar image/image.json > image/SHA256SUMS
 

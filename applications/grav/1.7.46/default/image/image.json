@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/grav",
+    "tag": "1.7.46",
+    "digest": "sha256:aa3284ede27aef5f16c69b97d97ab370d0508fdeb6ea09896eb3c3250079a1b8",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

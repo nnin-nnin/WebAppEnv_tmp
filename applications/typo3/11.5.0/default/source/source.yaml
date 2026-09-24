@@ -1,0 +1,4 @@
+repository: https://github.com/TYPO3/typo3.git
+commit: 0da4bf2966784c088931dbe7f8b23bb981bf0065
+version: 11.5.0
+tag: v11.5.0

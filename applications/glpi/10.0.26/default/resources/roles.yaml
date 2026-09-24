@@ -1,0 +1,11 @@
+application: GLPI
+roles:
+  - name: Super-Admin
+    permissions: GLPI 内置超级管理员权限
+    purpose: 管理资产、工单、用户、实体和系统配置
+    assigned_to: admin（镜像初始化时绑定）
+  - name: Self-Service
+    permissions: GLPI 内置自助服务权限
+    purpose: 普通用户创建后使用的最小业务角色
+    assigned_to: resources/register.sh 创建的普通用户
+

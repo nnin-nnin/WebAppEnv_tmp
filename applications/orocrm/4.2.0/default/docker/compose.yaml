@@ -1,0 +1,23 @@
+name: orocrm_4_2_0
+
+services:
+  orocrm:
+    image: yorem/orocrm:4.2.0@sha256:3433bb80b2fe6bf1e2ca012b5ef83644d9901e6a5b81d879d996fd1a392ae134
+    platform: linux/amd64
+    user: "0:0"
+    working_dir: /var/www/backend
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        touch /var/www/backend/.initialized
+        exec php -S 0.0.0.0:80 -t public
+    ports:
+      - "18627:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 5s

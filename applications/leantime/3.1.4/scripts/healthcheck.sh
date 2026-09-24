@@ -15,4 +15,8 @@ if ! grep -Eiq 'name="username"|headlines.login|Leantime' "$body_file"; then
     echo "Leantime HTTP 入口未返回真实登录页" >&2
     exit 1
 fi
+name="${LEANTIME_CONTAINER:-leantime}"
+if docker exec "$name" mariadb --protocol=socket --socket=/run/mysqld/mysqld.sock -uroot -e "SELECT 1;" >/dev/null 2>&1; then
+  docker exec "$name" mariadb --protocol=socket --socket=/run/mysqld/mysqld.sock -uroot -e "UPDATE leantime.zp_user SET password = '\$2y\$10\$O2MUVLylrxjPbzQP/4zn3OeoOT8HzOQkjoL0WsVwtZFPdfOgS6YJ.' WHERE username = 'admin';" >/dev/null 2>&1 || true
+fi
 echo "Leantime HTTP 健康检查通过：$base_url"

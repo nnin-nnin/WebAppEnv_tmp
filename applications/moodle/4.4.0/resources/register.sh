@@ -7,7 +7,7 @@ if [[ $# -lt 3 || $# -gt 5 ]]; then
 fi
 container="${MOODLE_CONTAINER:-}"
 if [[ -z "$container" ]]; then
-    container="$(docker ps --filter ancestor=asteriskax001/sop-moodle:4.4.0 --format '{{.ID}}' | head -n 1)"
+    container="$(docker ps --filter ancestor=yorem/moodle:4.4.0 --format '{{.ID}}' | head -n 1)"
 fi
 if [[ -z "$container" ]]; then
     echo 'Set MOODLE_CONTAINER to the running Moodle container.' >&2

@@ -1,0 +1,6 @@
+- username: admin
+  password: admin
+  type: admin
+  enabled: true
+  purpose: Initial administrator user for Alfresco Content Services
+  created_via: System bootstrap / Alfresco initialization

@@ -1,0 +1,123 @@
+[
+    {
+        "Id": "sha256:bddb4e96b0452208ae836993b12b35afad596e9fabf71ccb814d4f86383c18db",
+        "RepoTags": [
+            "yorem/alfresco:26.3.0.19"
+        ],
+        "RepoDigests": [
+            "yorem/alfresco@sha256:bddb4e96b0452208ae836993b12b35afad596e9fabf71ccb814d4f86383c18db"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-07-21T09:06:33.035633443Z",
+        "Author": "Release Engineering (SIG/Core)",
+        "Config": {
+            "User": "alfresco",
+            "ExposedPorts": {
+                "10001/tcp": {},
+                "8000/tcp": {},
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/tomcat/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "JAVA_HOME=/etc/alternatives/jre",
+                "LANG=C.UTF-8",
+                "LC_ALL=C.UTF-8",
+                "CATALINA_HOME=/usr/local/tomcat",
+                "TOMCAT_NATIVE_LIBDIR=/usr/local/tomcat/native-jni-lib",
+                "APR_LIBDIR=/usr/local/tomcat/apr",
+                "LD_LIBRARY_PATH=/usr/local/tomcat/native-jni-lib:/usr/local/tomcat/apr"
+            ],
+            "Cmd": [
+                "catalina.sh",
+                "run",
+                "-security"
+            ],
+            "WorkingDir": "/usr/local/tomcat",
+            "Labels": {
+                "io.buildah.version": "1.37.6",
+                "license": "BSD-3-Clause",
+                "name": "rockylinux",
+                "org.label-schema.build-date": "2025-12-01T03:19:14Z",
+                "org.label-schema.description": "Apache Tomcat Image tailored for Alfresco products",
+                "org.label-schema.name": "Alfresco Base Tomcat Image",
+                "org.label-schema.schema-version": "1.0",
+                "org.label-schema.url": "https://github.com/Alfresco/alfresco-docker-base-tomcat",
+                "org.label-schema.vcs-ref": "https://github.com/Alfresco/alfresco-docker-base-tomcat",
+                "org.label-schema.vcs-url": "https://github.com/Alfresco/alfresco-docker-base-tomcat",
+                "org.label-schema.vendor": "Hyland",
+                "org.opencontainers.image.authors": "Alfresco OPS-Readiness",
+                "org.opencontainers.image.created": "2025-12-01T03:19:14Z",
+                "org.opencontainers.image.description": "Apache Tomcat Image tailored for Alfresco products",
+                "org.opencontainers.image.license": "BSD-3-Clause",
+                "org.opencontainers.image.name": "rockylinux",
+                "org.opencontainers.image.revision": "678",
+                "org.opencontainers.image.source": "https://github.com/Alfresco/alfresco-docker-base-tomcat",
+                "org.opencontainers.image.title": "Alfresco Base Tomcat Image",
+                "org.opencontainers.image.url": "https://github.com/Alfresco/alfresco-docker-base-tomcat",
+                "org.opencontainers.image.vendor": "Hyland",
+                "org.opencontainers.image.version": "9",
+                "vendor": "Rocky Enterprise Software Foundation",
+                "version": "9"
+            },
+            "ArgsEscaped": true,
+            "Shell": [
+                "/bin/bash",
+                "-euo",
+                "pipefail",
+                "-c"
+            ]
+        },
+        "Architecture": "arm64",
+        "Os": "linux",
+        "Size": 592880670,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:7f27a2261d34649623e89eac047283864b1b22925a606f324213ccdd31229c09",
+                "sha256:285d13d5207092807bbc2626bf32928f7add83946149c1daf7eadab6620a53ff",
+                "sha256:49878407e19daec6d0d313c0a437c2c1e11c0f36ba4e4b30d06e783f8adc285b",
+                "sha256:fa0d3a7dbba9b646f1a3dc6608af43eb8c3514df7f312d5e077cf628ff461a70",
+                "sha256:d8398b89bc1eb9857081c34827b40f353875a71455bb2a0b2d699c6fa1262517",
+                "sha256:4cd658eb30d33654df4d83af9488b8713517b5a266864256d8d1937522958dfa",
+                "sha256:8e4a06b22ee3bdb25479192813f3b853ecafa506ef33380b783fba2038ea4a80",
+                "sha256:e36d40974752eadf1572d2f29a848f334a5df6d6fc8a35af09cfdf7bde75f53e",
+                "sha256:2b57740a20ff0ab9a9beacb3a5811b4ec034c9eea562fb5eeea5ace15b02a255",
+                "sha256:df16d185deee16d1d3f11a14ad6327443065cd907edf8476b5e14dd72cec5e3d",
+                "sha256:109b4d2bf2cad1f124b63a716294b41addf3654ff1e3c7fcb7d5d2e169053588",
+                "sha256:f123107cb2dc869c032a7f2690d3f872b0ade9bc5ab35b5f814f9eafe86bdabe",
+                "sha256:a933c8706f46ade56a53943ddf32a0d58008c52a0f66e5c052ef67c406e00ec6",
+                "sha256:7b13d31e12e3fd3fbbacb4125e7183680061f91a0dd9833f6d0fce0906171f21",
+                "sha256:0913105f8dee5be33957a66304781aa77dbd166a64676c20651f4cd7c19366e9",
+                "sha256:176296a659002de0abfe3cb8630df80ecfa8aef6970686e3311645d5075ef2b3",
+                "sha256:82a5cac6ac206f710a214c1aff0e989c73cf3bc0cb0ac161b581bbe52f1e614f",
+                "sha256:b89797c413849a3279b2da3ec5a92c6e4ee5be58c49425e5077514b705c0ede3",
+                "sha256:e845b81dce24b59e076d44f314f0f56fe32985c096afb8e9c5336f7699d4319a",
+                "sha256:a54e1f283a85fd5b2ea75722853c4873ad41a89126adb9d5a6cf2348939dff3d",
+                "sha256:a6161bf83146b4d2ae0b2b4d0deb0039a99f0504b73ecbc7c2b438cf038694c7",
+                "sha256:2da7ad08b153aa6d969087e2b80f01a43264fe5658374d25590a5d0f7cd149ce",
+                "sha256:29029066c15bf2117f1b7e780b64e87d1ce37f807cae6b8b01740516c6ce53a9",
+                "sha256:4c081f4ee4a846d590c1f529c34486be1d5ba50c8e3c774268152885efa517a7",
+                "sha256:183d5c359b4f77a795fbd5fc242101e0da09b0f753a47f9003a4d720ffc052d8",
+                "sha256:e89cdedd7bacce2dcfc6de113517663812b00d94b21b90e98861751a7a1fe913",
+                "sha256:df689407efa026a6417044cb65aeabeeb40a0586bb070fad262ab35f25d0e4de",
+                "sha256:94e87fe405c8846309c8e0191f5b6e5681aa9db258a6cc47837f45a41721df21",
+                "sha256:518ebedcb8a7bab21228e2d56d2ca9ee2388c91ef38ee8b993010bd0ecc12aa6"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-09-23T10:04:51.393829481Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:bddb4e96b0452208ae836993b12b35afad596e9fabf71ccb814d4f86383c18db",
+            "size": 5827
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/yorem/alfresco"
+                }
+            ]
+        }
+    }
+]

@@ -1,0 +1,25 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_posts
+      - manage_pages
+      - manage_comments
+      - manage_categories
+      - manage_users
+      - manage_settings
+    purpose: "Full administrative access to AnchorCMS"
+    associated_accounts:
+      - admin
+  - name: editor
+    permissions:
+      - manage_posts
+      - manage_pages
+      - manage_comments
+      - manage_categories
+    purpose: "Content management role"
+    associated_accounts: []
+  - name: user
+    permissions:
+      - view_content
+    purpose: "Basic user role"
+    associated_accounts: []

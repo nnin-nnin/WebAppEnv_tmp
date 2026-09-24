@@ -1,1 +1,1 @@
-FROM asteriskax001/sop-itop:3.1.1
+FROM yorem/itop:3.1.1

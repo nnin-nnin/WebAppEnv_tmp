@@ -1,0 +1,36 @@
+application: Clansphere
+version: 2011.4.5
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/ClanSphere/ClanSphere
+  commit: e56d11e11805410ef396b0532d2e7bdd8ce22f15
+runtime:
+  php: 7.4
+  web_server: apache
+  database: sqlite
+ports:
+  host_port: 18531
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: benchmark-only
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/clansphere:2011.4.5
+    tag: 2011.4.5
+    digest: sha256:524d2dd2424827b11421a493df6b4fcd5b4e519d249e62ce1e04b3563fb79c6e
+    platform: linux/amd64

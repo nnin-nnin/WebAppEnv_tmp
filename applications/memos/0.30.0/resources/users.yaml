@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: "123456"
+    role: ADMIN
+    enabled: true
+    description: "Initial administrator account"
+    creation_method: "First registered user is automatically promoted to ADMIN via POST /api/v1/users"

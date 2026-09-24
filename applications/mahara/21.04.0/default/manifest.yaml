@@ -1,0 +1,36 @@
+application: mahara
+version: 21.04.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/MaharaProject/mahara
+  commit: 359597b32c7afe52339422a91f14256e17b33dfc
+runtime:
+  php: '7.0'
+  web_server: apache
+  database: postgresql
+ports:
+  host_port: 18621
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/mahara:21.04.0@sha256:a80ae49437d1abc59ace4c0c9802eb02c51ff8ab2bf543c3ebc7c45c156ebe35
+    tag: 21.04.0
+    digest: sha256:a80ae49437d1abc59ace4c0c9802eb02c51ff8ab2bf543c3ebc7c45c156ebe35
+    platform: linux/amd64

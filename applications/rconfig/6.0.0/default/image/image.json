@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/rconfig",
+    "tag": "6.0.0",
+    "digest": "sha256:99f7f31fd09a3bd247075661da77389e30df4d789b1f5b6ad100f4c0b9153148",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

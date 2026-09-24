@@ -1,0 +1,37 @@
+name: serendipity-202
+
+services:
+  app:
+    image: yorem/serendipity:2.0.2@sha256:82438cd29c40f2c15cb3fff6e5759a768bcf48f3928bd0236b7dc65677d97519
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18555}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../resources/serendipity_config_local.inc.php:/usr/src/serendipity/serendipity_config_local.inc.php:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: serendipity_root_password
+      MYSQL_DATABASE: serendipity
+      MYSQL_USER: serendipity
+      MYSQL_PASSWORD: serendipity
+    volumes:
+      - ../resources/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped

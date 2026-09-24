@@ -1,0 +1,68 @@
+application:
+  name: Fork CMS
+  version: 5.12.0
+  type: full_web_application
+  description: "Fork is an open source CMS built on Symfony components."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（Fork CMS / PHP 7.1 Apache）与数据库服务（MariaDB 10.5）分别运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: forkcms-5-12-0
+  host_port: 18542
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/forkcms/forkcms
+    commit: 75b2c0bd8576f1d2cf153ed1a58c99d6186c2a64
+    tag: 5.12.0
+    source_yaml: source/source.yaml
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime"
+    image: yorem/forkcms:5.12.0@sha256:768ed5dd37dc06fcd7d4ab1dbce6f1a6a5d5a4eacd48fa413f270dd7d26344e4
+    digest: "sha256:768ed5dd37dc06fcd7d4ab1dbce6f1a6a5d5a4eacd48fa413f270dd7d26344e4"
+    platform: linux/amd64
+    ports:
+      - "18542:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.5)"
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    digest: "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"
+    volumes:
+      - db-data
+
+credentials:
+  admin_username: admin@fork-cms.com
+  admin_password: AdminPassword123!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin@fork-cms.com AdminPassword123!"
+  reset: "./scripts/reset.sh"

@@ -1,0 +1,3 @@
+roles:
+  - name: Administrator
+    description: Full access to AbanteCart store management and settings

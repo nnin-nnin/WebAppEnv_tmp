@@ -1,0 +1,35 @@
+application: activemq
+version: 6.1.4
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/apache/activemq
+  commit: d97f3140c41ed187cbc64ee2ae9cc9b8169b7467
+runtime:
+  language: java
+  server: jetty
+ports:
+  host_port: 18614
+  container_port: 8161
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/activemq:6.1.4
+    tag: 6.1.4
+    digest: sha256:1cacfbd9c08ad437c5e1177a9f1217e7c7ada62a64065128acd1a81866a03711
+    platform: linux/amd64

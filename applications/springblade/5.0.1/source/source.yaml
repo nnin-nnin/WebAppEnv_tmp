@@ -1,0 +1,6 @@
+backend:
+  repository: https://github.com/chillzhuang/SpringBlade
+  commit: e4c98e4f8c07e57f16ece5ea50d00a697515d1eb # boot branch commit
+frontend:
+  repository: https://github.com/chillzhuang/Saber
+  commit: 8da0528a1dd3849c052a129d032430bf6ebdaeb3 # Saber commit

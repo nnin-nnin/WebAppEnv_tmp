@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root_dir"
-image_name="asteriskax001/sop-gitlab:16.11.2-ce.0"
+image_name="yorem/gitlab:16.11.2-ce.0"
 archive="image/gitlab-16.11.2-ce.0-linux-amd64.tar"
 
 docker pull gitlab/gitlab-ce:16.11.2-ce.0

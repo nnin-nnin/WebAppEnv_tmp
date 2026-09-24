@@ -1,0 +1,80 @@
+application:
+  name: SPIP
+  version: 4.2.0
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for SPIP 4.2.0 CMS with MariaDB 10.11 database."
+
+target:
+  platform: linux/amd64
+  compose_project: spip-420
+  compose_file: docker/compose.yaml
+  host_port: 18611
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18611/
+  login_url: http://127.0.0.1:18611/ecrire/
+
+source:
+  repository: https://git.spip.net/spip/spip.git
+  fixed_ref: v4.2.0
+  immutable_commit: ecac31e4c3c28ad0d7969b2f44c4e3b6711b0dfc
+  metadata: source/source.yaml
+  availability: git_only
+
+compose:
+  project_name: spip-420
+  services:
+    - application
+    - db
+  volumes:
+    - application-data
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/spip:4.2.0@sha256:7516d1e529971a6653e746f9004c719735daa973d389c36e46c75dfbe93b74bf
+  database_image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: application
+    role: "SPIP CMS web application"
+    image: yorem/spip:4.2.0@sha256:7516d1e529971a6653e746f9004c719735daa973d389c36e46c75dfbe93b74bf
+    tag: 4.2.0
+    digest: sha256:7516d1e529971a6653e746f9004c719735daa973d389c36e46c75dfbe93b74bf
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18611}:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    tag: 10.11
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+
+ports:
+  host_port: 18611
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: benchmark-only
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

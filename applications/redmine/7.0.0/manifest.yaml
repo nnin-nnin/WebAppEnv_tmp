@@ -1,0 +1,52 @@
+application:
+  name: Redmine
+  version: 7.0.0
+  type: 完整 Web 应用
+  repository: https://github.com/redmine/redmine.git
+  commit: e192cf1fd10e58bac716cf94b91b0a5ac8df72a1
+  frontend_repository: null
+  frontend_commit: null
+
+platform:
+  target: linux/amd64
+  runtime: Ruby 4.0.6 / Rails 8.1.3
+  verified_base_image: redmine@sha256:8a07cc23db3cf833f3a7089ca2e64b609164f0472ba4f589bacd21a06a44879b
+  web_server: Nginx 1.26.3 with Puma 8.0.2
+  frontend_build_command: bundle exec rake assets:precompile
+  static_assets: /usr/src/redmine/public/assets（镜像构建阶段生成，由 Nginx 直接提供）
+  browser_entrypoint: http://127.0.0.1:18512/
+
+database:
+  engine: MariaDB 11.8.6 from Debian 13 trixie (same container)
+  host: 127.0.0.1
+  initialization: 镜像构建阶段迁移并初始化，容器启动时幂等迁移
+
+delivery:
+  all_in_one: true
+  description: 单镜像、单容器，内部包含 Redmine、Nginx、Puma、Ruby 运行时和 MariaDB 数据库服务
+  image: yorem/redmine:7.0.0@sha256:4572153f69b511a5b9f0a4ef7d194b9e2ec00713f9961769fd95fbc0b0248cd7
+  archive: image/redmine-7.0.0-linux-amd64.tar
+  metadata: image/image.json
+  checksum: image/SHA256SUMS
+  port: 18512
+  internal_port: 80
+  frontend: 镜像包含 Redmine 原生页面和本地静态资源，Nginx 将动态请求转发到同容器 127.0.0.1:3000 的 Puma
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+  initial_data: none; 数据库已作为镜像内置初始化数据，运行时按需复制到持久卷
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  entrypoint: scripts/entrypoint.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+recommended_run: docker run -d -p 18512:80 yorem/redmine:7.0.0
+source_metadata_file: source/source.yaml
+source_checksums: source/SHA256SUMS
+source_availability: bundled immutable source tree

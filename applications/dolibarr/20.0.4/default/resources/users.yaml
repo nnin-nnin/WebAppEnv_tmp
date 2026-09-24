@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: WcDoli!26-gK8tP3Y
+    user_type: internal
+    enabled: true
+    purpose: 初始 Dolibarr 超级管理员
+

@@ -1,0 +1,9 @@
+name: coppermine_1_6_0_default
+
+services:
+  web:
+    image: yorem/coppermine:1.6.0@sha256:cb6e9fffd83608d8e674de16a2282ecc05b8be99c025e96900901ccab3d6a33a
+    platform: linux/amd64
+    ports:
+      - "18632:80"
+    restart: unless-stopped

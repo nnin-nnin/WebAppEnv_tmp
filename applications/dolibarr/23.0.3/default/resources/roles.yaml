@@ -1,0 +1,10 @@
+roles:
+  - name: Super administrator
+    permissions: all application administration and business permissions
+    purpose: 初始账号的全局管理角色
+    initial_user_relation: admin
+  - name: Internal user
+    permissions: permissions assigned by an administrator
+    purpose: 普通内部用户创建时使用的基础用户类型
+    initial_user_relation: register.sh 创建的用户默认为普通内部用户
+

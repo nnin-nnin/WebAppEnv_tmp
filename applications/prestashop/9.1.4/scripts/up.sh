@@ -1,9 +1,24 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-IMAGE_NAME=asteriskax001/sop-prestashop:9.1.4
-CONTAINER_NAME=${CONTAINER_NAME:-prestashop-914}
-HOST_PORT=${HOST_PORT:-18401}
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
-exec docker run -d --name "$CONTAINER_NAME" -p "$HOST_PORT:80" "$IMAGE_NAME"
+cd "$APP_DIR"
+
+docker compose -f docker/compose.yaml up -d
+
+echo "Waiting for PrestaShop to become healthy..."
+max_retries=45
+counter=0
+until bash "$SCRIPT_DIR/healthcheck.sh" >/dev/null 2>&1; do
+  counter=$((counter + 1))
+  if [ "$counter" -ge "$max_retries" ]; then
+    echo "PrestaShop failed to become healthy after $max_retries retries" >&2
+    bash "$SCRIPT_DIR/healthcheck.sh" || true
+    exit 1
+  fi
+  sleep 3
+done
+
+echo "PrestaShop is up and healthy."

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-base_url="${APP_URL:-http://localhost:18086}"
+base_url="${APP_URL:-http://localhost:18097}"
 username="${APP_USERNAME:-${MONICA_USERNAME:-admin@example.com}}"
 password="${APP_PASSWORD:-${MONICA_PASSWORD:-benchmark-only}}"
 timeout="${APP_TIMEOUT:-20}"

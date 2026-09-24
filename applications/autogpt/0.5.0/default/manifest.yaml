@@ -1,0 +1,37 @@
+application: autogpt
+version: 0.5.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/Significant-Gravitas/AutoGPT
+  commit: cdc8611c83a2b5270499c3f93437bfcab2d272c4
+runtime:
+  python: '3.10'
+  node: '18'
+  framework: nextjs
+  web_server: nginx
+ports:
+  host_port: 18620
+  container_port: 3000
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/autogpt:0.5.0
+    tag: 0.5.0
+    digest: sha256:3b4f5df6c7bf50236feb5168eb5d6962dfc2367ef05c03a7d7f2b6708fdc738b
+    platform: linux/amd64

@@ -1,0 +1,9 @@
+- role: ALFRESCO_ADMINISTRATORS
+  permissions:
+    - full_control
+    - repository_admin
+    - user_management
+    - site_management
+  purpose: System administration and governance
+  users:
+    - admin

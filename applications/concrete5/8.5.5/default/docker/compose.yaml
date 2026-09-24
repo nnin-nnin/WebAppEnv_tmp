@@ -1,0 +1,36 @@
+name: concrete5-8-5-5
+
+services:
+  app:
+    image: yorem/concrete5:8.5.5@sha256:6b83b4f8dae4e855bc8246d708d882f91636979798ee623a027510c9d5dde39a
+    platform: linux/amd64
+    tty: true
+    stdin_open: true
+    ports:
+      - "18618:80"
+    environment:
+      APP_PASS: admin
+      APP_EMAIL: admin@example.com
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        rm -f /usr/lib/inithooks/firstboot.d/10regen-sshkeys /usr/lib/inithooks/firstboot.d/15regen-sslcert
+        cat << EOF > /etc/inithooks.conf
+        export ROOT_PASS=$${APP_PASS:-admin}
+        export DB_PASS=$${APP_PASS:-admin}
+        export APP_PASS=$${APP_PASS:-admin}
+        export APP_EMAIL=$${APP_EMAIL:-admin@example.com}
+        export APP_DOMAIN=DEFAULT
+        export HUB_APIKEY=SKIP
+        export SEC_ALERTS=SKIP
+        export SEC_UPDATES=SKIP
+        EOF
+        exec /usr/sbin/start.sh
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://localhost:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s

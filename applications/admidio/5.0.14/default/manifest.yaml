@@ -1,0 +1,78 @@
+application:
+  name: Admidio
+  version: 5.0.14
+  type: full_web_application
+  description: "Free open source user management system for websites of organizations and groups."
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署，不是 all-in-one 单容器部署。应用服务（Web/PHP）与数据库服务（MariaDB）分别运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: admidio-5-0-14
+  host_port: 18003
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/Admidio/admidio
+    commit: 0db5895d237c32708c2ea6ab057708d952e999ca
+    tag: v5.0.14
+    source_yaml: source/source.yaml
+  official_compose_source: https://github.com/Admidio/admidio/blob/v5.0.14/Dockerfile
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime"
+    image: yorem/admidio:5.0.14@sha256:28be67a1ec6b148c57799d95b486bb886df000d9c32fb6c66fa4bdd41510ffa2
+    digest: "sha256:28be67a1ec6b148c57799d95b486bb886df000d9c32fb6c66fa4bdd41510ffa2"
+    platform: linux/amd64
+    ports:
+      - "18003:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f http://localhost:80/index.php"
+    volumes:
+      - admidio-files
+      - admidio-plugins
+      - admidio-themes
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB)"
+    image: mariadb:10.11.8
+    digest: "sha256:3f111eec639eeb22518b22566e9241f08bf13dcd5269472d79083b9dc39d7a9f"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "healthcheck.sh --connect --innodb_initialized"
+    volumes:
+      - database-data
+
+credentials:
+  admin_username: admin
+  admin_password: benchmark-only
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+  register: resources/register.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin benchmark-only"
+  reset: "./scripts/reset.sh"
+
+differences_from_official:
+  - "将 PHP/Apache 运行环境更新为官方 php:8.3-apache 基础镜像，提升构建与运行稳定性。"
+  - "引入 MariaDB 10.11 作为独立数据库服务，通过 Docker Compose 网络连接。"
+  - "配置数据库自动 Seed 初始化（database-seed.sql），启动即可获得已配置好的初始管理员账号 admin/benchmark-only。"
+
+known_limitations:
+  - "ARM64 宿主机上运行 linux/amd64 容器可能会出现 Docker 平台警告，不影响功能正常运行。"

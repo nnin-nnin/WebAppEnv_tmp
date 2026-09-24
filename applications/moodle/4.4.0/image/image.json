@@ -2,12 +2,10 @@
     {
         "Id": "sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12",
         "RepoTags": [
-            "asteriskax001/sop-moodle:4.4.0",
-            "nnin/sop-moodle:4.4.0"
+            "yorem/moodle:4.4.0"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-moodle@sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12",
-            "nnin/sop-moodle@sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12"
+            "yorem/moodle@sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T17:03:45.276175689+08:00",
@@ -88,7 +86,7 @@
             "digest": "sha256:090ce2cea53e73cb031b10fcd37065268d3a2123a309e1094135abb8b0d13b12",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-moodle:4.4.0",
+                "io.containerd.image.name": "docker.io/yorem/moodle:4.4.0",
                 "org.opencontainers.image.ref.name": "4.4.0"
             }
         }

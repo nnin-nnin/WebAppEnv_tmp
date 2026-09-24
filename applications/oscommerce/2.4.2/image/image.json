@@ -2,13 +2,9 @@
     {
         "Id": "sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494",
         "RepoTags": [
-            "asteriskax001/sop-oscommerce:2.4.2",
-            "nnin/sop-oscommerce:2.4.2"
+            "yorem/oscommerce:2.4.2"
         ],
-        "RepoDigests": [
-            "asteriskax001/sop-oscommerce@sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494",
-            "nnin/sop-oscommerce@sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494"
-        ],
+        "RepoDigests": [],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-05T20:10:20.788947021+08:00",
         "Config": {
@@ -90,7 +86,7 @@
             "digest": "sha256:e28f0aa26ae2fef9d4f9e04b8fe07cccdb2397da789f7542c17fd9b37cb34494",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-oscommerce:2.4.2",
+                "io.containerd.image.name": "docker.io/yorem/oscommerce:2.4.2",
                 "org.opencontainers.image.ref.name": "2.4.2"
             }
         }

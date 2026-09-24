@@ -1,0 +1,4 @@
+repository: https://github.com/apache/airflow
+commit: 1438ea3587031417cc85d74323235cf087a058fb
+tag: 3.3.0
+official_compose: https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml

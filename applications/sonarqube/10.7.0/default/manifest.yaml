@@ -1,0 +1,35 @@
+application: sonarqube
+version: 10.7.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/SonarSource/sonarqube
+  commit: 9e1fded16c1dc80f886af1db4413cbe78a245d7f
+runtime:
+  language: java
+  java: "17"
+ports:
+  host_port: 18607
+  container_port: 9000
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  sonarqube:
+    image: yorem/sonarqube:10.7.0@sha256:a6f6e13d2805751f22bbd8f31e18f104fcc87aec14b4ccfb588c5b916c56ee07
+    tag: 10.7.0
+    digest: sha256:a6f6e13d2805751f22bbd8f31e18f104fcc87aec14b4ccfb588c5b916c56ee07
+    platform: linux/amd64

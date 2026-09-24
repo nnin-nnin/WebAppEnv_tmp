@@ -1,6 +1,6 @@
 services:
   application:
-    image: asteriskax001/sop-phpmyadmin:4.7.9
+    image: yorem/phpmyadmin:4.7.9@sha256:afd5d342644af52c323bc60e4d54b64a84220c22b62b6cd0b56b4189ec1ab7a8
     ports:
       - "18379:80"
     volumes:

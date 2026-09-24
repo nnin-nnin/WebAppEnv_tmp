@@ -1,0 +1,4 @@
+sources:
+  - repository: https://github.com/WordPress/WordPress
+    commit: ee22b82282c6f7429872df03f2344b29cd062d53
+

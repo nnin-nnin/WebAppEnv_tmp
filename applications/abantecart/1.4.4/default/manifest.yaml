@@ -1,0 +1,43 @@
+application: AbanteCart
+version: 1.4.4
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/abantecart/abantecart-src
+  commit: 051a50f373fad8c8955800f881e08f2f7620600e
+runtime:
+  php: "8.2"
+  web_server: apache
+  database: mariadb:10.6
+ports:
+  host_port: 18001
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: benchmark-only
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  web:
+    image: yorem/abantecart:1.4.4@sha256:cc035b050892bcbe89ffffeed4f0ef1222606990025e7be003c8c99167a25ca4
+    tag: 1.4.4
+    digest: sha256:cc035b050892bcbe89ffffeed4f0ef1222606990025e7be003c8c99167a25ca4
+    platform: linux/amd64
+  db:
+    image: mariadb:10.6
+    tag: 10.6
+    digest: sha256:4ba945cc3998b4443d6c6937d9890bb4cf642229f3d95377369645c567a59b91
+    platform: linux/amd64

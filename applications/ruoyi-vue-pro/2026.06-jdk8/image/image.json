@@ -50,10 +50,10 @@
         "Os": "linux",
         "Parent": "sha256:c6a3f2b040d331a64930d4099da2d9975e7223f2f102bef03e7801a72b5526cf",
         "RepoDigests": [
-            "yorem/sop-ruoyi-vue-pro@sha256:dd3c93a1d80b303c6d6ae4798c62ab3bd219100805d0995649cc0ed23e07082c"
+            "yorem/ruoyi-vue-pro:2026.06-jdk8@sha256:3d3461894dfa5c38509a15aa4faec8b1804f04e365b1276fb52f6ea083e924e0"
         ],
         "RepoTags": [
-            "yorem/sop-ruoyi-vue-pro:2026.06-jdk8"
+            "yorem/ruoyi-vue-pro:2026.06-jdk8"
         ],
         "RootFS": {
             "Layers": [

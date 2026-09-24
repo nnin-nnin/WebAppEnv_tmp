@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 app_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-image_name="asteriskax001/sop-hotcrp:3.3.1"
+image_name="yorem/hotcrp:3.3.1"
 tar_path="$app_dir/image/hotcrp-3.3.1-linux-amd64.tar"
 mkdir -p "$app_dir/image"
 

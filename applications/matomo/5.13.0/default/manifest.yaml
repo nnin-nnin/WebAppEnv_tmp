@@ -1,0 +1,81 @@
+application:
+  name: Matomo
+  version: 5.13.0
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for Matomo 5.13.0 with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: matomo-5-13-0
+  compose_file: docker/compose.yaml
+  host_port: 18563
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18563/
+  login_url: http://127.0.0.1:18563/index.php?module=Login
+
+source:
+  repository: https://github.com/matomo-org/matomo
+  fixed_ref: 5.13.0
+  immutable_commit: 04c528673024239d858998eebc34e1f8afa1acf3
+  metadata: source/source.yaml
+  availability: github_only
+
+compose:
+  project_name: matomo-5-13-0
+  services:
+    - app
+    - db
+  volumes:
+    - app-data
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/matomo:5.13.0@sha256:5031e36f42a13e9bd8afc748b3eb61170f59dcff8d9901e9c8843673935820bf
+  database_image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: app
+    role: "Long-running Matomo web analytics application"
+    image: yorem/matomo:5.13.0@sha256:5031e36f42a13e9bd8afc748b3eb61170f59dcff8d9901e9c8843673935820bf
+    tag: 5.13.0
+    digest: sha256:5031e36f42a13e9bd8afc748b3eb61170f59dcff8d9901e9c8843673935820bf
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18563}:80"
+    depends_on:
+      - db: service_healthy
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    tag: 10.11
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+
+ports:
+  host_port: 18563
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh

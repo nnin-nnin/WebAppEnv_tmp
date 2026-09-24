@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/mantisbt",
+    "tag": "2.26.2",
+    "digest": "sha256:3378f42363587c99ade2ec06d4c3d8c8a09f9f9cd455b8545a4b573f16fa272a",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "mariadb",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

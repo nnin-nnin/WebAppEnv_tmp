@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: 12345678password
+    type: admin
+    enabled: true
+    purpose: "Initial administrator account"
+    creation_method: "Auto-created by Joomla Docker entrypoint script via environment variables"

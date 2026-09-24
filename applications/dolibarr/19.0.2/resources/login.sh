@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-BASE_URL="${DOLIBARR_URL:-http://localhost:18525}"
+BASE_URL="${DOLIBARR_URL:-http://localhost:${DOLIBARR_PORT:-18527}}"
 USERNAME="${DOLIBARR_USER:-admin}"
 PASSWORD="${DOLIBARR_PASSWORD:-${DOLIBARR_INITIAL_ADMIN_PASSWORD:-}}"
 if [[ -z "$PASSWORD" ]]; then
@@ -37,4 +37,3 @@ if [[ "$http_code" != 2* ]] || ! grep -Eq 'id="mainmenu|class="mainmenu' "$resul
   exit 1
 fi
 echo "登录成功：$USERNAME"
-

@@ -1,6 +1,6 @@
 services:
   application:
-    image: asteriskax001/sop-joomla:5.1.1
+    image: yorem/joomla:5.1.1@sha256:7287c440475adb0d35dada0ac970f37798bbeff801a0cdb48d68dbf240d26128
     ports:
       - "18211:80"
     volumes:

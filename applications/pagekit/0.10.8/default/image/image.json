@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/pagekit",
+    "tag": "0.10.8",
+    "digest": "sha256:6e0518a42b95ee85c94288fb137c023caf15962df7f3c5998b87799c9998bd32",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

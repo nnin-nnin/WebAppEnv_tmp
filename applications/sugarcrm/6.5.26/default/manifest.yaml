@@ -1,0 +1,41 @@
+application: sugarcrm
+version: 6.5.26
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/sugarai-archive/sugarcrm_dev
+  commit: 5ecdaa80fc806282c11769831b09fef9772b6e7e
+runtime:
+  php: '5.6'
+  web_server: apache
+  database: mysql:5.7
+ports:
+  host_port: 18629
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  sugarcrm:
+    image: yorem/sugarcrm:6.5.26@sha256:29d1acc6b5d9aae26baa279b7373b9b75780c619756a4b4160e8a1fc3be98f85
+    tag: 6.5.26
+    digest: sha256:29d1acc6b5d9aae26baa279b7373b9b75780c619756a4b4160e8a1fc3be98f85
+    platform: linux/amd64
+  db:
+    image: mysql:5.7@sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    tag: "5.7"
+    digest: sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    platform: linux/amd64

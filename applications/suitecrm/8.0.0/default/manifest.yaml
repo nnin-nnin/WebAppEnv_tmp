@@ -1,0 +1,41 @@
+application: suitecrm
+version: 8.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/salesagility/SuiteCRM-Core
+  commit: 55c1ee9cbdf409ed41c04da0bbf442b311a3ab57
+runtime:
+  php: '8.3'
+  web_server: apache
+  database: mariadb:10.11
+ports:
+  host_port: 18608
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  suitecrm:
+    image: yorem/suitecrm:8.0.0@sha256:7460deff1f12410c9d56980a269afda009b080eb3b525411cf0cb52044db1bb0
+    tag: 8.0.0
+    digest: sha256:7460deff1f12410c9d56980a269afda009b080eb3b525411cf0cb52044db1bb0
+    platform: linux/amd64
+  mariadb:
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    tag: "10.11"
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64

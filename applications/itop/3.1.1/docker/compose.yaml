@@ -1,9 +1,13 @@
+name: itop-3-1-1
+
 services:
   application:
-    image: asteriskax001/sop-itop:3.1.1
+    platform: linux/amd64
+    image: yorem/itop:3.1.1@sha256:cb5bd72ec2631b3f47a010ed65faac39fe010ca52af331120bffe0c32e9db197
     ports:
       - "18515:80"
     volumes:
+      - ./opcache.ini:/usr/local/etc/php/conf.d/zz-disable-opcache.ini:ro
       - application-data:/var/www/html/data
       - application-db:/var/lib/mysql
 

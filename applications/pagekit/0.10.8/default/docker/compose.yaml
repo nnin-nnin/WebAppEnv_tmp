@@ -1,0 +1,8 @@
+name: pagekit_0_10_8
+services:
+  web:
+    image: yorem/pagekit:0.10.8@sha256:6e0518a42b95ee85c94288fb137c023caf15962df7f3c5998b87799c9998bd32
+    platform: linux/amd64
+    ports:
+    - 18591:80
+    restart: unless-stopped

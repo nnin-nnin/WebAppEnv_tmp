@@ -1,0 +1,10 @@
+[
+  {
+    "service": "webmin",
+    "image": "yorem/webmin",
+    "tag": "2.100",
+    "digest": "sha256:2bf950170b970f943e5c03d8146f69ae72ba8764274dd553fd6383f8b78690f8",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

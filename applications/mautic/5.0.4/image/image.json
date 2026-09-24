@@ -2,12 +2,10 @@
     {
         "Id": "sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e",
         "RepoTags": [
-            "asteriskax001/sop-mautic:5.0.4",
-            "nnin/sop-mautic:5.0.4"
+            "yorem/mautic:5.0.4"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-mautic@sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e",
-            "nnin/sop-mautic@sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e"
+            "yorem/mautic@sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T14:52:46.483600949+08:00",
@@ -101,16 +99,19 @@
             ]
         },
         "Metadata": {
-            "LastTagTime": "2026-08-06T16:41:13.464713255Z"
+            "LastTagTime": "2026-09-23T08:28:06.081300354Z"
         },
         "Descriptor": {
             "mediaType": "application/vnd.oci.image.index.v1+json",
             "digest": "sha256:2cca12c2ec7fac66e04b3423523b05f8658572e68011e8ead4159f6fde09c79e",
-            "size": 856,
-            "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-mautic:5.0.4",
-                "org.opencontainers.image.ref.name": "5.0.4"
-            }
+            "size": 856
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/yorem/mautic"
+                }
+            ]
         }
     }
 ]

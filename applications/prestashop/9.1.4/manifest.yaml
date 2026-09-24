@@ -29,10 +29,8 @@ database:
 network:
   port: 18401
 image:
-  name: asteriskax001/sop-prestashop:9.1.4
-  archive: image/prestashop-9.1.4-linux-amd64.tar
+  name: yorem/prestashop:9.1.4@sha256:483befaaf88fe85854a8f5f8b98912045ff895f7cd4c7e1187b54f6b8f68b973
   metadata: image/image.json
-  checksum_file: image/SHA256SUMS
   contents: [PrestaShop source, PHP extensions, Composer vendor, compiled frontend assets, Apache, MariaDB, initialization entrypoint]
 resources:
   users: resources/users.yaml
@@ -46,4 +44,4 @@ operations:
   entrypoint: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18401:80 asteriskax001/sop-prestashop:9.1.4
+recommended_run: docker compose -f docker/compose.yaml up -d

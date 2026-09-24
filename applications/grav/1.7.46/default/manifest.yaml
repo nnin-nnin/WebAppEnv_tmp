@@ -1,0 +1,36 @@
+application: grav
+version: 1.7.46
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/getgrav/grav
+  commit: faa8ee5fe13f061c4ae218a7fc5df89c69817506
+runtime:
+  php: '8.3'
+  web_server: apache
+  database: flat-file
+ports:
+  host_port: 18570
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/grav:1.7.46
+    tag: 1.7.46
+    digest: sha256:aa3284ede27aef5f16c69b97d97ab370d0508fdeb6ea09896eb3c3250079a1b8
+    platform: linux/amd64

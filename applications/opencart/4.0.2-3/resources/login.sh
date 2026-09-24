@@ -7,6 +7,14 @@ username="${OPENCART_USERNAME:-admin}"
 password="${OPENCART_PASSWORD:-${CODEX_ADMIN_PASSWORD:-}}"
 
 if [ -z "$password" ]; then
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    users_file="$script_dir/users.yaml"
+    if [ -f "$users_file" ]; then
+        password="$(grep 'password:' "$users_file" | head -n 1 | awk '{print $2}' | tr -d '"\r\n')"
+    fi
+fi
+
+if [ -z "$password" ]; then
     echo '登录失败：请通过 OPENCART_PASSWORD 或受控 CODEX_ADMIN_PASSWORD 提供密码。' >&2
     exit 2
 fi

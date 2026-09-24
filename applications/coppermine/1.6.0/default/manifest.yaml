@@ -1,0 +1,35 @@
+application: coppermine
+version: 1.6.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/coppermine-gallery/cpg1.6.x
+  commit: 6a7e1067e676af98eed89d752120d7227e2c7efd
+runtime:
+  php: '5.6'
+  web_server: nginx
+ports:
+  host_port: 18632
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  web:
+    image: yorem/coppermine:1.6.0@sha256:cb6e9fffd83608d8e674de16a2282ecc05b8be99c025e96900901ccab3d6a33a
+    tag: 1.6.0
+    digest: sha256:cb6e9fffd83608d8e674de16a2282ecc05b8be99c025e96900901ccab3d6a33a
+    platform: linux/amd64

@@ -1,0 +1,106 @@
+application:
+  name: AnchorCMS
+  version: 0.12.7
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for AnchorCMS 0.12.7 with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: anchorcms-0127
+  compose_file: docker/compose.yaml
+  host_port: 18009
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18009/
+  login_url: http://127.0.0.1:18009/index.php/admin/login
+
+source:
+  repository: https://github.com/anchorcms/anchor-cms
+  fixed_ref: 0.12.7
+  immutable_commit: 08e8e507909ee55b588674563b8ea21646ed9425
+  metadata: source/source.yaml
+  availability: github_only
+  frontend_note: "AnchorCMS includes built-in PHP templates and theme frontend."
+
+compose:
+  project_name: anchorcms-0127
+  services:
+    - application
+    - db
+  volumes:
+    - application-data
+    - database-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/anchorcms:0.12.7@sha256:5009aa26cb72247ecb3493e08f5cb7a0d08c6e9d47dba5fb69358a67fe2f0d4b
+  database_image: mariadb:10.5
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: application
+    role: "Long-running AnchorCMS Apache web application"
+    image: yorem/anchorcms:0.12.7@sha256:5009aa26cb72247ecb3493e08f5cb7a0d08c6e9d47dba5fb69358a67fe2f0d4b
+    digest: sha256:5009aa26cb72247ecb3493e08f5cb7a0d08c6e9d47dba5fb69358a67fe2f0d4b
+    platform: linux/amd64
+    source: "https://github.com/anchorcms/anchor-cms commit 08e8e507909ee55b588674563b8ea21646ed9425 via docker/Dockerfile"
+    ports:
+      - "${HOST_PORT:-18009}:80"
+    depends_on:
+      - db: service_healthy
+    healthcheck: "HTTP GET http://127.0.0.1:80/ inside container"
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.5
+    digest: sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    source: "Official MariaDB image from Docker Hub"
+    healthcheck: "mysqladmin ping -h localhost -u root -pbenchmark-only-root"
+
+initialization:
+  database: "Automated schema creation and admin seeding during container entrypoint initialization."
+  idempotence: "Checks for existing config/db.php, install.lock, and database tables."
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin
+    password: benchmark-only
+    email: admin@example.com
+    role: administrator
+    creation_method: "Seeded into users table via container entrypoint"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+  register_script: resources/register.sh
+
+operations:
+  build: bash scripts/build.sh
+  start: bash scripts/up.sh
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - source_checksum
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+    - normal_user_creation_and_login
+  final_state: "After scripts/up.sh, db and application containers report healthy status."
+
+known_limits:
+  - "AnchorCMS 0.12.7 is legacy software designed for research and benchmarking."
+  - "Images target linux/amd64 platform."
+
+consistency_statement: "This is a native multi-container Docker Compose environment, not an all-in-one image. The application service runs AnchorCMS on Apache/PHP 7.4 and connects to a separate MariaDB container via Compose networking."

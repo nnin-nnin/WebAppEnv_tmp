@@ -1,0 +1,10 @@
+roles:
+  - name: Admin
+    description: Full administrative privileges over organization, employees, users, and system configuration
+    purpose: Primary system administration role
+    associated_accounts:
+      - Admin
+  - name: ESS
+    description: Employee Self Service role for personal details, leave, and timesheet management
+    purpose: General employee access
+    associated_accounts: []

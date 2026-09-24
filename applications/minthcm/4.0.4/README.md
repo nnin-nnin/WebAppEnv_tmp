@@ -8,7 +8,7 @@
 
 ```bash
 cd applications/minthcm/4.0.4
-docker run -d -p 18520:80 asteriskax001/sop-minthcm:4.0.4
+docker run -d -p 18520:80 yorem/minthcm:4.0.4
 ```
 
 接收者只需要执行 `docker run`，Docker 会自动从 Docker Hub 拉取镜像。镜像内部已经包含应用、数据库、初始化和启动逻辑，不需要执行 `build.sh`、Compose、bootstrap 脚本、数据库脚本或 Web Installer。
@@ -46,7 +46,7 @@ MINTHCM_ADMIN_PASSWORD='MintHCM-Admin-2026!R7w2' \
 
 ```bash
 MINTHCM_CONTAINER=minthcm-4-0-4 scripts/reset.sh
-docker run --name minthcm-4-0-4 -d -p 18520:80 asteriskax001/sop-minthcm:4.0.4
+docker run --name minthcm-4-0-4 -d -p 18520:80 yorem/minthcm:4.0.4
 ```
 
 脚本只删除指定容器，不删除未明确指定的 Docker volume。使用 Compose 时，数据库、上传文件和 Elasticsearch 数据分别持久化到本应用的命名卷，重启后会自动恢复。

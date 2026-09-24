@@ -1,0 +1,42 @@
+version: '3'
+services:
+  ampache:
+    image: yorem/ampache:8.0.0@sha256:c3bfa6d8c5dba525574da03694f8d4ff3eee4d70a72a219af32eff3d88048ca4
+    platform: linux/amd64
+    ports:
+      - "18088:80"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=ampache
+      - DB_USER=root
+      - DB_PASSWORD=ampache_root
+      - AMPACHE_DB_USER=ampache
+      - AMPACHE_DB_PASSWORD=ampache
+      - AMPACHE_ADMIN_USER=admin
+      - AMPACHE_ADMIN_PASSWORD=benchmark-only
+    volumes:
+      - ampache_data:/var/www/html
+      - ampache_media:/media
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  db:
+    image: mariadb:10.6
+    platform: linux/amd64
+    environment:
+      - MARIADB_ROOT_PASSWORD=ampache_root
+      # Do not create MARIADB_DATABASE=ampache, let ampache container do it
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pampache_root"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  ampache_data:
+  ampache_media:
+  db_data:

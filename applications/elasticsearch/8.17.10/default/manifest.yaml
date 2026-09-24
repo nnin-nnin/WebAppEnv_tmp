@@ -1,0 +1,35 @@
+application: elasticsearch
+version: 8.17.10
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/elastic/elasticsearch
+  commit: e5c4b2af120c131ea2885730f6693cb7d40a0a63
+runtime:
+  language: java
+  java: "21"
+ports:
+  host_port: 18584
+  container_port: 9200
+credentials:
+  admin_username: elastic
+  admin_password: ""
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  elasticsearch:
+    image: yorem/elasticsearch:8.17.10@sha256:301047b72827de2cbfa8aaa61c8110589a66ecd5189b9822a4fdd9854bb3a64b
+    tag: 8.17.10
+    digest: sha256:301047b72827de2cbfa8aaa61c8110589a66ecd5189b9822a4fdd9854bb3a64b
+    platform: linux/amd64

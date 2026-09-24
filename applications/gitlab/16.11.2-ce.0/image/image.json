@@ -2,12 +2,10 @@
     {
         "Id": "sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c",
         "RepoTags": [
-            "asteriskax001/sop-gitlab:16.11.2-ce.0",
-            "nnin/sop-gitlab:16.11.2-ce.0"
+            "yorem/gitlab:16.11.2-ce.0"
         ],
         "RepoDigests": [
-            "asteriskax001/sop-gitlab@sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c",
-            "nnin/sop-gitlab@sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c"
+            "yorem/gitlab@sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c"
         ],
         "Comment": "buildkit.dockerfile.v0",
         "Created": "2026-08-06T21:20:49.194205011+08:00",
@@ -24,7 +22,7 @@
                 "EDITOR=/bin/vi",
                 "GITLAB_ALLOW_SHA1_RSA=false",
                 "TERM=xterm",
-                "GITLAB_OMNIBUS_CONFIG=external_url 'http://127.0.0.1:18527'; nginx['listen_port']=80; nginx['listen_https']=false; nginx['worker_processes']=2; nginx['worker_connections']=1024; letsencrypt['enable']=false; prometheus_monitoring['enable']=false; puma['worker_processes']=2; puma['min_threads']=1; puma['max_threads']=4; sidekiq['concurrency']=5; gitlab_rails['monitoring_whitelist']=['0.0.0.0/0','::/0']"
+                "GITLAB_OMNIBUS_CONFIG=external_url 'http://127.0.0.1:18528'; nginx['listen_port']=80; nginx['listen_https']=false; nginx['worker_processes']=2; nginx['worker_connections']=1024; letsencrypt['enable']=false; prometheus_monitoring['enable']=false; puma['worker_processes']=2; puma['min_threads']=1; puma['max_threads']=4; sidekiq['concurrency']=5; gitlab_rails['monitoring_whitelist']=['0.0.0.0/0','::/0']"
             ],
             "Entrypoint": [
                 "/opt/sop/entrypoint.sh"
@@ -82,7 +80,7 @@
             "digest": "sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c",
             "size": 856,
             "annotations": {
-                "io.containerd.image.name": "docker.io/nnin/sop-gitlab:16.11.2-ce.0",
+                "io.containerd.image.name": "docker.io/yorem/gitlab:16.11.2-ce.0",
                 "org.opencontainers.image.ref.name": "16.11.2-ce.0"
             }
         }

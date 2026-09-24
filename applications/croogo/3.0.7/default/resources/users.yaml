@@ -1,0 +1,8 @@
+users:
+  - username: croogo
+    password: croogo
+    role: SuperAdmin
+    type: admin
+    enabled: true
+    purpose: Primary administrator account for system administration and benchmark verification
+    creation_method: Pre-seeded in SQLite database

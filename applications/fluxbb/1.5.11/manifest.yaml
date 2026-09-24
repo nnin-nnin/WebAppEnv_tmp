@@ -8,7 +8,9 @@ application:
   frontend_repository: null
   frontend_commit: null
   source_metadata: source/source.yaml
-  source_availability: github_only
+  source_archive: source/fluxbb-1.5.11-3909815c.tar.gz
+  source_snapshot: source/fluxbb/
+  source_availability: bundled_snapshot
 platform:
   target: linux/amd64
 runtime:
@@ -21,7 +23,7 @@ runtime:
   browser_entrypoint: /
 delivery:
   port: 18311
-  image: asteriskax001/sop-fluxbb:1.5.11
+  image: yorem/fluxbb:1.5.11@sha256:9294cf1f2562d6ad7e27b50d8557478a09a138acc1a88b64724f600ddec22ae2
   image_archive: image/fluxbb-1.5.11-linux-amd64.tar
   image_metadata: image/image.json
   image_checksum: image/SHA256SUMS
@@ -39,4 +41,4 @@ scripts:
   start: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18311:80 asteriskax001/sop-fluxbb:1.5.11
+recommended_run: docker run -d --platform linux/amd64 -p 18311:80 yorem/fluxbb:1.5.11

@@ -11,7 +11,7 @@ docker run -d \
   --platform linux/amd64 \
   --name atropim-489afea \
   -p 18083:80 \
-  nnin/sop-atropim:489afea
+  yorem/atropim:489afea
 ```
 
 镜像内已经包含 Apache、PHP 7.4、MariaDB 10.5、AtroPIM 固定源码和 Composer 依赖、应用配置及初始数据库。容器首次启动时会自动初始化数据库和管理员，并启动数据库、Web server 和 cron；不需要执行 `build.sh`、Compose 或 Web Installer。

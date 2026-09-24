@@ -1,0 +1,4 @@
+sources:
+  - repository: https://github.com/espocrm/espocrm
+    commit: 42dc989e63f62682752431b31cfc21aef7740fc8
+

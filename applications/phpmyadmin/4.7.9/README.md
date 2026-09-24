@@ -10,7 +10,7 @@
 cd phpmyadmin_4.7.9
 sha256sum -c image/SHA256SUMS
 docker load -i image/phpmyadmin-4.7.9-linux-amd64.tar
-docker run -d -p 18379:80 asteriskax001/sop-phpmyadmin:4.7.9
+docker run -d -p 18379:80 yorem/phpmyadmin:4.7.9
 ```
 
 镜像内部已经包含应用、依赖、数据库、初始化和启动逻辑；不需要执行 `build.sh`、Compose、bootstrap 脚本、Web Installer、SQL 导入或单独启动数据库容器。若需要显式命名持久化卷，可在 `docker run` 中额外挂载 `/var/lib/mysql` 和 `/var/www/html/data`。

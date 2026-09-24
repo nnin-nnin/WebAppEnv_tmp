@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 app_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-image_name='asteriskax001/sop-mediawiki:1.41.1'
+image_name='yorem/mediawiki:1.41.1'
 archive="$app_dir/image/mediawiki-1.41.1-linux-amd64.tar"
 
 if [[ -z "${MEDIAWIKI_ADMIN_PASSWORD:-}" ]]; then

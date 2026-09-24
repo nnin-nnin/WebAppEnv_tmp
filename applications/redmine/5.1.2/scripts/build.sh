@@ -8,9 +8,8 @@ mkdir -p image
 
 docker build --platform linux/amd64 \
   --secret id=admin_password,env=REDMINE_INITIAL_PASSWORD \
-  --tag asteriskax001/sop-redmine:5.1.2 \
+  --tag yorem/redmine:5.1.2 \
   --file docker/Dockerfile .
-docker save --output image/redmine-5.1.2-linux-amd64.tar asteriskax001/sop-redmine:5.1.2
-docker image inspect asteriskax001/sop-redmine:5.1.2 > image/image.json
+docker save --output image/redmine-5.1.2-linux-amd64.tar yorem/redmine:5.1.2
+docker image inspect yorem/redmine:5.1.2 > image/image.json
 sha256sum image/redmine-5.1.2-linux-amd64.tar > image/SHA256SUMS
-

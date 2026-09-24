@@ -1,0 +1,14 @@
+name: halo_2_17_0_default
+
+services:
+  app:
+    image: yorem/halo:2.17.0@sha256:a888e68eb89ad6c9c19d2e91361c58c540e291525d485f4542243c408b17bae8
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18582:8090"
+    volumes:
+      - halo-data:/root/.halo2
+
+volumes:
+  halo-data:

@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/librenms",
+    "tag": "24.8.0",
+    "digest": "sha256:ef05e8b4b8e30a62abff9342deeb26cc59353a4d83565b04861385867e1cee2e",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.11",
+    "digest": "sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

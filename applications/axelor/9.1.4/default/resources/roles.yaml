@@ -1,0 +1,9 @@
+- name: ADMIN
+  permissions:
+    - full_access
+    - system_administration
+    - user_management
+    - module_management
+  purpose: "System Administrator role with complete administrative privileges over all Axelor modules and settings."
+  associated_users:
+    - admin

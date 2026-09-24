@@ -21,7 +21,7 @@ runtime:
   port: 18514
   internal_port: 80
 image:
-  name: asteriskax001/sop-glpi:10.0.15
+  name: yorem/glpi:10.0.15
   all_in_one: true
   architecture: linux/amd64
   components:
@@ -45,7 +45,7 @@ scripts:
   start: scripts/up.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: docker run -d -p 18514:80 asteriskax001/sop-glpi:10.0.15
+recommended_run: docker run -d -p 18514:80 yorem/glpi:10.0.15
 api:
   endpoint: /apirest.php
   credentials_login_enabled: true

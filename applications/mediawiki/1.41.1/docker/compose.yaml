@@ -1,6 +1,6 @@
 services:
   application:
-    image: asteriskax001/sop-mediawiki:1.41.1
+    image: yorem/mediawiki:1.41.1@sha256:b45fb686c2bd6740307433eb0d3a028f249ef6ef35d489b3ee1154f7af51df81
     platform: linux/amd64
     ports:
       - "18519:80"

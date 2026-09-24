@@ -1,0 +1,114 @@
+services:
+  app:
+    image: yorem/snipe-it:8.7.0@sha256:a0e339af3b0ced99df19d51bc62bbed322df89f5d841cab2cafcee46a192574c
+    platform: linux/amd64
+    restart: unless-stopped
+    volumes:
+      - application-data:/var/lib/snipeit
+    ports:
+      - "127.0.0.1:8000:80"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      APP_ENV: production
+      APP_DEBUG: 'false'
+      APP_KEY: base64:3ilviXqB9u6DX1NRcyWGJ+sjySF+H18CPDGb3+IVwMQ=
+      APP_URL: http://127.0.0.1:8000
+      APP_TIMEZONE: UTC
+      APP_LOCALE: en-US
+      MAX_RESULTS: '500'
+      PRIVATE_FILESYSTEM_DISK: local
+      PUBLIC_FILESYSTEM_DISK: local_public
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: '3306'
+      DB_DATABASE: snipeit
+      DB_USERNAME: snipeit
+      DB_PASSWORD: changeme1234
+      DB_PREFIX: 'null'
+      DB_DUMP_PATH: /usr/bin
+      DB_DUMP_SKIP_SSL: 'true'
+      DB_DUMP_SINGLE_TRANSACTION: 'false'
+      DB_CHARSET: utf8mb4
+      DB_COLLATION: utf8mb4_unicode_ci
+      MAIL_MAILER: smtp
+      MAIL_HOST: mailhog
+      MAIL_PORT: '1025'
+      MAIL_TLS_VERIFY_PEER: 'true'
+      MAIL_FROM_ADDR: admin@example.com
+      MAIL_FROM_NAME: 'Snipe-IT'
+      MAIL_REPLYTO_ADDR: admin@example.com
+      MAIL_REPLYTO_NAME: 'Snipe-IT'
+      MAIL_AUTO_EMBED_METHOD: attachment
+      ALLOW_BACKUP_DELETE: 'false'
+      ALLOW_DATA_PURGE: 'false'
+      IMAGE_LIB: gd
+      SESSION_LIFETIME: '12000'
+      EXPIRE_ON_CLOSE: 'false'
+      ENCRYPT: 'false'
+      COOKIE_NAME: snipeit_session
+      SECURE_COOKIES: 'false'
+      API_TOKEN_EXPIRATION_YEARS: '40'
+      APP_TRUSTED_PROXIES: 192.168.1.1,10.0.0.1,172.16.0.0/12
+      ALLOW_IFRAMING: 'false'
+      REFERRER_POLICY: same-origin
+      ENABLE_CSP: 'false'
+      ENABLE_HSTS: 'false'
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: sync
+      CACHE_PREFIX: snipeit
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      LOGIN_MAX_ATTEMPTS: '5'
+      LOGIN_LOCKOUT_DURATION: '60'
+      RESET_PASSWORD_LINK_EXPIRES: '900'
+      INVITE_PASSWORD_LINK_EXPIRES: '1500'
+      LOG_CHANNEL: stderr
+      LOG_MAX_DAYS: '10'
+      APP_LOCKED: 'false'
+      APP_CIPHER: AES-256-CBC
+      APP_FORCE_TLS: 'false'
+    healthcheck:
+      test: ["CMD-SHELL", "php -r '$$s=@fsockopen(\"127.0.0.1\",80); exit($$s ? 0 : 1);'"]
+      start_period: 2m
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:11.4.7@sha256:39596f079862334be04f4231664862e55d4febe54309cc62f750f2297de85b06
+    platform: linux/amd64
+    restart: unless-stopped
+    volumes:
+      - database-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: snipeit
+      MYSQL_USER: snipeit
+      MYSQL_PASSWORD: changeme1234
+      MYSQL_ROOT_PASSWORD: changeme1234
+    healthcheck:
+      test: ["CMD-SHELL", "healthcheck.sh --connect --innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  redis:
+    image: redis:7.4.0@sha256:6725a7dc7a44a6486b9d0a5172b10ccaf0c2ea600df87c0b93450d0e7769297f
+    platform: linux/amd64
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  application-data:
+  database-data:
+  redis-data:

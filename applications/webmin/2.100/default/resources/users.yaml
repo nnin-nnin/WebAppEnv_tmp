@@ -1,0 +1,5 @@
+users:
+  - username: root
+    password: password
+    role: admin
+    description: Default administrative user

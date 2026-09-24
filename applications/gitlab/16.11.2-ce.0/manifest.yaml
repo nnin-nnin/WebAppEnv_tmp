@@ -12,7 +12,7 @@ application:
   frontend_commit: null
   frontend_build_command: "GitLab Rails asset bundle is included in the fixed source/official Omnibus artifact"
   frontend_static_assets: "/opt/gitlab/embedded/service/gitlab-rails/public/assets"
-  browser_entrypoint: http://127.0.0.1:18527/
+  browser_entrypoint: http://127.0.0.1:18528/
 runtime:
   language: Ruby/Rails, Go, Node.js runtime components bundled by Omnibus
   web_server: NGINX + GitLab Workhorse
@@ -21,9 +21,10 @@ runtime:
   internal_database_host: 127.0.0.1
 delivery:
   mode: all-in-one-single-image-single-container
-  image: asteriskax001/sop-gitlab:16.11.2-ce.0
+  image: yorem/gitlab:16.11.2-ce.0@sha256:3793396b2007a8fdb4913fcbe52c2ec1779c6400ba2e3643d1174860cd18c41c
   image_metadata: image/image.json
-  published_port: 18527:80
+  published_port: 18528:80
+  port: 18528
   components:
     - GitLab Rails application and bundled frontend assets
     - NGINX, Workhorse, Puma, Sidekiq and Gitaly
@@ -41,12 +42,7 @@ scripts:
   entrypoint: scripts/entrypoint.sh
   healthcheck: scripts/healthcheck.sh
   reset: scripts/reset.sh
-recommended_run: >-
-  docker run -d --name gitlab-16.11.2-ce.0 -p 18527:80
-  -v gitlab-16.11.2-ce.0-config:/etc/gitlab
-  -v gitlab-16.11.2-ce.0-logs:/var/log/gitlab
-  -v gitlab-16.11.2-ce.0-data:/var/opt/gitlab
-  asteriskax001/sop-gitlab:16.11.2-ce.0
+recommended_run: docker compose -f docker/compose.yaml up -d
 notes:
   - The image is a single all-in-one container with application and database services inside it.
   - The complete Web application serves its bundled frontend from the same container and uses same-origin backend APIs.

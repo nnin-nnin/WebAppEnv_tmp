@@ -1,0 +1,101 @@
+application:
+  name: testlink
+  version: 1.9.20
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for TestLink 1.9.20 test management system with MariaDB 10.11 database."
+
+target:
+  platform: linux/amd64
+  compose_project: testlink-1920
+  compose_file: docker/compose.yaml
+  host_port: 18601
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18601/
+  login_url: http://127.0.0.1:18601/login.php
+
+source:
+  repository: https://github.com/TestLinkOpenSourceTRMS/testlink-code
+  fixed_ref: 1.9.20
+  immutable_commit: 2f6a6f4dd0cd500258f0f4ddf0eeb3fd93714433
+  metadata: source/source.yaml
+  availability: github_only
+  frontend_note: "TestLink includes built-in PHP web interface."
+
+compose:
+  project_name: testlink-1920
+  services:
+    - application
+    - mariadb
+  volumes:
+    - mariadb-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/testlink:1.9.20@sha256:8ae9312c1e647b77be6e27cf9938d3cfc780e979ce8812c6d5774cfc8a934ea2
+  database_image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: application
+    role: "Long-running TestLink Apache web application"
+    image: yorem/testlink:1.9.20@sha256:8ae9312c1e647b77be6e27cf9938d3cfc780e979ce8812c6d5774cfc8a934ea2
+    digest: sha256:8ae9312c1e647b77be6e27cf9938d3cfc780e979ce8812c6d5774cfc8a934ea2
+    platform: linux/amd64
+    source: "https://github.com/TestLinkOpenSourceTRMS/testlink-code 1.9.20 commit 2f6a6f4dd0cd500258f0f4ddf0eeb3fd93714433"
+    ports:
+      - "18601:80"
+    depends_on:
+      - mariadb: service_healthy
+    healthcheck: "wget -q --spider http://127.0.0.1:80/login.php || exit 1"
+
+  - name: mariadb
+    role: "MariaDB database service"
+    image: mariadb:10.11@sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    digest: sha256:7f22313fc130a377a44999965bcb0a08dd5b21e8502824c1b864f792f9bc66ab
+    platform: linux/amd64
+    source: "Official MariaDB 10.11 image from Docker Hub"
+    healthcheck: "mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"
+
+initialization:
+  database: "Automated schema initialization via MariaDB entrypoint and pre-configured config_db.inc.php."
+  idempotence: "Checks for existing database tables and config_db.inc.php file."
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin
+    password: admin
+    email: admin@localhost
+    role: administrator
+    creation_method: "Seeded into users table during initialization"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+
+operations:
+  start: bash scripts/up.sh
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - source_checksum
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+  final_state: "After scripts/up.sh, mariadb and application containers report healthy status."
+
+known_limits:
+  - "Images target linux/amd64 platform."
+
+consistency_statement: "This is a native multi-container Docker Compose environment. The application service runs TestLink on Apache/PHP 5.6 and connects to MariaDB 10.11 container via Compose networking."

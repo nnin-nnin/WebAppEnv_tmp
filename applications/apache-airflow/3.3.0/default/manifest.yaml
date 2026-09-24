@@ -1,0 +1,88 @@
+application:
+  name: Apache Airflow
+  version: 3.3.0
+  type: full_web_app
+  deployment_mode: native_compose
+  project_name: apache-airflow-3-3-0
+
+source:
+  repository: https://github.com/apache/airflow
+  commit: 1438ea3587031417cc85d74323235cf087a058fb
+  tag: 3.3.0
+  official_compose: https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml
+
+compose:
+  file: docker/compose.yaml
+  services:
+    - name: postgres
+      role: database
+      image: postgres:16
+      platform: linux/amd64
+      ports: []
+      volumes:
+        - postgres-db-volume:/var/lib/postgresql/data
+    - name: redis
+      role: cache_broker
+      image: redis:7.2-bookworm
+      platform: linux/amd64
+      ports: []
+      volumes:
+        - redis-db-volume:/data
+    - name: airflow-apiserver
+      role: webserver_apiserver
+      image: yorem/apache-airflow:3.3.0@sha256:1803ed9d010ddcdc6e09e0052c179a72a99d8f3e2f909ff073d5e88f54fbdce8
+      digest: sha256:977cb287a1f8e70e27e820439a36037c8db52a5e022d67a903f668ba77bd91dd
+      platform: linux/amd64
+      ports:
+        - "18010:8080"
+    - name: airflow-scheduler
+      role: scheduler
+      image: yorem/apache-airflow:3.3.0@sha256:1803ed9d010ddcdc6e09e0052c179a72a99d8f3e2f909ff073d5e88f54fbdce8
+      platform: linux/amd64
+    - name: airflow-dag-processor
+      role: dag_processor
+      image: yorem/apache-airflow:3.3.0@sha256:1803ed9d010ddcdc6e09e0052c179a72a99d8f3e2f909ff073d5e88f54fbdce8
+      platform: linux/amd64
+    - name: airflow-worker
+      role: celery_worker
+      image: yorem/apache-airflow:3.3.0@sha256:1803ed9d010ddcdc6e09e0052c179a72a99d8f3e2f909ff073d5e88f54fbdce8
+      platform: linux/amd64
+    - name: airflow-triggerer
+      role: triggerer
+      image: yorem/apache-airflow:3.3.0@sha256:1803ed9d010ddcdc6e09e0052c179a72a99d8f3e2f909ff073d5e88f54fbdce8
+      platform: linux/amd64
+    - name: airflow-init
+      role: initializer
+      image: yorem/apache-airflow:3.3.0@sha256:1803ed9d010ddcdc6e09e0052c179a72a99d8f3e2f909ff073d5e88f54fbdce8
+      platform: linux/amd64
+
+delivery:
+  mode: DOCKERHUB
+  docker_hub_namespace: yorem
+  push_result:
+    status: success
+    image: yorem/apache-airflow:3.3.0@sha256:1803ed9d010ddcdc6e09e0052c179a72a99d8f3e2f909ff073d5e88f54fbdce8
+    digest: sha256:977cb287a1f8e70e27e820439a36037c8db52a5e022d67a903f668ba77bd91dd
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  register: resources/register.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+access:
+  url: http://localhost:18010
+  admin_username: admin
+  admin_password: benchmark-only
+
+notes:
+  statement: 该环境是原生多容器 Docker Compose 部署，不是 all-in-one 单容器部署。应用、数据库和其他依赖服务分别运行在独立容器中，并通过 Compose 网络通信。
+  differences:
+    - 将 Airflow 基础镜像标准化为 yorem/apache-airflow:3.3.0 并推送到 Docker Hub。
+    - 将 Web UI 宿主机端口固定映射为 18010:8080。
+    - 配置默认初始管理员账号为 admin / benchmark-only。

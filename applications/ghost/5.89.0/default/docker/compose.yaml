@@ -1,0 +1,19 @@
+name: ghost_5_89_0_default
+
+services:
+  app:
+    image: yorem/ghost:5.89.0@sha256:7797c81d1148594fb3ce9a89a6f1aeb3efd1c991f9ce6e8bf642b03e16820b17
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18556:2368"
+    environment:
+      url: http://localhost:18556
+      database__client: sqlite3
+      database__connection__filename: /var/lib/ghost/content/data/ghost.db
+      security__staffDeviceVerification: "false"
+    volumes:
+      - ghost-data:/var/lib/ghost/content
+
+volumes:
+  ghost-data:

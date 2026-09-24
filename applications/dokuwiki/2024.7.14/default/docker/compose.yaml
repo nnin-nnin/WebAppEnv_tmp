@@ -1,0 +1,13 @@
+name: dokuwiki_2024_7_14_default
+
+services:
+  web:
+    image: yorem/dokuwiki:2024.7.14@sha256:87aa3e7cdc34154a25a5a404281a32e2c876f2314e795b1fc5647e309e28897f
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18561:80"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
