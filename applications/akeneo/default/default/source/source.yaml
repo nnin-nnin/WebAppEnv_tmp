@@ -1,0 +1,4 @@
+upstream:
+  repository: https://github.com/akeneo/pim-community-dev
+  branch: master
+  commit: 77d98c30f8af96a34c9d4056c8d78146ac03a43b

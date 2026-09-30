@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/fatfreecrm",
+    "tag": "default",
+    "digest": "sha256:9e727f5bf6af37bc8328f453c0a058fcfba4275dfbb4f416ff2702a5ff6d1a1b",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "postgres",
+    "tag": "14",
+    "digest": "sha256:c2427de38f998489d36de7ca3553db2134872c400f2b08be4b824e5c50e4d619",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

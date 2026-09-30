@@ -1,0 +1,56 @@
+name: wackowiki-default-default
+
+services:
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    restart: unless-stopped
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_520_ci
+      - --innodb-file-per-table=1
+    environment:
+      MYSQL_ROOT_PASSWORD: wacko_root
+      MYSQL_DATABASE: wackowiki
+      MYSQL_USER: wacko
+      MYSQL_PASSWORD: wacko_password
+    volumes:
+      - wackowiki-db:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -pwacko_root --silent || exit 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+
+  application:
+    image: yorem/wackowiki:default@sha256:602f95fbce582829df3d41c5ceffb4efb373fd83e5e13912f1ca417c13876a1b
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-18873}:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: wackowiki
+      DB_USER: wacko
+      DB_PASSWORD: wacko_password
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - wackowiki-cache:/var/www/html/_cache
+      - wackowiki-file:/var/www/html/file
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sI http://127.0.0.1/ | grep -qiE 'HTTP/1.1 (200|302)' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+volumes:
+  wackowiki-db:
+  wackowiki-cache:
+  wackowiki-file:

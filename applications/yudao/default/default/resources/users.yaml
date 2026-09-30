@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: admin123
+    email: admin@example.com
+    type: administrator
+    enabled: true
+    purpose: "Initial administrator account for system management and security evaluation"
+    creation_method: "Pre-seeded into MySQL database during container image build"

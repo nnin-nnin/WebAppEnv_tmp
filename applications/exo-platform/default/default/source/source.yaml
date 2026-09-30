@@ -1,0 +1,4 @@
+repository: https://github.com/exoplatform/exo-community.git
+commit: 512519e82cb7029fa94895007dc52a9dc4b4892e
+ref: HEAD
+version: default

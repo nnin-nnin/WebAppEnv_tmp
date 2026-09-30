@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: macro123
+    role: Administrator
+    type: admin
+    enabled: true
+    purpose: Primary administrator account for mall-swarm
+    creation_method: Pre-configured default credentials in database seed

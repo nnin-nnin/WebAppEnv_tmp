@@ -1,0 +1,49 @@
+name: open-edx-default-default
+
+services:
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: openedx
+      MYSQL_USER: openedx
+      MYSQL_PASSWORD: openedx_password
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u root -proot --silent"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+
+  app:
+    image: yorem/open-edx:default@sha256:45e3208cd0fcd17d94660136f8ec83bfa5bcd7d426c9f42d6308d896c223c6a6
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18848:8000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: openedx
+      DB_USER: openedx
+      DB_PASSWORD: openedx_password
+      ADMIN_EMAIL: admin@example.com
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: AdminPassword123!
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sL http://127.0.0.1:8000/health | grep -q 'open-edx-lms' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+volumes:
+  db-data:

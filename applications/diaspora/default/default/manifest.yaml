@@ -1,0 +1,137 @@
+id: diaspora_default
+application: Diaspora
+version: default
+artifact_type: ready_application_environment
+status: native_compose_ready
+application_type: complete_web_application
+deployment_mode: native_compose
+deployment_statement: "This is a native multi-container Docker Compose deployment. Application, database, and cache run in independent containers and communicate through the Compose network."
+
+documentation:
+  readme: README.md
+  compose_file: docker/compose.yaml
+  recommended_start: "docker compose -f docker/compose.yaml up -d"
+
+compose:
+  project_name: diaspora_default
+  standard_entrypoint: docker/compose.yaml
+  service_names:
+    - app
+    - db
+    - redis
+  network: "Compose-created default network; containers communicate via service names"
+  volumes:
+    - application-uploads
+    - application-tmp
+    - database-data
+    - redis-data
+  external_dependencies: false
+
+official_compose:
+  development: null
+  status: "Official repository provides development compose files; delivery provides a production-grade standardized multi-container compose topology."
+
+source:
+  backend:
+    repository: https://github.com/diaspora/diaspora
+    ref: HEAD
+    commit: f96527862dc1ba2e5b95c4196efb0d1f0cc4b6e5
+  frontend:
+    repository: null
+    commit: null
+    note: "Frontend templates and assets are bundled within the main repository."
+  metadata: source/source.yaml
+
+runtime:
+  platform: linux/amd64
+  ruby: 3.3.11
+  web_server: Puma 7.2.0
+  database: PostgreSQL 14
+  cache: Redis 7
+  public_url: http://localhost:18815/
+  container_web_port: 80
+  container_db_port: 5432
+  container_redis_port: 6379
+
+services:
+  - name: app
+    role: "Diaspora Ruby on Rails Web Application & Sidekiq Worker"
+    image: yorem/diaspora:default@sha256:706fc9b3ca713178a22d22a8bd120ea07a1f3a3cae38c329bc85779bc5bd564f
+    tag: default
+    digest: sha256:706fc9b3ca713178a22d22a8bd120ea07a1f3a3cae38c329bc85779bc5bd564f
+    platform: linux/amd64
+    source: "Built from upstream commit f96527862dc1ba2e5b95c4196efb0d1f0cc4b6e5 and docker/Dockerfile"
+    ports:
+      - 18815:80
+    depends_on:
+      - db: service_healthy
+      - redis: service_healthy
+    healthcheck: "HTTP GET / returns 200/302"
+    volumes:
+      - application-uploads:/home/diaspora/diaspora/public/uploads
+      - application-tmp:/home/diaspora/diaspora/tmp
+
+  - name: db
+    role: "PostgreSQL Relational Database"
+    image: postgres:14@sha256:c2427de38f998489d36de7ca3553db2134872c400f2b08be4b824e5c50e4d619
+    tag: 14
+    digest: sha256:c2427de38f998489d36de7ca3553db2134872c400f2b08be4b824e5c50e4d619
+    platform: linux/amd64
+    source: "Official PostgreSQL 14 image"
+    ports: []
+    depends_on: []
+    healthcheck: "pg_isready -U diaspora -d diaspora_production"
+    volumes:
+      - database-data:/var/lib/postgresql/data
+
+  - name: redis
+    role: "Redis In-Memory Key-Value Store"
+    image: redis:7@sha256:c6eabf748fc7a61dbb5a705c78bcf3d6377b1127a97d0ce965c11c44ba46896f
+    tag: 7
+    digest: sha256:c6eabf748fc7a61dbb5a705c78bcf3d6377b1127a97d0ce965c11c44ba46896f
+    platform: linux/amd64
+    source: "Official Redis 7 image"
+    ports: []
+    depends_on: []
+    healthcheck: "redis-cli ping"
+    volumes:
+      - redis-data:/data
+
+delivery:
+  mode: DOCKERHUB
+  registry: docker.io
+  namespace: yorem
+  registry_images:
+    app: yorem/diaspora:default
+    db: postgres:14
+    redis: redis:7
+  start_command: "docker compose -f docker/compose.yaml up -d"
+  health_command: "bash scripts/healthcheck.sh"
+  reset_command: "bash scripts/reset.sh"
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+
+scripts:
+  build: scripts/build.sh
+  start: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+initial_account:
+  username: admin
+  password: AdminPassword123!
+  role: admin
+  creation: "Initialized automatically on cold start via docker/seed_admin.rb and Role.add_admin"
+
+official_vs_delivery:
+  - "Official repo targets manual bare-metal setups and development compose; delivery defines a hardened production multi-container topology (app + postgres + redis)."
+  - "Automatic migration execution and admin user seeding on initial cold start without requiring interactive setup wizard."
+  - "Configured with zero-wizard auto-bypass (getting_started=false) for instant benchmark readiness."
+  - "All images locked to sha256 digests and built for linux/amd64."
+
+known_limitations:
+  - "Benchmark credentials (admin / AdminPassword123!) are stored in documentation and scripts for test automation."
+  - "ARM64 host systems rely on Docker linux/amd64 emulation mode."

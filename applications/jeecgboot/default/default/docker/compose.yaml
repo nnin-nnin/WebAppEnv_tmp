@@ -1,0 +1,72 @@
+name: jeecgboot-default-default
+
+services:
+  jeecgboot:
+    image: yorem/jeecgboot:default@sha256:87c41f054c48c9dced282062b0175fb5bbfcf5020884e376d205591a5c4c4860
+    platform: linux/amd64
+    ports:
+      - "18833:8080"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1024m"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - application-data:/opt/upFiles
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:8080/jeecg-boot/doc.html || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+
+  db:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    platform: linux/amd64
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      default:
+        aliases:
+          - jeecg-boot-mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    networks:
+      default:
+        aliases:
+          - jeecg-boot-redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  application-data:
+  database-data:
+  redis-data:

@@ -1,0 +1,4 @@
+- username: elastic
+  password: changeme
+  role: superuser
+  email: elastic@example.com

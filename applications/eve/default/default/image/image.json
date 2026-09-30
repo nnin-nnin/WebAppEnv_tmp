@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/eve",
+    "tag": "default",
+    "digest": "sha256:72c3ae0c6d2c1fb52744d2041340b00f4d35d7365cc6fd252af9a1c556430419",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "mongo",
+    "image": "mongo",
+    "tag": "4.4",
+    "digest": "sha256:4be76f674fc4b27859816811b8baa3c51830eb1dbf4ca81a51e26b79edd662ef",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

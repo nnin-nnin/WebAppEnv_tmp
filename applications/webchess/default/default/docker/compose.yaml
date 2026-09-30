@@ -1,0 +1,38 @@
+name: webchess_default_default
+
+services:
+  app:
+    image: yorem/webchess:default@sha256:4741fd66247d6af41995c2d5ca89f20af5367f309e9b55fcf05b41f757b91e9b
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-18874}:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: webchess
+      DB_USER: webchess
+      DB_PASSWORD: webchess_password
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: webchess_root_pass
+      MYSQL_DATABASE: webchess
+      MYSQL_USER: webchess
+      MYSQL_PASSWORD: webchess_password
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -pwebchess_root_pass || mysqladmin ping -h localhost -u root -pwebchess_root_pass || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

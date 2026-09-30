@@ -1,0 +1,15 @@
+users:
+  - username: admin
+    password: AdminPassword123!
+    email: admin@example.com
+    type: administrator
+    enabled: true
+    purpose: "Primary benchmark administrator account for system management and security evaluation"
+    creation_method: "Automated database seed during container entrypoint initialization"
+  - username: super
+    password: AdminPassword123!
+    email: info@zurmo.com
+    type: superuser
+    enabled: true
+    purpose: "Zurmo native super administrator account"
+    creation_method: "Automated database seed during container entrypoint initialization"

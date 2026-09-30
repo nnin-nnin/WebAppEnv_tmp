@@ -1,0 +1,4 @@
+repository: https://github.com/thredded/thredded.git
+version: default
+commit: a9c234692736070b8ac4e7dce9b6bf7d38559688
+ref: main

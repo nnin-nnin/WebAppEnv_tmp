@@ -1,0 +1,7 @@
+roles:
+  - role: administrator
+    description: Administrator with full administrative access
+  - role: modeler
+    description: Data modeler role
+  - role: analyst
+    description: Data analyst role

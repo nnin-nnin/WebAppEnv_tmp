@@ -1,0 +1,18 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/gallery",
+    "tag": "default",
+    "digest": "sha256:71f419a1b59684a1464ff52de2b53d823dfe9f668f00b0e13554013164c2e705",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

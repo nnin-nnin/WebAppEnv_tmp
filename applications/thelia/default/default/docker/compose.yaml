@@ -1,0 +1,39 @@
+name: thelia-default
+
+services:
+  app:
+    image: yorem/thelia:default@sha256:0a53e9433a0aefec7afbfe789bb0e20e87340deedd7f382e31d5affd2a2a6583
+    platform: linux/amd64
+    command: ["bash", "-c", "echo 'memory_limit = -1' > /usr/local/etc/php/conf.d/memory.ini && exec /usr/local/bin/entrypoint.sh"]
+    ports:
+      - "18869:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: thelia
+      MYSQL_USER: thelia
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  db-data:

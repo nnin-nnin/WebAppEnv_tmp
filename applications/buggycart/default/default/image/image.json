@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/buggycart",
+    "tag": "default",
+    "digest": "sha256:87061ce4e4c194f953313d05ff9e7796b3a64e211e9172794039fe12487530eb",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

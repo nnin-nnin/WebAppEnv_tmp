@@ -1,0 +1,16 @@
+users:
+- username: admin
+  password: AdminPassword123!
+  role: Administrator
+  email: admin@example.com
+  description: Default administrator account
+- username: instructor
+  password: InstructorPassword123!
+  role: Staff
+  email: instructor@example.com
+  description: Course instructor and staff account
+- username: student
+  password: StudentPassword123!
+  role: Student
+  email: student@example.com
+  description: Standard learner student account

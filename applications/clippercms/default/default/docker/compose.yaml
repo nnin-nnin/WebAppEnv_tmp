@@ -1,0 +1,41 @@
+name: clippercms-default
+
+services:
+  application:
+    image: yorem/clippercms:default@sha256:6af995ad51ca42c236c4d8b984b3ae3bce739565705b895065deca90ddfdb775
+    platform: linux/amd64
+    ports:
+      - "18807:80"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=clippercms
+      - DB_USER=clippercms
+      - DB_PASSWORD=clippercmspassword
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - application-data:/var/www/html/assets/images
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: clippercms
+      MYSQL_USER: clippercms
+      MYSQL_PASSWORD: clippercmspassword
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u root -prootpassword || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  application-data:
+  database-data:

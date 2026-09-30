@@ -1,0 +1,46 @@
+application: canvaslms
+version: default
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/instructure/canvas-lms
+  commit: 1c9f0bb8013ed69c4f2efe11fd483025469b7e6c
+runtime:
+  language: Ruby 2.7 / Rails 6.0
+  web_server: Nginx with Passenger 6.0
+  database: PostgreSQL 12
+ports:
+  host_port: 18805
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  canvaslms:
+    image: yorem/canvaslms:default@sha256:62316ba6c213db3d82a21b1d0bb33e7d667cc1de66cb49e3846ec684b93c2e53
+    tag: default
+    digest: sha256:62316ba6c213db3d82a21b1d0bb33e7d667cc1de66cb49e3846ec684b93c2e53
+    platform: linux/amd64
+  db:
+    image: postgres:12@sha256:2f2a8c2a7d10862e7fba2602e304523554f9df8244c632dafe2628ccb398fb5c
+    tag: "12"
+    digest: sha256:2f2a8c2a7d10862e7fba2602e304523554f9df8244c632dafe2628ccb398fb5c
+    platform: linux/amd64
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    tag: 7-alpine
+    digest: sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64

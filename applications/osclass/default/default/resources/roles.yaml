@@ -1,0 +1,21 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_listings
+      - manage_categories
+      - manage_pages
+      - manage_comments
+      - manage_users
+      - manage_settings
+      - manage_plugins
+      - manage_themes
+    purpose: "Full administrative access to Osclass management backoffice"
+    associated_accounts:
+      - admin
+  - name: user
+    permissions:
+      - post_item
+      - view_item
+      - contact_seller
+    purpose: "Standard registered user on Osclass frontend"
+    associated_accounts: []

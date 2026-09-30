@@ -1,0 +1,56 @@
+name: pimcore-default-default
+
+services:
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    restart: unless-stopped
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --innodb-file-per-table=1
+      - --innodb-log-file-size=16M
+      - --innodb-buffer-pool-size=64M
+    environment:
+      MYSQL_ROOT_PASSWORD: pimcore_root
+      MYSQL_DATABASE: pimcore
+      MYSQL_USER: pimcore
+      MYSQL_PASSWORD: pimcore
+    volumes:
+      - pimcore-db:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -ppimcore_root --silent || exit 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+
+  application:
+    image: yorem/pimcore:default@sha256:c36ce1a36e28edac459c176465fcae502d27acc6493b022c794654327b451948
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-18857}:80"
+    environment:
+      PIMCORE_DB_HOST: db
+      PIMCORE_DB_PORT: 3306
+      PIMCORE_DB_NAME: pimcore
+      PIMCORE_DB_USER: pimcore
+      PIMCORE_DB_PASSWORD: pimcore
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - pimcore-data:/var/www/html/var
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sI http://127.0.0.1/ | grep -q 'HTTP/1.1 200' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+volumes:
+  pimcore-db:
+  pimcore-data:

@@ -1,0 +1,69 @@
+application:
+  name: Zurmo
+  version: default
+  type: full_web_application
+  description: "Zurmo is an open source customer relationship management (CRM) mobile application."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（Zurmo PHP 7.4 Apache）与关系型数据库（MariaDB 10.5）分别运行在独立容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: zurmo_default_default
+  host_port: 18879
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/Zurmo/Zurmo
+    commit: 849e52029997ced4f7b571ded20dae824e9bfb55
+    tag: default
+    source_yaml: source/source.yaml
+
+services:
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.5)"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mariadb-admin ping -h localhost -u root -pAdminPassword123!"
+    volumes:
+      - db-data
+  app:
+    service_name: app
+    role: "Web Application & CRM Runtime (PHP 7.4 Apache)"
+    image: yorem/zurmo:default@sha256:4e49ee6445c43d0293d367a3e43790198d83ffe9aa736402302717d0267d1c96
+    digest: "sha256:4e49ee6445c43d0293d367a3e43790198d83ffe9aa736402302717d0267d1c96"
+    platform: linux/amd64
+    ports:
+      - "18879:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s http://127.0.0.1:80/app/index.php/zurmo/default/login || exit 1"
+    volumes: []
+
+credentials:
+  admin_username: super
+  admin_password: "AdminPassword123!"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh super AdminPassword123!"
+  reset: "./scripts/reset.sh"

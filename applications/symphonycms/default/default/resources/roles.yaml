@@ -1,0 +1,24 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_pages
+      - manage_blueprints
+      - manage_sections
+      - manage_authors
+      - manage_settings
+      - manage_extensions
+    purpose: "Full administrative, developer and content access to Symphony CMS"
+    associated_accounts:
+      - admin
+  - name: manager
+    permissions:
+      - manage_content
+      - view_blueprints
+    purpose: "Content management and editorial permissions"
+    associated_accounts: []
+  - name: author
+    permissions:
+      - create_content
+      - edit_own_content
+    purpose: "Standard content contributor permissions"
+    associated_accounts: []

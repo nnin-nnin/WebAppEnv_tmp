@@ -1,0 +1,53 @@
+name: navigatecms-default
+
+services:
+  app:
+    image: yorem/navigatecms:default@sha256:4f5a5fdae8c1f5a51ddfae4f2145592e38f1487986138e51a2159af1f2535852
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: navigatecms
+      DB_USER: navigatecms
+      DB_PASS: AdminPassword123!
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: AdminPassword123!
+      HOST_PORT: "${HOST_PORT:-18846}"
+    ports:
+      - "${HOST_PORT:-18846}:80"
+    volumes:
+      - app-cache:/var/www/html/cache
+      - app-private:/var/www/html/private
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/login.php || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: navigatecms
+      MYSQL_USER: navigatecms
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  app-cache:
+  app-private:
+  db-data:

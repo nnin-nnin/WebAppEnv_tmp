@@ -1,0 +1,6 @@
+admin:
+  username: admin
+  password: AdminPassword123!
+  email: admin@example.com
+  role: administrator
+  purpose: Default system administrator account for project management and benchmarking.

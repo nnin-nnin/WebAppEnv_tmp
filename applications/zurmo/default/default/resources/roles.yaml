@@ -1,0 +1,23 @@
+roles:
+  - name: super_administrator
+    permissions:
+      - manage_users
+      - manage_roles
+      - manage_groups
+      - manage_configuration
+      - manage_modules
+      - access_api
+      - export_data
+      - import_data
+    purpose: "Super administrator with complete access to all CRM functions, configurations, and data"
+    associated_accounts:
+      - admin
+      - super
+  - name: regular_user
+    permissions:
+      - view_contacts
+      - view_accounts
+      - view_leads
+      - view_opportunities
+    purpose: "Standard CRM user with standard operational privileges"
+    associated_accounts: []

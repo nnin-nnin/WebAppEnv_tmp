@@ -1,0 +1,5 @@
+roles:
+  - role: admin
+    description: Full administrative privileges
+  - role: member
+    description: Standard store member access

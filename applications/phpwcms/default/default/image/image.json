@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/phpwcms:default",
+    "tag": "default",
+    "digest": "sha256:afda9101b1aa5c2c07d3cc1056de2de03210df86fb0206fb9cd4e0dd09c2b016",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

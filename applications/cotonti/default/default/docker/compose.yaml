@@ -1,0 +1,41 @@
+name: cotonti-default
+
+services:
+  app:
+    image: yorem/cotonti:default@sha256:3c42b9fca8d7e271e118d947a26b78a98aeb94c768ce167e050956ec0ff87381
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18809}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../resources/initial-data/config.php:/var/www/html/datas/config.php:rw
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: benchmark-only-root
+      MYSQL_DATABASE: cotonti
+      MYSQL_USER: cotonti
+      MYSQL_PASSWORD: benchmark-only
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

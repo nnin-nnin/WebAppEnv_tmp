@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/jizhicms:default",
+    "tag": "default",
+    "digest": "sha256:d5330409f4daf686916933014036ef681db16abc3a9415db9c69547768142162",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,100 @@
+application:
+  name: Symphony-CMS
+  version: default
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for Symphony CMS default (3.0.0) with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: symphonycms-default
+  compose_file: docker/compose.yaml
+  host_port: 18868
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18868/
+  login_url: http://127.0.0.1:18868/symphony/login/
+
+source:
+  repository: https://github.com/symphonycms/symphony-2
+  fixed_ref: HEAD
+  immutable_commit: ea690f74cbc5b325014e45fb44b7ad5501b7da5e
+  metadata: source/source.yaml
+  availability: github_only
+  frontend_note: "Symphony CMS includes XSLT templating frontend and XML-driven architecture."
+
+compose:
+  project_name: symphonycms-default
+  services:
+    - application
+    - db
+  volumes:
+    - application-manifest
+    - application-workspace
+    - database-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/symphonycms:default@sha256:c1c3b45a14d150cec0669e8c136710cc47bca5d4a9de559b45a9f283b333164c
+  database_image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+
+services:
+  - name: application
+    role: "Long-running Symphony CMS Apache web application"
+    image: yorem/symphonycms:default@sha256:c1c3b45a14d150cec0669e8c136710cc47bca5d4a9de559b45a9f283b333164c
+    digest: sha256:c1c3b45a14d150cec0669e8c136710cc47bca5d4a9de559b45a9f283b333164c
+    platform: linux/amd64
+    source: "https://github.com/symphonycms/symphony-2 commit ea690f74cbc5b325014e45fb44b7ad5501b7da5e via docker/Dockerfile"
+    ports:
+      - "${HOST_PORT:-18868}:80"
+    depends_on:
+      - db: service_healthy
+    healthcheck: "HTTP GET http://127.0.0.1:80/symphony/login/ inside container"
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    source: "Official MariaDB image from Docker Hub"
+    healthcheck: "mysqladmin ping -h localhost -u root -pbenchmark-only-root"
+
+initialization:
+  database: "Automated schema creation and admin seeding during container entrypoint initialization."
+  idempotence: "Checks for existing sym_authors table before initialization."
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin
+    password: AdminPassword123!
+    email: admin@example.com
+    role: administrator
+    creation_method: "Seeded into sym_authors table via container entrypoint"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+
+operations:
+  build: bash scripts/build.sh
+  start: bash scripts/up.sh
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+  final_state: "After scripts/up.sh, db and application containers report healthy status."
+
+known_limits:
+  - "Symphony CMS default (3.0.0) is configured for security research and benchmarking."

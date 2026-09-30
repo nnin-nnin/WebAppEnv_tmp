@@ -1,0 +1,9 @@
+roles:
+  - name: ROLE_ADMINISTRATOR
+    permissions: "系统超级管理员角色，拥有全量报表定义、组织架构与权限管理"
+    purpose: "系统管理"
+    relation: "jasperadmin 账号所属角色"
+  - name: ROLE_USER
+    permissions: "普通用户角色，拥有报表浏览、执行与导出权限"
+    purpose: "常规报表访问"
+    relation: "joeuser 账号所属角色"

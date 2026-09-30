@@ -1,0 +1,2 @@
+- name: administrator
+  description: Administrator with full administrative access and bbPress keymaster role

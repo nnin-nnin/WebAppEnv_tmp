@@ -1,0 +1,4 @@
+repository: https://github.com/edgewall/trac
+version: default
+commit: 717da8621d32bc0b50cda2acb77fcc4ae59d82b2
+ref: tags/trac-1.6

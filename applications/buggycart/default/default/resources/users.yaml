@@ -1,0 +1,11 @@
+users:
+  - username: admin
+    password: AdminPassword123!
+    role: administrator
+    email: admin@admin.com
+    description: Default administrator account
+  - username: admin@admin.com
+    password: AdminPassword123!
+    role: administrator
+    email: admin@admin.com
+    description: Default administrator account (email alias)

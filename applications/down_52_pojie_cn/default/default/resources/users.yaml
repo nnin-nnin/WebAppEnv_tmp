@@ -1,0 +1,8 @@
+users:
+  - username: admin
+    password: AdminPassword123!
+    role: Administrator
+    type: admin
+    enabled: true
+    purpose: Benchmark administrator account
+    creation_method: Preconfigured benchmark account

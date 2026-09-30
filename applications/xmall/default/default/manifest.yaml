@@ -1,0 +1,113 @@
+application:
+  name: XMall
+  version: default
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for XMall default with MariaDB database and Redis cache."
+
+target:
+  platform: linux/amd64
+  compose_project: xmall-default
+  compose_file: docker/compose.yaml
+  host_port: 18876
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18876/
+  login_url: http://127.0.0.1:18876/login
+
+source:
+  repository: https://github.com/Exrick/xmall
+  fixed_ref: 19e7917d5ed3bd2a2421a3a246ad494c133ba94c
+  immutable_commit: 19e7917d5ed3bd2a2421a3a246ad494c133ba94c
+  metadata: source/source.yaml
+  availability: github_only
+  frontend_note: "XMall includes administrative management web interface and product/order management portal."
+
+compose:
+  project_name: xmall-default
+  services:
+    - app
+    - db
+    - redis
+  volumes:
+    - db-data
+    - redis-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/xmall:default@sha256:60737c6661b41aeac9ee4047571ef166fa6576f8884b18aa548d7e4eb563af44
+  database_image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+  redis_image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+
+services:
+  - name: app
+    role: "XMall Web application runtime (Tomcat 8.5 / Java 8)"
+    image: yorem/xmall:default@sha256:60737c6661b41aeac9ee4047571ef166fa6576f8884b18aa548d7e4eb563af44
+    digest: sha256:60737c6661b41aeac9ee4047571ef166fa6576f8884b18aa548d7e4eb563af44
+    platform: linux/amd64
+    source: "https://github.com/Exrick/xmall commit 19e7917d5ed3bd2a2421a3a246ad494c133ba94c via docker/Dockerfile"
+    ports:
+      - "${HOST_PORT:-18876}:7777"
+    depends_on:
+      - db: service_healthy
+      - redis: service_healthy
+    healthcheck: "curl -f -s http://127.0.0.1:7777/"
+
+  - name: db
+    role: "MariaDB 10.5 database service"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    source: "Official MariaDB image from Docker Hub"
+    healthcheck: "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD"
+
+  - name: redis
+    role: "Redis 7 in-memory cache and session store"
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    digest: sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64
+    source: "Official Redis image from Docker Hub"
+    healthcheck: "redis-cli ping"
+
+initialization:
+  database: "Automated schema initialization and admin seeding via /docker-entrypoint-initdb.d/01-database-seed.sql"
+  idempotence: "Checks for existing schema during database creation"
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin
+    password: AdminPassword123!
+    email: admin@example.com
+    role: "Super Admin"
+    creation_method: "Seeded into user table via initial database seed"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+
+operations:
+  build: bash scripts/build.sh
+  start: bash scripts/up.sh
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+  final_state: "After scripts/up.sh, db, redis, and app containers report healthy status."
+
+known_limits:
+  - "XMall default is configured for benchmark and security evaluation."
+  - "Images target linux/amd64 platform."
+
+consistency_statement: "This is a native multi-container Docker Compose environment, not an all-in-one image. The application service runs XMall on Tomcat 8.5 (Java 8) and connects to separate MariaDB and Redis containers via Compose networking."

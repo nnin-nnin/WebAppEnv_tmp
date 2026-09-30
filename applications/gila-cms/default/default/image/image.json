@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/gila-cms:default",
+    "tag": "default",
+    "digest": "sha256:d8b2d5e4255e1b83bfbf40db38d513376337b9be62b5e0eceb7c08918326d9db",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.6",
+    "digest": "sha256:40153feb479c0da88b5cfe3f50f44c91f7baf05a1b7bcc5beb7eb37a890a8f16",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

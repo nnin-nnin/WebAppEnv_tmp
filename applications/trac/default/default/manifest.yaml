@@ -1,0 +1,47 @@
+application: trac
+version: default
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+
+source:
+  repository: https://github.com/edgewall/trac
+  commit: 717da8621d32bc0b50cda2acb77fcc4ae59d82b2
+
+runtime:
+  language: python
+  python_version: "3.11"
+  framework: "Trac 1.6"
+  server: tracd
+  database: sqlite
+  database_version: "3"
+
+ports:
+  host_port: 18871
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/trac:default@sha256:bcbe8809e3a9df7f5f0f9eff77bc97f35bdf85ed5e74ee2bb7bbc7d6322c018a
+    tag: default
+    digest: sha256:bcbe8809e3a9df7f5f0f9eff77bc97f35bdf85ed5e74ee2bb7bbc7d6322c018a
+    platform: linux/amd64

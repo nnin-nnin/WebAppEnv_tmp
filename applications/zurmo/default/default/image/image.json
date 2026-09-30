@@ -1,0 +1,18 @@
+[
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "app",
+    "image": "yorem/zurmo",
+    "tag": "default",
+    "digest": "sha256:4e49ee6445c43d0293d367a3e43790198d83ffe9aa736402302717d0267d1c96",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

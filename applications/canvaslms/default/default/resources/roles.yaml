@@ -1,0 +1,6 @@
+application: canvaslms
+roles:
+  - name: AccountAdmin
+    permissions: Canvas LMS 内置全站及账户最高管理权限
+    purpose: 系统初始化与全站管理
+    assigned_to: admin

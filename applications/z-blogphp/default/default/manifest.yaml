@@ -1,0 +1,41 @@
+application: z-blogphp
+version: "default"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/zblogcn/zblogphp
+  commit: af674c47b6778d8fbacb4a18e9514936631e06b6
+runtime:
+  language: php
+  server: apache
+ports:
+  host_port: 18878
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/z-blogphp:default@sha256:0ba3c425f4995fa1e6edcbf783ef6bb3d3fea93384e57675371d08f45f67534d
+    tag: "default"
+    digest: sha256:0ba3c425f4995fa1e6edcbf783ef6bb3d3fea93384e57675371d08f45f67534d
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    tag: "10.5"
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

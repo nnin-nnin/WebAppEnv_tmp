@@ -1,0 +1,4 @@
+repository: https://github.com/ProcessMaker/processmaker
+version: default
+commit: dfa352c7fac2a764053fe724372738e4d5228df0
+ref: develop

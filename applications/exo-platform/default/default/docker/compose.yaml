@@ -1,0 +1,51 @@
+name: exo-platform-default
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.14.3@sha256:1ddbb1ae0754278f3ab53edc24fcc5c790ebc2422cc47abea760b24abee2d88a
+    platform: linux/amd64
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+      - es_tmp:/tmp
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -q 'green\\|yellow'"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  application:
+    image: yorem/exo-platform:default@sha256:b7becad322b60255189b7338b732e9d261a3cef2ecd18bf22e67707353df4eef
+    platform: linux/amd64
+    ports:
+      - "18824:8080"
+    environment:
+      - EXO_PROXY_VHOST=127.0.0.1
+      - EXO_PROXY_PORT=18824
+      - EXO_PROXY_SSL=false
+      - EXO_DB_TYPE=hsqldb
+      - EXO_ES_HOST=elasticsearch
+      - EXO_ES_PORT=9200
+      - EXO_ES_SCHEME=http
+      - EXO_ES_INDEX_REPLICA_NB=0
+      - EXO_JVM_LOG_GC_ENABLED=false
+      - EXO_JVM_SIZE_MAX=2g
+      - EXO_JVM_SIZE_MIN=512m
+    volumes:
+      - exo_data:/srv/exo
+      - exo_codec:/etc/exo/codec
+      - exo_logs:/var/log/exo
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+volumes:
+  es_data:
+  es_tmp:
+  exo_data:
+  exo_codec:
+  exo_logs:

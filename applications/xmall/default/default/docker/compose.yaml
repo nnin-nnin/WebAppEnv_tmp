@@ -1,0 +1,52 @@
+name: xmall-default
+
+services:
+  app:
+    image: yorem/xmall:default@sha256:60737c6661b41aeac9ee4047571ef166fa6576f8884b18aa548d7e4eb563af44
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "${HOST_PORT:-18876}:7777"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s http://127.0.0.1:7777/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 25s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: xmall
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+
+volumes:
+  db-data:
+  redis-data:

@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/couchcms:default",
+    "tag": "default",
+    "digest": "sha256:3079142eaa73c169c667347c3bb684c4b96a646329dbfd83be79ae9814466b95",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

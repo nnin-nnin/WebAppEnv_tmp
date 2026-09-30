@@ -29,5 +29,5 @@
 | YuraScanner-NDSS'25 | 16 | ownCloud | [owncloud/core](https://github.com/owncloud/core) | 10.14.0 | 10.14.0 | [applications/owncloud/10.14.0](../applications/owncloud/10.14.0/) |
 | YuraScanner-NDSS'25 | 17 | phpBB | [phpbb/phpbb](https://github.com/phpbb/phpbb) | 3.3.11 | 3.3.17 | [applications/phpbb/3.3.17](../applications/phpbb/3.3.17/) |
 | YuraScanner-NDSS'25 | 18 | Redmine | [redmine/redmine](https://github.com/redmine/redmine) | 5.1.2 | 5.1.2 | [Redmine 5.1.2](../applications/redmine/5.1.2/) |
-| YuraScanner-NDSS'25 | 19 | Silverpeas | [Silverpeas/Silverpeas-Core](https://github.com/Silverpeas/Silverpeas-Core) | 6.3.5 | - | - |
+| YuraScanner-NDSS'25 | 19 | Silverpeas | [Silverpeas/Silverpeas-Core](https://github.com/Silverpeas/Silverpeas-Core) | 6.3.5 | default | [Silverpeas default](../applications/silverpeas/default/default/) |
 | YuraScanner-NDSS'25 | 20 | WordPress | [WordPress/wordpress-develop](https://github.com/WordPress/wordpress-develop) | 6.5.3 | 6.5.3 | [applications/wordpress/6.5.3](../applications/wordpress/6.5.3/) |

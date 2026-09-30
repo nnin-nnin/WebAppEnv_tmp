@@ -1,0 +1,21 @@
+[configuration.environment]
+url = "http://localhost:18815/"
+certificate_authorities = "/etc/ssl/certs/ca-certificates.crt"
+redis = "redis://redis:6379"
+require_ssl = false
+
+[configuration.environment.assets]
+serve = true
+
+[configuration.server]
+listen = "tcp://0.0.0.0:80"
+rails_environment = "production"
+
+[configuration.settings]
+username_blacklist = []
+
+[configuration.admins]
+account = "admin"
+podmin_email = "admin@example.com"
+
+[production]

@@ -1,0 +1,10 @@
+roles:
+  - name: admin
+    permissions: 所有权限
+    purpose: 系统管理员
+    relation: 初始账号admin默认拥有此角色
+
+  - name: web_manager
+    permissions: 网站管理权限
+    purpose: 站点运维用户
+    relation: 具备后台管理权限的角色

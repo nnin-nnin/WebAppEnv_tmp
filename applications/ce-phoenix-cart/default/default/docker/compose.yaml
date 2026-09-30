@@ -1,0 +1,36 @@
+name: ce-phoenix-cart-default
+
+services:
+  web:
+    image: yorem/ce-phoenix-cart:default@sha256:e8eae01be7dccbfc83a698cfda355eaf3e8acc60cacbf0eb3154ba0839086d21
+    platform: linux/amd64
+    ports:
+      - "18806:80"
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      - DB_SERVER=db
+      - DB_DATABASE=phoenix
+      - DB_SERVER_USERNAME=phoenix
+      - DB_SERVER_PASSWORD=phoenix_password
+      - HTTP_SERVER=http://localhost:18806
+    volumes:
+      - phoenix-work:/var/www/html/includes/work
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=phoenix
+      - MYSQL_USER=phoenix
+      - MYSQL_PASSWORD=phoenix_password
+      - MYSQL_ROOT_PASSWORD=root_password
+    volumes:
+      - ../resources/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - phoenix-db:/var/lib/mysql
+
+volumes:
+  phoenix-db: {}
+  phoenix-work: {}

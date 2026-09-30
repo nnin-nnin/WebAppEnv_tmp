@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/spree",
+    "tag": "default",
+    "digest": "sha256:1c29b806fb6769ef5d4ac5a451f862457611b661fa2208b4eb431674da96b45e",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "postgres",
+    "tag": "16-alpine",
+    "digest": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

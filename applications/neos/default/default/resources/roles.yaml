@@ -1,0 +1,7 @@
+roles:
+  - role: "Neos.Neos:Administrator"
+    description: "Superadministrator with full system and backend privileges"
+  - role: "Neos.Neos:Editor"
+    description: "Content editor with editing permissions"
+  - role: "Neos.Flow:Everybody"
+    description: "Default pseudo-role for all users"

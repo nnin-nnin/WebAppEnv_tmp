@@ -1,0 +1,81 @@
+application:
+  name: MoonBox
+  version: default
+  type: full_web_application
+  description: "MoonBox (月光宝盒) is a traffic recording and playback platform developed by vivo."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（MoonBox Spring Boot）、MariaDB 数据库与 Elasticsearch 搜索引擎运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: vivo-moonbox_default_default
+  host_port: 18872
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/vivo/MoonBox.git
+    commit: 9a0c20b0befe0b0d3b41a33a96654d762bf37cd1
+    tag: master
+    source_yaml: source/source.yaml
+
+services:
+  elasticsearch:
+    service_name: elasticsearch
+    role: "Search & Analytics Engine (Elasticsearch 7.16.2)"
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2@sha256:055ab3c3466c6bd72ef42f7773c5fa224db4fb7cd6a9a5588ebe46642a15abf5
+    digest: "sha256:055ab3c3466c6bd72ef42f7773c5fa224db4fb7cd6a9a5588ebe46642a15abf5"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "curl -s http://localhost:9200/_cluster/health"
+    volumes:
+      - es-data
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.5)"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mariadb-admin ping -h localhost -u root -pAdminPassword123!"
+    volumes:
+      - db-data
+  app:
+    service_name: app
+    role: "Web Application & Spring Boot REST API Runtime"
+    image: yorem/vivo-moonbox:default@sha256:66f9c4226a1d7f30932e31d058d9751f760f84e4fa9dfc4b54b52ced44cc04ce
+    digest: "sha256:66f9c4226a1d7f30932e31d058d9751f760f84e4fa9dfc4b54b52ced44cc04ce"
+    platform: linux/amd64
+    ports:
+      - "18872:8080"
+    dependencies:
+      - db
+      - elasticsearch
+    healthcheck: "curl -f -s http://127.0.0.1:8080/api/app/supportEnv || exit 1"
+    volumes: []
+
+credentials:
+  admin_username: admin
+  admin_password: "AdminPassword123!"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin AdminPassword123!"
+  reset: "./scripts/reset.sh"

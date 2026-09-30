@@ -1,0 +1,12 @@
+name: apache-kylin_default_default
+
+services:
+  app:
+    image: yorem/apache-kylin:default@sha256:847cf8498e8b7db811d6ac47465b8ae5fffa40abd2c9149dca8078552b864174
+    platform: linux/amd64
+    container_name: apache-kylin-default-default
+    restart: unless-stopped
+    ports:
+      - "18802:7070"
+    environment:
+      - TZ=Asia/Shanghai

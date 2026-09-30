@@ -1,0 +1,40 @@
+name: processmaker-community-default
+
+services:
+  app:
+    image: yorem/processmaker-community:default@sha256:e0e7c068656faf3b49675d5e6a4bd74543f8f2a9c8a3ca77f3fa25ba832673d0
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18859}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    command: ["--sql-mode="]
+    environment:
+      MYSQL_ROOT_PASSWORD: benchmark-only-root
+      MYSQL_DATABASE: wf_workflow
+      MYSQL_USER: processmaker
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

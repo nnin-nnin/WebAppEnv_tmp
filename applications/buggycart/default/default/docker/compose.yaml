@@ -1,0 +1,39 @@
+name: buggycart-default
+
+services:
+  application:
+    image: yorem/buggycart:default@sha256:87061ce4e4c194f953313d05ff9e7796b3a64e211e9172794039fe12487530eb
+    platform: linux/amd64
+    ports:
+      - "18849:80"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=buggycart
+      - DB_USER=buggycart
+      - DB_PASSWORD=buggycartpassword
+      - DB_PORT=3306
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: buggycart
+      MYSQL_USER: buggycart
+      MYSQL_PASSWORD: buggycartpassword
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u root -prootpassword || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  database-data:

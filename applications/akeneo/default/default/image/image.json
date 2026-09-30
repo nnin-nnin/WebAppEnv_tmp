@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/akeneo",
+    "tag": "default",
+    "digest": "sha256:73880adda318991f8d002e12d717d80209638d5d0ca9bc2392539104308b984e",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

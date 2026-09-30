@@ -1,0 +1,45 @@
+name: zurmo_default_default
+
+services:
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: zurmo
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -pAdminPassword123! || mysqladmin ping -h localhost -u root -pAdminPassword123! || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  app:
+    image: yorem/zurmo:default@sha256:4e49ee6445c43d0293d367a3e43790198d83ffe9aa736402302717d0267d1c96
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-18879}:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASS: AdminPassword123!
+      DB_NAME: zurmo
+      HOST_INFO: "http://localhost:18879"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s http://127.0.0.1:80/app/index.php/zurmo/default/login || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+
+volumes:
+  db-data:

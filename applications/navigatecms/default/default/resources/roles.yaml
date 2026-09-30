@@ -1,0 +1,23 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_content
+      - manage_structure
+      - manage_users
+      - manage_settings
+      - manage_extensions
+      - manage_backups
+    purpose: "Super administrator with full system management permissions"
+    associated_accounts:
+      - admin
+  - name: editor
+    permissions:
+      - manage_content
+      - manage_structure
+    purpose: "Editor with website content management permissions"
+    associated_accounts: []
+  - name: webuser
+    permissions:
+      - view_pages
+    purpose: "Frontend registered user"
+    associated_accounts: []

@@ -1,0 +1,103 @@
+application:
+  name: BigTree-CMS
+  version: default
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for BigTree CMS default (4.6.1) with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: bigtree-cms-default
+  compose_file: docker/compose.yaml
+  host_port: 18804
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18804/
+  login_url: http://127.0.0.1:18804/admin/login/
+
+source:
+  repository: https://github.com/bigtreecms/BigTree-CMS
+  fixed_ref: HEAD
+  immutable_commit: 4a641e01d41121179ea3a7709fa14e2a94c36e31
+  metadata: source/source.yaml
+  availability: github_only
+  frontend_note: "BigTree CMS includes built-in template engine and demo website frontend."
+
+compose:
+  project_name: bigtree-cms-default
+  services:
+    - application
+    - db
+  volumes:
+    - application-data
+    - site-data
+    - database-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/bigtree-cms:default@sha256:516c0285459f50758b82460a6a591fbe7da6c24b2209fa684468599f6cb68360
+  database_image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+
+services:
+  - name: application
+    role: "Long-running BigTree CMS Apache web application"
+    image: yorem/bigtree-cms:default@sha256:516c0285459f50758b82460a6a591fbe7da6c24b2209fa684468599f6cb68360
+    digest: sha256:516c0285459f50758b82460a6a591fbe7da6c24b2209fa684468599f6cb68360
+    platform: linux/amd64
+    source: "https://github.com/bigtreecms/BigTree-CMS commit 4a641e01d41121179ea3a7709fa14e2a94c36e31 via docker/Dockerfile"
+    ports:
+      - "${HOST_PORT:-18804}:80"
+    depends_on:
+      - db: service_healthy
+    healthcheck: "HTTP GET http://127.0.0.1:80/admin/ inside container"
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    source: "Official MariaDB image from Docker Hub"
+    healthcheck: "mysqladmin ping -h localhost -u root -pbenchmark-only-root"
+
+initialization:
+  database: "Automated schema creation and admin seeding during container entrypoint initialization."
+  idempotence: "Checks for existing bigtree_users table before initialization."
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin
+    password: AdminPassword123!
+    email: admin@example.com
+    role: administrator
+    creation_method: "Seeded into bigtree_users table via container entrypoint"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+
+operations:
+  build: bash scripts/build.sh
+  start: bash scripts/up.sh
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+  final_state: "After scripts/up.sh, db and application containers report healthy status."
+
+known_limits:
+  - "BigTree CMS 4.6.1 is designed for research and benchmarking."
+  - "Images target linux/amd64 platform."
+
+consistency_statement: "This is a native multi-container Docker Compose environment, not an all-in-one image. The application service runs BigTree CMS on Apache/PHP 8.2 and connects to a separate MariaDB container via Compose networking."

@@ -1,0 +1,46 @@
+name: oxid-eshop_default
+
+services:
+  web:
+    image: yorem/oxid-eshop:default@sha256:86a69a55d264ac52476b4fa155b969e63dffb136893199a6cc7739d4c02a9056
+    platform: linux/amd64
+    ports:
+      - "18851:80"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=oxid
+      - DB_PASS=oxid_pass
+      - DB_NAME=oxideshop
+      - SHOP_BASE_URL=http://localhost:18851/
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_PASSWORD=AdminPassword123!
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - web-cache:/var/www/eshop/var/cache
+      - web-log:/var/www/eshop/source/log
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      - MYSQL_DATABASE=oxideshop
+      - MYSQL_USER=oxid
+      - MYSQL_PASSWORD=oxid_pass
+      - MYSQL_ROOT_PASSWORD=root_pass
+    volumes:
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "oxid", "-poxid_pass"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+volumes:
+  web-cache:
+  web-log:
+  db-data:

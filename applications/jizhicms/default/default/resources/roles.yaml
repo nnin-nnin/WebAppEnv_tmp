@@ -1,0 +1,23 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_content
+      - manage_channels
+      - manage_users
+      - manage_system_settings
+      - manage_extensions
+      - manage_database_backups
+    purpose: "Super administrator with unrestricted system permissions"
+    associated_accounts:
+      - admin
+  - name: editor
+    permissions:
+      - manage_content
+      - manage_channels
+    purpose: "Content editor with editorial permissions"
+    associated_accounts: []
+  - name: normal_user
+    permissions:
+      - view_pages
+    purpose: "Standard authenticated frontend member"
+    associated_accounts: []

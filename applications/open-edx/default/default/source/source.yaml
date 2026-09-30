@@ -1,0 +1,4 @@
+repository: https://github.com/openedx/edx-platform
+commit: ca039029e4918f02903b1c7d62adf8b3ad74f75b
+version: default
+tag: master

@@ -1,0 +1,13 @@
+users:
+  - username: jasperadmin
+    password: jasperadmin
+    type: admin
+    enabled: true
+    purpose: "初始超级管理员账号"
+    creation: "系统首次引导初始化自动配置"
+  - username: joeuser
+    password: joeuser
+    type: sample_user
+    enabled: true
+    purpose: "示例普通用户账号"
+    creation: "Minimal CE 种子数据预置"

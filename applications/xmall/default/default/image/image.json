@@ -1,0 +1,26 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/xmall",
+    "tag": "default",
+    "digest": "sha256:60737c6661b41aeac9ee4047571ef166fa6576f8884b18aa548d7e4eb563af44",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "redis",
+    "image": "redis",
+    "tag": "7-alpine",
+    "digest": "sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

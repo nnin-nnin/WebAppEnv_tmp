@@ -1,0 +1,18 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_options
+      - manage_pages
+      - manage_plugins
+      - manage_users
+      - manage_sidebars
+      - manage_comments
+    purpose: "Full administrative access to MaxSite CMS"
+    associated_accounts:
+      - admin
+  - name: users
+    permissions:
+      - create_comments
+      - view_pages
+    purpose: "Standard authenticated user or author access"
+    associated_accounts: []

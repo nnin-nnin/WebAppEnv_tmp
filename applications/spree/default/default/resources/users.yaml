@@ -1,0 +1,6 @@
+admin:
+  username: admin@example.com
+  password: AdminPassword123!
+  email: admin@example.com
+  role: admin
+  purpose: Default system administrator account for site management and benchmarking.

@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/bigtree-cms:default",
+    "tag": "default",
+    "digest": "sha256:516c0285459f50758b82460a6a591fbe7da6c24b2209fa684468599f6cb68360",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

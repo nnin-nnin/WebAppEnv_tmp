@@ -1,0 +1,8 @@
+application: discourse
+users:
+  - username: admin
+    email: admin@example.com
+    password: AdminPassword123!
+    type: administrator
+    enabled: true
+    purpose: 初始系统全站管理员

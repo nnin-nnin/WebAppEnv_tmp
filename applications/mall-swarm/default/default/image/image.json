@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/mall-swarm",
+    "tag": "default",
+    "digest": "sha256:c7431e2c0035800b55d8d00e30107fc183612894239e843c38f19c268dd127ff",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

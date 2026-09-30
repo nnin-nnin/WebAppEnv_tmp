@@ -1,0 +1,92 @@
+id: buggycart_default
+application: buggycart
+version: default
+artifact_type: ready_application_environment
+status: native_compose_ready
+application_type: complete_web_application
+deployment_mode: native_compose
+deployment_statement: "This is a native multi-container Docker Compose deployment. BuggyCart application and MariaDB database run in independent containers and communicate through the Compose network."
+
+documentation:
+  readme: README.md
+  compose_file: docker/compose.yaml
+  recommended_start: "docker compose -f docker/compose.yaml pull && docker compose -f docker/compose.yaml up -d"
+
+compose:
+  project_name: buggycart-default
+  standard_entrypoint: docker/compose.yaml
+  service_names:
+    - application
+    - db
+  network: "Compose-created default network; containers communicate via service names (db)"
+  volumes:
+    - database-data
+  external_dependencies: false
+
+source:
+  backend:
+    repository: https://github.com/sazzad114/buggycart
+    ref: master
+    commit: 6a1485230c96b6ea12a336d7559dffb450538460
+  metadata: source/source.yaml
+
+runtime:
+  platform: linux/amd64
+  language: php
+  php_version: "7.4"
+  server: apache
+  database: mariadb
+  database_version: "10.5"
+  public_url: http://127.0.0.1:18849/
+  host_port: 18849
+  container_port: 80
+
+ports:
+  host_port: 18849
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+
+services:
+  application:
+    image: yorem/buggycart:default@sha256:87061ce4e4c194f953313d05ff9e7796b3a64e211e9172794039fe12487530eb
+    tag: default
+    digest: sha256:87061ce4e4c194f953313d05ff9e7796b3a64e211e9172794039fe12487530eb
+    platform: linux/amd64
+    ports:
+      - 18849:80
+    depends_on:
+      db: service_healthy
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    tag: "10.5"
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+
+delivery:
+  mode: DOCKERHUB
+  registry: docker.io
+  namespace: yorem
+  registry_images:
+    application: yorem/buggycart:default
+    db: mariadb:10.5
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  database_seed: resources/database-seed.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+initial_account:
+  username: admin
+  password: AdminPassword123!
+  role: administrator
+  creation: "Initialized via resources/database-seed.sql into oc_user table with full administrator permissions."

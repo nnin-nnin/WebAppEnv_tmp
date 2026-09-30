@@ -1,0 +1,4 @@
+repository: https://github.com/strapi/strapi
+commit: 6c9a65db15a2567192132ac671183429a0fa71a7
+version: default
+tag: HEAD

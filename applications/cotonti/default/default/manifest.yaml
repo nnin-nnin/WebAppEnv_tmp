@@ -1,0 +1,68 @@
+application:
+  name: Cotonti
+  version: default
+  type: full_web_application
+  description: "Cotonti is a powerful open-source PHP content management system and framework."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（Cotonti / PHP 8.2 Apache）与数据库服务（MariaDB 10.5）分别运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: cotonti-default
+  host_port: 18809
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/Cotonti/Cotonti
+    commit: f43f1fc38ba4e02027786dad9dac1435c7c52b30
+    tag: HEAD
+    source_yaml: source/source.yaml
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime"
+    image: yorem/cotonti:default@sha256:3c42b9fca8d7e271e118d947a26b78a98aeb94c768ce167e050956ec0ff87381
+    digest: "sha256:3c42b9fca8d7e271e118d947a26b78a98aeb94c768ce167e050956ec0ff87381"
+    platform: linux/amd64
+    ports:
+      - "18809:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.5)"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"
+    volumes:
+      - db-data
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin AdminPassword123!"
+  reset: "./scripts/reset.sh"

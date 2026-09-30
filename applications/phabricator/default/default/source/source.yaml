@@ -1,0 +1,4 @@
+repository: https://github.com/phacility/phabricator
+version: default
+commit: 5720a38cfe95b00ca4be5016dd0d2f3195f4fa04
+ref: master

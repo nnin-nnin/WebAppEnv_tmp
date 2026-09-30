@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/open-edx",
+    "tag": "default",
+    "digest": "sha256:45e3208cd0fcd17d94660136f8ec83bfa5bcd7d426c9f42d6308d896c223c6a6",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,2 @@
+- name: superuser
+  description: Superuser with full administrative control over cluster data, indices, and Kibana management

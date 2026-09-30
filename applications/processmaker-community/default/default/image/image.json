@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/processmaker-community",
+    "tag": "default",
+    "digest": "sha256:e0e7c068656faf3b49675d5e6a4bd74543f8f2a9c8a3ca77f3fa25ba832673d0",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

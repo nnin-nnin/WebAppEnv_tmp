@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/osclass:default",
+    "tag": "default",
+    "digest": "sha256:ba7734a15a7b043e7fb4f08c485485ff877fe2e25c856c6f7c100312936e8aef",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb:10.5",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

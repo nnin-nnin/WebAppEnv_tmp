@@ -1,0 +1,10 @@
+roles:
+  - name: admin
+    permissions: 所有系统与业务管理权限
+    purpose: 系统管理员
+    relation: 初始账号admin默认拥有此角色
+
+  - name: manager
+    permissions: 采购、销售、财务与库存管理权限
+    purpose: 业务主管/经理
+    relation: 账号jsh默认拥有此角色

@@ -1,0 +1,9 @@
+name: down-52-pojie-cn-default
+
+services:
+  app:
+    image: yorem/down_52_pojie_cn:default@sha256:5148a467735e1932c61e96b4c79ed04fa88cedd4d0cf63e5915a1afc22736259
+    platform: linux/amd64
+    ports:
+      - "18819:80"
+    restart: unless-stopped

@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/dotplant2",
+    "tag": "default",
+    "digest": "sha256:612ee7e09957dd13d327cd665f99ea6706571858eaf96696b63926c1ffb7f5eb",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

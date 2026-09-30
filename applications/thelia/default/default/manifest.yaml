@@ -1,0 +1,65 @@
+application:
+  name: Thelia
+  version: default
+  type: full_web_application
+  description: "Thelia is a modern open-source ecommerce CMS based on Symfony components."
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（Thelia PHP/Apache）与数据库服务（MariaDB）分别运行在独立容器中，通过 Compose 内部网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: thelia-default
+  host_port: 18869
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/thelia/thelia.git
+    commit: 90909a77f4668bbce3af8b961e1ec1d4e324a00b
+    tag: "2.5.4"
+    source_yaml: source/source.yaml
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime"
+    image: yorem/thelia:default@sha256:0a53e9433a0aefec7afbfe789bb0e20e87340deedd7f382e31d5affd2a2a6583
+    digest: "sha256:0a53e9433a0aefec7afbfe789bb0e20e87340deedd7f382e31d5affd2a2a6583"
+    platform: linux/amd64
+    ports:
+      - "18869:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f http://localhost/"
+    volumes: []
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB)"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "healthcheck.sh --connect --innodb_initialized"
+    volumes:
+      - db-data
+
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin AdminPassword123!"
+  reset: "./scripts/reset.sh"

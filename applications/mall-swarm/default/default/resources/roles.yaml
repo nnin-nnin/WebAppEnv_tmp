@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over mall-swarm management platform
+    purpose: Primary administrative role
+    associated_accounts:
+      - admin

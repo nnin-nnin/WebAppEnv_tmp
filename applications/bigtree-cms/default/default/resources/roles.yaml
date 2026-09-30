@@ -1,0 +1,22 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_pages
+      - manage_modules
+      - manage_users
+      - manage_settings
+      - manage_developer_tools
+    purpose: "Full administrative and developer access to BigTree CMS"
+    associated_accounts:
+      - admin
+  - name: editor
+    permissions:
+      - manage_pages
+      - manage_modules
+    purpose: "Content editing and publication permissions"
+    associated_accounts: []
+  - name: normal_user
+    permissions:
+      - view_pages
+    purpose: "Standard authenticated or viewer permissions"
+    associated_accounts: []

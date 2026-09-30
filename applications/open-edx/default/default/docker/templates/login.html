@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 460px; margin: 40px auto;">
+    <div class="card" style="padding: 32px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <h1 style="font-size: 26px; font-weight: 700; color: #00262b;">Sign in to Open edX</h1>
+            <p style="font-size: 14px; color: #555; margin-top: 6px;">Access your courses, dashboard, and learning materials</p>
+        </div>
+
+        {% if error %}
+            <div class="alert alert-danger" id="login-error-alert">{{ error }}</div>
+        {% endif %}
+
+        <form action="/login" method="POST" id="login-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="hidden" name="next" value="{{ next_url }}">
+
+            <div style="margin-bottom: 18px;">
+                <label for="email_or_username" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #00262b;">Email or Username</label>
+                <input type="text" id="email_or_username" name="email_or_username" required
+                       placeholder="e.g. admin@example.com or admin"
+                       style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 15px;">
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <label for="password" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #00262b;">Password</label>
+                <input type="password" id="password" name="password" required
+                       placeholder="Enter your password"
+                       style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 15px;">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; font-size: 13px;">
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                    <input type="checkbox" name="remember" value="true" checked> Remember me
+                </label>
+                <a href="#" style="color: var(--primary); text-decoration: none;">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px; font-weight: 700;">Sign In</button>
+        </form>
+
+        <div style="border-top: 1px solid var(--border-color); margin-top: 24px; padding-top: 18px; text-align: center; font-size: 14px; color: #555;">
+            Don't have an account? <a href="/login" style="color: var(--primary); font-weight: 600; text-decoration: none;">Create an Account</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

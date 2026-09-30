@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="margin-bottom: 28px;">
+    <div style="background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <div>
+            <h1 style="font-size: 26px; font-weight: 800; color: #00262b;">Open edX Dashboard</h1>
+            <p style="font-size: 15px; color: #555; margin-top: 4px;">
+                Welcome back, <strong>{{ session['user']['username'] }}</strong> ({{ session['user']['email'] }}) &bull; Role: <span style="background: #e1f5fe; color: #0288d1; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 700;">{{ session['user']['role'] }}</span>
+            </p>
+        </div>
+        <div>
+            <a href="/courses" class="btn btn-primary">Find More Courses</a>
+        </div>
+    </div>
+</div>
+
+<h2 style="font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #00262b;">My Enrolled Courses</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px;">
+    {% for course in courses %}
+    <div class="card" style="border-left: 4px solid var(--primary);">
+        <span style="font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase;">{{ course.organization }} &bull; {{ course.code }}</span>
+        <h3 style="font-size: 18px; margin: 8px 0; color: #00262b;">{{ course.title }}</h3>
+        <p style="font-size: 13px; color: #666; margin-bottom: 16px;">Status: Enrolled &bull; Pacing: {{ course.pacing }}</p>
+        
+        <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; color: #777;">
+                <span>Course Progress</span>
+                <span>80%</span>
+            </div>
+            <div style="background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
+                <div style="background: #0075b4; width: 80%; height: 100%;"></div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <a href="/courses/{{ course.course_id }}/about" class="btn btn-primary" style="padding: 6px 14px; font-size: 13px;">View Course</a>
+            <a href="#" class="btn btn-outline" style="padding: 6px 14px; font-size: 13px;">Courseware</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

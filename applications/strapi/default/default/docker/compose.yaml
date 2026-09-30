@@ -1,0 +1,48 @@
+name: strapi_default_default
+
+services:
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: AdminPassword123!
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strapi -d strapi"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+      start_period: 10s
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ../resources/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  app:
+    image: yorem/strapi:default@sha256:f781029b4f96403751f1e211f272b15ce51b5216a0f856a4496e5b9361396d8b
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      HOST: "0.0.0.0"
+      PORT: 1337
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: AdminPassword123!
+      APP_KEYS: "toBeModified1,toBeModified2"
+      API_TOKEN_SALT: tobemodified
+      ADMIN_JWT_SECRET: tobemodified
+      TRANSFER_TOKEN_SALT: tobemodified
+      JWT_SECRET: tobemodified
+      ENCRYPTION_KEY: tobemodified
+    ports:
+      - "18867:1337"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:

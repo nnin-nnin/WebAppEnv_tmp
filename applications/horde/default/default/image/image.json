@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/horde:default",
+    "tag": "default",
+    "digest": "sha256:38503ed77e8128cfaa5e6d2d8ee3f1e049c0c6637ae7e4371c36ae20cc28837b",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

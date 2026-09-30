@@ -1,0 +1,41 @@
+application: webchess
+version: "default"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/halojoy/PHP7-Webchess
+  commit: ee3e343dfd2cf766e1a88a1dcf2f2c4c292c3a10
+runtime:
+  language: php
+  server: apache
+ports:
+  host_port: 18874
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/webchess:default@sha256:4741fd66247d6af41995c2d5ca89f20af5367f309e9b55fcf05b41f757b91e9b
+    tag: "default"
+    digest: sha256:4741fd66247d6af41995c2d5ca89f20af5367f309e9b55fcf05b41f757b91e9b
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    tag: "10.5"
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

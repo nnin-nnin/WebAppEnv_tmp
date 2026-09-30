@@ -1,0 +1,8 @@
+initial_admin:
+  username: admin
+  email: admin@example.com
+  password: AdminPassword123!
+  user_type: administrator
+  enabled: true
+  purpose: Default system administrator account for site management and benchmarking.
+  creation_method: Initialized via database-seed.sql into couch_users with access_level=10 (Super Admin).

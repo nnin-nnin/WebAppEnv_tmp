@@ -1,0 +1,8 @@
+users:
+  - username: "test@liferay.com"
+    screen_name: "test"
+    password: "test"
+    type: admin
+    enabled: true
+    purpose: "初始超级管理员账号 (Administrator)"
+    creation: "Liferay 缺省预置与 portal-ext.properties 初始化"

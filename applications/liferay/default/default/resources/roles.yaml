@@ -1,0 +1,5 @@
+roles:
+  - name: Administrator
+    permissions: "超级管理员，拥有 Liferay 门户所有站点、控制面板与接口权限"
+    purpose: "系统最高管理"
+    relation: "test@liferay.com 所属角色"

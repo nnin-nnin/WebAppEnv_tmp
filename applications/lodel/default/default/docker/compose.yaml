@@ -1,0 +1,47 @@
+name: lodel_default
+
+services:
+  web:
+    image: yorem/lodel:default@sha256:a419367638dc4d81ecc65721f38a4bc5d273ae374724a6bea0298c0e9e3c3a8c
+    platform: linux/amd64
+    ports:
+      - "18839:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: lodel
+      DB_USER: lodel
+      DB_PASS: lodelpassword
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: AdminPassword123!
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: lodel
+      MYSQL_USER: lodel
+      MYSQL_PASSWORD: lodelpassword
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

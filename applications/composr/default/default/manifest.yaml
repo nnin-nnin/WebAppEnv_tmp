@@ -1,0 +1,103 @@
+application:
+  name: composr
+  version: default
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for Composr CMS with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: composr-default
+  compose_file: docker/compose.yaml
+  host_port: 18808
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18808/
+  login_url: http://127.0.0.1:18808/index.php?page=login&type=browse
+
+source:
+  repository: https://github.com/composr-ecosystem/composr
+  fixed_ref: HEAD
+  immutable_commit: f204b0d038d08c6c663c25bbf344e55074841c7d
+  metadata: source/source.yaml
+  availability: github_only
+  frontend_note: "Composr CMS includes built-in PHP templates and theme frontend."
+
+compose:
+  project_name: composr-default
+  services:
+    - application
+    - db
+  volumes:
+    - composr-data
+    - composr-db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/composr:default@sha256:cce6cb3de8b8b4befbcb40dcd81f40c203f137032b784f2e0d3813b08ba6bde2
+  database_image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  - name: application
+    role: "Long-running Composr CMS Apache web application"
+    image: yorem/composr:default@sha256:cce6cb3de8b8b4befbcb40dcd81f40c203f137032b784f2e0d3813b08ba6bde2
+    digest: sha256:cce6cb3de8b8b4befbcb40dcd81f40c203f137032b784f2e0d3813b08ba6bde2
+    platform: linux/amd64
+    source: "https://github.com/composr-ecosystem/composr commit f204b0d038d08c6c663c25bbf344e55074841c7d via docker/Dockerfile"
+    ports:
+      - "${HOST_PORT:-18808}:80"
+    depends_on:
+      - db: service_healthy
+    healthcheck: "HTTP GET http://127.0.0.1:80/ inside container"
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    source: "Official MariaDB image from Docker Hub"
+    healthcheck: "mysqladmin ping -h localhost -u composr -pcomposr_password"
+
+initialization:
+  database: "Automated schema creation from install.sql and admin member seeding during container entrypoint initialization."
+  idempotence: "Checks for existing _config.php and database tables."
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin
+    password: AdminPassword123!
+    email: admin@example.com
+    role: administrator
+    creation_method: "Seeded into cms_f_members table via container entrypoint"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+
+operations:
+  build: bash scripts/build.sh
+  start: bash scripts/up.sh
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - source_checksum
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+  final_state: "After scripts/up.sh, db and application containers report healthy status."
+
+known_limits:
+  - "Images target linux/amd64 platform."
+
+consistency_statement: "This is a native multi-container Docker Compose environment. The application service runs Composr CMS on Apache/PHP 8.2 and connects to a separate MariaDB container via Compose networking."

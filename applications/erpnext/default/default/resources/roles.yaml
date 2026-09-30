@@ -1,0 +1,6 @@
+application: erpnext
+roles:
+  - name: System Manager
+    permissions: ERPNext 及 Frappe 框架系统全权管理员权限
+    purpose: 平台运维、业务模块配置与用户权限管理
+    assigned_to: Administrator

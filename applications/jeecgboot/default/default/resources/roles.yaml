@@ -1,0 +1,9 @@
+roles:
+  - name: admin
+    permissions: "超级管理员，拥有系统所有功能与接口权限"
+    purpose: "系统最高管理"
+    relation: "admin 账号所属角色"
+  - name: devleader
+    permissions: "研发负责人，拥有应用开发与系统配置权限"
+    purpose: "研发管理"
+    relation: "jeecg 账号所属角色"

@@ -1,0 +1,34 @@
+name: eve_default_default
+
+services:
+  mongo:
+    image: mongo:4.4@sha256:4be76f674fc4b27859816811b8baa3c51830eb1dbf4ca81a51e26b79edd662ef
+    platform: linux/amd64
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    image: yorem/eve:default@sha256:72c3ae0c6d2c1fb52744d2041340b00f4d35d7365cc6fd252af9a1c556430419
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18823:5000"
+    environment:
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_DBNAME=eve
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=AdminPassword123!
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo-data:

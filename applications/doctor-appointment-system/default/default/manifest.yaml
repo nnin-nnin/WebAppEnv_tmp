@@ -1,0 +1,53 @@
+application:
+  name: doctor-appointment-system
+  version: default
+  type: full_web_app
+  deployment_mode: native_compose
+
+compose:
+  file_path: docker/compose.yaml
+  project_name: doctor-appointment-system-default
+  services:
+    - name: app
+      role: application
+      image: yorem/doctor-appointment-system:default@sha256:a5d3832a5d8294263aaeb6339d864d0a1afdc3865979021dbb2bed20c014dc6a
+      digest: sha256:a5d3832a5d8294263aaeb6339d864d0a1afdc3865979021dbb2bed20c014dc6a
+      platform: linux/amd64
+      ports:
+        - "18817:80"
+      dependencies:
+        - db
+    - name: db
+      role: database
+      image: mariadb:10.5
+      digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+      platform: linux/amd64
+      ports: []
+
+source:
+  backend:
+    repository: https://github.com/divScorp/Doctor-Appointment
+    commit: 339b0c1fefebaf490282e9233ff9e76994413ffd
+
+delivery:
+  mode: DOCKERHUB
+  docker_hub_namespace: yorem
+  images:
+    - service: app
+      image: yorem/doctor-appointment-system:default@sha256:a5d3832a5d8294263aaeb6339d864d0a1afdc3865979021dbb2bed20c014dc6a
+      tag: default
+      digest: sha256:a5d3832a5d8294263aaeb6339d864d0a1afdc3865979021dbb2bed20c014dc6a
+      platform: linux/amd64
+    - service: db
+      image: mariadb:10.5
+      tag: 10.5
+      digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+      platform: linux/amd64
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login_script: resources/login.sh
+  initial_data: resources/initial-data/database-seed.sql
+
+recommended_start_command: docker compose -f docker/compose.yaml up -d

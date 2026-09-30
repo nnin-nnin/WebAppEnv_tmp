@@ -1,0 +1,41 @@
+application: strapi
+version: default
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/strapi/strapi
+  commit: 6c9a65db15a2567192132ac671183429a0fa71a7
+runtime:
+  language: nodejs
+  node: "22.21.1"
+  database: postgres:15-alpine
+ports:
+  host_port: 18867
+  container_port: 1337
+credentials:
+  admin_username: admin@example.com
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/strapi:default@sha256:f781029b4f96403751f1e211f272b15ce51b5216a0f856a4496e5b9361396d8b
+    tag: "default"
+    digest: sha256:f781029b4f96403751f1e211f272b15ce51b5216a0f856a4496e5b9361396d8b
+    platform: linux/amd64
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    tag: "15-alpine"
+    digest: sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64

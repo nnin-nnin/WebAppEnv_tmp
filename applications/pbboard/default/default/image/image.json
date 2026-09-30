@@ -1,0 +1,18 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/pbboard",
+    "tag": "default",
+    "digest": "sha256:936853cc7448de4da3092eb9e6510cdf8d10e41e513670c2609ec7474c8eccbe",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

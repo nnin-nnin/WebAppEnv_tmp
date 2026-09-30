@@ -1,0 +1,26 @@
+[
+  {
+    "service": "elasticsearch",
+    "image": "docker.elastic.co/elasticsearch/elasticsearch",
+    "tag": "7.16.2",
+    "digest": "sha256:055ab3c3466c6bd72ef42f7773c5fa224db4fb7cd6a9a5588ebe46642a15abf5",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "app",
+    "image": "yorem/vivo-moonbox",
+    "tag": "default",
+    "digest": "sha256:66f9c4226a1d7f30932e31d058d9751f760f84e4fa9dfc4b54b52ced44cc04ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

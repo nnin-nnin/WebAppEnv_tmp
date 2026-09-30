@@ -1,0 +1,36 @@
+application: pico
+version: "default"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/picocms/Pico
+  commit: 5e8e0a03f4a14d4f70a109e8f5d905fbbad897f6
+runtime:
+  language: php
+  server: apache
+ports:
+  host_port: 18856
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/pico:default@sha256:df32459c0015dbec56fe5297128d787049168fceef3a47e74604b1e956b7ef4e
+    tag: "default"
+    digest: sha256:df32459c0015dbec56fe5297128d787049168fceef3a47e74604b1e956b7ef4e
+    platform: linux/amd64

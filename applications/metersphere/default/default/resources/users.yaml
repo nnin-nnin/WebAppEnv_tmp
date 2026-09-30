@@ -1,0 +1,7 @@
+users:
+  - username: admin
+    password: "metersphere"
+    type: admin
+    enabled: true
+    purpose: "初始超级管理员账号"
+    creation: "系统内置默认账号"

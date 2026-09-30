@@ -1,0 +1,4 @@
+repository: https://github.com/neos/neos
+version: default
+commit: e2a96a3990249da59586ff3ea2f1514f837d03dd
+ref: HEAD

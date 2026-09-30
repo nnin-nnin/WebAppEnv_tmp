@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/doctor-appointment-system:default",
+    "tag": "default",
+    "digest": "sha256:a5d3832a5d8294263aaeb6339d864d0a1afdc3865979021dbb2bed20c014dc6a",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

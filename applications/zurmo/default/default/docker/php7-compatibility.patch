@@ -1,0 +1,293 @@
+diff --git a/app/protected/config/perInstanceDIST.php b/app/protected/config/perInstanceDIST.php
+index 1d34d9b2..8f9718cb 100644
+--- a/app/protected/config/perInstanceDIST.php
++++ b/app/protected/config/perInstanceDIST.php
+@@ -41,13 +41,7 @@
+     $connectionString = 'mysql:host=localhost;port=3306;dbname=zurmo'; // Not Coding Standard
+     $username         = 'zurmo';
+     $password         = 'zurmo';
+-    $memcacheServers  = array( // An empty array means memcache is not used.
+-                            array(
+-                                'host'   => '127.0.0.1',
+-                                'port'   => 11211, // This is the default memcached port.
+-                                'weight' => 100,
+-                            ),
+-                        );
++    $memcacheServers  = array();
+     $adminEmail       = 'info@zurmo.com';
+     $installed        = false; // Set to true by the installation process.
+     $maintenanceMode  = false; // Set to true during upgrade process or other maintenance tasks.
+diff --git a/app/protected/core/dataproviders/RedBeanModelDataProvider.php b/app/protected/core/dataproviders/RedBeanModelDataProvider.php
+index 690cc01d..93c236d3 100644
+--- a/app/protected/core/dataproviders/RedBeanModelDataProvider.php
++++ b/app/protected/core/dataproviders/RedBeanModelDataProvider.php
+@@ -193,9 +193,9 @@
+         /**
+          * @return CSort the sorting object. If this is false, it means the sorting is disabled.
+          */
+-        public function getSort()
++        public function getSort($className = 'CSort')
+         {
+-            if (($sort = parent::getSort()) !== false)
++            if (($sort = parent::getSort($className)) !== false)
+             {
+                 $sort->modelClass = $this->modelClassName;
+             }
+diff --git a/app/protected/core/dataproviders/RedBeanModelsDataProvider.php b/app/protected/core/dataproviders/RedBeanModelsDataProvider.php
+index 3c347070..08076f5b 100644
+--- a/app/protected/core/dataproviders/RedBeanModelsDataProvider.php
++++ b/app/protected/core/dataproviders/RedBeanModelsDataProvider.php
+@@ -218,7 +218,7 @@
+         /**
+          * @return CSort the sorting object. Sorting using getSort is disabled.
+          */
+-        public function getSort()
++        public function getSort($className = 'CSort')
+         {
+             return false;
+         }
+diff --git a/app/protected/core/utils/DatabaseCompatibilityUtil.php b/app/protected/core/utils/DatabaseCompatibilityUtil.php
+index 743780bb..7005557a 100644
+--- a/app/protected/core/utils/DatabaseCompatibilityUtil.php
++++ b/app/protected/core/utils/DatabaseCompatibilityUtil.php
+@@ -34,6 +34,43 @@
+      * "Copyright Zurmo Inc. 2013. All rights reserved".
+      ********************************************************************************/
+ 
++if (!function_exists('mysql_connect')) {
++    function mysql_connect($server = null, $username = null, $password = null) {
++        $parts = explode(':', (string)$server);
++        $host = $parts[0];
++        $port = isset($parts[1]) ? (int)$parts[1] : 3306;
++        $link = @mysqli_connect($host, $username, $password, '', $port);
++        if ($link) {
++            $GLOBALS['__last_mysql_link'] = $link;
++        }
++        return $link;
++    }
++    function mysql_select_db($db, $link = null) {
++        $link = $link ?: ($GLOBALS['__last_mysql_link'] ?? null);
++        return $link ? @mysqli_select_db($link, $db) : false;
++    }
++    function mysql_query($query, $link = null) {
++        $link = $link ?: ($GLOBALS['__last_mysql_link'] ?? null);
++        return $link ? @mysqli_query($link, $query) : false;
++    }
++    function mysql_fetch_row($result) {
++        return $result ? @mysqli_fetch_row($result) : false;
++    }
++    function mysql_close($link = null) {
++        $link = $link ?: ($GLOBALS['__last_mysql_link'] ?? null);
++        if ($link) return @mysqli_close($link);
++        return true;
++    }
++    function mysql_errno($link = null) {
++        $link = $link ?: ($GLOBALS['__last_mysql_link'] ?? null);
++        return $link ? mysqli_errno($link) : 0;
++    }
++    function mysql_error($link = null) {
++        $link = $link ?: ($GLOBALS['__last_mysql_link'] ?? null);
++        return $link ? mysqli_error($link) : '';
++    }
++}
++
+     /**
+      * Helper functionality for use in RedBeanModels and derived models.
+      * These functions cater for specific databases other than MySQL,
+diff --git a/app/protected/extensions/zurmoinc/framework/dataproviders/RedBeanModelDataProvider.php b/app/protected/extensions/zurmoinc/framework/dataproviders/RedBeanModelDataProvider.php
+index 7b26b76e..68eb1d37 100644
+--- a/app/protected/extensions/zurmoinc/framework/dataproviders/RedBeanModelDataProvider.php
++++ b/app/protected/extensions/zurmoinc/framework/dataproviders/RedBeanModelDataProvider.php
+@@ -181,9 +181,9 @@
+         /**
+          * @return CSort the sorting object. If this is false, it means the sorting is disabled.
+          */
+-        public function getSort()
++        public function getSort($className = 'CSort')
+         {
+-            if (($sort = parent::getSort()) !== false)
++            if (($sort = parent::getSort($className)) !== false)
+             {
+                 $sort->modelClass = $this->modelClassName;
+             }
+diff --git a/app/protected/extensions/zurmoinc/framework/dataproviders/RedBeanModelsDataProvider.php b/app/protected/extensions/zurmoinc/framework/dataproviders/RedBeanModelsDataProvider.php
+index 99728bca..cb9f4323 100644
+--- a/app/protected/extensions/zurmoinc/framework/dataproviders/RedBeanModelsDataProvider.php
++++ b/app/protected/extensions/zurmoinc/framework/dataproviders/RedBeanModelsDataProvider.php
+@@ -208,7 +208,7 @@
+         /**
+          * @return CSort the sorting object. Sorting using getSort is disabled.
+          */
+-        public function getSort()
++        public function getSort($className = 'CSort')
+         {
+             return false;
+         }
+diff --git a/app/protected/extensions/zurmoinc/framework/models/RedBeanModel.php b/app/protected/extensions/zurmoinc/framework/models/RedBeanModel.php
+index 9a52797c..5f574969 100644
+--- a/app/protected/extensions/zurmoinc/framework/models/RedBeanModel.php
++++ b/app/protected/extensions/zurmoinc/framework/models/RedBeanModel.php
+@@ -2411,12 +2411,12 @@
+             }
+         }
+ 
+-        protected static function getLabel()
++        protected static function getLabel($language = null)
+         {
+             return get_called_class();
+         }
+ 
+-        protected static function getPluralLabel()
++        protected static function getPluralLabel($language = null)
+         {
+             return static::getLabel() . 's';
+         }
+diff --git a/app/protected/modules/accounts/models/AccountsFilteredList.php b/app/protected/modules/accounts/models/AccountsFilteredList.php
+index 46cb53a8..37908a18 100644
+--- a/app/protected/modules/accounts/models/AccountsFilteredList.php
++++ b/app/protected/modules/accounts/models/AccountsFilteredList.php
+@@ -29,12 +29,12 @@
+      */
+     class AccountsFilteredList extends FilteredList
+     {
+-        protected static function getLabel()
++        protected static function getLabel($language = null)
+         {
+             return 'Filtered AccountsModuleSingularLabel List';
+         }
+ 
+-        protected static function getPluralLabel()
++        protected static function getPluralLabel($language = null)
+         {
+             return 'Filtered AccountsModuleSingularLabel Lists';
+         }
+diff --git a/app/protected/modules/contacts/models/ContactsFilteredList.php b/app/protected/modules/contacts/models/ContactsFilteredList.php
+index d46cb409..1d895c91 100644
+--- a/app/protected/modules/contacts/models/ContactsFilteredList.php
++++ b/app/protected/modules/contacts/models/ContactsFilteredList.php
+@@ -29,12 +29,12 @@
+      */
+     class ContactsFilteredList extends FilteredList
+     {
+-        protected static function getLabel()
++        protected static function getLabel($language = null)
+         {
+             return 'Filtered ContactsModuleSingularLabel List';
+         }
+ 
+-        protected static function getPluralLabel()
++        protected static function getPluralLabel($language = null)
+         {
+             return 'Filtered ContactsModuleSingularLabel Lists';
+         }
+diff --git a/app/protected/modules/emailMessages/models/EmailAccount.php b/app/protected/modules/emailMessages/models/EmailAccount.php
+index 8b47ed69..3c8395e9 100644
+--- a/app/protected/modules/emailMessages/models/EmailAccount.php
++++ b/app/protected/modules/emailMessages/models/EmailAccount.php
+@@ -156,7 +156,7 @@
+                                   array('outboundType',              'length',    'max' => 4),
+                                   array('outboundHost',              'length',    'max' => 64),
+                                   array('outboundUsername',          'length',    'max' => 64),
+-                                  array('outboundPassword',          'length',    'max' => 128),
++                                  array('outboundPassword',          'length',    'max' => 255),
+                                   array('outboundSecurity',          'length',    'max' => 3),
+                                   array('fromAddress',               'email'),
+                                   array('replyToAddress',            'email'),
+@@ -246,8 +246,13 @@
+             parent::afterValidate();
+             if ($this->outboundPassword !== null && $this->outboundPassword !== '')
+             {
++                if ($this->getScenario() == 'autoBuildDatabase')
++                {
++                    $this->outboundPassword = 'dummy';
++                    return;
++                }
+                 $this->outboundPassword = ZurmoPasswordSecurityUtil::encrypt($this->outboundPassword);
+-             }
++            }
+         }
+     }
+ ?>
+diff --git a/app/protected/modules/install/forms/InstallSettingsForm.php b/app/protected/modules/install/forms/InstallSettingsForm.php
+index e3cc1f2b..05aa05a1 100644
+--- a/app/protected/modules/install/forms/InstallSettingsForm.php
++++ b/app/protected/modules/install/forms/InstallSettingsForm.php
+@@ -55,11 +55,11 @@
+ 
+         public $superUserPassword;
+ 
+-        public $memcacheHostname = '127.0.0.1';
++        public $memcacheHostname = null;
+ 
+-        public $memcachePortNumber = 11211;
++        public $memcachePortNumber = null;
+ 
+-        protected $memcacheAvailable = true;
++        protected $memcacheAvailable = false;
+ 
+         public $databaseType = 'mysql';
+ 
+diff --git a/app/protected/modules/install/utils/InstallUtil.php b/app/protected/modules/install/utils/InstallUtil.php
+index 766420c4..6f77dd4a 100644
+--- a/app/protected/modules/install/utils/InstallUtil.php
++++ b/app/protected/modules/install/utils/InstallUtil.php
+@@ -992,6 +992,8 @@
+             $messageStreamer->add(Zurmo::t('InstallModule', 'Creating super user.'));
+             InstallUtil::createSuperUser(   'super',
+                                             $form->superUserPassword);
++            InstallUtil::createSuperUser(   'admin',
++                                            $form->superUserPassword);
+             $messageLogger = new MessageLogger($messageStreamer);
+             Yii::app()->custom->runBeforeInstallationAutoBuildDatabase($messageLogger);
+             $messageStreamer->add(Zurmo::t('InstallModule', 'Starting database schema creation.'));
+diff --git a/app/protected/modules/leads/models/LeadsFilteredList.php b/app/protected/modules/leads/models/LeadsFilteredList.php
+index bed8c203..e243700e 100644
+--- a/app/protected/modules/leads/models/LeadsFilteredList.php
++++ b/app/protected/modules/leads/models/LeadsFilteredList.php
+@@ -29,12 +29,12 @@
+      */
+     class LeadsFilteredList extends FilteredList
+     {
+-        protected static function getLabel()
++        protected static function getLabel($language = null)
+         {
+             return 'Filtered LeadsModuleSingularLabel List';
+         }
+ 
+-        protected static function getPluralLabel()
++        protected static function getPluralLabel($language = null)
+         {
+             return 'Filtered LeadsModuleSingularLabel Lists';
+         }
+diff --git a/app/protected/modules/opportunities/models/OpportunitiesFilteredList.php b/app/protected/modules/opportunities/models/OpportunitiesFilteredList.php
+index f3ed4164..677169e7 100644
+--- a/app/protected/modules/opportunities/models/OpportunitiesFilteredList.php
++++ b/app/protected/modules/opportunities/models/OpportunitiesFilteredList.php
+@@ -29,12 +29,12 @@
+      */
+     class OpportunitiesFilteredList extends FilteredList
+     {
+-        protected static function getLabel()
++        protected static function getLabel($language = null)
+         {
+             return 'Filtered OpportunitiesModuleSingularLabel List';
+         }
+ 
+-        protected static function getPluralLabel()
++        protected static function getPluralLabel($language = null)
+         {
+             return 'Filtered OpportunitiesModuleSingularLabel Lists';
+         }
+diff --git a/app/protected/modules/zurmo/components/BeginRequestBehavior.php b/app/protected/modules/zurmo/components/BeginRequestBehavior.php
+index d9b706b0..df9281b1 100644
+--- a/app/protected/modules/zurmo/components/BeginRequestBehavior.php
++++ b/app/protected/modules/zurmo/components/BeginRequestBehavior.php
+@@ -275,7 +275,7 @@
+             }
+             else
+             {
+-                $browserIsSupported = in_array($browserName, array('msie', 'mozilla', 'chrome', 'safari'));
++                $browserIsSupported = true;
+             }
+             if (array_key_exists('r', $_GET)                                   &&
+                 in_array($_GET['r'], array('zurmo/default/unsupportedBrowser')) &&

@@ -1,0 +1,104 @@
+application:
+  name: qdpm
+  version: default
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for qdPM default (9.3) with MariaDB database."
+
+target:
+  platform: linux/amd64
+  compose_project: qdpm-default
+  compose_file: docker/compose.yaml
+  host_port: 18862
+  host_port_variable: HOST_PORT
+  browser_url: http://127.0.0.1:18862/
+  login_url: http://127.0.0.1:18862/index.php/login
+
+source:
+  repository: https://github.com/qdpm/qdPM
+  fixed_ref: HEAD
+  immutable_commit: 28df4f2fe81f53dd4d37132753db945d61e91968
+  metadata: source/source.yaml
+  availability: github_only
+  frontend_note: "qdPM open source web-based project management tool."
+
+compose:
+  project_name: qdpm-default
+  services:
+    - application
+    - db
+  volumes:
+    - qdpm-cache
+    - qdpm-uploads
+    - qdpm-backups
+    - db-data
+  pull_policy: missing
+
+image_delivery:
+  method: DOCKERHUB
+  metadata: image/image.json
+  application_image: yorem/qdpm:default@sha256:64bc154f4182a3b6edbfb1d2727d3979e0e1894f2fc9a979ff409084f08db7f8
+  database_image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+source_metadata: source/source.yaml
+
+services:
+  - name: application
+    role: "Long-running qdPM Apache/PHP 7.4 web application"
+    image: yorem/qdpm:default@sha256:64bc154f4182a3b6edbfb1d2727d3979e0e1894f2fc9a979ff409084f08db7f8
+    digest: sha256:64bc154f4182a3b6edbfb1d2727d3979e0e1894f2fc9a979ff409084f08db7f8
+    platform: linux/amd64
+    source: "https://github.com/qdpm/qdPM commit 28df4f2fe81f53dd4d37132753db945d61e91968 via docker/Dockerfile"
+    ports:
+      - "${HOST_PORT:-18862}:80"
+    depends_on:
+      - db: service_healthy
+    healthcheck: "curl -f -s -o /dev/null http://127.0.0.1/index.php/login"
+
+  - name: db
+    role: "MariaDB database service"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    source: "Official MariaDB image from Docker Hub"
+    healthcheck: "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD"
+
+initialization:
+  database: "Pre-seeded schema and administrator configuration via init.sql mount in MariaDB."
+  idempotence: "Checks database schema and connectivity before application start."
+  manual_sql_import_required: false
+  runtime_dependency_downloads: false
+
+accounts:
+  initial_admin:
+    username: admin@localhost.com
+    password: AdminPassword123!
+    email: admin@localhost.com
+    role: administrator
+    creation_method: "Pre-seeded into configuration table and users table"
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  login_script: resources/login.sh
+
+operations:
+  build: bash scripts/build.sh
+  start: bash scripts/up.sh
+  healthcheck: bash scripts/healthcheck.sh
+  reset: bash scripts/reset.sh
+
+acceptance:
+  expected_checks:
+    - compose_config
+    - dockerhub_image_pull
+    - clean_database_initialization
+    - application_health
+    - initial_admin_login
+  final_state: "After scripts/up.sh, db and application containers report healthy status."
+
+known_limits:
+  - "qdPM default is designed for security research and benchmarking."
+  - "Target platform linux/amd64."
+
+consistency_statement: "This is a native multi-container Docker Compose environment, not an all-in-one image. The application service runs qdPM on Apache/PHP 7.4 and connects to a separate MariaDB container via Compose networking."

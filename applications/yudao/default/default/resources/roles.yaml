@@ -1,0 +1,12 @@
+roles:
+  - name: administrator
+    permissions:
+      - system:user:list
+      - system:role:list
+      - system:menu:list
+      - system:dept:list
+      - system:post:list
+      - system:tenant:list
+    purpose: "Super administrator role with full system management permissions"
+    associated_accounts:
+      - admin

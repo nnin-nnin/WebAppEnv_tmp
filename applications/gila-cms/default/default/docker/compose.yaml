@@ -1,0 +1,52 @@
+name: gila-cms-default
+
+services:
+  app:
+    image: yorem/gila-cms:default@sha256:d8b2d5e4255e1b83bfbf40db38d513376337b9be62b5e0eceb7c08918326d9db
+    platform: linux/amd64
+    ports:
+      - "18828:80"
+    environment:
+      GILA_DB_HOST: db
+      GILA_DB_NAME: gila
+      GILA_DB_USER: gila
+      GILA_DB_PASSWORD: AdminPassword123!
+      GILA_BASE_URL: "http://localhost:18828/"
+      TZ: "UTC"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - gila-data:/var/www/html/data
+      - gila-log:/var/www/html/log
+      - gila-tmp:/var/www/html/tmp
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.6@sha256:40153feb479c0da88b5cfe3f50f44c91f7baf05a1b7bcc5beb7eb37a890a8f16
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: gila
+      MYSQL_USER: gila
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  gila-data:
+  gila-log:
+  gila-tmp:
+  database-data:

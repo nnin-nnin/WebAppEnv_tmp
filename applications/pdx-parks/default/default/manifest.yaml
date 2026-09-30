@@ -1,0 +1,36 @@
+application: pdx-parks
+version: "default"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/meandavejustice/pdx-parks
+  commit: 45c2e11aa7ee02cab1d4a25b8c41e2221bc328c7
+runtime:
+  language: nodejs
+  server: express
+ports:
+  host_port: 18853
+  container_port: 3000
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/pdx-parks:default@sha256:9e36e03b2478eafff97ec38ee1a6179b1e05e6867473ec1aa937844772627aa3
+    tag: "default"
+    digest: sha256:9e36e03b2478eafff97ec38ee1a6179b1e05e6867473ec1aa937844772627aa3
+    platform: linux/amd64

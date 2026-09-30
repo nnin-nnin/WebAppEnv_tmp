@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over modules, users, themes, and system settings
+    purpose: Primary system administration role
+    associated_accounts:
+      - admin

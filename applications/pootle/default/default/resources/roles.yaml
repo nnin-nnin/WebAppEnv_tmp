@@ -1,0 +1,7 @@
+roles:
+- role: Administrator
+  description: Administrator with full translation and administration privileges
+- role: Member
+  description: Registered member with translation and suggestion privileges
+- role: Nobody
+  description: Anonymous visitor with read-only access

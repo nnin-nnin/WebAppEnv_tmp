@@ -1,0 +1,24 @@
+name: yudao-default
+
+services:
+  application:
+    image: yorem/yudao:default@sha256:3d3461894dfa5c38509a15aa4faec8b1804f04e365b1276fb52f6ea083e924e0
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18877}:80"
+    volumes:
+      - application-db:/var/lib/mysql
+      - application-redis:/var/lib/redis
+      - application-data:/var/lib/yudao
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s http://127.0.0.1/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+
+volumes:
+  application-db:
+  application-redis:
+  application-data:

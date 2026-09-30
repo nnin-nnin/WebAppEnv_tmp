@@ -1,0 +1,52 @@
+name: spree-default
+
+services:
+  application:
+    image: yorem/spree:default@sha256:1c29b806fb6769ef5d4ac5a451f862457611b661fa2208b4eb431674da96b45e
+    platform: linux/amd64
+    ports:
+      - "18866:3000"
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/spree_production
+      - SECRET_KEY_BASE=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+      - ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY=spree_primary_key_0123456789abcdef0123456789abcdef
+      - ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY=spree_determ_key_0123456789abcdef0123456789abcdef
+      - ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT=spree_salt_key_0123456789abcdef0123456789abcdef
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_PASSWORD=AdminPassword123!
+      - ADMIN_FIRST_NAME=Spree
+      - ADMIN_LAST_NAME=Admin
+      - STORE_COUNTRY=US
+      - STORE_LOCALE=en
+      - STORE_CURRENCY=USD
+      - RAILS_FORCE_SSL=false
+      - RAILS_ASSUME_SSL=false
+      - RAILS_SERVE_STATIC_FILES=true
+      - SOLID_QUEUE_IN_PUMA=true
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - application-storage:/rails/storage
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    platform: linux/amd64
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=spree_production
+    volumes:
+      - database-data:/var/lib/postgresql/data
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d spree_production || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+volumes:
+  application-storage:
+  database-data:

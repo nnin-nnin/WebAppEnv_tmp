@@ -1,0 +1,49 @@
+name: neos-default
+
+services:
+  app:
+    image: yorem/neos:default@sha256:ac190f87f012d9b20a5d52472b1e9029d222b1d3c83260144847649ec0d89e3e
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18847}:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: neos
+      DB_USER: neos
+      DB_PASSWORD: AdminPassword123!
+      FLOW_CONTEXT: Production
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - neos-data:/var/www/html/Data/Persistent
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -f http://127.0.0.1:80/neos/login || curl -s -f http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: neos
+      MYSQL_USER: neos
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - neos-db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  neos-data:
+  neos-db-data:

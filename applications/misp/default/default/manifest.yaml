@@ -1,0 +1,80 @@
+application:
+  name: misp
+  version: default
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for MISP (Malware Information Sharing Platform) with MariaDB and Redis."
+
+target:
+  platform: linux/amd64
+  compose_project: misp-default-default
+  compose_file: docker/compose.yaml
+  host_port: 18843
+  browser_url: http://127.0.0.1:18843/
+  login_url: http://127.0.0.1:18843/users/login
+
+source:
+  repository: https://github.com/MISP/MISP
+  fixed_ref: HEAD
+  commit: fb54b3e4a4ddd7ad7913fffd94284dd0e81b2120
+  metadata: source/source.yaml
+
+compose:
+  project_name: misp-default-default
+  services:
+    - application
+    - db
+    - redis
+  volumes:
+    - application-files
+    - application-logs
+    - database-data
+    - redis-data
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+deployment_mode: native_compose
+
+runtime:
+  language: php:7.4
+  web_server: nginx
+  database: mariadb:10.5
+
+ports:
+  host_port: 18843
+  container_port: 80
+
+credentials:
+  admin_username: admin@admin.test
+  admin_password: AdminPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  database_seed: resources/init.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/misp:default
+    tag: default
+    digest: sha256:02fcca47635f0128d2d0ddc451d63ac12c6c819775713588f0a6d53840e70721
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5
+    tag: 10.5
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+  redis:
+    image: redis:6.2-alpine
+    tag: 6.2-alpine
+    digest: sha256:b362b5dff9d14d961dc3352db4776aba6a8c53ca2661d7c74ad2c121f82cdaea
+    platform: linux/amd64

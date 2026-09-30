@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/thredded",
+    "tag": "default",
+    "digest": "sha256:124d76ac0c9a651ee2fbfe8846cdb9f05f47ef742cd965fcb8751eb8e5e704a8",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

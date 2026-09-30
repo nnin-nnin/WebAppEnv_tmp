@@ -1,0 +1,4 @@
+admin:
+  username: admin
+  password: AdminPassword123!
+  role: superadmin

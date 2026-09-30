@@ -1,0 +1,50 @@
+name: jizhicms-default
+
+services:
+  application:
+    image: yorem/jizhicms:default@sha256:d5330409f4daf686916933014036ef681db16abc3a9415db9c69547768142162
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: jizhicms
+      DB_USER: jizhicms
+      DB_PASS: benchmark-only
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: AdminPassword123!
+    ports:
+      - "${HOST_PORT:-18835}:80"
+    volumes:
+      - application-data:/var/www/html/cache
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s http://127.0.0.1:80/index.php/admins/Login/index.html || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: benchmark-only-root
+      MYSQL_DATABASE: jizhicms
+      MYSQL_USER: jizhicms
+      MYSQL_PASSWORD: benchmark-only
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  application-data:
+  database-data:

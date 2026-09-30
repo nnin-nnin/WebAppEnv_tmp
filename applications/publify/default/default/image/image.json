@@ -1,0 +1,18 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/publify",
+    "tag": "default",
+    "digest": "sha256:a5aefcc1b571e71de9f07c295d9952eb2b3f5d7c8ade9aa36cc1f24e4700aa11",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.6",
+    "digest": "sha256:40153feb479c0da88b5cfe3f50f44c91f7baf05a1b7bcc5beb7eb37a890a8f16",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

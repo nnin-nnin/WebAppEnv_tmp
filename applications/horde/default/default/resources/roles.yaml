@@ -1,0 +1,23 @@
+roles:
+  - name: administrator
+    permissions:
+      - manage_configuration
+      - manage_users
+      - manage_groups
+      - manage_permissions
+      - manage_locks
+      - manage_alarms
+      - manage_cache
+      - sql_shell
+      - php_shell
+      - cli_shell
+    purpose: "Full administrative and system configuration access to Horde Groupware"
+    associated_accounts:
+      - admin
+      - administrator
+  - name: normal_user
+    permissions:
+      - access_portal
+      - manage_personal_prefs
+    purpose: "Standard authenticated user access"
+    associated_accounts: []

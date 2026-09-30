@@ -1,0 +1,14 @@
+name: eccube3-default
+
+services:
+  web:
+    image: yorem/eccube3:default@sha256:b9b4724736400a51a8ff1db5f6bf8cd49a60aeb19095c75dc10ddd16ce7cdbc1
+    platform: linux/amd64
+    ports:
+      - "18820:80"
+    restart: unless-stopped
+    volumes:
+      - eccube-data:/ec-cube
+
+volumes:
+  eccube-data: {}

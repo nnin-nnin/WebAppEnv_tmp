@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="margin-bottom: 24px;">
+    <h1 style="font-size: 28px; font-weight: 800; color: #00262b; margin-bottom: 8px;">Explore All Courses</h1>
+    <p style="font-size: 16px; color: #555;">Browse online courses from leading universities and organizations</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px;">
+    {% for course in courses %}
+    <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <span style="font-size: 12px; font-weight: 700; color: #0075b4; text-transform: uppercase;">{{ course.organization }} &bull; {{ course.code }}</span>
+            <h3 style="font-size: 18px; margin: 10px 0; color: #00262b;">{{ course.title }}</h3>
+            <p style="font-size: 14px; color: #555; margin-bottom: 16px;">{{ course.description }}</p>
+        </div>
+        <div style="border-top: 1px solid #edf2f7; padding-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 13px; color: #718096;">{{ course.pacing }}</span>
+            <a href="/courses/{{ course.course_id }}/about" class="btn btn-outline" style="padding: 6px 14px; font-size: 13px;">Course Details</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

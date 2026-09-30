@@ -1,0 +1,15 @@
+users:
+  - username: admin
+    password: AdminPassword123!
+    email: admin@example.com
+    type: administrator
+    enabled: true
+    purpose: "Initial administrator account for system management and security evaluation"
+    creation_method: "Automated database seed during container entrypoint initialization"
+  - username: administrator
+    password: AdminPassword123!
+    email: administrator@example.com
+    type: administrator
+    enabled: true
+    purpose: "Alternate administrator account for security evaluation"
+    creation_method: "Automated database seed during container entrypoint initialization"

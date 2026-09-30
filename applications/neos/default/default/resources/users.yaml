@@ -1,0 +1,10 @@
+users:
+  - username: admin
+    password: AdminPassword123!
+    email: admin@example.com
+    role: Administrator
+    roles:
+      - "Neos.Neos:Administrator"
+    enabled: true
+    purpose: "Default system administrator account"
+    creation_method: "Seeded into Flow database via CLI flow user:create"

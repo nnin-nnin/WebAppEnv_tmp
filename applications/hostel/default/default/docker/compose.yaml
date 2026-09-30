@@ -1,0 +1,36 @@
+name: hostel-default
+
+services:
+  app:
+    image: yorem/hostel:default@sha256:25e75b94f02b81704907aa98eda2f71942b622e7cd3eae239fafb76816ba6a6b
+    platform: linux/amd64
+    ports:
+      - "18830:80"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=hostel_management_system
+      - DB_USER=root
+      - DB_PASS=AdminPassword123!
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      - MYSQL_ROOT_PASSWORD=AdminPassword123!
+      - MYSQL_DATABASE=hostel_management_system
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u root -pAdminPassword123! || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  database-data:

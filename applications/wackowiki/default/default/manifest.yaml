@@ -1,0 +1,41 @@
+application: wackowiki
+version: "default"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/WackoWiki/wackowiki.git
+  commit: d777cb5d6c25d0c146a0169beac71ca08d54f7e8
+runtime:
+  language: php
+  server: apache
+ports:
+  host_port: 18873
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/wackowiki:default@sha256:602f95fbce582829df3d41c5ceffb4efb373fd83e5e13912f1ca417c13876a1b
+    tag: "default"
+    digest: sha256:602f95fbce582829df3d41c5ceffb4efb373fd83e5e13912f1ca417c13876a1b
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    tag: "10.5"
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

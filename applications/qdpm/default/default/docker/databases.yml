@@ -1,0 +1,10 @@
+all:
+  doctrine:
+    class: sfDoctrineDatabase
+    param:
+      dsn: 'mysql:dbname=qdpm;host=db;port=3306'
+      profiler: false
+      username: qdpm
+      password: benchmark-only
+      attributes:
+        quote_identifier: true

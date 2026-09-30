@@ -1,0 +1,72 @@
+application:
+  name: silverpeas
+  version: default
+  type: complete_web_application
+  deployment_mode: native_compose
+  description: "Native multi-container Docker Compose deployment for Silverpeas collaborative platform with PostgreSQL database."
+
+target:
+  platform: linux/amd64
+  compose_project: silverpeas-default-default
+  compose_file: docker/compose.yaml
+  host_port: 18864
+  browser_url: http://127.0.0.1:18864/silverpeas/
+  login_url: http://127.0.0.1:18864/silverpeas/defaultLogin.jsp
+
+source:
+  repository: https://github.com/Silverpeas/Silverpeas-Core
+  fixed_ref: HEAD
+  commit: 3f5875d5832af01276050f9ad75a08f7ddb4dd30
+  metadata: source/source.yaml
+
+compose:
+  project_name: silverpeas-default-default
+  services:
+    - application
+    - db
+  volumes:
+    - db-data
+    - silverpeas-data
+
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+deployment_mode: native_compose
+
+runtime:
+  language: java:11
+  web_server: wildfly:26.1.3
+  database: postgres:15-alpine
+
+ports:
+  host_port: 18864
+  container_port: 8000
+
+credentials:
+  admin_username: silverpeas
+  admin_password: SilverpeasPassword123!
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+  database_seed: resources/init.sql
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/silverpeas:default@sha256:157b1306ddfbec8e525419955c1e10f067f57924481b60c119061be52b873831
+    tag: default
+    digest: sha256:157b1306ddfbec8e525419955c1e10f067f57924481b60c119061be52b873831
+    platform: linux/amd64
+  db:
+    image: postgres:15-alpine
+    tag: 15-alpine
+    digest: sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64

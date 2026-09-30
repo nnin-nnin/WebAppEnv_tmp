@@ -1,0 +1,42 @@
+application: eve
+version: default
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/pyeve/eve
+  commit: fe7d9c919bf35fe149feb42e51ba9c5c337e3119
+runtime:
+  python: '3.10'
+  framework: flask-eve
+  database: mongo:4.4
+ports:
+  host_port: 18823
+  container_port: 5000
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/eve:default@sha256:72c3ae0c6d2c1fb52744d2041340b00f4d35d7365cc6fd252af9a1c556430419
+    tag: default
+    digest: sha256:72c3ae0c6d2c1fb52744d2041340b00f4d35d7365cc6fd252af9a1c556430419
+    platform: linux/amd64
+  mongo:
+    image: mongo:4.4@sha256:4be76f674fc4b27859816811b8baa3c51830eb1dbf4ca81a51e26b79edd662ef
+    tag: '4.4'
+    digest: sha256:4be76f674fc4b27859816811b8baa3c51830eb1dbf4ca81a51e26b79edd662ef
+    platform: linux/amd64

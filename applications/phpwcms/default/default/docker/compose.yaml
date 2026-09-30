@@ -1,0 +1,51 @@
+name: phpwcms-default
+
+services:
+  app:
+    image: yorem/phpwcms:default@sha256:afda9101b1aa5c2c07d3cc1056de2de03210df86fb0206fb9cd4e0dd09c2b016
+    platform: linux/amd64
+    ports:
+      - "18855:80"
+    environment:
+      PHPWCMS_DB_HOST: db
+      PHPWCMS_DB_PORT: 3306
+      PHPWCMS_DB_NAME: phpwcms
+      PHPWCMS_DB_USER: phpwcms
+      PHPWCMS_DB_PASSWORD: AdminPassword123!
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - application-data:/var/www/html/filearchive
+      - application-content:/var/www/html/content
+      - application-upload:/var/www/html/upload
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/login.php || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: phpwcms
+      MYSQL_USER: phpwcms
+      MYSQL_PASSWORD: AdminPassword123!
+    volumes:
+      - database-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u root -pAdminPassword123! --silent || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  application-data:
+  application-content:
+  application-upload:
+  database-data:

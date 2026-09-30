@@ -1,0 +1,10 @@
+[
+  {
+    "service": "web",
+    "image": "yorem/eccube3:default",
+    "tag": "default",
+    "digest": "sha256:b9b4724736400a51a8ff1db5f6bf8cd49a60aeb19095c75dc10ddd16ce7cdbc1",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

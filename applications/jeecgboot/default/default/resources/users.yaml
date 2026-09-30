@@ -1,0 +1,13 @@
+users:
+  - username: admin
+    password: "123456"
+    type: admin
+    enabled: true
+    purpose: "初始超级管理员账号"
+    creation: "数据库 seed 初始化 (jeecgboot-mysql-5.7.sql)"
+  - username: jeecg
+    password: "123456"
+    type: admin
+    enabled: true
+    purpose: "平台默认开发者账号"
+    creation: "数据库 seed 初始化"

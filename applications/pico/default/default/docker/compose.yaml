@@ -1,0 +1,9 @@
+name: pico_default_default
+
+services:
+  app:
+    image: yorem/pico:default@sha256:df32459c0015dbec56fe5297128d787049168fceef3a47e74604b1e956b7ef4e
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18856:80"

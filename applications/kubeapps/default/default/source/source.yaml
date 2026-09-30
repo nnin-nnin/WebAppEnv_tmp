@@ -1,0 +1,4 @@
+repository: https://github.com/kubeapps/kubeapps
+commit: b70ead2c476805bf73bb76190bf406f9e453e6ff
+version: default
+tag: v2.12.1

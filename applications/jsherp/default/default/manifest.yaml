@@ -1,0 +1,47 @@
+application: jsherp
+version: default
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/jishenghua/jshERP
+  commit: d1a0f7d6082b7fbcc7af341f198dd1abf095321b
+runtime:
+  language: Java 8 / Spring Boot
+  database: MariaDB 10.5
+  cache: Redis 7
+ports:
+  host_port: 18836
+  container_port: 3000
+credentials:
+  admin_username: admin
+  admin_password: "123456"
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/jsherp:default@sha256:090c20899ae9a8ebe24d444e20a2277dadb3573863a93eb240d680ca5dcf2704
+    tag: default
+    digest: sha256:090c20899ae9a8ebe24d444e20a2277dadb3573863a93eb240d680ca5dcf2704
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    tag: "10.5"
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    tag: 7-alpine
+    digest: sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    platform: linux/amd64

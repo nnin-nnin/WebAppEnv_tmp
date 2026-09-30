@@ -1,0 +1,42 @@
+application: pbboard
+version: default
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/pbboard/PBBoard-3.0.4
+  commit: bfdb398a01a94f9519b303db088a989f4956d4b1
+runtime:
+  language: php
+  server: apache
+  database: mariadb:10.5
+ports:
+  host_port: 18852
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  web:
+    image: yorem/pbboard:default@sha256:936853cc7448de4da3092eb9e6510cdf8d10e41e513670c2609ec7474c8eccbe
+    tag: default
+    digest: sha256:936853cc7448de4da3092eb9e6510cdf8d10e41e513670c2609ec7474c8eccbe
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    tag: "10.5"
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

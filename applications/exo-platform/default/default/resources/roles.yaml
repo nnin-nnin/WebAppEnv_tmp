@@ -1,0 +1,10 @@
+roles:
+  - name: superadmin
+    permissions: "超级管理员，拥有全局最高系统与门户管理权限"
+    purpose: "系统运维与全功能控制"
+  - name: admin
+    permissions: "门户管理员，拥有空间、内容与用户管理权限"
+    purpose: "门户管理"
+  - name: users
+    permissions: "基础成员，拥有协作办公与内容浏览权限"
+    purpose: "日常业务使用"

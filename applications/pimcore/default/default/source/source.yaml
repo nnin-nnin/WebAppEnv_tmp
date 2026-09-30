@@ -1,0 +1,4 @@
+repository: https://github.com/pimcore/pimcore
+version: default
+commit: e6a157f8af56e4de7b88eedd0da89b669203d9b5
+ref: HEAD

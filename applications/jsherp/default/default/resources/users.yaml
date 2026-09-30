@@ -1,0 +1,13 @@
+users:
+  - username: admin
+    password: "123456"
+    type: admin
+    enabled: true
+    purpose: 初始系统管理员
+    creation: 数据库预置 (01_jsh_erp.sql)
+  - username: jsh
+    password: "123456"
+    type: user
+    enabled: true
+    purpose: 业务测试管理员
+    creation: 数据库预置 (01_jsh_erp.sql)
