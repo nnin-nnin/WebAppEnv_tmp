@@ -1,0 +1,36 @@
+application: homer
+version: "24.05.1"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/bastienwirtz/homer
+  commit: 6ab50f11e2aadb96332d15d5fad0e189255d682d
+runtime:
+  language: javascript
+  server: lighttpd
+ports:
+  host_port: 18674
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/homer:24.05.1@sha256:2276ddf032f972887b84992b3c538f14da73b4fc8a811f5c84a5ec957922b78b
+    tag: "24.05.1"
+    digest: sha256:2276ddf032f972887b84992b3c538f14da73b4fc8a811f5c84a5ec957922b78b
+    platform: linux/amd64

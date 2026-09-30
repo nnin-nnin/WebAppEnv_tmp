@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/nostromo",
+    "tag": "1.9.6",
+    "digest": "sha256:4ecac4b209096ab25d05940a0a367d17d1a36c5077cd5363f2d31f22af39fe2c",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

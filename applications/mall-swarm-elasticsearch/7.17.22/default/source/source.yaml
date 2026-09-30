@@ -1,0 +1,4 @@
+repository: https://github.com/elastic/elasticsearch
+commit: 38e9ca2e81304a821c50862dafab089ca863944b
+version: 7.17.22
+tag: v7.17.22

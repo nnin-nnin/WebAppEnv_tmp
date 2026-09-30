@@ -1,0 +1,19 @@
+name: gitea-1-22-0
+
+services:
+  app:
+    image: yorem/gitea:1.22.0@sha256:ff5addffde6abf6e57a7def08f45281eab2a86d2ff6cd92ac88ff84263a87547
+    platform: linux/amd64
+    container_name: gitea-1.22.0
+    restart: unless-stopped
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__security__INSTALL_LOCK=true
+    ports:
+      - "18655:3000"
+    volumes:
+      - gitea-data:/data
+
+volumes:
+  gitea-data:

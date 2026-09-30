@@ -1,0 +1,23 @@
+name: vaultwarden-1-32-0
+
+services:
+  app:
+    image: yorem/vaultwarden:1.32.0@sha256:c1ac298c3f1803e87d719ac882f01ccb1f0385c403bdb94db3e09e24dcbdfe7d
+    platform: linux/amd64
+    ports:
+      - "18651:80"
+    environment:
+      - SIGNUPS_ALLOWED=true
+      - ADMIN_TOKEN=Admin123456!
+    volumes:
+      - vaultwarden-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/healthcheck.sh"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+volumes:
+  vaultwarden-data:

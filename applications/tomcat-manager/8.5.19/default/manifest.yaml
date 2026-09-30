@@ -1,0 +1,35 @@
+application: tomcat-manager
+version: 8.5.19
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/apache/tomcat
+  commit: 7d6cf6ec6c467a5cd3fd69c50d5fde5b4d7b4f5f
+runtime:
+  language: java
+  server: tomcat
+ports:
+  host_port: 18772
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  application:
+    image: yorem/tomcat-manager:8.5.19
+    tag: 8.5.19
+    digest: sha256:10a12894ce5e30ee9832bf1dd37ad4ab035e87cd8e6a8e06b6448028029e53ff
+    platform: linux/amd64

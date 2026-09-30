@@ -1,0 +1,38 @@
+application: empirecms
+version: "7.5"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: http://www.phome.net
+  version: "7.5"
+runtime:
+  language: php
+  framework: empirecms
+  web_server: apache
+  database: mysql
+ports:
+  host_port: 18763
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: "123456"
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/empirecms:7.5@sha256:6f43bea7a90aba66f4764ceaf3839df040721ecc90fcab6d98af3ce4b13e5fe8
+    tag: "7.5"
+    digest: sha256:6f43bea7a90aba66f4764ceaf3839df040721ecc90fcab6d98af3ce4b13e5fe8
+    platform: linux/amd64

@@ -1,0 +1,8 @@
+{
+  "service": "web",
+  "image": "yorem/bludit",
+  "tag": "3.13.1",
+  "digest": "sha256:db0153c579f522590f6df12bc5effa4adc153857ea6c280e10b3b5197647c4f6",
+  "platform": "linux/amd64",
+  "archive": "not-bundled-docker-hub"
+}

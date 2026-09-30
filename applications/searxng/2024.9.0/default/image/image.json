@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/searxng",
+    "tag": "2024.9.0",
+    "digest": "sha256:44924939f9b36580f6957e2c7f1ea8331ebccada9b2eeb9de7ea38f90740eeda",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

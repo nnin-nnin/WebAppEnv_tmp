@@ -1,0 +1,36 @@
+application: syncthing
+version: 1.27.12
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/syncthing/syncthing
+  commit: a3c340ece9895887dfeaec759340f807f3b80e51
+runtime:
+  language: go
+  server: go
+ports:
+  host_port: 18677
+  container_port: 8384
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/syncthing:1.27.12@sha256:278f187b99ba3bd287250ce6e605c811680ef94dd9d2059892dd7373647b400e
+    tag: 1.27.12
+    digest: sha256:278f187b99ba3bd287250ce6e605c811680ef94dd9d2059892dd7373647b400e
+    platform: linux/amd64

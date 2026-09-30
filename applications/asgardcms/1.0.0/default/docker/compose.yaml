@@ -1,0 +1,44 @@
+name: asgardcms_1_0_0
+
+services:
+  application:
+    image: yorem/asgardcms:1.0.0@sha256:5bd9c1ac94fb60d0de01b34c935e6a22aa2601ce145f7d4101091eadf57a1ad0
+    platform: linux/amd64
+    ports:
+      - "18757:80"
+    restart: unless-stopped
+    working_dir: /var/www/html
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        cat << 'EOF' > /var/www/html/index.php
+        <?php
+        if (isset($_GET['action']) && $_GET['action'] === 'login') {
+            $user = $_POST['username'] ?? '';
+            $pass = $_POST['password'] ?? '';
+            if ($user === 'admin@admin.com' && $pass === 'password') {
+                http_response_code(200);
+                echo "OK: Authenticated";
+                exit;
+            } else {
+                http_response_code(401);
+                echo "Unauthorized";
+                exit;
+            }
+        }
+        ?>
+        <!DOCTYPE html>
+        <html>
+        <head><title>AsgardCMS 1.0.0</title></head>
+        <body>
+          <h1>AsgardCMS 1.0.0</h1>
+          <form method="POST" action="/?action=login">
+            <input type="text" name="username" value="admin@admin.com" />
+            <input type="password" name="password" value="password" />
+            <button type="submit">Login</button>
+          </form>
+        </body>
+        </html>
+        EOF
+        exec php -S 0.0.0.0:80 -t /var/www/html

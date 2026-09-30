@@ -1,0 +1,9 @@
+name: thinkcmf_2_2_3_default
+
+services:
+  application:
+    image: yorem/thinkcmf:2.2.3@sha256:ff4f22cc7714a97b1da6613cd006edbccac9aa8113169224648eb56906f816ca
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18761:80"

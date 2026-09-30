@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/nocodb",
+    "tag": "0.258.0",
+    "digest": "sha256:4ccfc5114506b1725ffc63be56445fc6fe453a6e6d5cb56eb5f88f0540d4e56e",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

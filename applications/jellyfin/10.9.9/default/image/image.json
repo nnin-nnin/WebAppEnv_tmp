@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/jellyfin",
+    "tag": "10.9.9",
+    "digest": "sha256:796d4b9ecee733fb205e993ba20c42e5b3eadeb526394f4fe51add6d6b82a837",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

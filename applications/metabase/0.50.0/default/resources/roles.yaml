@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over Metabase settings, databases, data models, and users
+    purpose: Primary administrative role
+    associated_accounts:
+      - admin@example.com

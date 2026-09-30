@@ -1,0 +1,18 @@
+name: qbittorrent_4_6_5_default
+
+services:
+  app:
+    image: yorem/qbittorrent:4.6.5@sha256:cb6170e7c0bcdf42d042af112a20e28aa266bd0c5cb4e3e89ffcdce8bfbf99fa
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18681:8080"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - WEBUI_PORT=8080
+    volumes:
+      - qbittorrent_config:/config
+
+volumes:
+  qbittorrent_config:

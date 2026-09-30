@@ -1,0 +1,41 @@
+application: yourls
+version: 1.9.2
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/YOURLS/YOURLS
+  commit: 218b053447eefba54486d24a65df3103ab6b56e5
+runtime:
+  php: '8.3'
+  web_server: apache
+  database: mariadb:10.5
+ports:
+  host_port: 18654
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/yourls:1.9.2
+    tag: 1.9.2
+    digest: sha256:e55d4b812c0833a7529d267a43844957a9f8e6a9fedfd01d6d3ec4fa0eda61ec
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5
+    tag: 10.5
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

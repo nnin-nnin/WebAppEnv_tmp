@@ -1,0 +1,30 @@
+name: audiobookshelf-2-12-3
+
+services:
+  application:
+    image: yorem/audiobookshelf:2.12.3@sha256:3528a93b6442ffe54bd46771bbbab7c97084e1101071586d9dc2254f30bb4358
+    platform: linux/amd64
+    ports:
+      - "18741:13378"
+    environment:
+      - PORT=13378
+      - CONFIG_PATH=/config
+      - METADATA_PATH=/metadata
+    volumes:
+      - audiobookshelf-config:/config
+      - audiobookshelf-metadata:/metadata
+      - audiobookshelf-audiobooks:/audiobooks
+      - audiobookshelf-podcasts:/podcasts
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://localhost:13378/ping >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+volumes:
+  audiobookshelf-config:
+  audiobookshelf-metadata:
+  audiobookshelf-audiobooks:
+  audiobookshelf-podcasts:

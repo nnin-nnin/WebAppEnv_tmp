@@ -1,0 +1,5 @@
+users:
+  - username: admin
+    password: adminadmin
+    role: admin
+    description: Default administrator account

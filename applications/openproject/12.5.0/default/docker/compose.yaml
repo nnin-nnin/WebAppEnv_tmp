@@ -1,0 +1,12 @@
+name: openproject_12_5_0
+services:
+  app:
+    image: yorem/openproject:12.5.0@sha256:63dc143ab2fe6eac48e8d0421366f5157f6eefc1193595d92414ce095030bb2e
+    platform: linux/amd64
+    ports:
+      - "18646:8080"
+    environment:
+      - OPENPROJECT_SECRET_KEY_BASE=secret
+      - OPENPROJECT_HOST__NAME=127.0.0.1:18646
+      - OPENPROJECT_HTTPS=false
+    restart: unless-stopped

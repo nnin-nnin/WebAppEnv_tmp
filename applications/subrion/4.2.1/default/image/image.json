@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/subrion:4.2.1",
+    "tag": "4.2.1",
+    "digest": "sha256:8135b7288dd7021c82aa8093bc80f6d392e6cff277f7d23905afbfdc32a84d88",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,42 @@
+application: fider
+version: 0.20.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/getfider/fider
+  commit: 9049da1cb4b0d239f8b9c4b6eba1fe74ad6acb68
+runtime:
+  language: go
+  web_server: fider
+  database: postgres:15-alpine
+ports:
+  host_port: 18675
+  container_port: 3000
+credentials:
+  admin_username: admin@example.com
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/fider:0.20.0@sha256:a7ad1378d8db8880d4e4a3a11b1aea7107c8e7886b6412368c2706db4ffb0966
+    tag: 0.20.0
+    digest: sha256:a7ad1378d8db8880d4e4a3a11b1aea7107c8e7886b6412368c2706db4ffb0966
+    platform: linux/amd64
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    tag: 15-alpine
+    digest: sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64

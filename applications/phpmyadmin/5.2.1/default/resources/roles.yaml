@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges
+    purpose: Primary administrative role
+    associated_accounts:
+      - admin

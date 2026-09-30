@@ -1,0 +1,35 @@
+application: nocodb
+version: 0.258.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/nocodb/nocodb
+  commit: 0f115e7f7f181bbe0fc3a33e053710e96ee16765
+runtime:
+  language: nodejs
+  server: express
+ports:
+  host_port: 18658
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/nocodb:0.258.0
+    tag: 0.258.0
+    digest: sha256:4ccfc5114506b1725ffc63be56445fc6fe453a6e6d5cb56eb5f88f0540d4e56e
+    platform: linux/amd64

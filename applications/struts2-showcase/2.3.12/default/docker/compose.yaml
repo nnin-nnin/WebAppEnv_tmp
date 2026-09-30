@@ -1,0 +1,9 @@
+name: struts2_showcase_2_3_12_default
+
+services:
+  application:
+    image: yorem/struts2-showcase:2.3.12@sha256:02658803118f4b60dcdddb10247df61b8945349f0f8f95dae7e422b810a6f8f6
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18773:8080"

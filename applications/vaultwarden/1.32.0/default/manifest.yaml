@@ -1,0 +1,36 @@
+application: vaultwarden
+version: 1.32.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/dani-garcia/vaultwarden
+  commit: b557c117247b0def307623b22203bd09c89bf05f
+runtime:
+  language: rust
+  web_server: rocket
+  database: sqlite
+ports:
+  host_port: 18651
+  container_port: 80
+credentials:
+  admin_username: admin@example.com
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/vaultwarden:1.32.0
+    tag: 1.32.0
+    digest: sha256:c1ac298c3f1803e87d719ac882f01ccb1f0385c403bdb94db3e09e24dcbdfe7d
+    platform: linux/amd64

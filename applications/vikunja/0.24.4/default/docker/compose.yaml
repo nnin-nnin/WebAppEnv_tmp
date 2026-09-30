@@ -1,0 +1,21 @@
+name: vikunja_0_24_4_default
+
+services:
+  app:
+    image: yorem/vikunja:0.24.4@sha256:4e4f1dc8812526b8a3f5462552ef2677c8c9aadefd08b8d4ec1f5b404afcf57a
+    platform: linux/amd64
+    restart: unless-stopped
+    user: "0:0"
+    ports:
+      - "18661:3456"
+    environment:
+      - VIKUNJA_SERVICE_JWTSECRET=benchmark-jwt-secret-key-1234567890
+      - VIKUNJA_DATABASE_TYPE=sqlite
+      - VIKUNJA_DATABASE_PATH=/db/vikunja.db
+    volumes:
+      - vikunja-db:/db
+      - vikunja-files:/app/vikunja/files
+
+volumes:
+  vikunja-db:
+  vikunja-files:

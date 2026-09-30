@@ -1,0 +1,9 @@
+name: getsimplecms_3_3_16_default
+
+services:
+  application:
+    image: yorem/getsimplecms:3.3.16@sha256:5756a9df2d7dc5f9818fad94f9c5dcd7d1c1fbb498b63427fd319d3b5d040098
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18762:80"

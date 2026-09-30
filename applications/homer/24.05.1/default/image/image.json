@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/homer",
+    "tag": "24.05.1",
+    "digest": "sha256:2276ddf032f972887b84992b3c538f14da73b4fc8a811f5c84a5ec957922b78b",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

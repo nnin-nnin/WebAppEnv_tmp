@@ -1,0 +1,16 @@
+name: cpg_1_6_0_default
+
+services:
+  application:
+    image: yorem/cpg:1.6.0@sha256:b97b24d0fb9516946bfe1698522ce54cc4b0ec893be9712698779958c363067d
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18758:8080"
+    environment:
+      - PORT=8080
+      - DEBUG=true
+      - SESSION_SECRET=cpg_session_secret_key_12345
+      - JWT_ACCESS_TOKEN=cpg_jwt_secret_token_12345
+      - DOMAIN=localhost
+      - HTTP_SCHEMA=http

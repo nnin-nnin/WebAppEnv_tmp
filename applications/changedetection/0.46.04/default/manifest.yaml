@@ -1,0 +1,35 @@
+application: changedetection
+version: 0.46.04
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/dgtlmoon/changedetection.io
+  commit: 5b70625eaabba8ed85bb271f32c6c955513e1ef2
+runtime:
+  language: python
+  web_server: werkzeug
+ports:
+  host_port: 18695
+  container_port: 5000
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/changedetection:0.46.04@sha256:096dae27b5d677b89f0e810fff95a70403271aa3ff3b6437952d2db9be7e74c5
+    tag: 0.46.04
+    digest: sha256:096dae27b5d677b89f0e810fff95a70403271aa3ff3b6437952d2db9be7e74c5
+    platform: linux/amd64

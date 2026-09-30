@@ -1,0 +1,36 @@
+application: struts2-showcase
+version: 2.3.12
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/apache/struts
+  commit: f15f28a1766fe991de85c8cd089b102f77915319
+runtime:
+  language: Java 8
+  web_server: Apache Tomcat 8.0
+  framework: Struts 2.3.12
+ports:
+  host_port: 18773
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  application:
+    image: yorem/struts2-showcase:2.3.12@sha256:02658803118f4b60dcdddb10247df61b8945349f0f8f95dae7e422b810a6f8f6
+    tag: 2.3.12
+    digest: sha256:02658803118f4b60dcdddb10247df61b8945349f0f8f95dae7e422b810a6f8f6
+    platform: linux/amd64

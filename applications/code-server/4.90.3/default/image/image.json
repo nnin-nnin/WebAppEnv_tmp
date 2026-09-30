@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/code-server",
+    "tag": "4.90.3",
+    "digest": "sha256:81706b71ace316157850cbcfb574714d1067249c107a415b3a03dc6b613ebfbc",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

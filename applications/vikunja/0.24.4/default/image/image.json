@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/vikunja",
+    "tag": "0.24.4",
+    "digest": "sha256:4e4f1dc8812526b8a3f5462552ef2677c8c9aadefd08b8d4ec1f5b404afcf57a",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

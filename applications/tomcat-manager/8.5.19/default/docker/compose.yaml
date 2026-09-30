@@ -1,0 +1,9 @@
+name: tomcat_manager_8_5_19_default
+
+services:
+  application:
+    image: yorem/tomcat-manager:8.5.19@sha256:10a12894ce5e30ee9832bf1dd37ad4ab035e87cd8e6a8e06b6448028029e53ff
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18772:8080"

@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/struts2-showcase",
+    "tag": "2.3.12",
+    "digest": "sha256:02658803118f4b60dcdddb10247df61b8945349f0f8f95dae7e422b810a6f8f6",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

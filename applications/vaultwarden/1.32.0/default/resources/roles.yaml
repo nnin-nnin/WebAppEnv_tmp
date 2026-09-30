@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative privileges over vaultwarden settings, users, and organizations
+    purpose: Primary administrative role
+    associated_accounts:
+      - admin@example.com

@@ -1,0 +1,35 @@
+application: thelounge
+version: "4.4.3"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/thelounge/thelounge
+  commit: f5867c3643ba8ef24dcf5a7010f39fd6050d0954
+runtime:
+  language: nodejs
+  node: "18.20.8"
+ports:
+  host_port: 18672
+  container_port: 9000
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/thelounge:4.4.3@sha256:54e87285a8a6203e1cc4a3a854227f100180f33a1b5fa42933b4ed6ab4d07d38
+    tag: "4.4.3"
+    digest: sha256:54e87285a8a6203e1cc4a3a854227f100180f33a1b5fa42933b4ed6ab4d07d38
+    platform: linux/amd64

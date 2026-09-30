@@ -1,0 +1,37 @@
+application: wallabag
+version: "2.6.9"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/wallabag/wallabag
+  commit: f8f7f962cebab65d94f29e165046dc6e638d1a37
+runtime:
+  php: "8.1"
+  web_server: nginx
+  database: sqlite
+ports:
+  host_port: 18671
+  container_port: 80
+credentials:
+  admin_username: wallabag
+  admin_password: wallabag
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/wallabag:2.6.9@sha256:2f2b1fd1dae28f010692ae24a78f9bbf2cc88829b96ded8c6718ae8008f9ae45
+    tag: "2.6.9"
+    digest: sha256:2f2b1fd1dae28f010692ae24a78f9bbf2cc88829b96ded8c6718ae8008f9ae45
+    platform: linux/amd64

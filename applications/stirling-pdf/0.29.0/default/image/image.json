@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/stirling-pdf:0.29.0",
+    "tag": "0.29.0",
+    "digest": "sha256:03e5c3d82e607aeedf6df16ca9ba7832129ab5763b9785068602fb5c7fb96034",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

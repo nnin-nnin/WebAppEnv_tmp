@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/kibana",
+    "tag": "6.5.4",
+    "digest": "sha256:0209a5433ed49346858507bdccca1c5afc99a540f34f0d8a86eca8197ddd8aca",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "elasticsearch",
+    "tag": "6.5.4",
+    "digest": "sha256:7053b3979a1dd709f2a225d52bc53622714790b13d88cf08164d252291ab8b61",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

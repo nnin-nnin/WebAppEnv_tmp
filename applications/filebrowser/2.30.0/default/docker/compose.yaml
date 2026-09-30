@@ -1,0 +1,18 @@
+name: filebrowser_2_30_0_default
+
+services:
+  app:
+    image: yorem/filebrowser:2.30.0@sha256:1252d3e3d7c27598765a4cd08d68a8b4dda57753649870dcfd2fdcc2e3622709
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18667:80"
+    environment:
+      - FB_DATABASE=/database/filebrowser.db
+    volumes:
+      - filebrowser_data:/srv
+      - filebrowser_db:/database
+
+volumes:
+  filebrowser_data:
+  filebrowser_db:

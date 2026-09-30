@@ -1,0 +1,36 @@
+application: livehelperchat
+version: "4.43"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/LiveHelperChat/livehelperchat
+  version: "4.43"
+runtime:
+  language: php
+  server: apache
+ports:
+  host_port: 18770
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/livehelperchat:4.43@sha256:a10da99c78806bb97012b8405810e04818a3b9d0e1caea6b07f03f504d728869
+    tag: "4.43"
+    digest: sha256:a10da99c78806bb97012b8405810e04818a3b9d0e1caea6b07f03f504d728869
+    platform: linux/amd64

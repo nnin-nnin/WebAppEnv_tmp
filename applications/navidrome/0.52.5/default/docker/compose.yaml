@@ -1,0 +1,26 @@
+name: navidrome-0-52-5
+
+services:
+  app:
+    image: yorem/navidrome:0.52.5@sha256:4d42b180d99bfe95e1c058413e504b287559afac7b496606d27e4a89c187c339
+    platform: linux/amd64
+    ports:
+      - "18678:4533"
+    environment:
+      - ND_MUSICFOLDER=/music
+      - ND_DATAFOLDER=/data
+      - ND_DEVAUTOCREATEADMINPASSWORD=Admin123456!
+    volumes:
+      - navidrome-data:/data
+      - navidrome-music:/music
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://localhost:4533/ping >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+volumes:
+  navidrome-data:
+  navidrome-music:

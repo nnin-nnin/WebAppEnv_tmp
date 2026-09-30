@@ -1,0 +1,9 @@
+name: it-tools-2024-5-13
+
+services:
+  app:
+    image: yorem/it-tools:2024.5.13@sha256:6f177c156b9466610e0f2093e24668b78da501c66f0054f98bccb582b74ab26b
+    platform: linux/amd64
+    ports:
+      - "18665:80"
+    restart: unless-stopped

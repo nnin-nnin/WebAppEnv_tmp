@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/kong-admin-ui",
+    "tag": "0.14.9",
+    "digest": "sha256:c8172b75607d06d83d917387a2f4d95b9b855f64063ee60db8e6f1a1c97b8abf",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

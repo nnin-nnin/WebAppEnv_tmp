@@ -1,0 +1,41 @@
+application: lychee
+version: 5.5.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/LycheeOrg/Lychee
+  commit: cc684748504a9ea4027fad70be2d76bbe791d61f
+runtime:
+  php: '8.2'
+  web_server: nginx
+  database: mariadb
+ports:
+  host_port: 18657
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/lychee:5.5.0
+    tag: 5.5.0
+    digest: sha256:2361c80a8c3803f5597f0af4f7f119742accd6a14377f671d23e9543c6173fad
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5
+    tag: 10.5
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

@@ -1,0 +1,36 @@
+application: shlink
+version: 3.7.3
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/shlinkio/shlink
+  commit: 361d987f47b1f2d9ce8564e8e185cbc941f16ae6
+runtime:
+  php: '8.2'
+  runtime: roadrunner
+  database: sqlite
+ports:
+  host_port: 18673
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/shlink:3.7.3
+    tag: 3.7.3
+    digest: sha256:da18b218478bdf405bb6293391dd8688edcdf95aed550fc54e9fccb43dd852bd
+    platform: linux/amd64

@@ -1,0 +1,68 @@
+application:
+  name: Subrion CMS
+  version: 4.2.1
+  type: full_web_application
+  description: "Subrion is a PHP/MySQL based content management system."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（Subrion CMS / PHP 5.6 Apache）与数据库服务（MariaDB 10.5）分别运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: subrion-4-2-1
+  host_port: 18643
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/intelliants/subrion
+    commit: b8d2c1b2d71120bb55162722818f49ddcd064108
+    tag: v4.2.1
+    source_yaml: source/source.yaml
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime"
+    image: yorem/subrion:4.2.1@sha256:8135b7288dd7021c82aa8093bc80f6d392e6cff277f7d23905afbfdc32a84d88
+    digest: "sha256:8135b7288dd7021c82aa8093bc80f6d392e6cff277f7d23905afbfdc32a84d88"
+    platform: linux/amd64
+    ports:
+      - "18643:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s -o /dev/null http://127.0.0.1:80/panel/ || exit 1"
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.5)"
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    digest: "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"
+    volumes:
+      - db-data
+
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh admin Admin123456!"
+  reset: "./scripts/reset.sh"

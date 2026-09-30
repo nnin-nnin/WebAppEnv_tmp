@@ -1,0 +1,37 @@
+application: freshrss
+version: "1.24.3"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/FreshRSS/FreshRSS
+  commit: 4461784b8a519fe5f77e374be8e79818422933a0
+runtime:
+  php: "8.2"
+  web_server: apache
+  database: sqlite
+ports:
+  host_port: 18652
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/freshrss:1.24.3@sha256:fcfe6a5ff162b45c3e15ee0a261640d2d154aade9c655cba1ae9087e3f22cc0d
+    tag: "1.24.3"
+    digest: sha256:fcfe6a5ff162b45c3e15ee0a261640d2d154aade9c655cba1ae9087e3f22cc0d
+    platform: linux/amd64

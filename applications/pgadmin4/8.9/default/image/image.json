@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/pgadmin4",
+    "tag": "8.9",
+    "digest": "sha256:33eb7d070ee7500d1513453773f61df1256fdea08257d4a3f4aebd8cf1cc87cf",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

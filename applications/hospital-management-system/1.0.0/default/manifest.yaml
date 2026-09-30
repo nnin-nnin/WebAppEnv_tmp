@@ -1,0 +1,37 @@
+application: hospital-management-system
+version: "1.0.0"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/kabirkhyrul/HMS.git
+  commit: 1.0.0
+runtime:
+  language: php
+  server: apache
+  database: mysql
+ports:
+  host_port: 18765
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/hospital-management-system:1.0@sha256:31ef62f56ca137603ff75b7e058f7861df2e9af0ad8a89c0018e14e783d21a72
+    tag: "1.0"
+    digest: sha256:31ef62f56ca137603ff75b7e058f7861df2e9af0ad8a89c0018e14e783d21a72
+    platform: linux/amd64

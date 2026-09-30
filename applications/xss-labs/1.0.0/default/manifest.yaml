@@ -1,0 +1,36 @@
+application: xss-labs
+version: 1.0.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/do0dl3/xss-labs
+  commit: c97bed6e6dd850d486e0fcaac177b13117b1052d
+runtime:
+  language: PHP 5.5
+  web_server: Apache 2.4
+  database: MySQL 5.5
+ports:
+  host_port: 18769
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: password
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  application:
+    image: yorem/xss-labs:1.0.0@sha256:7533d8006f96b5426bb704fe0f01a4ea4ab098982bd6c90459ee8cc26a2e8594
+    tag: 1.0.0
+    digest: sha256:7533d8006f96b5426bb704fe0f01a4ea4ab098982bd6c90459ee8cc26a2e8594
+    platform: linux/amd64

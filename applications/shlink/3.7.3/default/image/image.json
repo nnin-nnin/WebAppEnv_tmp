@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/shlink",
+    "tag": "3.7.3",
+    "digest": "sha256:da18b218478bdf405bb6293391dd8688edcdf95aed550fc54e9fccb43dd852bd",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

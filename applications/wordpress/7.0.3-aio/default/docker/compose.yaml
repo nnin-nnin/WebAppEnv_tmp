@@ -1,0 +1,16 @@
+name: wordpress_7_0_3_aio_default
+
+services:
+  application:
+    image: yorem/wordpress:7.0.3-aio@sha256:004c2da991d835c426fbcb57ac98beaee1b7feeb6ceaa16f5bb80857eaafc7fd
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18755:80"
+    volumes:
+      - wp-data:/var/www/html/wp-content
+      - wp-db:/var/lib/mysql
+
+volumes:
+  wp-data:
+  wp-db:

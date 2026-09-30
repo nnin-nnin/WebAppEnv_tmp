@@ -1,0 +1,4 @@
+repository: https://github.com/phpmyadmin/phpmyadmin
+commit: 11e127f3fa64adb099d765c4cae6de026954068c
+version: 5.2.1
+tag: RELEASE_5_2_1

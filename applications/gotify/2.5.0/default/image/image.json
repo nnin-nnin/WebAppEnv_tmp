@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/gotify:2.5.0",
+    "tag": "2.5.0",
+    "digest": "sha256:87761c6884bab9169699111bc542c0d29ae785247e2129ac9b3a07e54b686281",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

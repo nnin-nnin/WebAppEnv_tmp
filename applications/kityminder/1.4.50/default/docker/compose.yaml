@@ -1,0 +1,8 @@
+name: kityminder_1_4_50
+services:
+  app:
+    image: yorem/kityminder:1.4.50@sha256:f9bff912eb65e7c30b3ef4b5aabb65afb69f2ee47fd6b5eda001c929a9a22b6c
+    platform: linux/amd64
+    ports:
+      - "18640:80"
+    restart: unless-stopped

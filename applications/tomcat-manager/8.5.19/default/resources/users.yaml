@@ -1,0 +1,9 @@
+users:
+  - username: admin
+    password: admin
+    role: admin
+    description: Default administrator account
+  - username: tomcat
+    password: tomcat
+    role: manager-gui
+    description: Tomcat Manager GUI role account

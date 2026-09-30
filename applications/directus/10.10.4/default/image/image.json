@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/directus",
+    "tag": "10.10.4",
+    "digest": "sha256:4cedae57d07ff1915c06e57b655eb1bd41373fff69bbd06f8748bfd0b07637a6",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

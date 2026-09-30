@@ -1,0 +1,68 @@
+application:
+  name: xe
+  version: 1.8.0
+  type: full_web_application
+  description: "XpressEngine (XE) is a flexible open-source Content Management System."
+
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（XpressEngine / Apache PHP 7.1）与数据库服务（MariaDB 10.5）分别运行在独立容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: xe-180
+  host_port: 18644
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/xpressengine/xe-core
+    commit: 328ebdc118ce1b6b5cb52fdc425026b4bcb6cdfc
+    tag: 1.8.0
+    source_yaml: source/source.yaml
+
+services:
+  app:
+    service_name: app
+    role: "Web Application & PHP Runtime"
+    image: yorem/xe:1.8.0@sha256:9f84609faf70aeb81faa8ff880e4e5d6e2b40f5c08e655fae94e4cf7b67553b5
+    digest: "sha256:9f84609faf70aeb81faa8ff880e4e5d6e2b40f5c08e655fae94e4cf7b67553b5"
+    platform: linux/amd64
+    ports:
+      - "18644:80"
+    dependencies:
+      - db
+    healthcheck: "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"
+  db:
+    service_name: db
+    role: "Relational Database (MariaDB 10.5)"
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    digest: "sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984"
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    healthcheck: "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"
+    volumes:
+      - db-data
+
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+  login: resources/login.sh
+
+recommended_commands:
+  pull: "docker compose -f docker/compose.yaml pull"
+  up: "docker compose -f docker/compose.yaml up -d"
+  healthcheck: "./scripts/healthcheck.sh"
+  login: "./resources/login.sh"
+  reset: "./scripts/reset.sh"

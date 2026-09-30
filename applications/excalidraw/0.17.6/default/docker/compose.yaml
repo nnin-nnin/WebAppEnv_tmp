@@ -1,0 +1,9 @@
+name: excalidraw-0-17-6
+
+services:
+  app:
+    image: yorem/excalidraw:0.17.6@sha256:4542f30bea392b833822d0e7db4fa2220e6706ca962c082add2665159fa91758
+    platform: linux/amd64
+    ports:
+      - "18684:80"
+    restart: unless-stopped

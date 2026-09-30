@@ -1,0 +1,34 @@
+application: vikunja
+version: 0.24.4
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/go-vikunja/vikunja
+  commit: fd57babb1ce787091689f9971e6f3bced1ffb2da
+runtime:
+  language: go
+ports:
+  host_port: 18661
+  container_port: 3456
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/vikunja:0.24.4@sha256:4e4f1dc8812526b8a3f5462552ef2677c8c9aadefd08b8d4ec1f5b404afcf57a
+    tag: 0.24.4
+    digest: sha256:4e4f1dc8812526b8a3f5462552ef2677c8c9aadefd08b8d4ec1f5b404afcf57a
+    platform: linux/amd64

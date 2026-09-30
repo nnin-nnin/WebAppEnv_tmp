@@ -1,0 +1,6 @@
+roles:
+  - name: Administrator
+    description: Full administrative access to XpressEngine management and modules
+    purpose: System management and administration
+    associated_accounts:
+      - admin

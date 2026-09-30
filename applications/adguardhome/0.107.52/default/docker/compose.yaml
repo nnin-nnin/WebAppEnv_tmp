@@ -1,0 +1,16 @@
+name: adguardhome_0_107_52_default
+
+services:
+  app:
+    image: yorem/adguardhome:0.107.52@sha256:1f9dd7718f03514f86f51d3486dbabd6b58cb5d77cc3932e80c896bc6e726d32
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18683:3000"
+    volumes:
+      - adguardhome_work:/opt/adguardhome/work
+      - adguardhome_conf:/opt/adguardhome/conf
+
+volumes:
+  adguardhome_work:
+  adguardhome_conf:

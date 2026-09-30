@@ -1,0 +1,17 @@
+name: pgadmin4_8_9_default
+
+services:
+  app:
+    image: yorem/pgadmin4:8.9@sha256:33eb7d070ee7500d1513453773f61df1256fdea08257d4a3f4aebd8cf1cc87cf
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18699:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=Admin123456!
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pgadmin_data:

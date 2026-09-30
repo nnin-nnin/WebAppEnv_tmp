@@ -1,0 +1,36 @@
+name: kibana-6-5-4
+
+services:
+  app:
+    image: yorem/kibana:6.5.4@sha256:0209a5433ed49346858507bdccca1c5afc99a540f34f0d8a86eca8197ddd8aca
+    platform: linux/amd64
+    ports:
+      - "18649:5601"
+    environment:
+      ELASTICSEARCH_URL: http://db:9200
+      SERVER_HOST: "0.0.0.0"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -f http://127.0.0.1:5601/api/status >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+
+  db:
+    image: elasticsearch:6.5.4@sha256:7053b3979a1dd709f2a225d52bc53622714790b13d88cf08164d252291ab8b61
+    platform: linux/amd64
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://127.0.0.1:9200 >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+    restart: unless-stopped

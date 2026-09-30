@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/plantuml",
+    "tag": "1.2024.5",
+    "digest": "sha256:5f6f99ec2fc11c8236e80630d622b0ba22b8d9301b39b18db4bb2b95cae87781",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

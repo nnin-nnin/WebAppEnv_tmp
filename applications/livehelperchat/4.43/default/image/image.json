@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/livehelperchat",
+    "tag": "4.43",
+    "digest": "sha256:a10da99c78806bb97012b8405810e04818a3b9d0e1caea6b07f03f504d728869",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/cmsimple",
+    "tag": "4.7.5",
+    "digest": "sha256:d3a3e0da4c4fc2861680e860a4c48342854c2b994f33eb80d8d647d8ccdda18f",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

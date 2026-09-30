@@ -1,0 +1,9 @@
+name: hospital_management_system_1_0_0_default
+
+services:
+  application:
+    image: yorem/hospital-management-system:1.0@sha256:31ef62f56ca137603ff75b7e058f7861df2e9af0ad8a89c0018e14e783d21a72
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18765:80"

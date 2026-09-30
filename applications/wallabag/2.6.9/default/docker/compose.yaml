@@ -1,0 +1,17 @@
+name: wallabag_2_6_9_default
+
+services:
+  app:
+    image: yorem/wallabag:2.6.9@sha256:2f2b1fd1dae28f010692ae24a78f9bbf2cc88829b96ded8c6718ae8008f9ae45
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18671:80"
+    environment:
+      - SYMFONY__ENV__DOMAIN_NAME=http://127.0.0.1:18671
+      - SYMFONY__ENV__DATABASE_DRIVER=pdo_sqlite
+    volumes:
+      - wallabag_data:/var/www/wallabag/data
+
+volumes:
+  wallabag_data:

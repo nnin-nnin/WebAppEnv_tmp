@@ -1,0 +1,35 @@
+application: code-server
+version: 4.90.3
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/coder/code-server
+  commit: 26c763485b9101fcae2ce56fc0903f0e2d48abe3
+runtime:
+  language: node
+  server: node
+ports:
+  host_port: 18698
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/code-server:4.90.3@sha256:81706b71ace316157850cbcfb574714d1067249c107a415b3a03dc6b613ebfbc
+    tag: 4.90.3
+    digest: sha256:81706b71ace316157850cbcfb574714d1067249c107a415b3a03dc6b613ebfbc
+    platform: linux/amd64

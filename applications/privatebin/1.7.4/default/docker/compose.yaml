@@ -1,0 +1,14 @@
+name: privatebin_1_7_4_default
+
+services:
+  app:
+    image: yorem/privatebin:1.7.4@sha256:8909f997c8906980e7bfd68edcbcbaef27e4264d3be06d06c960daa80d54fac7
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18666:8080"
+    volumes:
+      - privatebin_data:/srv/data
+
+volumes:
+  privatebin_data:

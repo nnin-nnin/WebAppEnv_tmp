@@ -1,0 +1,6 @@
+users:
+- username: admin
+  password: Admin123456!
+  role: Administrator
+  email: admin@benchmark.local
+  description: Default administrator account

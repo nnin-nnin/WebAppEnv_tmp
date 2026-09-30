@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/vaultwarden:1.32.0",
+    "tag": "1.32.0",
+    "digest": "sha256:c1ac298c3f1803e87d719ac882f01ccb1f0385c403bdb94db3e09e24dcbdfe7d",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,35 @@
+application: qbittorrent
+version: "4.6.5"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/qbittorrent/qBittorrent
+  commit: 5e81347933adec219dab27a503f8dc9c4a1c522d
+runtime:
+  language: c++
+  web_server: qbittorrent-nox
+ports:
+  host_port: 18681
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: adminadmin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/qbittorrent:4.6.5@sha256:cb6170e7c0bcdf42d042af112a20e28aa266bd0c5cb4e3e89ffcdce8bfbf99fa
+    tag: "4.6.5"
+    digest: sha256:cb6170e7c0bcdf42d042af112a20e28aa266bd0c5cb4e3e89ffcdce8bfbf99fa
+    platform: linux/amd64

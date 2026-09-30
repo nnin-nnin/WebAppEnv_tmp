@@ -1,0 +1,35 @@
+application: uptime-kuma
+version: 1.23.16
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/louislam/uptime-kuma
+  commit: 5bb329fa0e8af9395911f33d5a6d6bb9b128c0f7
+runtime:
+  language: node
+  server: node
+ports:
+  host_port: 18656
+  container_port: 3001
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/uptime-kuma:1.23.16@sha256:b4c3a4d186b4612b3a7bbb39c56a634626276615c21871c837a86e4a43d8e047
+    tag: 1.23.16
+    digest: sha256:b4c3a4d186b4612b3a7bbb39c56a634626276615c21871c837a86e4a43d8e047
+    platform: linux/amd64

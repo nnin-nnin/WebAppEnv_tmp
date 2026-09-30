@@ -1,0 +1,36 @@
+application: nodered
+version: "3.1.9"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/node-red/node-red
+  commit: 29ed5b27925e51185098a7fe3180faa4c8a734d7
+runtime:
+  language: nodejs
+  node: "20"
+ports:
+  host_port: 18693
+  container_port: 1880
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/nodered:3.1.9@sha256:a649dd711d55490151a2c39a8e48ad0c44325488fbc0e66315f2d2e19e5e1ace
+    tag: "3.1.9"
+    digest: sha256:a649dd711d55490151a2c39a8e48ad0c44325488fbc0e66315f2d2e19e5e1ace
+    platform: linux/amd64

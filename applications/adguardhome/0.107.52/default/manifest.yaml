@@ -1,0 +1,35 @@
+application: adguardhome
+version: 0.107.52
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/AdguardTeam/AdGuardHome
+  commit: c7d8b9ede1eaf8507e406875c679c0a1c21e9cca
+runtime:
+  language: go
+  server: adguardhome
+ports:
+  host_port: 18683
+  container_port: 3000
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/adguardhome:0.107.52@sha256:1f9dd7718f03514f86f51d3486dbabd6b58cb5d77cc3932e80c896bc6e726d32
+    tag: 0.107.52
+    digest: sha256:1f9dd7718f03514f86f51d3486dbabd6b58cb5d77cc3932e80c896bc6e726d32
+    platform: linux/amd64

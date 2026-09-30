@@ -1,0 +1,12 @@
+name: redis_commander_0_8_0_default
+
+services:
+  app:
+    image: yorem/redis-commander:0.8.0@sha256:19cd0c49f418779fa2822a0496c5e6516d0c792effc39ed20089e6268477e40a
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18687:8081"
+    environment:
+      - HTTP_USER=admin
+      - HTTP_PASSWORD=Admin123456!

@@ -1,0 +1,5 @@
+name: nostromo
+version: 1.9.6
+url: http://www.nazgul.ch/dev_nostromo.html
+description: nostromo nhttpd is a simple, fast and secure HTTP server
+license: MIT

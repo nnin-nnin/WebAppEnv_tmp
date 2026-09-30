@@ -1,0 +1,4 @@
+repository: https://github.com/pgadmin-org/pgadmin4
+commit: 7d0bbf30ec940a4501e971c59c72b0134ed4f05e
+version: 8.9
+tag: REL-8_9

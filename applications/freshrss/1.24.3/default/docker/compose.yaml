@@ -1,0 +1,19 @@
+name: freshrss_1_24_3_default
+
+services:
+  app:
+    image: yorem/freshrss:1.24.3@sha256:fcfe6a5ff162b45c3e15ee0a261640d2d154aade9c655cba1ae9087e3f22cc0d
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18652:80"
+    environment:
+      - TZ=UTC
+      - CRON_MIN=4,34
+      - FRESHRSS_INSTALL=--api-enabled --default-user admin --db-type sqlite --base-url http://localhost:18652/
+      - FRESHRSS_USER=--user admin --password Admin123456!
+    volumes:
+      - freshrss_data:/var/www/FreshRSS/data
+
+volumes:
+  freshrss_data:

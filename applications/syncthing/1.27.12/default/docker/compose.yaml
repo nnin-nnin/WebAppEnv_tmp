@@ -1,0 +1,18 @@
+name: syncthing_1_27_12_default
+
+services:
+  app:
+    image: yorem/syncthing:1.27.12@sha256:278f187b99ba3bd287250ce6e605c811680ef94dd9d2059892dd7373647b400e
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18677:8384"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - HOME=/var/syncthing
+    volumes:
+      - syncthing_data:/var/syncthing
+
+volumes:
+  syncthing_data:

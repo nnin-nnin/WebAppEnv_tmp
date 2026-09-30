@@ -1,0 +1,35 @@
+application: it-tools
+version: "2024.5.13"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/CorentinTh/it-tools
+  commit: e876d0360812eab1255e414102a44d65f7c1bfaf
+runtime:
+  language: typescript
+  web_server: nginx
+ports:
+  host_port: 18665
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/it-tools:2024.5.13
+    tag: "2024.5.13"
+    digest: sha256:6f177c156b9466610e0f2093e24668b78da501c66f0054f98bccb582b74ab26b
+    platform: linux/amd64

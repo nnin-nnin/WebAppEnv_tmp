@@ -1,0 +1,41 @@
+application: rocket.chat
+version: 4.8.7
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/RocketChat/Rocket.Chat
+  commit: a396a11f664ee65368f3ea0149ebe826abdaeb6e
+runtime:
+  node: "14.18.3"
+  database: mongo:4.4
+ports:
+  host_port: 18647
+  container_port: 3000
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/rocket.chat:4.8.7@sha256:52ed454bcc888a26f70c73af4a3dad98d10b5580bdd27984291aea6bbd6a4736
+    tag: 4.8.7
+    digest: sha256:52ed454bcc888a26f70c73af4a3dad98d10b5580bdd27984291aea6bbd6a4736
+    platform: linux/amd64
+  db:
+    image: mongo:4.4@sha256:4be76f674fc4b27859816811b8baa3c51830eb1dbf4ca81a51e26b79edd662ef
+    tag: "4.4"
+    digest: sha256:4be76f674fc4b27859816811b8baa3c51830eb1dbf4ca81a51e26b79edd662ef
+    platform: linux/amd64

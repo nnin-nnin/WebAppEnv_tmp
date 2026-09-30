@@ -1,0 +1,21 @@
+name: transmission_4_0_5_default
+
+services:
+  app:
+    image: yorem/transmission:4.0.5@sha256:f722d66f77ea2b73c4bbb34eb7957e603dd590311efce99c28d465a33f7e7d7a
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18680:9091"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - USER=admin
+      - PASS=Admin123456!
+    volumes:
+      - transmission_config:/config
+      - transmission_downloads:/downloads
+
+volumes:
+  transmission_config:
+  transmission_downloads:

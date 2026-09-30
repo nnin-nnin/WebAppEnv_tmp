@@ -1,0 +1,36 @@
+application: cmsimple
+version: "4.7.5"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  url: https://www.cmsimple.org/
+runtime:
+  php: "7.2"
+  web_server: apache
+  database: flat-file
+ports:
+  host_port: 18753
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: test
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/cmsimple:4.7.5@sha256:d3a3e0da4c4fc2861680e860a4c48342854c2b994f33eb80d8d647d8ccdda18f
+    tag: "4.7.5"
+    digest: sha256:d3a3e0da4c4fc2861680e860a4c48342854c2b994f33eb80d8d647d8ccdda18f
+    platform: linux/amd64

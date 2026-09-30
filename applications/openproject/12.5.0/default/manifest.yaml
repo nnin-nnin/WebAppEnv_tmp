@@ -1,0 +1,36 @@
+application: openproject
+version: 12.5.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/opf/openproject
+  commit: 0df59a64b60df4690137940f13985230a6f9485f
+runtime:
+  language: ruby
+  web_server: puma
+  database: postgresql
+ports:
+  host_port: 18646
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: admin
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/openproject:12.5.0@sha256:63dc143ab2fe6eac48e8d0421366f5157f6eefc1193595d92414ce095030bb2e
+    tag: 12.5.0
+    digest: sha256:63dc143ab2fe6eac48e8d0421366f5157f6eefc1193595d92414ce095030bb2e
+    platform: linux/amd64

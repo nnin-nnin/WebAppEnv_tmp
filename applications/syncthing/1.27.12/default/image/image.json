@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/syncthing",
+    "tag": "1.27.12",
+    "digest": "sha256:278f187b99ba3bd287250ce6e605c811680ef94dd9d2059892dd7373647b400e",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,18 @@
+name: elasticsearch-6-8-6
+
+services:
+  application:
+    image: yorem/elasticsearch:6.8.6@sha256:2cc0deebe1cbbf3e2f6b7c03bb897c962d0b7537bd37b3e59c946c1f5b4ab096
+    platform: linux/amd64
+    ports:
+      - "18749:9200"
+    command:
+      - "elasticsearch"
+      - "-Ediscovery.type=single-node"
+      - "-Ebootstrap.system_call_filter=false"
+    environment:
+      discovery.type: single-node
+      bootstrap.system_call_filter: "false"
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    restart: unless-stopped

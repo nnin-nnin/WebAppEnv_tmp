@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+COMPOSE_FILE="${APP_DIR}/docker/compose.yaml"
+HOST_PORT="${HOST_PORT:-18694}"
+BASE_URL="${BASE_URL:-http://127.0.0.1:${HOST_PORT}}"
+
+echo "Checking Docker Compose service status..."
+RUNNING=$(docker compose -f "${COMPOSE_FILE}" ps -q 2>/dev/null | wc -l | tr -d ' ')
+if [ "${RUNNING}" -lt 1 ]; then
+    echo "Error: No running containers found."
+    docker compose -f "${COMPOSE_FILE}" ps
+    exit 1
+fi
+
+echo "Checking health endpoint (${BASE_URL}/health)..."
+HEALTH_CODE=$(curl -s -o /dev/null -w "%{http_code}" "${BASE_URL}/health" || true)
+if [ "${HEALTH_CODE}" != "200" ]; then
+    echo "Warning: /health returned HTTP ${HEALTH_CODE}, checking /login endpoint..."
+fi
+
+echo "Checking login page (${BASE_URL}/login)..."
+LOGIN_CODE=$(curl -s -L -o /dev/null -w "%{http_code}" "${BASE_URL}/login" || true)
+if [ "${LOGIN_CODE}" -ne 200 ]; then
+    echo "Error: ${BASE_URL}/login returned HTTP ${LOGIN_CODE}, expected 200."
+    exit 1
+fi
+
+echo "Performing automated login test..."
+"${APP_DIR}/resources/login.sh"
+
+echo "Health check passed successfully!"
+exit 0

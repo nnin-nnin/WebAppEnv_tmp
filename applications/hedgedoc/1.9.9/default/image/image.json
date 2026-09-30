@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/hedgedoc",
+    "tag": "1.9.9",
+    "digest": "sha256:53a21ddeb2ed0f9b9be67cf143d9429f9f7480d997d5e5533ab11bee32a4e876",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/miniflux",
+    "tag": "2.1.4",
+    "digest": "sha256:bfafdf3d8e8cc7aaefe80a8acd10e86ef62140eec792a9e9c6905305d53ea063",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "postgres",
+    "tag": "15-alpine",
+    "digest": "sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

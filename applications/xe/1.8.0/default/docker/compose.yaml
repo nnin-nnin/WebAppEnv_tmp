@@ -1,0 +1,48 @@
+name: xe-180
+
+services:
+  app:
+    image: yorem/xe:1.8.0@sha256:9f84609faf70aeb81faa8ff880e4e5d6e2b40f5c08e655fae94e4cf7b67553b5
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18644}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: xe
+      DB_USER: xe
+      DB_PASS: Admin123456!
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: Admin123456!
+    volumes:
+      - ../resources/index.php:/var/www/html/index.php:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+  db:
+    image: mariadb:10.5@sha256:c219d932f5c0d67d224bceb609cc3dca6188a1903ac17b2d75cc764f0f50e984
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin123456!
+      MYSQL_DATABASE: xe
+      MYSQL_USER: xe
+      MYSQL_PASSWORD: Admin123456!
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

@@ -1,0 +1,38 @@
+name: miniflux_2_1_4_default
+
+services:
+  db:
+    image: postgres:15-alpine@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: miniflux
+      POSTGRES_PASSWORD: benchmark-only
+      POSTGRES_DB: miniflux
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U miniflux -d miniflux"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+      start_period: 3s
+    volumes:
+      - miniflux_db_data:/var/lib/postgresql/data
+
+  app:
+    image: yorem/miniflux:2.1.4@sha256:bfafdf3d8e8cc7aaefe80a8acd10e86ef62140eec792a9e9c6905305d53ea063
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18653:8080"
+    environment:
+      - DATABASE_URL=postgres://miniflux:benchmark-only@db/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=Admin123456!
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  miniflux_db_data:

@@ -1,0 +1,36 @@
+application: metabase
+version: 0.50.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/metabase/metabase
+  commit: 4fe42d36351a43489db577963542424b0358a73d
+runtime:
+  language: clojure
+  web_server: jetty
+  database: h2
+ports:
+  host_port: 18652
+  container_port: 3000
+credentials:
+  admin_username: admin@example.com
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/metabase:0.50.0
+    tag: 0.50.0
+    digest: sha256:9bb2fc209d2957d8e459e5818ff60dfcd23322c74c18e4da1f591e56b8ea4ca2
+    platform: linux/amd64

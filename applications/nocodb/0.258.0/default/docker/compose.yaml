@@ -1,0 +1,17 @@
+name: nocodb_0_258_0_default
+
+services:
+  app:
+    image: yorem/nocodb:0.258.0@sha256:4ccfc5114506b1725ffc63be56445fc6fe453a6e6d5cb56eb5f88f0540d4e56e
+    platform: linux/amd64
+    ports:
+      - "18658:8080"
+    environment:
+      - NC_ADMIN_EMAIL=admin@example.com
+      - NC_ADMIN_PASSWORD=Admin123456!
+    volumes:
+      - nocodb-data:/usr/app/data
+    restart: unless-stopped
+
+volumes:
+  nocodb-data:

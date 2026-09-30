@@ -1,0 +1,3 @@
+roles:
+  - role: admin
+    description: Full administrative access to Node-RED

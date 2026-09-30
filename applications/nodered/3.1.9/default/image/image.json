@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/nodered",
+    "tag": "3.1.9",
+    "digest": "sha256:a649dd711d55490151a2c39a8e48ad0c44325488fbc0e66315f2d2e19e5e1ace",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

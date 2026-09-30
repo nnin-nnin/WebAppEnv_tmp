@@ -1,0 +1,18 @@
+name: duplicati_2_0_8_default
+
+services:
+  app:
+    image: yorem/duplicati:2.0.8@sha256:d2d98870f324e1912534cbe147b25cf638828493cce52524ca82e93fcea54421
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18682:8200"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MONO_ENV_OPTIONS=--interpreter
+    volumes:
+      - duplicati_config:/config
+
+volumes:
+  duplicati_config:

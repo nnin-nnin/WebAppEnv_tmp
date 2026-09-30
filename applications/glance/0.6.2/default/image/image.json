@@ -1,0 +1,10 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/glance",
+    "tag": "0.6.2",
+    "digest": "sha256:e71f219c5894dde27644daea2fc77984e20bcab0e54a71f8f845a3ed5a5f06f6",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

@@ -1,0 +1,8 @@
+users:
+  - username: root
+    password: benchmark-only
+    role: Administrator
+    type: root
+    enabled: true
+    purpose: Primary administrator account for audiobookshelf server
+    creation_method: Initial server setup API

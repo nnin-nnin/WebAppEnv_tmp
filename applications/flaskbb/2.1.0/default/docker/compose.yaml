@@ -1,0 +1,29 @@
+name: flaskbb_2_1_0
+
+services:
+  app:
+    image: yorem/flaskbb:2.1.0@sha256:74a8f4a09a23139f995f12c4341cb2dc3652e1a257d54100a6269b082001e0d2
+    platform: linux/amd64
+    ports:
+      - "18642:5000"
+    volumes:
+      - flaskbb_data:/app/data
+      - flaskbb_config:/app/config
+    entrypoint:
+      - /bin/ash
+      - -c
+      - |
+        mkdir -p /app/config /app/data
+        if [ ! -f /app/config/flaskbb.cfg ]; then
+          flaskbb makeconfig -d -f -o /app/config/flaskbb.cfg
+          sed -i "s/SERVER_NAME = .*/SERVER_NAME = None/" /app/config/flaskbb.cfg
+          sed -i "s|SQLALCHEMY_DATABASE_URI = .*|SQLALCHEMY_DATABASE_URI = \"sqlite:////app/data/flaskbb.sqlite\"|" /app/config/flaskbb.cfg
+          flaskbb --config=/app/config/flaskbb.cfg install --username "$${FLASKBB_USER:-admin}" --email admin@example.com --password "$${FLASKBB_PASSWORD:-benchmark-only}" --welcome --force
+          python -c "from flaskbb import create_app; create_app(config=\"/app/config/flaskbb.cfg\")"
+        fi
+        exec gunicorn -w 4 -b 0.0.0.0:5000 wsgi:flaskbb
+    restart: unless-stopped
+
+volumes:
+  flaskbb_data:
+  flaskbb_config:

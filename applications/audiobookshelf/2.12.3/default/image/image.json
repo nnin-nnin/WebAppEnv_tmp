@@ -1,0 +1,10 @@
+[
+  {
+    "service": "application",
+    "image": "yorem/audiobookshelf",
+    "tag": "2.12.3",
+    "digest": "sha256:3528a93b6442ffe54bd46771bbbab7c97084e1101071586d9dc2254f30bb4358",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

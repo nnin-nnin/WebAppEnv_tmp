@@ -1,0 +1,46 @@
+name: subrion-4-2-1
+
+services:
+  app:
+    image: yorem/subrion:4.2.1@sha256:8135b7288dd7021c82aa8093bc80f6d392e6cff277f7d23905afbfdc32a84d88
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18643}:80"
+    environment:
+      SUBRION_DB_HOST: db
+      SUBRION_DB_USER: subrion
+      SUBRION_DB_PASSWORD: benchmark-only
+      SUBRION_DB_NAME: subrion
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../resources/initial-data/config.inc.php:/usr/src/subrion/includes/config.inc.php:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:80/panel/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: benchmark-only-root
+      MYSQL_DATABASE: subrion
+      MYSQL_USER: subrion
+      MYSQL_PASSWORD: benchmark-only
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

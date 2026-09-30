@@ -1,0 +1,37 @@
+application: shiro-web
+version: "1.2.4"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/apache/shiro
+  version: "1.2.4"
+runtime:
+  language: java
+  java: "8"
+  server: tomcat
+ports:
+  host_port: 18774
+  container_port: 8080
+credentials:
+  admin_username: root
+  admin_password: secret
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    image: yorem/shiro-web:1.2.4@sha256:5c96f0fa1399c4c2d30174fb9bcaea4aeda108e82cd61550b3e690b0dde5d2fc
+    tag: "1.2.4"
+    digest: sha256:5c96f0fa1399c4c2d30174fb9bcaea4aeda108e82cd61550b3e690b0dde5d2fc
+    platform: linux/amd64

@@ -1,0 +1,24 @@
+name: directus_10_10_4_default
+
+services:
+  app:
+    image: yorem/directus:10.10.4@sha256:4cedae57d07ff1915c06e57b655eb1bd41373fff69bbd06f8748bfd0b07637a6
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18657:8055"
+    environment:
+      - KEY=255d046f-ccf6-4220-994f-4205bb802f37
+      - SECRET=fb95744e-1fc2-4730-8444-943214102644
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_PASSWORD=Admin123456!
+      - DB_CLIENT=sqlite3
+      - DB_FILENAME=/directus/database/data.db
+      - WEBSOCKETS_ENABLED=true
+    volumes:
+      - directus_data:/directus/database
+      - directus_uploads:/directus/uploads
+
+volumes:
+  directus_data:
+  directus_uploads:

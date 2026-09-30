@@ -1,0 +1,9 @@
+name: pikachu_0_1_0
+
+services:
+  application:
+    image: yorem/pikachu:0.1@sha256:e9748879af76b68235a6ec66ce28b048323ac31f7f33065d83727cacb3998e05
+    platform: linux/amd64
+    ports:
+      - "18764:80"
+    restart: unless-stopped

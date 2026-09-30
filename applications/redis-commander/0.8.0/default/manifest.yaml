@@ -1,0 +1,36 @@
+application: redis-commander
+version: 0.8.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/joeferner/redis-commander
+  commit: e61f17b3242b4ff5fd4a4ee5c14aede421394047
+runtime:
+  language: javascript
+  server: nodejs
+ports:
+  host_port: 18687
+  container_port: 8081
+credentials:
+  admin_username: admin
+  admin_password: Admin123456!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  app:
+    image: yorem/redis-commander:0.8.0@sha256:19cd0c49f418779fa2822a0496c5e6516d0c792effc39ed20089e6268477e40a
+    tag: 0.8.0
+    digest: sha256:19cd0c49f418779fa2822a0496c5e6516d0c792effc39ed20089e6268477e40a
+    platform: linux/amd64

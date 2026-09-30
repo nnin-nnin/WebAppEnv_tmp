@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/yourls",
+    "tag": "1.9.2",
+    "digest": "sha256:e55d4b812c0833a7529d267a43844957a9f8e6a9fedfd01d6d3ec4fa0eda61ec",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mariadb",
+    "tag": "10.5",
+    "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

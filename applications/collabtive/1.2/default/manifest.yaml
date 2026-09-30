@@ -1,0 +1,74 @@
+application: collabtive
+version: "1.2"
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+
+deployment:
+  mode: native_compose
+  notes: "该环境是原生多容器 Docker Compose 部署。应用服务（Collabtive / PHP 5.6 Apache）与数据库服务（MySQL 5.7）分别运行在独立的容器中，并通过 Compose 专有网络通信。"
+  compose_file: docker/compose.yaml
+  project_name: collabtive-1-2-default
+  host_port: 18746
+  delivery_method: DOCKERHUB
+  dockerhub_namespace: yorem
+
+source:
+  backend:
+    repository: https://github.com/3logy/Collabtive.git
+    commit: d185b32fcecbd3745102a39262651fd2827bce6f
+    source_yaml: source/source.yaml
+
+runtime:
+  php: '5.6'
+  web_server: apache
+  database: mysql:5.7
+
+ports:
+  host_port: 18746
+  container_port: 80
+
+credentials:
+  admin_username: admin
+  admin_password: admin
+
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+
+services:
+  application:
+    name: application
+    role: "Collabtive Web Application & PHP 5.6"
+    image: yorem/collabtive:1.2@sha256:9d4e1521e31e7880407f151ae310c8d0c07be257d220b9c2a03f8c871a163e96
+    tag: "1.2"
+    digest: sha256:9d4e1521e31e7880407f151ae310c8d0c07be257d220b9c2a03f8c871a163e96
+    platform: linux/amd64
+    ports:
+      - "18746:80"
+    dependencies:
+      - db
+    volumes:
+      - application-data:/var/www/html/files
+  db:
+    name: db
+    role: "MySQL 5.7 Database"
+    image: mysql:5.7@sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    tag: "5.7"
+    digest: sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+    platform: linux/amd64
+    ports: []
+    dependencies: []
+    volumes:
+      - database-data:/var/lib/mysql

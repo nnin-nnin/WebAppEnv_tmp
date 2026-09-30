@@ -1,0 +1,11 @@
+name: etherpad_2_2_4_default
+
+services:
+  app:
+    image: yorem/etherpad:2.2.4@sha256:98d395769b3b74f7c886d68bdd2aaa49924ed60ee9d78bea020bd23ab8eeed7e
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "18692:9001"
+    environment:
+      - ADMIN_PASSWORD=Admin123456!
