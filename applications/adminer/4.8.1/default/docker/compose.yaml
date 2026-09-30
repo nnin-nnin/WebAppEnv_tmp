@@ -1,9 +1,0 @@
-name: adminer_4_8_1_default
-
-services:
-  app:
-    image: yorem/adminer:4.8.1@sha256:7b346bacc32a9fc9f0d434d0e14c875b9ec54c82b3ea47a87c925389291e67d1
-    platform: linux/amd64
-    restart: unless-stopped
-    ports:
-      - "18686:8080"

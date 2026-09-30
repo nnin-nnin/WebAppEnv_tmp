@@ -1,6 +1,0 @@
-roles:
-  - name: Administrator
-    description: Full administrative privileges over Gotify server, clients, applications, and users
-    purpose: Primary administrative role
-    associated_accounts:
-      - admin

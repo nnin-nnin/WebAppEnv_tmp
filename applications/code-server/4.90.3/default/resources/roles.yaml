@@ -1,6 +1,0 @@
-roles:
-  - name: Administrator
-    description: Full administrative privileges over the code-server instance and development environment
-    purpose: Primary administrative role
-    associated_accounts:
-      - admin

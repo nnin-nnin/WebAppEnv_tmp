@@ -1,9 +1,0 @@
-name: xss_labs_1_0_0_default
-
-services:
-  application:
-    image: yorem/xss-labs:1.0.0@sha256:7533d8006f96b5426bb704fe0f01a4ea4ab098982bd6c90459ee8cc26a2e8594
-    platform: linux/amd64
-    restart: unless-stopped
-    ports:
-      - "18769:80"

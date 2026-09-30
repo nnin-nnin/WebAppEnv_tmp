@@ -1,6 +1,0 @@
-roles:
-  - name: Administrator
-    description: Full administrative privileges over Navidrome music server, user management, and library settings
-    purpose: Primary administrative role
-    associated_accounts:
-      - admin

@@ -1,6 +1,0 @@
-roles:
-  - name: Administrator
-    description: Full administrative privileges over mall-admin-web management platform
-    purpose: Primary administrative role
-    associated_accounts:
-      - admin

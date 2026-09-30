@@ -1,5 +1,0 @@
-roles:
-  - role: super
-    description: Super administrator with full system privileges
-  - role: org-level-creator
-    description: Organization level creator privileges

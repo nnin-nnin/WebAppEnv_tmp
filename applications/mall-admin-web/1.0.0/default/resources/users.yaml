@@ -1,8 +1,0 @@
-users:
-  - username: admin
-    password: macro123
-    role: Administrator
-    type: admin
-    enabled: true
-    purpose: Primary administrator account for mall-admin-web
-    creation_method: Pre-configured default credentials

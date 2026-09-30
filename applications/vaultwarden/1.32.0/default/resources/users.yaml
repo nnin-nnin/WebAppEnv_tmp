@@ -1,8 +1,0 @@
-users:
-  - username: admin@example.com
-    password: Admin123456!
-    role: Administrator
-    type: admin
-    enabled: true
-    purpose: Initial administrator user and admin token credential
-    creation_method: Environment variable configuration

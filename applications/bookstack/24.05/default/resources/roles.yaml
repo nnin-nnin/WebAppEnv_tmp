@@ -1,6 +1,0 @@
-roles:
-  - name: Administrator
-    description: Full administrative privileges over shelves, books, chapters, pages, users, and system settings
-    purpose: Primary system management role
-    associated_accounts:
-      - admin@admin.com

@@ -1,9 +1,0 @@
-name: drawio_24_7_17_default
-
-services:
-  app:
-    image: yorem/drawio:24.7.17@sha256:85ae18a03bc4dd4360408684883de28f61d14171af3b03369707c39c974715c6
-    platform: linux/amd64
-    restart: unless-stopped
-    ports:
-      - "18669:8080"

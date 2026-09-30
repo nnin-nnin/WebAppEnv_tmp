@@ -1,5 +1,0 @@
-users:
-  - username: admin
-    password: benchmark-only
-    role: admin
-    description: Initial administrator account

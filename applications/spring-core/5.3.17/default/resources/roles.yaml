@@ -1,5 +1,0 @@
-roles:
-  - role: admin
-    description: System administrator
-  - role: user
-    description: Standard user access

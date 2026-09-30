@@ -1,4 +1,0 @@
-users:
-  - username: elastic
-    role: superuser
-    description: Default superuser account (authentication disabled)

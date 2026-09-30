@@ -2,11 +2,11 @@
 
 Reproducible Web application security benchmark environments for empirical security research, automated exploit generation, and autonomous agent evaluation.
 
-The repository provides **289 Web applications** across **311 versioned environments**. All environments are self-contained, pre-seeded with ground-truth credentials, and verified. Pre-built images are hosted on Docker Hub under the `yorem` namespace.
+The repository provides **224 Web applications** across **246 versioned environments**. All environments are self-contained, pre-seeded with ground-truth credentials, and verified. Pre-built images are hosted on Docker Hub under the `yorem` namespace.
 
 ## Index
 
-- [All Applications and Environments (311 Suites)](index/all.md)
+- [All Applications and Environments (246 Suites)](index/all.md)
 - [Black Widow and YuraScanner Paper Baselines](index/listb.md)
 - [Packaging and Verification Guide](docs/README.md)
 
@@ -43,7 +43,7 @@ Refer to each environment's `README.md` for specific access URLs and default cre
 
 ## Releases
 
-- `sync/2026-10-01`: 289 applications, 311 environments, incremental sync of 76 List B benchmark applications from Envs.
-- `sync/2026-09-30`: 213 applications, 235 environments, incremental sync of 81 new apps and 8 new versions from Envs.
+- `sync/2026-10-01`: 224 applications, 246 environments, strictly scoped to List B benchmark applications (all non-List B applications retained exclusively in Envs).
+- `sync/2026-09-30`: Initial baseline environments from Envs.
 - `release-2026.09.24`: 132 applications, 146 environments, standardized to `yorem/` namespace.
 - `release-2026.08.07`: Initial baseline with 27 applications (28 environments) for Black Widow and YuraScanner.

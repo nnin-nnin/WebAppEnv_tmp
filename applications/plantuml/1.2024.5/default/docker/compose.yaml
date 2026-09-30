@@ -1,9 +1,0 @@
-name: plantuml_1_2024_5_default
-
-services:
-  app:
-    image: yorem/plantuml:1.2024.5@sha256:5f6f99ec2fc11c8236e80630d622b0ba22b8d9301b39b18db4bb2b95cae87781
-    platform: linux/amd64
-    restart: unless-stopped
-    ports:
-      - "18697:8080"

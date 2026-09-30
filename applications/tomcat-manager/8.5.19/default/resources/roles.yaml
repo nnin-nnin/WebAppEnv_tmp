@@ -1,5 +1,0 @@
-roles:
-  - role: admin
-    description: System administrator with full management permissions
-  - role: manager-gui
-    description: Access to Tomcat HTML Manager interface

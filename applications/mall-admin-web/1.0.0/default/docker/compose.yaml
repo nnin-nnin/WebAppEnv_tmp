@@ -1,9 +1,0 @@
-name: mall_admin_web_1_0_0_default
-
-services:
-  application:
-    image: yorem/mall-admin-web:1.0.0@sha256:f9891ddc7031c2159c90de5eb10a45f950d065a0aef2385c1e2f8a6ed3abc7d0
-    platform: linux/amd64
-    restart: unless-stopped
-    ports:
-      - "18752:80"

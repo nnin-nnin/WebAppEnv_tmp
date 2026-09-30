@@ -1,9 +1,0 @@
-users:
-  - username: root
-    password: secret
-    role: admin
-    description: Default superuser account
-  - username: guest
-    password: guest
-    role: guest
-    description: Guest account

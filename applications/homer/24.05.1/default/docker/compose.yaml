@@ -1,9 +1,0 @@
-name: homer_24_05_1_default
-
-services:
-  app:
-    image: yorem/homer:24.05.1@sha256:2276ddf032f972887b84992b3c538f14da73b4fc8a811f5c84a5ec957922b78b
-    platform: linux/amd64
-    restart: unless-stopped
-    ports:
-      - "18674:8080"

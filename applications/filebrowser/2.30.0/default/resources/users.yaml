@@ -1,8 +1,0 @@
-users:
-  - username: admin
-    password: admin
-    role: admin
-    email: admin@example.com
-    type: admin
-    enabled: true
-    description: Initial Administrator Account for Benchmark

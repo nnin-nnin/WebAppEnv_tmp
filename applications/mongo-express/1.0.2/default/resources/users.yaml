@@ -1,5 +1,0 @@
-users:
-  - username: admin
-    password: pass
-    role: admin
-    description: Initial administrator account

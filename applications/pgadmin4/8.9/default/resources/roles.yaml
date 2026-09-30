@@ -1,3 +1,0 @@
-roles:
-  - name: admin
-    description: Administrator with full access to pgAdmin 4

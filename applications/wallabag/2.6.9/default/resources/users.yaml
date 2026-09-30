@@ -1,5 +1,0 @@
-users:
-  - username: wallabag
-    password: wallabag
-    role: admin
-    description: Default administrator account

@@ -1,7 +1,0 @@
-roles:
-  - role: admin
-    description: Hospital administrator with full privileges
-  - role: doctor
-    description: Doctor account with clinical privileges
-  - role: patient
-    description: Patient account
