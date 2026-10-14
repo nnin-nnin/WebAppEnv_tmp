@@ -1,0 +1,5 @@
+{
+  "image": "yorem/nblog:default",
+  "digest": "sha256:9c82cb97a3598f4d9d4217147906d4253887da3cea992c173ca23ab95f4921d5",
+  "platform": "linux/amd64"
+}

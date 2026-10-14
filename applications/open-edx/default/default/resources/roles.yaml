@@ -1,7 +1,0 @@
-roles:
-- role: Administrator
-  description: Super administrator with full course authoring, system configuration, and learner management permissions
-- role: Staff
-  description: Course staff with instructor authoring, grading, and forum moderation permissions
-- role: Student
-  description: Standard enrolled learner with courseware access and progress tracking

@@ -5,7 +5,7 @@ services:
     image: yorem/mall-swarm:default@sha256:c7431e2c0035800b55d8d00e30107fc183612894239e843c38f19c268dd127ff
     platform: linux/amd64
     ports:
-      - "18840:8080"
+      - "18088:8080"
     environment:
       JAVA_OPTS: "-Xms256m -Xmx512m"
       SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true"
@@ -27,7 +27,7 @@ services:
       start_period: 40s
 
   db:
-    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    image: mysql:8.0
     platform: linux/amd64
     command: >
       --default-authentication-plugin=mysql_native_password

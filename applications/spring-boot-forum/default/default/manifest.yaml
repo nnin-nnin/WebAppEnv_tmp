@@ -1,0 +1,23 @@
+name: spring-boot-forum
+version: default
+upstream: https://github.com/weiqingwen/spring-boot-forum
+commit: 538eecc3c6b85fdf0768ab4e8354b48c0c17d94f
+image: yorem/spring-boot-forum:default
+platform: linux/amd64
+ports:
+  - "18090:8080"
+credentials:
+  administrators:
+    - username: admin
+      password: AdminPassword123!
+      role: administrator
+    - username: admin2
+      password: AdminPassword123!
+      role: administrator
+  standard_users:
+    - username: user1
+      password: UserPassword123!
+      role: standard_user
+    - username: user2
+      password: UserPassword123!
+      role: standard_user

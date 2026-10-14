@@ -1,5 +1,0 @@
-users:
-  - username: admin
-    password: dolphinscheduler123
-    role: admin
-    description: Default administrator account

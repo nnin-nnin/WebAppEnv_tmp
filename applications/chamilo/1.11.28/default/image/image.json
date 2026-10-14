@@ -1,8 +1,0 @@
-{
-  "service": "application",
-  "image": "yorem/chamilo",
-  "tag": "1.11.28",
-  "digest": "sha256:c26f78d5d11bceaca1075d35f0d9e00ec967cc03330152b932c411e9e62d4ca2",
-  "platform": "linux/amd64",
-  "archive": "not-bundled-docker-hub"
-}

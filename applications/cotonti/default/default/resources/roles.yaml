@@ -1,5 +1,0 @@
-roles:
-  - role: administrator
-    description: Full administrative privileges
-  - role: member
-    description: Standard registered user

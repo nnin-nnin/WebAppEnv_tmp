@@ -1,9 +1,0 @@
-name: chamilo-1-11-28
-
-services:
-  application:
-    image: yorem/chamilo:1.11.28@sha256:c26f78d5d11bceaca1075d35f0d9e00ec967cc03330152b932c411e9e62d4ca2
-    platform: linux/amd64
-    ports:
-      - "18752:80"
-    restart: unless-stopped

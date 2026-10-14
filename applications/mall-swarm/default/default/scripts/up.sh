@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-HOST_PORT="${HOST_PORT:-18840}"
+HOST_PORT="${HOST_PORT:-18088}"
 
 echo "Starting mall-swarm environment with Docker Compose..."
 cd "$APP_DIR"

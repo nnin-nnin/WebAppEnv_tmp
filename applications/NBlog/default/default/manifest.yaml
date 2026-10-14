@@ -1,0 +1,34 @@
+name: NBlog
+version: default
+variant: default
+description: "NBlog 前后端分离博客系统 (2x2 Dual-Tier Account Matrix)"
+upstream:
+  repo: https://github.com/Naccl/NBlog
+  commit: b8e537cb27bb6635a0e0ecea0b51fcc327e2e32c
+runtime:
+  platform: linux/amd64
+  framework: "Java 8 / Spring Boot 2.3.3"
+  database: "MariaDB 10.5 + Redis 7"
+  image: "yorem/nblog:default"
+network:
+  host_port: 18094
+  container_port: 80
+credentials:
+  administrators:
+    - username: admin
+      password: AdminPassword123!
+      role: administrator
+      dimension: vertical_admin
+    - username: admin2
+      password: AdminPassword123!
+      role: administrator
+      dimension: horizontal_admin
+  standard_users:
+    - username: user1
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user
+    - username: user2
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user

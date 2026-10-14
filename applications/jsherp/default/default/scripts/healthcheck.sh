@@ -1,35 +1,41 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-HOST_PORT="${HOST_PORT:-18836}"
+PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+COMPOSE_FILE="${PROJECT_DIR}/docker/compose.yaml"
+APP_URL="${APP_URL:-http://127.0.0.1:18084}"
 
-cd "$APP_DIR"
+echo "Validating Docker Compose file structure..."
+docker compose -f "${COMPOSE_FILE}" config --quiet
 
-echo "Checking compose config..."
-docker compose -f docker/compose.yaml config --quiet
+echo "Checking running container status..."
+RUNNING_CONTAINERS=$(docker compose -f "${COMPOSE_FILE}" ps -q 2>/dev/null | wc -l | tr -d ' ')
 
-echo "Checking service status..."
-if ! docker compose -f docker/compose.yaml ps --status running --services | grep -q .; then
-  echo "No services are running."
-  exit 1
+if [ "${RUNNING_CONTAINERS}" -lt 3 ]; then
+    echo "Error: Expected at least 3 running containers (app, jsh-mysql, jsh-redis), found ${RUNNING_CONTAINERS}."
+    docker compose -f "${COMPOSE_FILE}" ps
+    exit 1
 fi
 
-echo "Checking HTTP frontend endpoint..."
-HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:${HOST_PORT}/" || true)
-
-if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "302" ]; then
-  echo "Healthcheck failed on /: HTTP $HTTP_CODE"
-  exit 1
+echo "Checking HTTP frontend endpoint (${APP_URL}/)..."
+HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${APP_URL}/")
+if [ "${HTTP_STATUS}" != "200" ] && [ "${HTTP_STATUS}" != "302" ] && [ "${HTTP_STATUS}" != "303" ]; then
+    echo "Error: HTTP frontend check failed with status code ${HTTP_STATUS}."
+    exit 1
 fi
+echo "HTTP check passed: ${APP_URL}/ returned ${HTTP_STATUS}"
 
-echo "Checking API backend endpoint..."
-API_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:${HOST_PORT}/jshERP-boot/user/randomImage" || true)
-if [ "$API_CODE" != "200" ]; then
-  echo "Healthcheck failed on /jshERP-boot/user/randomImage: HTTP $API_CODE"
-  exit 1
+echo "Checking backend service API endpoint (${APP_URL}/jshERP-boot/user/randomImage)..."
+API_HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${APP_URL}/jshERP-boot/user/randomImage")
+if [ "${API_HTTP_STATUS}" != "200" ]; then
+    echo "Error: Backend API check failed with status code ${API_HTTP_STATUS}."
+    exit 1
 fi
+echo "Backend API check passed: ${APP_URL}/jshERP-boot/user/randomImage returned ${API_HTTP_STATUS}"
 
-echo "Healthcheck passed: frontend HTTP $HTTP_CODE, backend API HTTP $API_CODE."
+echo "Performing automated multi-dimension account verification..."
+APP_URL="${APP_URL}" "${PROJECT_DIR}/resources/login.sh"
+
+echo "Healthcheck passed successfully!"
 exit 0

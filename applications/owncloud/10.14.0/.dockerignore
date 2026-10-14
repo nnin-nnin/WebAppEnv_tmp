@@ -1,4 +1,0 @@
-source/owncloud-core/.git
-image/*.tar
-image/*.tar.gz
-docker/.dockerignore

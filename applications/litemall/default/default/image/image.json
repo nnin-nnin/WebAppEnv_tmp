@@ -1,0 +1,7 @@
+{
+  "image": "yorem/litemall:default",
+  "tag": "default",
+  "digest": "sha256:3cd5ccc73374a247d6620d18cf5d3cd5b2e0436852bb6c8a2455e9ba420df20c",
+  "platform": "linux/amd64",
+  "created_at": "2026-10-14T10:20:43Z"
+}

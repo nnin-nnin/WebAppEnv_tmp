@@ -1,4 +1,0 @@
-upstream:
-  repository: https://github.com/Cotonti/Cotonti
-  commit: f43f1fc38ba4e02027786dad9dac1435c7c52b30
-  version: default

@@ -1,7 +1,0 @@
-application: canvaslms
-users:
-  - username: admin
-    password: AdminPassword123!
-    type: administrator
-    enabled: true
-    purpose: 初始系统管理员

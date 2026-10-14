@@ -1,17 +1,17 @@
-name: gila-cms-default
+name: gila-cms-dual
 
 services:
   app:
     image: yorem/gila-cms:default@sha256:d8b2d5e4255e1b83bfbf40db38d513376337b9be62b5e0eceb7c08918326d9db
     platform: linux/amd64
     ports:
-      - "18828:80"
+      - "18082:80"
     environment:
       GILA_DB_HOST: db
       GILA_DB_NAME: gila
       GILA_DB_USER: gila
       GILA_DB_PASSWORD: AdminPassword123!
-      GILA_BASE_URL: "http://localhost:18828/"
+      GILA_BASE_URL: "http://localhost:18082/"
       TZ: "UTC"
     depends_on:
       db:
@@ -37,7 +37,7 @@ services:
       MYSQL_PASSWORD: AdminPassword123!
     volumes:
       - database-data:/var/lib/mysql
-      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
+      - ../resources/db/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql:ro
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s

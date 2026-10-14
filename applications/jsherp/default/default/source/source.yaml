@@ -1,3 +1,4 @@
-repository: https://github.com/jishenghua/jshERP
-commit: d1a0f7d6082b7fbcc7af341f198dd1abf095321b
+url: https://github.com/jishenghua/jshERP
+commit: 26124e31babdbcda411b051ac8df4ad0c6721b1a
+tag: default
 version: default

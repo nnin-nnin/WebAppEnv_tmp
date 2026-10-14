@@ -1,22 +1,22 @@
 [
   {
-    "service": "application",
-    "image": "yorem/jsherp",
+    "service": "app",
+    "image": "yorem/jsherp:default",
     "tag": "default",
     "digest": "sha256:090c20899ae9a8ebe24d444e20a2277dadb3573863a93eb240d680ca5dcf2704",
     "platform": "linux/amd64",
     "archive": "not-bundled-docker-hub"
   },
   {
-    "service": "db",
+    "service": "jsh-mysql",
     "image": "mariadb",
     "tag": "10.5",
     "digest": "sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce",
-    "platform": "linux/amd64",
+    "platform": "linux/amd64,linux/arm64",
     "archive": "not-bundled-docker-hub"
   },
   {
-    "service": "redis",
+    "service": "jsh-redis",
     "image": "redis",
     "tag": "7-alpine",
     "digest": "sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499",

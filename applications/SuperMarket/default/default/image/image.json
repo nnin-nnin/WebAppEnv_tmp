@@ -1,0 +1,5 @@
+{
+  "image": "yorem/supermarket:default",
+  "digest": "sha256:b32c41c2fb133af33bf534ec231a55068940b9451a4d0af5fca714f5c9053896",
+  "platform": "linux/amd64"
+}

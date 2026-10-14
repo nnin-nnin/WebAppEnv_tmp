@@ -1,0 +1,26 @@
+name: yzsunlei-xmall
+version: default
+variant: default
+runtime: java8-springboot
+database: mariadb:10.5
+image: yorem/yzsunlei-xmall:default
+platform: linux/amd64
+ports:
+  http: 18097
+credentials:
+  admin:
+    username: admin
+    password: AdminPassword123!
+    role: administrator
+  admin2:
+    username: admin2
+    password: AdminPassword123!
+    role: administrator
+  user1:
+    username: user1
+    password: UserPassword123!
+    role: standard_user
+  user2:
+    username: user2
+    password: UserPassword123!
+    role: standard_user

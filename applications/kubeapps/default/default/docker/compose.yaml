@@ -1,9 +1,0 @@
-name: kubeapps_default_default
-
-services:
-  app:
-    image: yorem/kubeapps:default@sha256:4f8af29ba4a738e2412501477fb34b66bc0df59b77abc3165a1620e4c33396a2
-    platform: linux/amd64
-    restart: unless-stopped
-    ports:
-      - "18837:8080"

@@ -1,66 +1,63 @@
-name: jsherp_default_default
+name: jsherp-dual
 
 services:
-  application:
-    image: yorem/jsherp:default@sha256:090c20899ae9a8ebe24d444e20a2277dadb3573863a93eb240d680ca5dcf2704
+  app:
+    image: yorem/jsherp:default
     platform: linux/amd64
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
     ports:
-      - "18836:3000"
+      - "18084:80"
+    depends_on:
+      jsh-mysql:
+        condition: service_healthy
+      jsh-redis:
+        condition: service_healthy
     volumes:
-      - application-upload:/opt/jshERP/upload
+      - ../resources/nginx.conf:/etc/nginx/nginx.conf:ro
     healthcheck:
-      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:3000/ || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:80/ || curl -f http://localhost:3000/ || exit 1"]
       interval: 5s
       timeout: 5s
-      retries: 30
-      start_period: 20s
+      retries: 35
+      start_period: 25s
     restart: unless-stopped
 
-  db:
+  jsh-mysql:
     image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
-    platform: linux/amd64
-    environment:
-      - MYSQL_DATABASE=jsh_erp
-      - MYSQL_ROOT_PASSWORD=123456
     networks:
       default:
         aliases:
           - jsh-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: "jsh_erp"
+      TZ: "Asia/Shanghai"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     volumes:
+      - ../resources/db:/docker-entrypoint-initdb.d:ro
       - database-data:/var/lib/mysql
-      - ../resources/initial-data:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p123456 || exit 1"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p123456"]
       interval: 5s
       timeout: 5s
       retries: 30
-      start_period: 15s
     restart: unless-stopped
 
-  redis:
+  jsh-redis:
     image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
     platform: linux/amd64
-    command: ["redis-server", "--requirepass", "1234abcd"]
     networks:
       default:
         aliases:
           - jsh-redis
-    volumes:
-      - redis-data:/data
+    command: ["redis-server", "--requirepass", "1234abcd"]
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli -a 1234abcd ping || exit 1"]
+      test: ["CMD", "redis-cli", "-a", "1234abcd", "ping"]
       interval: 5s
       timeout: 5s
       retries: 30
-      start_period: 5s
     restart: unless-stopped
 
 volumes:
-  application-upload:
   database-data:
-  redis-data:

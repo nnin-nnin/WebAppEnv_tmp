@@ -1,0 +1,5 @@
+{
+  "image": "yorem/flycms:default",
+  "digest": "sha256:099cdbde04428c7117c41e101114d2f59bd0da1495a61054de90349c5463020c",
+  "platform": "linux/amd64"
+}

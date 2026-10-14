@@ -1,6 +1,0 @@
-- name: Admin
-  permissions: all
-- name: User
-  permissions: partial
-- name: Client
-  permissions: read-only

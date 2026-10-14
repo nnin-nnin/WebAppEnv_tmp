@@ -1,9 +1,0 @@
-roles:
-  - name: admin
-    permissions: "系统管理员，拥有 MeterSphere 系统设置、组织项目管理、用例及测试计划全量管理权限"
-    purpose: "系统最高管理"
-    relation: "admin 账号所属角色"
-  - name: project_admin
-    permissions: "项目管理员，拥有具体项目内用例、场景、接口定义与测试报告管理权限"
-    purpose: "项目级测试管理"
-    relation: "项目默认管理角色"

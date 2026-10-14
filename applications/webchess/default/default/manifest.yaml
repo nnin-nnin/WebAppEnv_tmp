@@ -12,11 +12,42 @@ runtime:
   language: php
   server: apache
 ports:
-  host_port: 18874
+  host_port: 18083
   container_port: 80
 credentials:
   admin_username: admin
   admin_password: AdminPassword123!
+  admin_alias: admin
+  user_password: UserPassword123!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  evaluation_matrix:
+    administrator_level:
+      - username: admin
+        password: AdminPassword123!
+        role: administrator
+        dimension: vertical_admin
+        peer_group: admin_group
+        purpose: "主系统管理员 (拥有全站最高管理特权)"
+      - username: admin2
+        password: AdminPassword123!
+        role: administrator
+        dimension: horizontal_admin
+        peer_group: admin_group
+        purpose: "次管理员 / 同级管理员 (用于测试管理员间横向越权与日志隔离)"
+    standard_user_level:
+      - username: user1
+        password: UserPassword123!
+        role: standard_user
+        dimension: horizontal_user
+        peer_group: standard_users
+        purpose: "普通业务用户 A (拥有独立业务数据空间)"
+      - username: user2
+        password: UserPassword123!
+        role: standard_user
+        dimension: horizontal_user
+        peer_group: standard_users
+        purpose: "普通业务用户 B (用于水平越权与 IDOR 测试)"
 resources:
   users: resources/users.yaml
   roles: resources/roles.yaml

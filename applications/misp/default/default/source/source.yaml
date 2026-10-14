@@ -1,4 +1,0 @@
-upstream:
-  repository: https://github.com/MISP/MISP
-  branch: 2.4
-  commit: fb54b3e4a4ddd7ad7913fffd94284dd0e81b2120

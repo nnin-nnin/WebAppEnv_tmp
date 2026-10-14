@@ -1,5 +1,18 @@
 roles:
-  - name: admin
-    permissions: "全部后台权限"
-    purpose: "后台管理"
-    relation: "admin 初始账号所属角色"
+  - role: administrator
+    dimension: vertical_admin
+    description: "后台管理中心管理员，拥有商品上架、订单处理、会员管理与轮播图配置特权"
+    capabilities:
+      - dashboard
+      - goods_management
+      - order_management
+      - user_management
+      - carousel_management
+  - role: standard_user
+    dimension: horizontal_user
+    description: "前台商城注册会员，拥有挑选商品、加购物车、提交订单、个人地址与订单列表查看权限"
+    capabilities:
+      - browse_mall
+      - cart_operations
+      - create_order
+      - address_management

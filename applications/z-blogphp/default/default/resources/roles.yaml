@@ -1,5 +1,0 @@
-roles:
-  - role: admin
-    description: Full administrative privileges
-  - role: author
-    description: Content creation and editing privileges

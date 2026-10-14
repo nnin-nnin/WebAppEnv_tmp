@@ -1,0 +1,13 @@
+roles:
+  - name: administrator
+    description: "Full administrative privilege over users, configuration, and content"
+    capabilities:
+      - manage_users
+      - manage_system_settings
+      - manage_all_data
+  - name: standard_user
+    description: "Standard user privilege restricted to personal profile and own resources"
+    capabilities:
+      - view_public_content
+      - manage_own_profile
+      - manage_own_resources

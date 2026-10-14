@@ -1,4 +1,4 @@
-name: webchess_default_default
+name: webchess_dual_20261012
 
 services:
   app:
@@ -6,12 +6,16 @@ services:
     platform: linux/amd64
     restart: unless-stopped
     ports:
-      - "${HOST_PORT:-18874}:80"
+      - "${HOST_PORT:-18083}:80"
     environment:
       DB_HOST: db
       DB_NAME: webchess
       DB_USER: webchess
       DB_PASSWORD: webchess_password
+      APP_URL: "http://127.0.0.1:${HOST_PORT:-18083}"
+      HOST_PORT: "${HOST_PORT:-18083}"
+    volumes:
+      - ./config.php:/var/www/html/config.php:ro
     depends_on:
       db:
         condition: service_healthy
@@ -27,7 +31,7 @@ services:
       MYSQL_PASSWORD: webchess_password
     volumes:
       - db-data:/var/lib/mysql
-      - ../resources/initial-data/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
+      - ../resources/db/database-seed.sql:/docker-entrypoint-initdb.d/01-database-seed.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -pwebchess_root_pass || mysqladmin ping -h localhost -u root -pwebchess_root_pass || exit 1"]
       interval: 5s

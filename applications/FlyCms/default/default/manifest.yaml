@@ -1,0 +1,34 @@
+name: FlyCms
+version: default
+variant: default
+description: "FlyCms 内容管理系统 (2x2 Dual-Tier Account Matrix)"
+upstream:
+  repo: https://github.com/sunkaifei/FlyCms
+  commit: edfdf724c3b944310f60c29aa755d03a00a75837
+runtime:
+  platform: linux/amd64
+  framework: "Java 24 / Spring Boot 4.1.1"
+  database: "MySQL 8.0"
+  image: "yorem/flycms:default"
+network:
+  host_port: 18095
+  container_port: 80
+credentials:
+  administrators:
+    - username: admin
+      password: AdminPassword123!
+      role: administrator
+      dimension: vertical_admin
+    - username: admin2
+      password: AdminPassword123!
+      role: administrator
+      dimension: horizontal_admin
+  standard_users:
+    - username: user1
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user
+    - username: user2
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user

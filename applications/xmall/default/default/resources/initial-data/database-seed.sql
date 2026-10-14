@@ -1471,9 +1471,10 @@ CREATE TABLE `tb_member` (
 -- Records of tb_member
 -- ----------------------------
 INSERT INTO `tb_member` VALUES ('62', 'test', '098f6bcd4621d373cade4e832627b4f6', null, null, '2017-09-05 21:27:54', '2017-10-08 18:13:51', null, null, '1', 'http://ow2h3ee9w.bkt.clouddn.com/1507866636672.png', null, null, null);
-INSERT INTO `tb_member` VALUES ('63', 'admin', '1c269c612413b6c46a21cfd70e50bfb3', null, null, '2017-09-05 21:27:54', '2018-04-18 14:43:32', null, null, '2', 'http://ow2h3ee9w.bkt.clouddn.com/1507875078112.png', null, null, null);
-INSERT INTO `tb_member` VALUES ('64', 'xhy', '21232f297a57a5a743894a0e4a801fc3', null, null, '2017-09-05 21:27:54', '2018-04-18 14:43:33', null, null, '2', null, null, null, null);
-INSERT INTO `tb_member` VALUES ('65', 'xhy1', '202cb962ac59075b964b07152d234b70', null, null, '2017-09-05 21:27:54', '2017-10-17 21:21:32', null, null, '0', '', null, null, null);
+INSERT INTO `tb_member` VALUES ('63', 'admin', '1c269c612413b6c46a21cfd70e50bfb3', '17621230884', 'admin@example.com', '2017-09-05 21:27:54', '2018-04-18 14:43:32', null, null, '2', 'http://ow2h3ee9w.bkt.clouddn.com/1507875078112.png', null, null, null);
+INSERT INTO `tb_member` VALUES ('66', 'admin2', '1c269c612413b6c46a21cfd70e50bfb3', '17621230885', 'admin2@example.com', '2017-09-05 21:27:54', '2018-04-18 14:43:32', null, null, '2', null, null, null, null);
+INSERT INTO `tb_member` VALUES ('67', 'user1', '9f76e79f3ea65e7fdc651f96a68c56ad', '13800000001', 'user1@example.com', '2026-10-14 10:00:00', '2026-10-14 10:00:00', null, null, '1', null, null, null, null);
+INSERT INTO `tb_member` VALUES ('68', 'user2', '9f76e79f3ea65e7fdc651f96a68c56ad', '13800000002', 'user2@example.com', '2026-10-14 10:00:00', '2026-10-14 10:00:00', null, null, '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for tb_order
@@ -1964,8 +1965,10 @@ CREATE TABLE `tb_user` (
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES ('1', 'admin', '1c269c612413b6c46a21cfd70e50bfb3', '17621230884', '1012139570@qq.com', '男', null, '1', '超级管理员', '1', 'http://ow2h3ee9w.bkt.clouddn.com/1507866340369.png', '2017-09-05 21:27:54', '2017-10-18 22:57:08');
-INSERT INTO `tb_user` VALUES ('2', 'test', '098f6bcd4621d373cade4e832627b4f6', '12345678901', '123@qq.com', '女', null, '1', '游客', '0', null, '2017-09-05 21:27:54', '2018-04-18 14:35:19');
+INSERT INTO `tb_user` VALUES ('1', 'admin', '1c269c612413b6c46a21cfd70e50bfb3', '17621230884', 'admin@example.com', '男', null, '1', '超级管理员', '1', 'http://ow2h3ee9w.bkt.clouddn.com/1507866340369.png', '2017-09-05 21:27:54', '2017-10-18 22:57:08');
+INSERT INTO `tb_user` VALUES ('2', 'admin2', '1c269c612413b6c46a21cfd70e50bfb3', '17621230885', 'admin2@example.com', '女', null, '1', '同级次管理员', '1', null, '2017-09-05 21:27:54', '2018-04-18 14:35:19');
+INSERT INTO `tb_user` VALUES ('3', 'user1', '9f76e79f3ea65e7fdc651f96a68c56ad', '13800000001', 'user1@example.com', '男', null, '1', '普通业务用户 A', '0', null, '2026-10-14 10:00:00', '2026-10-14 10:00:00');
+INSERT INTO `tb_user` VALUES ('4', 'user2', '9f76e79f3ea65e7fdc651f96a68c56ad', '13800000002', 'user2@example.com', '女', null, '1', '普通业务用户 B', '0', null, '2026-10-14 10:00:00', '2026-10-14 10:00:00');
 
 INSERT INTO `tb_shiro_filter` VALUES ('86', '/user/login', 'anon', '1');
 INSERT INTO `tb_shiro_filter` VALUES ('87', '/lib/**', 'anon', '1');

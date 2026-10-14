@@ -1,1 +1,0 @@
-import{pn as e,w as t}from"./index-DNC7Zg5H.js";var{t:n}=e();function r(e){return t(e)}export{r as t};

@@ -1,6 +1,37 @@
 roles:
-  - name: Administrator
-    description: Full administrative privileges over organization, content, users, and settings
-    purpose: Primary system management role
+  - name: administrator
+    role_id: 1
+    level: 10
+    description: "全站最高系统管理员，具备全局后台访问、文章页面管理、多媒体与模块插件管理、用户及角色管理等全量特权"
+    purpose: "Primary system administration role with full backend privileges (2 peer accounts: admin@example.com, admin2)"
+    group_id: 1
+    group_name: "Administrators"
+    capabilities:
+      - "admin"
+      - "admin_user"
+      - "admin_userrole"
+      - "admin_permissions"
+      - "content_management"
+      - "package_management"
+      - "theme_management"
+      - "settings_update"
     associated_accounts:
-      - admin
+      - admin@example.com
+      - admin2
+
+  - name: standard_user
+    role_id: 2
+    level: 0
+    description: "标准前台业务会员用户，拥有独立数据命名空间（私有草稿、资料与站内通知），受垂直访问控制约束，无法访问后台管理中心"
+    purpose: "Standard business member role with independent user data scope for IDOR/horizontal privilege evaluation (2 peer accounts: user1, user2)"
+    group_id: 2
+    group_name: "Standard Members"
+    capabilities:
+      - "user_auth"
+      - "browse_public_content"
+      - "manage_own_profile"
+      - "view_own_notifications"
+      - "manage_own_drafts"
+    associated_accounts:
+      - user1
+      - user2

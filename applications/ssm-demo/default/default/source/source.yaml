@@ -1,0 +1,5 @@
+name: ssm-demo
+version: default
+upstream_repo: https://github.com/quan7u/ssm-demo
+commit: 6256ad50bfe095519e37a50ceae4c135ea517f65
+platform: linux/amd64

@@ -1,4 +1,0 @@
-roles:
-  - name: administrator
-    application_type: admin
-    source: built_in

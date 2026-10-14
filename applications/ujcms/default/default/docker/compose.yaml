@@ -1,0 +1,57 @@
+name: ujcms-dual
+
+services:
+  app:
+    image: yorem/ujcms:default@sha256:b6be619634b70707eeb7ca2e8fe6292e8702d81e2149f04e7119d7fe9aa9a297
+    platform: linux/amd64
+    ports:
+      - "18081:80"
+    environment:
+      SERVER_PORT: 80
+      UJCMS_DB_HOST: db
+      UJCMS_DB_PORT: 3306
+      UJCMS_DB_NAME: ujcms
+      UJCMS_DB_USER: ujcms
+      UJCMS_DB_PASSWORD: AdminPassword123!
+      UJCMS_INIT_DOMAIN: localhost
+      UJCMS_INIT_PORT: 18081
+      UJCMS_INIT_USERNAME: admin
+      UJCMS_INIT_PASSWORD: AdminPassword123!
+      TZ: "Asia/Shanghai"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ujcms-static:/ujcms/static
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: AdminPassword123!
+      MYSQL_DATABASE: ujcms
+      MYSQL_USER: ujcms
+      MYSQL_PASSWORD: AdminPassword123!
+      TZ: "Asia/Shanghai"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+    volumes:
+      - database-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pAdminPassword123!"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  ujcms-static:
+  database-data:

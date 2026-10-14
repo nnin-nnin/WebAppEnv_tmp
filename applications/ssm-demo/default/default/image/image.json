@@ -1,0 +1,5 @@
+{
+  "image": "yorem/ssm-demo:default",
+  "digest": "sha256:41729b24a1e9248cf6b8c37fb2f73e052baad3898e0f50734856b7edd28b9c86",
+  "platform": "linux/amd64"
+}

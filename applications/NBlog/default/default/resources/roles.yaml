@@ -1,0 +1,15 @@
+roles:
+  - name: administrator
+    description: "系统管理员角色，具备后台全局管理权限及系统运维能力"
+    capabilities:
+      - admin_dashboard_access
+      - user_management
+      - content_moderation
+      - system_configuration
+  - name: standard_user
+    description: "普通注册用户角色，具备前台业务操作与个人中心管理权限"
+    capabilities:
+      - user_login
+      - profile_management
+      - content_creation
+      - personal_data_access

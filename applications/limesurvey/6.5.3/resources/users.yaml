@@ -1,6 +1,0 @@
-users:
-  - username: admin
-    password: WcLime!26-sP7yD2H
-    type: application-administrator
-    enabled: true
-    purpose: LimeSurvey 初始超级管理员

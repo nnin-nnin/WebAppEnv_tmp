@@ -1,5 +1,33 @@
 roles:
-  - role: admin
-    description: Full administrative privileges
-  - role: player
-    description: Standard player access
+  - name: administrator
+    role_id: 1
+    description: "全站系统管理员角色，具备 Webchess 棋盘系统最高管理权限、棋局控制、全站用户与角色管理、数据审计与全局配置权限"
+    purpose: "Primary system administration role with full access permissions (2 peer accounts: admin, admin2)"
+    group_id: 1
+    group_name: "管理员组"
+    capabilities:
+      - "all_permissions"
+      - "manage_players"
+      - "manage_games"
+      - "manage_communication"
+      - "system_config_view"
+      - "horizontal_admin_audit"
+    associated_accounts:
+      - admin
+      - admin2
+
+  - name: standard_user
+    role_id: 2
+    description: "标准前台对弈玩家角色，拥有独立棋局与信箱命名空间，支持创建棋局对弈、走棋、撤销申请、个人偏好配置与站内信收发"
+    purpose: "Standard business member role with independent user data scope for IDOR/horizontal privilege evaluation (2 peer accounts: user1, user2)"
+    group_id: 2
+    group_name: "普通玩家组"
+    capabilities:
+      - "create_game_invitation"
+      - "play_chess_moves"
+      - "send_receive_messages"
+      - "manage_own_preferences"
+      - "view_own_games"
+    associated_accounts:
+      - user1
+      - user2

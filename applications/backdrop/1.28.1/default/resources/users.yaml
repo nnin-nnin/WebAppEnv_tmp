@@ -1,6 +1,0 @@
-users:
-  - username: admin
-    password: admin123
-    role: administrator
-    email: admin@example.com
-    description: Initial administrator account

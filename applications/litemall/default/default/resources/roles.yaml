@@ -1,0 +1,28 @@
+roles:
+  - name: administrator
+    description: Full administrative privileges over litemall platform
+    purpose: Primary administrative role
+    capabilities:
+      - admin_access
+      - user_management
+      - mall_management
+      - goods_management
+      - order_management
+      - promotion_management
+      - system_configuration
+    associated_accounts:
+      - admin
+      - admin2
+
+  - name: standard_user
+    description: Standard registered consumer role with personal shopping cart and order access
+    purpose: Customer operational role
+    capabilities:
+      - browse_goods
+      - cart_operations
+      - create_order
+      - address_management
+      - personal_profile
+    associated_accounts:
+      - user1
+      - user2

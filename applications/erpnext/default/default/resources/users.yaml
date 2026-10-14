@@ -1,7 +1,0 @@
-application: erpnext
-users:
-  - username: Administrator
-    password: AdminPassword123!
-    type: administrator
-    enabled: true
-    purpose: 初始系统全权超级管理员

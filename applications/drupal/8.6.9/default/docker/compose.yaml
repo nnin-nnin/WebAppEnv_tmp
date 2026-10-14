@@ -1,7 +1,0 @@
-services:
-  application:
-    image: yorem/drupal:8.6.9@sha256:c76b91a7ee54c102dd948553b9cb9b1ea6dd5b47ba4d17d2e7383f74442a1c57
-    platform: linux/amd64
-    ports:
-      - "18771:80"
-    restart: unless-stopped

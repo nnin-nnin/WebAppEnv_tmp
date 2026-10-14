@@ -1,6 +1,0 @@
-image/*.tar
-source/SHA256SUMS
-source/wordpress-develop/.git
-source/wordpress-develop/node_modules
-source/wordpress-develop/vendor
-

@@ -1,0 +1,5 @@
+{
+  "image": "yorem/yzsunlei-xmall:default",
+  "digest": "sha256:a84910a8a48cf0679d20f24d58800607b2abf84f54e46e095d5bca9016c91dd1",
+  "platform": "linux/amd64"
+}

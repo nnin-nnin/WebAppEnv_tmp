@@ -1,5 +1,0 @@
-roles:
-  - role: admin
-    description: Full administrative privileges on LibreNMS
-  - role: user
-    description: Standard user with read or restricted access

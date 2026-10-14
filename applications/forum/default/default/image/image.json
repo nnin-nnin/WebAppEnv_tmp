@@ -1,0 +1,5 @@
+{
+  "image": "yorem/forum:default",
+  "platform": "linux/amd64",
+  "id": "sha256:90c9e3d9e16c993497c17bcb3530ed8e1f1c8c98012028023dd0ec38fdf1bee3"
+}

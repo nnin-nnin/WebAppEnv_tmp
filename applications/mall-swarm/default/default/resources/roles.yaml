@@ -1,6 +1,23 @@
 roles:
-  - name: Administrator
+  - name: administrator
     description: Full administrative privileges over mall-swarm management platform
     purpose: Primary administrative role
+    capabilities:
+      - admin_access
+      - user_management
+      - order_management
+      - product_management
+      - system_configuration
     associated_accounts:
       - admin
+      - admin2
+
+  - name: standard_user
+    description: Standard business user role with product/order management access
+    purpose: Standard operational role
+    capabilities:
+      - product_view
+      - order_view
+    associated_accounts:
+      - user1
+      - user2

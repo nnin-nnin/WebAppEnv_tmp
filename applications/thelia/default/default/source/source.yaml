@@ -1,4 +1,0 @@
-upstream:
-  repository: https://github.com/thelia/thelia.git
-  branch: "2.5.4"
-  commit: 90909a77f4668bbce3af8b961e1ec1d4e324a00b

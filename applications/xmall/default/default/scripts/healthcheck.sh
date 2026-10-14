@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
-HOST_PORT="${HOST_PORT:-18876}"
+HOST_PORT="${HOST_PORT:-18085}"
 BASE_URL="${APP_URL:-${BASE_URL:-http://127.0.0.1:${HOST_PORT}}}"
 
 echo "Checking XMall service health at ${BASE_URL}..."

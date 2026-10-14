@@ -1,0 +1,12 @@
+roles:
+  - name: administrator
+    description: "后台管理员 (tb_admin, roles=admin)"
+    capabilities:
+      - manage_admins
+      - manage_members
+      - view_admin_profile
+  - name: standard_user
+    description: "普通注册会员 (tb_member, type=1)"
+    capabilities:
+      - view_member_profile
+      - manage_own_billing_records

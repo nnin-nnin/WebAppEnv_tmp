@@ -1,0 +1,12 @@
+roles:
+  - name: administrator
+    description: "超级管理员 (flagKey=admin, roleLevel=100, type=1)"
+    capabilities:
+      - manage_users
+      - manage_roles
+      - manage_car_parks
+  - name: standard_user
+    description: "普通车主用户 (flagKey=user, roleLevel=10, type=0)"
+    capabilities:
+      - view_own_profile
+      - manage_own_driver_license

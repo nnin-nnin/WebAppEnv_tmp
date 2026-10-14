@@ -1,4 +1,0 @@
-roles:
-  - name: administrator
-    permissions: full-application-access
-    purpose: initial benchmark administrator role

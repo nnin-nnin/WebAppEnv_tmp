@@ -1,0 +1,55 @@
+name: litemall-default-default
+
+services:
+  application:
+    image: yorem/litemall:default
+    pull_policy: never
+    platform: linux/amd64
+    ports:
+      - "${HOST_PORT:-18087}:8080"
+    environment:
+      SPRING_DATASOURCE_DRUID_URL: "jdbc:mysql://db:3306/litemall?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false"
+      SPRING_DATASOURCE_DRUID_USERNAME: "root"
+      SPRING_DATASOURCE_DRUID_PASSWORD: "root"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f -s -o /dev/null http://127.0.0.1:8080/admin/auth/kaptcha || curl -f -s -o /dev/null http://127.0.0.1:8080/wx/index/index || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  db:
+    image: mysql:8.0
+    platform: linux/amd64
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: litemall
+      MYSQL_USER: litemall
+      MYSQL_PASSWORD: litemall123456
+    networks:
+      default:
+        aliases:
+          - mysql
+    volumes:
+      - db-data:/var/lib/mysql
+      - ../resources/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+    restart: unless-stopped
+
+volumes:
+  db-data:

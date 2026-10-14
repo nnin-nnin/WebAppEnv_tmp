@@ -1,75 +1,99 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCEd[0]:-${0}}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-HOST_PORT="${HOST_PORT:-18840}"
+HOST_PORT="${HOST_PORT:-18088}"
 APP_URL="${APP_URL:-http://127.0.0.1:${HOST_PORT}}"
-USERNAME="${1:-${ADMIN_USERNAME:-admin}}"
-PASSWORD="${2:-${ADMIN_PASSWORD:-macro123}}"
 
 echo "=========================================="
 echo "mall-swarm Multi-Tier Login Verification"
 echo "Target URL: ${APP_URL}"
-echo "User: ${USERNAME}"
 echo "=========================================="
 
-TMP_DIR="$(mktemp -d)"
-trap 'rm -rf "$TMP_DIR"' EXIT
+test_user_login() {
+  local USERNAME="$1"
+  local PASSWORD="$2"
+  local ROLE="$3"
 
-# 1. API Documentation & Actuator Health Check
-echo "[1/3] Checking API Documentation and System Health..."
-HEALTH_STATUS=$(curl -s "${APP_URL}/actuator/health" | grep -o '"status":"[^"]*"' | head -n 1 || true)
-SWAGGER_HTTP=$(curl -s -L -o /dev/null -w "%{http_code}" "${APP_URL}/swagger-ui.html" || true)
+  echo "------------------------------------------"
+  echo "Testing Account: ${USERNAME} (${ROLE})"
 
-if echo "$HEALTH_STATUS" | grep -q "UP" && [ "$SWAGGER_HTTP" = "200" ]; then
-  echo "✓ Actuator health confirmed ($HEALTH_STATUS) & Swagger UI accessible (HTTP $SWAGGER_HTTP)."
-else
-  echo "✓ Swagger UI returned HTTP $SWAGGER_HTTP, Actuator: $HEALTH_STATUS"
-fi
+  # 1. API Direct Authentication (/admin/login)
+  local LOGIN_PAYLOAD="{\"username\":\"${USERNAME}\",\"password\":\"${PASSWORD}\"}"
+  local LOGIN_RESP
+  LOGIN_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$LOGIN_PAYLOAD" "${APP_URL}/admin/login" || true)
 
-# 2. Core REST API Direct Authentication (/admin/login)
-echo "[2/3] Checking mall-swarm Core REST API authentication..."
-LOGIN_PAYLOAD="{\"username\":\"${USERNAME}\",\"password\":\"${PASSWORD}\"}"
-LOGIN_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$LOGIN_PAYLOAD" "${APP_URL}/admin/login" || true)
+  if ! echo "$LOGIN_RESP" | grep -q '"code":200'; then
+    echo "✗ Login failed for ${USERNAME}: ${LOGIN_RESP}"
+    return 1
+  fi
 
-API_PASSED=false
-TOKEN=""
-TOKEN_HEAD=""
-if echo "$LOGIN_RESP" | grep -q '"code":200'; then
+  local TOKEN
   TOKEN=$(echo "$LOGIN_RESP" | grep -o '"token":"[^"]*"' | cut -d'"' -f4)
+  local TOKEN_HEAD
   TOKEN_HEAD=$(echo "$LOGIN_RESP" | grep -o '"tokenHead":"[^"]*"' | cut -d'"' -f4 || echo "Bearer ")
-  echo "✓ mall-swarm Core API authenticated successfully!"
-  echo "  User: ${USERNAME}"
-  echo "  Token Head: ${TOKEN_HEAD}"
-  echo "  Token: ${TOKEN:0:32}..."
-else
-  echo "✗ mall-swarm API login failed: $LOGIN_RESP"
-fi
+  echo "✓ Authenticated successfully! Token: ${TOKEN:0:20}..."
 
-# 3. Authenticated Admin Session Validation (/admin/info)
-echo "[3/3] Validating authenticated session against /admin/info..."
-if [ -n "$TOKEN" ]; then
+  # 2. Authenticated Session Validation (/admin/info)
+  local INFO_RESP
   INFO_RESP=$(curl -s -H "Authorization: ${TOKEN_HEAD}${TOKEN}" "${APP_URL}/admin/info" || true)
   if echo "$INFO_RESP" | grep -q '"code":200'; then
+    local ADMIN_NAME
     ADMIN_NAME=$(echo "$INFO_RESP" | grep -o '"username":"[^"]*"' | cut -d'"' -f4 || echo "$USERNAME")
+    local ROLES
     ROLES=$(echo "$INFO_RESP" | grep -o '"roles":\[[^]]*\]' || echo "[]")
-    echo "✓ Token validation passed against /admin/info!"
-    echo "  Logged in as: ${ADMIN_NAME}"
-    echo "  Assigned Roles: ${ROLES}"
-    API_PASSED=true
+    echo "✓ Session valid for ${ADMIN_NAME} with roles: ${ROLES}"
+    return 0
   else
-    echo "✗ Token validation against /admin/info failed: $INFO_RESP"
+    echo "✗ /admin/info failed: ${INFO_RESP}"
+    return 1
   fi
+}
+
+# Check API availability
+echo "[1] Checking Swagger / Actuator health..."
+SWAGGER_HTTP=$(curl -s -L -o /dev/null -w "%{http_code}" "${APP_URL}/swagger-ui.html" || true)
+echo "✓ Swagger UI returned HTTP ${SWAGGER_HTTP}"
+
+if [ $# -ge 2 ]; then
+  test_user_login "$1" "$2" "${3:-custom}"
+  echo "=========================================="
+  echo "Single account verification completed."
+  exit 0
+fi
+
+# Verify 4-account matrix
+ACCOUNTS=(
+  "admin:AdminPassword123!:Administrator(Super)"
+  "admin2:AdminPassword123!:Administrator(Peer)"
+  "user1:UserPassword123!:StandardUser(User1)"
+  "user2:UserPassword123!:StandardUser(User2)"
+)
+
+ALL_PASSED=true
+for item in "${ACCOUNTS[@]}"; do
+  IFS=":" read -r user pass role <<< "$item"
+  if ! test_user_login "$user" "$pass" "$role"; then
+    ALL_PASSED=false
+  fi
+done
+
+echo "------------------------------------------"
+echo "Testing Negative Password Rejection (WrongPassword999!)"
+BAD_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d '{"username":"admin","password":"WrongPassword999!"}' "${APP_URL}/admin/login" || true)
+if echo "$BAD_RESP" | grep -q '"code":200'; then
+  echo "✗ Negative test failed: WrongPassword999! was accepted!"
+  ALL_PASSED=false
 else
-  echo "✗ Skipping session validation due to missing token."
+  echo "✓ WrongPassword999! properly rejected."
 fi
 
 echo "=========================================="
-if [ "$API_PASSED" = "true" ]; then
-  echo "RESULT: mall-swarm login verification PASSED!"
+if [ "$ALL_PASSED" = "true" ]; then
+  echo "RESULT: All 4 accounts verified successfully in mall-swarm!"
   exit 0
 else
-  echo "RESULT: mall-swarm login verification FAILED."
+  echo "RESULT: One or more accounts failed verification."
   exit 1
 fi

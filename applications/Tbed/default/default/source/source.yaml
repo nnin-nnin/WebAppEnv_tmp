@@ -1,0 +1,5 @@
+name: Tbed
+version: default
+upstream_repo: https://github.com/Hello-hao/Tbed
+commit: 86987221123931366efbf79b9b029180ddcf52e4
+platform: linux/amd64

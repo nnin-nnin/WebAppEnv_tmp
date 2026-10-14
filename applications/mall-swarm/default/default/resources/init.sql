@@ -2174,7 +2174,10 @@ CREATE TABLE `ums_admin`  (
 -- Records of ums_admin
 -- ----------------------------
 INSERT INTO `ums_admin` VALUES (1, 'test', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_02.png', 'test@qq.com', '测试账号', NULL, '2018-09-29 13:55:30', '2018-09-29 13:55:39', 1);
-INSERT INTO `ums_admin` VALUES (3, 'admin', '$2a$10$.E1FokumK5GIXWgKlg.Hc.i/0/2.qdAwYFL1zc5QHdyzpXOr38RZO', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_01.png', 'admin@163.com', '系统管理员', '系统管理员', '2018-10-08 13:32:47', '2019-04-20 12:45:16', 1);
+INSERT INTO `ums_admin` VALUES (3, 'admin', '$2a$12$YByoleCmWcyxkx0MUBnDRul4qo3QdQi1qrQXVZUeB0DVIUz9ayDmG', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_01.png', 'admin@163.com', '主系统管理员', '系统管理员', '2018-10-08 13:32:47', '2019-04-20 12:45:16', 1);
+INSERT INTO `ums_admin` VALUES (12, 'admin2', '$2a$12$YByoleCmWcyxkx0MUBnDRul4qo3QdQi1qrQXVZUeB0DVIUz9ayDmG', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_01.png', 'admin2@163.com', '同级次管理员', '次管理员', '2026-10-14 10:00:00', '2026-10-14 10:00:00', 1);
+INSERT INTO `ums_admin` VALUES (13, 'user1', '$2a$12$WO8DUlwz8LM0Wx3O4Xr/HuWgm2LH/EmmX60oMbEGqoGgbIEDDaCA.', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_02.png', 'user1@163.com', '普通用户A', '普通用户A', '2026-10-14 10:00:00', '2026-10-14 10:00:00', 1);
+INSERT INTO `ums_admin` VALUES (14, 'user2', '$2a$12$WO8DUlwz8LM0Wx3O4Xr/HuWgm2LH/EmmX60oMbEGqoGgbIEDDaCA.', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_02.png', 'user2@163.com', '普通用户B', '普通用户B', '2026-10-14 10:00:00', '2026-10-14 10:00:00', 1);
 INSERT INTO `ums_admin` VALUES (4, 'macro', '$2a$10$Bx4jZPR7GhEpIQfefDQtVeS58GfT5n6mxs/b4nLLK65eMFa16topa', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_01.png', 'macro@qq.com', 'macro', 'macro专用', '2019-10-06 15:53:51', '2020-02-03 14:55:55', 1);
 INSERT INTO `ums_admin` VALUES (6, 'productAdmin', '$2a$10$6/.J.p.6Bhn7ic4GfoB5D.pGd7xSiD1a9M6ht6yO0fxzlKJPjRAGm', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_03.png', 'product@qq.com', '商品管理员', '只有商品权限', '2020-02-07 16:15:08', NULL, 1);
 INSERT INTO `ums_admin` VALUES (7, 'orderAdmin', '$2a$10$UqEhA9UZXjHHA3B.L9wNG.6aerrBjC6WHTtbv1FdvYPUI.7lkL6E.', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_04.png', 'order@qq.com', '订单管理员', '只有订单管理权限', '2020-02-07 16:15:50', NULL, 1);
@@ -2648,6 +2651,9 @@ INSERT INTO `ums_admin_role_relation` VALUES (28, 7, 2);
 INSERT INTO `ums_admin_role_relation` VALUES (29, 1, 5);
 INSERT INTO `ums_admin_role_relation` VALUES (30, 4, 5);
 INSERT INTO `ums_admin_role_relation` VALUES (31, 8, 1);
+INSERT INTO `ums_admin_role_relation` VALUES (32, 12, 5);
+INSERT INTO `ums_admin_role_relation` VALUES (33, 13, 1);
+INSERT INTO `ums_admin_role_relation` VALUES (34, 14, 1);
 
 -- ----------------------------
 -- Table structure for ums_growth_change_history

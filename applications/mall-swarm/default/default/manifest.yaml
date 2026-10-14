@@ -13,11 +13,11 @@ runtime:
   java: "17"
   framework: spring-boot
 ports:
-  host_port: 18840
+  host_port: 18088
   container_port: 8080
 credentials:
   admin_username: admin
-  admin_password: macro123
+  admin_password: AdminPassword123!
 resources:
   users: resources/users.yaml
   roles: resources/roles.yaml

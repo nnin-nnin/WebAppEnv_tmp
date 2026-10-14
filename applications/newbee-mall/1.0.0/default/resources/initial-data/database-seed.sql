@@ -29,9 +29,8 @@ CREATE TABLE `tb_newbee_mall_admin_user`  (
 -- link https://github.com/newbee-ltd
 -- Records of tb_newbee_mall_admin_user
 -- ----------------------------
-INSERT INTO `tb_newbee_mall_admin_user` VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '十三', 0);
-INSERT INTO `tb_newbee_mall_admin_user` VALUES (2, 'newbee-admin1', 'e10adc3949ba59abbe56e057f20f883e', '新蜂01', 0);
-INSERT INTO `tb_newbee_mall_admin_user` VALUES (3, 'newbee-admin2', 'e10adc3949ba59abbe56e057f20f883e', '新蜂02', 0);
+INSERT INTO `tb_newbee_mall_admin_user` VALUES (1, 'admin', '1c269c612413b6c46a21cfd70e50bfb3', '主系统管理员', 0);
+INSERT INTO `tb_newbee_mall_admin_user` VALUES (2, 'admin2', '1c269c612413b6c46a21cfd70e50bfb3', '次级管理员', 0);
 
 -- ----------------------------
 -- author 13
@@ -1018,7 +1017,9 @@ CREATE TABLE `tb_newbee_mall_user`  (
 -- link https://github.com/newbee-ltd
 -- Records of tb_newbee_mall_user
 -- ----------------------------
-INSERT INTO `tb_newbee_mall_user` VALUES (1, '十三', '13700002703', 'e10adc3949ba59abbe56e057f20f883e', '我不怕千万人阻挡，只怕自己投降', '杭州市西湖区xx小区x幢419 十三 137xxxx2703', 0, 0, '2019-09-22 08:44:57');
-INSERT INTO `tb_newbee_mall_user` VALUES (6, '测试用户1', '13711113333', 'dda01dc6d334badcd031102be6bee182', '测试用户1', '上海浦东新区XX路XX号 999 137xxxx7797', 0, 0, '2019-08-29 10:51:39');
-INSERT INTO `tb_newbee_mall_user` VALUES (7, '测试用户2测试用户2测试用户2测试用户2', '13811113333', 'dda01dc6d334badcd031102be6bee182', '测试用户2', '杭州市西湖区xx小区x幢419 十三 137xxxx2703', 0, 0, '2019-08-29 10:55:08');
-INSERT INTO `tb_newbee_mall_user` VALUES (8, '测试用户3', '13911113333', 'dda01dc6d334badcd031102be6bee182', '测试用户3', '杭州市西湖区xx小区x幢419 十三 137xxxx2703', 0, 0, '2019-08-29 10:55:16');
+INSERT INTO `tb_newbee_mall_user` VALUES (101, 'user1', 'user1', '9f76e79f3ea65e7fdc651f96a68c56ad', '普通业务用户 A', '上海市浦东新区张江高科 13800000001', 0, 0, '2026-10-14 10:00:00');
+INSERT INTO `tb_newbee_mall_user` VALUES (102, 'user2', 'user2', '9f76e79f3ea65e7fdc651f96a68c56ad', '普通业务用户 B', '北京市海淀区中关村南大街 13800000002', 0, 0, '2026-10-14 10:00:00');
+INSERT INTO `tb_newbee_mall_user` VALUES (103, 'user1', '13800000001', '9f76e79f3ea65e7fdc651f96a68c56ad', '普通业务用户 A', '上海市浦东新区张江高科 13800000001', 0, 0, '2026-10-14 10:00:00');
+INSERT INTO `tb_newbee_mall_user` VALUES (104, 'user2', '13800000002', '9f76e79f3ea65e7fdc651f96a68c56ad', '普通业务用户 B', '北京市海淀区中关村南大街 13800000002', 0, 0, '2026-10-14 10:00:00');
+INSERT INTO `tb_newbee_mall_user` VALUES (105, 'user1', '13700000001', '9f76e79f3ea65e7fdc651f96a68c56ad', '普通业务用户 A', '上海市浦东新区张江高科 13700000001', 0, 0, '2026-10-14 10:00:00');
+INSERT INTO `tb_newbee_mall_user` VALUES (106, 'user2', '13700000002', '9f76e79f3ea65e7fdc651f96a68c56ad', '普通业务用户 B', '北京市海淀区中关村南大街 13700000002', 0, 0, '2026-10-14 10:00:00');

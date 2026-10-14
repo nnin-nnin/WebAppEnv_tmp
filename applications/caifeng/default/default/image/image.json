@@ -1,0 +1,4 @@
+{
+  "image": "yorem/caifeng:default",
+  "platform": "linux/amd64"
+}

@@ -1,9 +1,0 @@
-name: hadoop_2_8_1
-services:
-  app:
-    image: yorem/hadoop:2.8.1@sha256:2f68ef5c55a77c446c808c7cf3a58ee558082e61c5bb0e46906e234f31b738da
-    command: /opt/hadoop-2.8.1/bin/yarn resourcemanager
-    platform: linux/amd64
-    ports:
-      - "18644:8088"
-    restart: unless-stopped

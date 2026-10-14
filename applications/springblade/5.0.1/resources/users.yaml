@@ -1,6 +1,0 @@
-users:
-  - username: admin
-    password: admin
-    type: administrator
-    enabled: true
-    description: Initial system administrator account

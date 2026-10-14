@@ -1,0 +1,29 @@
+name: flycms
+services:
+  db:
+    image: mysql:8.0
+    platform: linux/amd64
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode=""
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: flycms
+    volumes:
+      - ../resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 3s
+      timeout: 3s
+      retries: 25
+
+  app:
+    image: yorem/flycms:default
+    pull_policy: never
+    platform: linux/amd64
+    environment:
+      FLYCMS_DB_USER: root
+      FLYCMS_DB_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "18095:80"

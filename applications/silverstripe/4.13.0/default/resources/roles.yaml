@@ -1,6 +1,0 @@
-roles:
-  - name: Administrator
-    description: Full administrative privileges over site content, pages, files, users, security, and settings
-    purpose: Primary system management role
-    associated_accounts:
-      - admin@example.com

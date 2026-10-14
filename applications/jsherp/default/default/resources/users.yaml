@@ -1,13 +1,31 @@
 users:
+  # 1. 管理员层级 (2 个，测试管理特权与管理员间横向越权)
   - username: admin
-    password: "123456"
-    type: admin
+    password: AdminPassword123!
+    role: administrator
+    dimension: vertical_admin
+    peer_group: admin_group
+    purpose: "主系统管理员 (拥有全站最高管理特权)"
     enabled: true
-    purpose: 初始系统管理员
-    creation: 数据库预置 (01_jsh_erp.sql)
-  - username: jsh
-    password: "123456"
-    type: user
+  - username: admin2
+    password: AdminPassword123!
+    role: administrator
+    dimension: horizontal_admin
+    peer_group: admin_group
+    purpose: "次管理员 / 同级管理员 (用于测试管理员间横向越权与日志隔离)"
     enabled: true
-    purpose: 业务测试管理员
-    creation: 数据库预置 (01_jsh_erp.sql)
+  # 2. 普通用户层级 (2 个，专为 IDOR 与水平越权测试设计)
+  - username: user1
+    password: UserPassword123!
+    role: standard_user
+    dimension: horizontal_user
+    peer_group: standard_users
+    purpose: "普通业务用户 A (拥有独立业务数据空间)"
+    enabled: true
+  - username: user2
+    password: UserPassword123!
+    role: standard_user
+    dimension: horizontal_user
+    peer_group: standard_users
+    purpose: "普通业务用户 B (用于水平越权与 IDOR 测试)"
+    enabled: true

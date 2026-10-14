@@ -1,5 +1,0 @@
-roles:
-  - name: admin
-    description: Administrator with full forum management and moderation privileges
-  - name: user
-    description: Standard forum participant

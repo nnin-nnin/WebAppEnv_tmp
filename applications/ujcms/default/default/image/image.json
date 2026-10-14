@@ -1,0 +1,18 @@
+[
+  {
+    "service": "app",
+    "image": "yorem/ujcms:default",
+    "tag": "default",
+    "digest": "sha256:b6be619634b70707eeb7ca2e8fe6292e8702d81e2149f04e7119d7fe9aa9a297",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  },
+  {
+    "service": "db",
+    "image": "mysql",
+    "tag": "8.0",
+    "digest": "sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b",
+    "platform": "linux/amd64",
+    "archive": "not-bundled-docker-hub"
+  }
+]

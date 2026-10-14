@@ -1,0 +1,34 @@
+name: ssm-demo
+version: default
+variant: default
+description: "SSM 微博社交系统 (2x2 Dual-Tier Account Matrix)"
+upstream:
+  repo: https://github.com/quan7u/ssm-demo
+  commit: 6256ad50bfe095519e37a50ceae4c135ea517f65
+runtime:
+  platform: linux/amd64
+  framework: "Java 8 / Spring MVC + MyBatis / Tomcat 8.5"
+  database: "MariaDB 10.5"
+  image: "yorem/ssm-demo:default"
+network:
+  host_port: 18092
+  container_port: 80
+credentials:
+  administrators:
+    - username: admin
+      password: AdminPassword123!
+      role: administrator
+      dimension: vertical_admin
+    - username: admin2
+      password: AdminPassword123!
+      role: administrator
+      dimension: horizontal_admin
+  standard_users:
+    - username: user1
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user
+    - username: user2
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user

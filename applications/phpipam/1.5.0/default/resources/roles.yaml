@@ -1,5 +1,0 @@
-roles:
-  - role: Administrator
-    description: Full administrative privileges on phpIPAM
-  - role: User
-    description: Standard user with read or restricted access

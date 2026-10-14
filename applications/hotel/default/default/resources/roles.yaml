@@ -1,0 +1,18 @@
+roles:
+  administrator:
+    name: administrator
+    description: "酒店管理系统管理员 (worker_info.role=admin)，具备客房、房型、住客、操作员及全量订单管理权限"
+    capabilities:
+      - manage_workers
+      - manage_rooms
+      - manage_orders
+      - manage_users
+      - manage_hotel_info
+  standard_user:
+    name: standard_user
+    description: "酒店注册客户 (user_info)，具备个人信息维护、客房查询及个人订单预订/查看权限"
+    capabilities:
+      - view_rooms
+      - create_order
+      - view_own_orders
+      - update_own_profile

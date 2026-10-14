@@ -1,9 +1,0 @@
-name: rconfig_3_9_6_default
-
-services:
-  application:
-    image: yorem/rconfig:3.9.6@sha256:8f99172cd8772819f91f48cfe96bc3e6ca6dc41ff8aa44b9f30010cb4d6e5bd9
-    platform: linux/amd64
-    restart: unless-stopped
-    ports:
-      - "18768:8080"

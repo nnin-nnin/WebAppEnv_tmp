@@ -8,8 +8,8 @@ deployment:
   mode: native_compose
   notes: "该环境采用原生多容器 Docker Compose 编排部署，Web 应用服务（PHP 8.1 Apache）与关系型数据库（MariaDB 10.6）运行在独立容器并通过专有网络互联。"
   compose_file: docker/compose.yaml
-  project_name: gila-cms-default
-  host_port: 18828
+  project_name: gila-cms-dual
+  host_port: 18082
   delivery_method: DOCKERHUB
   dockerhub_namespace: yorem
 
@@ -29,7 +29,7 @@ services:
     digest: "sha256:d8b2d5e4255e1b83bfbf40db38d513376337b9be62b5e0eceb7c08918326d9db"
     platform: linux/amd64
     ports:
-      - "18828:80"
+      - "18082:80"
     dependencies:
       - db
     healthcheck: "curl -f http://localhost:80/"
@@ -53,8 +53,36 @@ credentials:
   admin_username: admin@example.com
   admin_password: AdminPassword123!
   admin_alias: admin
+  user_password: UserPassword123!
   users_file: resources/users.yaml
   roles_file: resources/roles.yaml
+  evaluation_matrix:
+    administrator_level:
+      - username: admin@example.com
+        password: AdminPassword123!
+        role: administrator
+        dimension: vertical_admin
+        peer_group: admin_group
+        purpose: "主系统管理员 (拥有全站最高管理特权与配置管理权限)"
+      - username: admin2
+        password: AdminPassword123!
+        role: administrator
+        dimension: horizontal_admin
+        peer_group: admin_group
+        purpose: "次管理员 / 同级管理员 (用于测试管理员间横向越权与日志隔离)"
+    standard_user_level:
+      - username: user1
+        password: UserPassword123!
+        role: standard_user
+        dimension: horizontal_user
+        peer_group: standard_users
+        purpose: "普通业务用户 A (拥有独立业务数据空间)"
+      - username: user2
+        password: UserPassword123!
+        role: standard_user
+        dimension: horizontal_user
+        peer_group: standard_users
+        purpose: "普通业务用户 B (用于水平越权与 IDOR 测试)"
 
 scripts:
   up: scripts/up.sh
@@ -72,7 +100,8 @@ recommended_commands:
 differences_from_official:
   - "基础镜像采用官方 php:8.1-apache，支持现代 PHP 特性并解决旧版 Ubuntu 18.04 依赖过时问题。"
   - "在 PHP 运行配置中显式关闭 Zend OPcache (opcache.enable=0)，彻底消除 macOS ARM64 QEMU/Rosetta 模拟器下的 SIGSEGV 崩溃。"
-  - "引入独立的 MariaDB 10.6 容器服务，并通过 resources/initial-data/database-seed.sql 预填充全量数据表与初始管理员账户，实现零安装向导的即启即用冷启动。"
+  - "引入独立的 MariaDB 10.6 容器服务，并通过 resources/db/database-seed.sql 预填充全量数据表与初始管理员账户，实现零安装向导的即启即用冷启动。"
+  - "全面预置精简双层双主体 4 账号矩阵（2 管理员 + 2 普通用户），满足垂直越权提权、水平越权/IDOR、管理员间横向隔离与特权审计等学术安全评测需求。"
 
 known_limitations:
   - "ARM64 宿主机上运行 linux/amd64 容器可能会出现 Docker 平台警告，但不影响功能正常运行。"

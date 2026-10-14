@@ -1,9 +1,0 @@
-users:
-  - username: silverpeas
-    password: SilverpeasPassword123!
-    role: administrator
-    description: Primary Silverpeas administrator account
-  - username: SilverAdmin
-    password: SilverAdmin
-    role: administrator
-    description: Default Silverpeas administrator account

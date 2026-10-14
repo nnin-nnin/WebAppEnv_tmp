@@ -1,0 +1,34 @@
+name: Tbed
+version: default
+variant: default
+description: "Tbed 分布式云图床系统 (2x2 Dual-Tier Account Matrix)"
+upstream:
+  repo: https://github.com/Hello-hao/Tbed
+  commit: 86987221123931366efbf79b9b029180ddcf52e4
+runtime:
+  platform: linux/amd64
+  framework: "Java 8 / Spring Boot 2.5.1"
+  database: "MariaDB 10.5 + Redis 7"
+  image: "yorem/tbed:default"
+network:
+  host_port: 18093
+  container_port: 80
+credentials:
+  administrators:
+    - username: admin
+      password: AdminPassword123!
+      role: administrator
+      dimension: vertical_admin
+    - username: admin2
+      password: AdminPassword123!
+      role: administrator
+      dimension: horizontal_admin
+  standard_users:
+    - username: user1
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user
+    - username: user2
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user

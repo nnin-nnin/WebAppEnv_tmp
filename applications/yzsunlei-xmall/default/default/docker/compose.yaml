@@ -1,0 +1,26 @@
+name: yzsunlei-xmall
+services:
+  db:
+    image: mariadb:10.5
+    platform: linux/amd64
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode=""
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: xmall
+    volumes:
+      - ../resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  app:
+    image: yorem/yzsunlei-xmall:default
+    pull_policy: never
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "18097:8080"

@@ -1,91 +1,68 @@
-# Gila CMS default 原生多容器 Docker Compose 环境
+# Gila CMS (default) - Environment
 
-本交付物为 **Gila CMS (default / commit 0371737)** 的原生多容器 Docker Compose 应用环境，专为学术安全基准评测和漏洞扫描靶场设计。
-
-> [!NOTE]
-> 本环境采用原生多容器 Docker Compose 部署。应用服务（Apache/PHP 8.1）与独立数据库服务（MariaDB 10.6）分别运行在独立容器中，并通过 Compose 专有网络通信。接收者无需手动执行安装向导、配置数据库或导入 SQL，直接冷启动即用。
+本目录为 Gila CMS 的 Docker Compose 原生可持久化评测环境。专为学术安全基准评测、访问控制漏洞分析（垂直越权提权、横向越权/IDOR、管理员间横向隔离与特权审计）设计。
 
 ---
 
-## 1. 前置条件
+## 1. 运行环境配置 (Runtime Environment)
 
-- **Docker Engine**: v20.10.0+
-- **Docker Compose**: v2.0.0+
+- **服务端口**: 宿主机专属映射 `18082:80`
+- **前台站点**: [http://127.0.0.1:18082](http://127.0.0.1:18082)
+- **管理后台**: [http://127.0.0.1:18082/admin](http://127.0.0.1:18082/admin)
+- **交付镜像**:
+  - `app`: `yorem/gila-cms:default@sha256:d8b2d5e4255e1b83bfbf40db38d513376337b9be62b5e0eceb7c08918326d9db`
+  - `db`: `mariadb:10.6@sha256:40153feb479c0da88b5cfe3f50f44c91f7baf05a1b7bcc5beb7eb37a890a8f16`
 - **目标平台**: `linux/amd64`
-- **网络要求**: 宿主机需可用端口 `18828`
 
 ---
 
-## 2. 快速启动
+## 2. 精简双层双主体预置账户矩阵 (Dual-Peer 4-Account Matrix)
 
-使用封装好的启动脚本（自动执行 Compose 编排并轮询健康状态）：
+为满足高标准访问控制与越权漏洞安全评测，本环境预置了**精简双层双主体 4 账号矩阵（2 个管理员 + 2 个普通用户，共 4 个独立账号）**：
+> **注**：在安全基准评测中，“未授权访问/访客”的标准评测方式是直接发起无 Cookie/无 Token 的匿名 HTTP 请求作为对照基线，严禁且无需额外创建无意义的“访客/游客账号”。
+
+| 权限层级 | 维度 | 用户名 (标识) | 登录邮箱 | 初始密码 | 角色 | 权限级别 | 评测用途与权限边界 |
+|---|---|---|---|---|---|---|---|
+| **管理员级** | 主管理员 | `admin@example.com` | `admin@example.com` | `AdminPassword123!` | `administrator` | Level 10 | 全站最高系统管理员，拥有全站最高管理特权与配置管理权限 |
+| **管理员级** | 次/同级管理员 | `admin2` | `admin2@example.com` | `AdminPassword123!` | `administrator` | Level 10 | 同级管理员，专用于测试管理员间横向越权、凭据篡改与日志审计防伪造 |
+| **普通用户级** | 横向用户 A | `user1` | `user1@example.com` | `UserPassword123!` | `standard_user` | Level 0 | 普通业务用户 A，拥有独立业务数据空间 (ID: 3)，用于基准用户 |
+| **普通用户级** | 横向用户 B | `user2` | `user2@example.com` | `UserPassword123!` | `standard_user` | Level 0 | 普通业务用户 B，拥有独立业务数据空间 (ID: 4)，用于 IDOR/水平越权对照靶标 |
+
+详细清单与角色能力说明参见 [`resources/users.yaml`](resources/users.yaml) 与 [`resources/roles.yaml`](resources/roles.yaml)。
+
+---
+
+## 3. 常用生命周期操作 (Lifecycle Commands)
+
+在当前 `environment` 目录下执行生命周期脚本：
 
 ```bash
+# 1. 启动环境并等待服务就绪（自动预置多账号矩阵并执行验证）
 ./scripts/up.sh
+
+# 2. 健康检查与多账号登录校验
+./scripts/healthcheck.sh
+
+# 3. 单账号或全矩阵登录验证
+# 验证全矩阵（admin@example.com, admin2, user1, user2）：
+./resources/login.sh
+# 验证指定账号：
+./resources/login.sh admin@example.com AdminPassword123!
+./resources/login.sh admin2 AdminPassword123!
+./resources/login.sh user1 UserPassword123!
+./resources/login.sh user2 UserPassword123!
+
+# 4. 清理与销毁环境（释放端口与卷）
+./scripts/reset.sh
 ```
 
-或者使用原生 Docker Compose 命令：
-
-```bash
-docker compose -f docker/compose.yaml up -d
-```
-
 ---
 
-## 3. 访问与初始账号
+## 4. 架构与自动化设计特性
 
-- **前台站点地址**: [http://localhost:18828](http://localhost:18828) 或 [http://127.0.0.1:18828](http://127.0.0.1:18828)
-- **管理后台地址**: [http://localhost:18828/admin](http://localhost:18828/admin)
-- **初始管理员邮箱**: `admin@example.com`
-- **初始管理员用户名**: `admin`
-- **初始管理员密码**: `AdminPassword123!`
-- **角色级别**: `Admin (Level 10)`
-
-登录成功后即可直接进入 Gila CMS Administration 管理面板，具备内容管理 (Pages/Posts/Categories)、插件包管理 (Packages)、外观主题管理 (Themes) 以及系统配置全量权限。
-
----
-
-## 4. 服务组成
-
-本环境包含 2 个独立解耦的核心服务：
-
-| 服务名 | 容器镜像 | 内部端口 | 暴露端口 | 职责 |
-|---|---|---|---|---|
-| `app` | `yorem/gila-cms:default` | 80/tcp | `18828:80` | Web 应用与 PHP 8.1 运行时 |
-| `db` | `mariadb:10.6` | 3306/tcp | 内部互联 | 关系型数据库存储 |
-
----
-
-## 5. 自动化脚本与测试验证
-
-所有运维与测试脚本位于 `scripts/` 与 `resources/` 目录，均已赋予执行权限：
-
-- **启动并等待健康就绪**:
-  ```bash
-  ./scripts/up.sh
-  ```
-- **自动化健康检查与端点校验**:
-  ```bash
-  ./scripts/healthcheck.sh
-  ```
-- **管理员登录凭据测试**:
-  ```bash
-  ./resources/login.sh admin@example.com AdminPassword123!
-  # 或使用别名
-  ./resources/login.sh admin AdminPassword123!
-  ```
-- **清理容器与持久化卷**:
-  ```bash
-  ./scripts/reset.sh
-  ```
-
----
-
-## 6. 定制与工程自愈说明
-
-1. **解决 QEMU/Rosetta 下 PHP 段错误 (SIGSEGV)**:
-   - 在 macOS ARM64 环境下以 `linux/amd64` 平台运行 PHP-Apache 时，Zend OPcache 会触发段错误 `child exit signal Segmentation fault (11)`。
-   - 本环境在 PHP 运行配置中显式关闭 OPcache (`opcache.enable=0` 与 `opcache.enable_cli=0`)，彻底根除了 Apache 进程崩溃问题。
-2. **免向导冷启动 (Zero-Configuration Cold Boot)**:
-   - 官方 Gila CMS 默认在无 `config.php` 时重定向至 `/install` 安装向导。
-   - 本环境预置了适配容器网络的 `config.php`，并在 MariaDB 启动时通过 `resources/initial-data/database-seed.sql` 自动填充完整数据表、默认文章、基础部件和经过安全哈希处理的初始管理员账户。
+1. **零人工干预冷启动**:
+   - 依赖服务包含 MariaDB 10.6 关系型数据库，配置内嵌健康检查 `healthcheck.sh --connect --innodb_initialized`。
+   - 应用服务通过环境变量动态绑定数据库连接与应用基础 URL，通过预置 `resources/db/database-seed.sql` 自动填充数据，无需任何人工配置向导。
+2. **多主体横向数据隔离设计**:
+   - 在数据库中为同级普通用户 `user1` 与 `user2` 预埋了独立的个人资料（`usermeta`）、独立文章草稿（`post`，`publish=0`）以及站内通知（`user_notification`）。
+   - 为管理员 `admin` 与 `admin2` 分别记录审计日志（`event_log`）与运维指南（`post`），用于特权审计与横向防篡改评测。

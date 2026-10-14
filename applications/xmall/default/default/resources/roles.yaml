@@ -1,5 +1,17 @@
 roles:
-  - role: admin
-    description: Full administrative privileges
-  - role: member
-    description: Standard store member access
+  - role: administrator
+    dimension: vertical_admin
+    description: "全站超级管理员，拥有商品管理、系统设置、角色权限控制等最高特权"
+    capabilities:
+      - system_config
+      - user_management
+      - order_management
+      - role_management
+  - role: standard_user
+    dimension: horizontal_user
+    description: "前台标准会员用户，拥有浏览商品、下单购物、管理个人收货地址与个人资料权限"
+    capabilities:
+      - view_products
+      - manage_cart
+      - create_orders
+      - profile_management

@@ -1,8 +1,0 @@
-{
-  "service": "web",
-  "image": "yorem/monstra",
-  "tag": "default",
-  "digest": "sha256:fa8bfc3f03ea14370ca1568c9f60a951637eb46eb2d731f5b77ccf7c9bb09482",
-  "platform": "linux/amd64",
-  "archive": "not-bundled-docker-hub"
-}

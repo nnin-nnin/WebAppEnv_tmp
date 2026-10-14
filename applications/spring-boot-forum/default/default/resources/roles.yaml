@@ -1,0 +1,17 @@
+roles:
+  administrator:
+    name: administrator
+    description: "论坛管理员 (ADMIN,USER)，具备分类管理、全站帖子删除与后台管理权限"
+    capabilities:
+      - manage_categories
+      - delete_any_post
+      - create_post
+      - create_comment
+      - edit_profile
+  standard_user:
+    name: standard_user
+    description: "论坛普通注册用户 (USER)，具备发帖、回帖、修改个人设置与头像权限"
+    capabilities:
+      - create_post
+      - create_comment
+      - edit_own_profile

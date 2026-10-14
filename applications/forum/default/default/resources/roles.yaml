@@ -1,0 +1,17 @@
+roles:
+  administrator:
+    name: administrator
+    description: "论坛管理级账户，具备发帖、评论、话题互动与资料维护权限"
+    capabilities:
+      - publish_post
+      - reply_post
+      - edit_profile
+      - view_messages
+  standard_user:
+    name: standard_user
+    description: "论坛普通注册用户，具备独立 UID、个人资料、发帖与关注列表"
+    capabilities:
+      - publish_post
+      - reply_post
+      - edit_own_profile
+      - follow_users

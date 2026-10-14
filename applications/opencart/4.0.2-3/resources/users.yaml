@@ -1,6 +1,0 @@
-users:
-  - username: admin
-    password: WcOpen!26-hV4qM7D
-    type: administrator
-    enabled: true
-    purpose: OpenCart 后台初始管理员

@@ -12,7 +12,7 @@
 - **Docker Engine**: v20.10.0+
 - **Docker Compose**: v2.0.0+
 - **目标平台**: `linux/amd64`
-- **网络要求**: 宿主机需可用专属分配端口 `18840`
+- **网络要求**: 宿主机需可用专属分配端口 `18088`
 
 ---
 
@@ -33,15 +33,19 @@ docker compose -f docker/compose.yaml up -d
 
 ---
 
-## 3. 访问与初始账号
+## 3. 访问与初始账号 (2x2 双层双主体账号矩阵)
 
-- **Web / API 访问地址**: [http://localhost:18840](http://localhost:18840)
-- **Swagger API 文档**: [http://localhost:18840/swagger-ui.html](http://localhost:18840/swagger-ui.html)
-- **Druid 数据源监控控制台**: [http://localhost:18840/druid/login.html](http://localhost:18840/druid/login.html)
-- **初始管理员账号**: `admin`
-- **初始管理员密码**: `macro123`
-- **Druid 监控账号/密码**: `druid` / `druid`
-- **预设角色**: `超级管理员` (Administrator)
+- **Web / API 访问地址**: [http://localhost:18088](http://localhost:18088)
+- **Swagger API 文档**: [http://localhost:18088/swagger-ui.html](http://localhost:18088/swagger-ui.html)
+- **Druid 数据源监控控制台**: [http://localhost:18088/druid/login.html](http://localhost:18088/druid/login.html)
+
+### 预置账号矩阵
+| 用户名 | 初始密码 | 角色层级 | 维度 | 评测用途 |
+| :--- | :--- | :--- | :--- | :--- |
+| **admin** | `AdminPassword123!` | administrator (超级管理员) | 垂直特权 | 全局系统最高管理特权 |
+| **admin2** | `AdminPassword123!` | administrator (超级管理员) | 横向特权隔离 | 管理员间横向越权与审计隔离 |
+| **user1** | `UserPassword123!` | standard_user (业务用户) | 横向业务隔离 | IDOR / 水平越权测试主体 A |
+| **user2** | `UserPassword123!` | standard_user (业务用户) | 横向业务隔离 | IDOR / 水平越权测试主体 B |
 
 ---
 

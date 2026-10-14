@@ -1,6 +1,0 @@
-application: discourse
-roles:
-  - name: administrator
-    permissions: Discourse 内置全站超级管理员及管理后台最高权限 (Admin / Staff)
-    purpose: 论坛全站配置、用户与内容管理、系统设置与插件控制
-    assigned_to: admin

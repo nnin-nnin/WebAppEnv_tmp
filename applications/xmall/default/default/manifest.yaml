@@ -9,10 +9,10 @@ target:
   platform: linux/amd64
   compose_project: xmall-default
   compose_file: docker/compose.yaml
-  host_port: 18876
+  host_port: 18085
   host_port_variable: HOST_PORT
-  browser_url: http://127.0.0.1:18876/
-  login_url: http://127.0.0.1:18876/login
+  browser_url: http://127.0.0.1:18085/
+  login_url: http://127.0.0.1:18085/login
 
 source:
   repository: https://github.com/Exrick/xmall
@@ -52,7 +52,7 @@ services:
     platform: linux/amd64
     source: "https://github.com/Exrick/xmall commit 19e7917d5ed3bd2a2421a3a246ad494c133ba94c via docker/Dockerfile"
     ports:
-      - "${HOST_PORT:-18876}:7777"
+      - "${HOST_PORT:-18085}:7777"
     depends_on:
       - db: service_healthy
       - redis: service_healthy

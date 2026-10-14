@@ -1,0 +1,5 @@
+{
+  "image": "yorem/tbed:default",
+  "digest": "sha256:a8373b8396ea5eccabd14142489fadee8323d08f58d541ded7ebc9393dfd9703",
+  "platform": "linux/amd64"
+}

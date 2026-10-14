@@ -1,6 +1,0 @@
-users:
-  - username: spadmin
-    password: spadmin
-    role: admin
-    email: spadmin@example.com
-    description: Initial administrator account

@@ -10,7 +10,7 @@ services:
       redis:
         condition: service_healthy
     ports:
-      - "${HOST_PORT:-18876}:7777"
+      - "${HOST_PORT:-18085}:7777"
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f -s http://127.0.0.1:7777/ || exit 1"]

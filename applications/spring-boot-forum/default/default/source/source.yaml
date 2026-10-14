@@ -1,0 +1,4 @@
+name: spring-boot-forum
+upstream_repo: https://github.com/weiqingwen/spring-boot-forum
+commit: 538eecc3c6b85fdf0768ab4e8354b48c0c17d94f
+branch: master

@@ -1,0 +1,4 @@
+{
+  "image": "yorem/weixin-shop-spring-cloud:default",
+  "platform": "linux/amd64"
+}

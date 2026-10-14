@@ -1,0 +1,5 @@
+{
+  "image": "yorem/hotel:default",
+  "platform": "linux/amd64",
+  "id": "sha256:51e4c96234b3abb32dada4bf754bddc742a30fc61b414ac2c9eef94d9bd25c2f"
+}

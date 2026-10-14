@@ -1,0 +1,5 @@
+{
+  "image": "yorem/spring-boot-forum:default",
+  "platform": "linux/amd64",
+  "id": "sha256:e96adf9d63fed5c7e870f2cd9a6db5d3f15393fc1ad67bcfe6d14b193659d7a9"
+}

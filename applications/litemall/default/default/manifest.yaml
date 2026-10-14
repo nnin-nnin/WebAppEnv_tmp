@@ -1,0 +1,34 @@
+application: litemall
+version: default
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/linlinjava/litemall
+  commit: HEAD
+runtime:
+  language: java
+  java: "8"
+  framework: spring-boot
+ports:
+  host_port: 18087
+  container_port: 8080
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+
+services:
+  application:
+    image: yorem/litemall:default
+    tag: "default"
+    platform: linux/amd64

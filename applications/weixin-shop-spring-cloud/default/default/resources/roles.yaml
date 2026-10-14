@@ -1,0 +1,11 @@
+roles:
+  - name: administrator
+    description: "内部员工管理员 (is_employee=1, lvl-admin)"
+    capabilities:
+      - manage_accounts
+      - employee_privileges
+  - name: standard_user
+    description: "普通商城会员 (is_employee=0, lvl-user)"
+    capabilities:
+      - manage_own_delivery_addresses
+      - view_member_profile

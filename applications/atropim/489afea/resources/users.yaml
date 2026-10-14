@@ -1,6 +1,0 @@
-users:
-  - username: admin
-    password: benchmark-only
-    type: administrator
-    active: true
-    purpose: initial benchmark administrator
