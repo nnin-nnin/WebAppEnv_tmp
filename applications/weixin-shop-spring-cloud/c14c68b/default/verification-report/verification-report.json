@@ -1,0 +1,15 @@
+{
+  "application": "weixin-shop-spring-cloud",
+  "status": "PASSED",
+  "verified": true,
+  "accounts_verified": [
+    "admin",
+    "admin2",
+    "user1",
+    "user2"
+  ],
+  "negative_auth_check": true,
+  "timestamp": "2026-10-14T14:30:00+08:00",
+  "version": "c14c68b",
+  "commit": "c14c68b553f7b02b98b4dfb2b163789639d756bc"
+}

@@ -1,0 +1,19 @@
+name: siam-cloud
+version: d6ee970
+upstream_repo: https://github.com/siam1026/siam-cloud
+port: 18099
+image: yorem/siam-cloud:default
+credentials:
+- username: admin
+  password: AdminPassword123!
+  role: administrator
+- username: admin2
+  password: AdminPassword123!
+  role: administrator
+- username: user1
+  password: UserPassword123!
+  role: standard_user
+- username: user2
+  password: UserPassword123!
+  role: standard_user
+commit: d6ee970f8decaac09d7f6cbce022b6c67d8d2d33

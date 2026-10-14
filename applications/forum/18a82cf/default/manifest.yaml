@@ -1,0 +1,23 @@
+name: forum
+version: 18a82cf
+upstream: https://github.com/fanchaoo/forum
+commit: 18a82cfd67e04e172ca722be3203ff2cf4bce0f7
+image: yorem/forum:default
+platform: linux/amd64
+ports:
+- 18091:8080
+credentials:
+  administrators:
+  - username: admin
+    password: AdminPassword123!
+    role: administrator
+  - username: admin2
+    password: AdminPassword123!
+    role: administrator
+  standard_users:
+  - username: user1
+    password: UserPassword123!
+    role: standard_user
+  - username: user2
+    password: UserPassword123!
+    role: standard_user

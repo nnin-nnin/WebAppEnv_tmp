@@ -1,5 +1,0 @@
-name: NBlog
-version: default
-upstream_repo: https://github.com/Naccl/NBlog
-commit: b8e537cb27bb6635a0e0ecea0b51fcc327e2e32c
-platform: linux/amd64

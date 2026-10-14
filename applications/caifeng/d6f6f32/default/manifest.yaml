@@ -1,0 +1,19 @@
+name: caifeng
+version: d6f6f32
+upstream_repo: https://github.com/981011512/--
+port: 18101
+image: yorem/caifeng:default
+credentials:
+- username: admin
+  password: AdminPassword123!
+  role: administrator
+- username: admin2
+  password: AdminPassword123!
+  role: administrator
+- username: user1
+  password: UserPassword123!
+  role: standard_user
+- username: user2
+  password: UserPassword123!
+  role: standard_user
+commit: d6f6f32ac90dcd13dbbcd38c6ab2b684f2da783a

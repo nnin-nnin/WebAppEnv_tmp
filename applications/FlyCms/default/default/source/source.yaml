@@ -1,5 +1,0 @@
-name: FlyCms
-version: default
-upstream_repo: https://github.com/sunkaifei/FlyCms
-commit: edfdf724c3b944310f60c29aa755d03a00a75837
-platform: linux/amd64

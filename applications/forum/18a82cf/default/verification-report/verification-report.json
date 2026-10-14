@@ -1,0 +1,15 @@
+{
+  "application": "forum",
+  "status": "PASSED",
+  "verified": true,
+  "accounts_verified": [
+    "admin",
+    "admin2",
+    "user1",
+    "user2"
+  ],
+  "negative_auth_check": true,
+  "timestamp": "2026-10-14T14:30:00+08:00",
+  "version": "18a82cf",
+  "commit": "18a82cfd67e04e172ca722be3203ff2cf4bce0f7"
+}

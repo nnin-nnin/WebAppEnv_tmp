@@ -1,66 +1,38 @@
-# WebAppEnv (用于验证分支 — 21 个 2x2 账号矩阵靶标环境)
+# 可复现应用环境（用于验证分支 - 21 个 2x2 账号矩阵应用）
 
-本分支专门收录 **21 个 Web 应用**通过 **2x2 精简双层双主体账号矩阵规范（2 管理员 + 2 普通用户）** 构建并完成 **100% 冷启动与多账号鉴权动态实测验收**的标准化评测靶标环境（不含其他应用）。
+本分支仅包含已完成 2x2 账号矩阵（`admin`、`admin2`、`user1`、`user2`）预置与实机动态验证的 **21 个 Web 应用环境**。
 
----
-
-## 一、 评测靶标资产全景清单 (21 / 21 全部动态验收通过)
-
-完整索引亦可见 [`index/all.md`](index/all.md)。
-
-| # | 应用名称 | 环境目录 | 上游仓库 | 宿主机端口 | 核心架构与依赖栈 | 初始账号矩阵 (2 管理员 + 2 普通用户) |
-|---|---|---|---|---|---|---|
-| 1 | `ujcms` | [`applications/ujcms/default/default/`](applications/ujcms/default/default/) | `dromara/ujcms` | `18081:80` | Java 24 (Spring Boot 3) + MySQL 8.0 | `admin`, `admin2`, `user1`, `user2` |
-| 2 | `gila-cms` | [`applications/gila-cms/default/default/`](applications/gila-cms/default/default/) | `GilaCMS/gila` | `18082:80` | PHP 8.1 Apache + MariaDB 10.6 | `admin@example.com`, `admin2`, `user1`, `user2` |
-| 3 | `webchess` | [`applications/webchess/default/default/`](applications/webchess/default/default/) | `halojoy/PHP7-Webchess` | `18083:80` | PHP 7.4 Apache + MariaDB 10.5 | `admin`, `admin2`, `user1`, `user2` |
-| 4 | `jsherp` | [`applications/jsherp/default/default/`](applications/jsherp/default/default/) | `jishenghua/jshERP` | `18084:80` | Spring Boot 2 + Vue + MariaDB 10.5 + Redis 7 | `admin`, `admin2`, `user1`, `user2` |
-| 5 | `xmall` | [`applications/xmall/default/default/`](applications/xmall/default/default/) | `Exrick/xmall` | `18085:7777` | SSM + Dubbo + Zookeeper + MariaDB 10.5 + Redis | `admin`, `admin2`, `user1`, `user2` |
-| 6 | `newbee-mall` | [`applications/newbee-mall/1.0.0/default/`](applications/newbee-mall/1.0.0/default/) | `newbee-ltd/newbee-mall` | `18086:28080` | Spring Boot 2 + Thymeleaf + MySQL 8.0 | `admin`, `admin2`, `user1`, `user2` |
-| 7 | `litemall` | [`applications/litemall/default/default/`](applications/litemall/default/default/) | `linlinjava/litemall` | `18087:8080` | Spring Boot 2 + Shiro + JWT + MySQL 8.0 | `admin`, `admin2`, `user1`, `user2` |
-| 8 | `mall-swarm` | [`applications/mall-swarm/default/default/`](applications/mall-swarm/default/default/) | `macrozheng/mall-swarm` | `18088:8080` | Spring Cloud + JWT + MySQL 8.0 + Redis | `admin`, `admin2`, `user1`, `user2` |
-| 9 | `hotel` | [`applications/hotel/default/default/`](applications/hotel/default/default/) | `FreeeBird/hotel` | `18089:8080` | Spring Boot + MariaDB 10.5 | `admin`, `admin2`, `user1`, `user2` |
-| 10 | `spring-boot-forum` | [`applications/spring-boot-forum/default/default/`](applications/spring-boot-forum/default/default/) | `weiqingwen/spring-boot-forum` | `18090:8080` | Spring Boot + Thymeleaf + MariaDB 10.5 | `admin`, `admin2`, `user1`, `user2` |
-| 11 | `forum` | [`applications/forum/default/default/`](applications/forum/default/default/) | `fanchaoo/forum` | `18091:8080` | SSM + MariaDB 10.5 + Redis | `admin`, `admin2`, `user1`, `user2` |
-| 12 | `ssm-demo` | [`applications/ssm-demo/default/default/`](applications/ssm-demo/default/default/) | `quan7u/ssm-demo` | `18092:8080` | SSM (Tomcat WAR) + MariaDB 10.5 | `admin`, `admin2`, `user1`, `user2` |
-| 13 | `Tbed` | [`applications/Tbed/default/default/`](applications/Tbed/default/default/) | `Hello-hao/Tbed` | `18093:10088` | Spring Boot + MariaDB 10.5 + Redis | `admin`, `admin2`, `user1`, `user2` |
-| 14 | `NBlog` | [`applications/NBlog/default/default/`](applications/NBlog/default/default/) | `Naccl/NBlog` | `18094:8090` | Spring Boot + JWT + MariaDB 10.5 + Redis | `admin`, `admin2`, `user1`, `user2` |
-| 15 | `FlyCms` | [`applications/FlyCms/default/default/`](applications/FlyCms/default/default/) | `sunkaifei/FlyCms` | `18095:80` | Spring Boot + Shiro + FreeMarker + MySQL 8.0 | `admin`, `admin2`, `user1`, `user2` |
-| 16 | `mall` | [`applications/mall/default/default/`](applications/mall/default/default/) | `macrozheng/mall` | `18096:8080` | Spring Boot + Spring Security JWT + MySQL 8.0 + Redis | `admin`, `admin2`, `user1`, `user2` |
-| 17 | `yzsunlei-xmall` | [`applications/yzsunlei-xmall/default/default/`](applications/yzsunlei-xmall/default/default/) | `yzsunlei/xmall` | `18097:8080` | Spring Boot + Spring Security JWT + MariaDB 10.5 | `admin`, `admin2`, `user1`, `user2` |
-| 18 | `SuperMarket` | [`applications/SuperMarket/default/default/`](applications/SuperMarket/default/default/) | `ZongXR/SuperMarket` | `18098:8080` | Spring Boot + MariaDB 10.5 + Redis | `admin`, `admin2`, `user1`, `user2` |
-| 19 | `siam-cloud` | [`applications/siam-cloud/default/default/`](applications/siam-cloud/default/default/) | `siam1026/siam-cloud` | `18099:9200` | Spring Cloud (`user-provider`) + MariaDB 10.5 + Redis | `admin`, `admin2`, `user1`, `user2` |
-| 20 | `weixin-shop-spring-cloud` | [`applications/weixin-shop-spring-cloud/default/default/`](applications/weixin-shop-spring-cloud/default/default/) | `chengzhx76/weixin-shop-spring-cloud` | `18100:8086` | Spring Cloud (`service-user`) + MariaDB 10.5 | `admin`, `admin2`, `user1`, `user2` |
-| 21 | `caifeng` | [`applications/caifeng/default/default/`](applications/caifeng/default/default/) | `981011512/--` | `18101:8081` | Spring Cloud (`cf-ucenter`) + MariaDB 10.5 + Redis | `admin`, `admin2`, `user1`, `user2` |
-
----
-
-## 二、 目录约定与快速启动
+## 目录约定
 
 ```text
-applications/<app-name>/<version>/<variant>/
-├── README.md               # 环境说明、端口与预置多账号清单
-├── manifest.yaml           # 元数据清单 (commit、运行时、端口、镜像)
-├── source/source.yaml      # 上游 Git 仓库地址与固定 commit
-├── resources/              # 预置账号矩阵 (users.yaml, roles.yaml, login.sh 及种子数据)
-├── docker/compose.yaml     # Docker Compose 编排文件
-├── scripts/                # 生命周期脚本: up.sh, healthcheck.sh, reset.sh
-├── image/image.json        # 锁定镜像元数据
-└── verification-report/    # 自动化验证报告
+applications/<应用名>/<版本或7位短哈希>/default/
 ```
 
-```bash
-# 进入任意目标环境目录 (以 siam-cloud 为例)
-cd applications/siam-cloud/default/default
+- **应用名**：全小写 `kebab-case`。
+- **版本或 7 位短哈希**：具有明确发布标签的应用使用语义版本号（如 `1.0.0`、`1.1.0`），基于 Git commit 构建的应用使用 **7 位短哈希**（如 `edfdf72`）。
 
-# 1. 一键冷启动容器并轮询等待服务就绪
-./scripts/up.sh
+## 应用列表
 
-# 2. 自动化健康检查
-./scripts/healthcheck.sh
-
-# 3. 2x2 四账号登录鉴权、角色权限区分与错误密码负向拒绝校验
-./resources/login.sh
-
-# 4. 彻底销毁容器、专用网络并释放持久化卷
-./scripts/reset.sh
-```
+| # | 应用 | 版本 / 短哈希 | 完整 Commit | 目录 |
+| --- | --- | --- | --- | --- |
+| 1 | FlyCms (`flycms`) | `edfdf72` | `edfdf724c3b944310f60c29aa755d03a00a75837` | [applications/flycms/edfdf72/default](applications/flycms/edfdf72/default/) |
+| 2 | NBlog (`nblog`) | `b8e537c` | `b8e537cb27bb6635a0e0ecea0b51fcc327e2e32c` | [applications/nblog/b8e537c/default](applications/nblog/b8e537c/default/) |
+| 3 | SuperMarket (`supermarket`) | `ef4f8ef` | `ef4f8ef9ae7f901b5c2e3d0c6cd851fafe1843d1` | [applications/supermarket/ef4f8ef/default](applications/supermarket/ef4f8ef/default/) |
+| 4 | Tbed (`tbed`) | `8698722` | `86987221123931366efbf79b9b029180ddcf52e4` | [applications/tbed/8698722/default](applications/tbed/8698722/default/) |
+| 5 | caifeng (`caifeng`) | `d6f6f32` | `d6f6f32ac90dcd13dbbcd38c6ab2b684f2da783a` | [applications/caifeng/d6f6f32/default](applications/caifeng/d6f6f32/default/) |
+| 6 | forum (`forum`) | `18a82cf` | `18a82cfd67e04e172ca722be3203ff2cf4bce0f7` | [applications/forum/18a82cf/default](applications/forum/18a82cf/default/) |
+| 7 | gila-cms (`gila-cms`) | `0371737` | `03717370d4cb456aacb5f5df5eb806b3679764b6` | [applications/gila-cms/0371737/default](applications/gila-cms/0371737/default/) |
+| 8 | hotel (`hotel`) | `43c3373` | `43c3373c675cb5f0160cfe74df61e132ad801931` | [applications/hotel/43c3373/default](applications/hotel/43c3373/default/) |
+| 9 | jsherp (`jsherp`) | `26124e3` | `26124e31babdbcda411b051ac8df4ad0c6721b1a` | [applications/jsherp/26124e3/default](applications/jsherp/26124e3/default/) |
+| 10 | litemall (`litemall`) | `19b57d7` | `19b57d7d814fa090b9fe2c3f63a84a2232098773` | [applications/litemall/19b57d7/default](applications/litemall/19b57d7/default/) |
+| 11 | mall (`mall`) | `dcaa93b` | `dcaa93b3150352e5044708d7211b5bed0af4509f` | [applications/mall/dcaa93b/default](applications/mall/dcaa93b/default/) |
+| 12 | mall-swarm (`mall-swarm`) | `04c442f` | `04c442fe318356bae4445a109dde7af297ce1e84` | [applications/mall-swarm/04c442f/default](applications/mall-swarm/04c442f/default/) |
+| 13 | newbee-mall (`newbee-mall`) | `1.0.0` | `a069069b07027613bf0e7f571736be86f431faee` | [applications/newbee-mall/1.0.0/default](applications/newbee-mall/1.0.0/default/) |
+| 14 | siam-cloud (`siam-cloud`) | `d6ee970` | `d6ee970f8decaac09d7f6cbce022b6c67d8d2d33` | [applications/siam-cloud/d6ee970/default](applications/siam-cloud/d6ee970/default/) |
+| 15 | spring-boot-forum (`spring-boot-forum`) | `538eecc` | `538eecc3c6b85fdf0768ab4e8354b48c0c17d94f` | [applications/spring-boot-forum/538eecc/default](applications/spring-boot-forum/538eecc/default/) |
+| 16 | ssm-demo (`ssm-demo`) | `6256ad5` | `6256ad50bfe095519e37a50ceae4c135ea517f65` | [applications/ssm-demo/6256ad5/default](applications/ssm-demo/6256ad5/default/) |
+| 17 | ujcms (`ujcms`) | `0686d12` | `0686d1209cbb16641674f132596993dbd676cf86` | [applications/ujcms/0686d12/default](applications/ujcms/0686d12/default/) |
+| 18 | webchess (`webchess`) | `1.1.0` | `ee3e343dfd2cf766e1a88a1dcf2f2c4c292c3a10` | [applications/webchess/1.1.0/default](applications/webchess/1.1.0/default/) |
+| 19 | weixin-shop-spring-cloud (`weixin-shop-spring-cloud`) | `c14c68b` | `c14c68b553f7b02b98b4dfb2b163789639d756bc` | [applications/weixin-shop-spring-cloud/c14c68b/default](applications/weixin-shop-spring-cloud/c14c68b/default/) |
+| 20 | xmall (`xmall`) | `19e7917` | `19e7917d5ed3bd2a2421a3a246ad494c133ba94c` | [applications/xmall/19e7917/default](applications/xmall/19e7917/default/) |
+| 21 | yzsunlei-xmall (`yzsunlei-xmall`) | `88080b7` | `88080b7aeed2f87f79cb70c0f185f66739de0482` | [applications/yzsunlei-xmall/88080b7/default](applications/yzsunlei-xmall/88080b7/default/) |

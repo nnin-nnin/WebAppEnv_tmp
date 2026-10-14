@@ -1,0 +1,15 @@
+{
+  "application": "xmall",
+  "status": "PASSED",
+  "verified": true,
+  "accounts_verified": [
+    "admin",
+    "admin2",
+    "user1",
+    "user2"
+  ],
+  "negative_auth_check": true,
+  "timestamp": "2026-10-14T14:30:00+08:00",
+  "version": "19e7917",
+  "commit": "19e7917d5ed3bd2a2421a3a246ad494c133ba94c"
+}

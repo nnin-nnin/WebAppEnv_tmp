@@ -1,0 +1,15 @@
+{
+  "application": "webchess",
+  "status": "PASSED",
+  "verified": true,
+  "accounts_verified": [
+    "admin",
+    "admin2",
+    "user1",
+    "user2"
+  ],
+  "negative_auth_check": true,
+  "timestamp": "2026-10-14T14:30:00+08:00",
+  "version": "1.1.0",
+  "commit": "ee3e343dfd2cf766e1a88a1dcf2f2c4c292c3a10"
+}

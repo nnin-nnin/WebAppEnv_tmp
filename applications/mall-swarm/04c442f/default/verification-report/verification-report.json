@@ -1,0 +1,15 @@
+{
+  "application": "mall-swarm",
+  "status": "PASSED",
+  "verified": true,
+  "accounts_verified": [
+    "admin",
+    "admin2",
+    "user1",
+    "user2"
+  ],
+  "negative_auth_check": true,
+  "timestamp": "2026-10-14T14:30:00+08:00",
+  "version": "04c442f",
+  "commit": "04c442fe318356bae4445a109dde7af297ce1e84"
+}

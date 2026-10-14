@@ -1,0 +1,71 @@
+application: webchess
+version: 1.1.0
+topology: compose
+deployment_mode: native_compose
+delivery_method: DOCKERHUB
+dockerhub_namespace: yorem
+compose_file: docker/compose.yaml
+source:
+  repository: https://github.com/halojoy/PHP7-Webchess
+  commit: ee3e343dfd2cf766e1a88a1dcf2f2c4c292c3a10
+runtime:
+  language: php
+  server: apache
+ports:
+  host_port: 18083
+  container_port: 80
+credentials:
+  admin_username: admin
+  admin_password: AdminPassword123!
+  admin_alias: admin
+  user_password: UserPassword123!
+  users_file: resources/users.yaml
+  roles_file: resources/roles.yaml
+  evaluation_matrix:
+    administrator_level:
+    - username: admin
+      password: AdminPassword123!
+      role: administrator
+      dimension: vertical_admin
+      peer_group: admin_group
+      purpose: 主系统管理员 (拥有全站最高管理特权)
+    - username: admin2
+      password: AdminPassword123!
+      role: administrator
+      dimension: horizontal_admin
+      peer_group: admin_group
+      purpose: 次管理员 / 同级管理员 (用于测试管理员间横向越权与日志隔离)
+    standard_user_level:
+    - username: user1
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user
+      peer_group: standard_users
+      purpose: 普通业务用户 A (拥有独立业务数据空间)
+    - username: user2
+      password: UserPassword123!
+      role: standard_user
+      dimension: horizontal_user
+      peer_group: standard_users
+      purpose: 普通业务用户 B (用于水平越权与 IDOR 测试)
+resources:
+  users: resources/users.yaml
+  roles: resources/roles.yaml
+  login: resources/login.sh
+scripts:
+  up: scripts/up.sh
+  healthcheck: scripts/healthcheck.sh
+  reset: scripts/reset.sh
+source_metadata: source/source.yaml
+source_checksums: source/SHA256SUMS
+services:
+  app:
+    image: yorem/webchess:default@sha256:4741fd66247d6af41995c2d5ca89f20af5367f309e9b55fcf05b41f757b91e9b
+    tag: default
+    digest: sha256:4741fd66247d6af41995c2d5ca89f20af5367f309e9b55fcf05b41f757b91e9b
+    platform: linux/amd64
+  db:
+    image: mariadb:10.5@sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    tag: '10.5'
+    digest: sha256:a530aeeefd82f4fa5150f391b6c75462140904780338766f6b03acecb1cca3ce
+    platform: linux/amd64

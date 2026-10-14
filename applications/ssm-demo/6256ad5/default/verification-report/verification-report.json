@@ -1,0 +1,15 @@
+{
+  "application": "ssm-demo",
+  "status": "PASSED",
+  "verified": true,
+  "accounts_verified": [
+    "admin",
+    "admin2",
+    "user1",
+    "user2"
+  ],
+  "negative_auth_check": true,
+  "timestamp": "2026-10-14T14:30:00+08:00",
+  "version": "6256ad5",
+  "commit": "6256ad50bfe095519e37a50ceae4c135ea517f65"
+}

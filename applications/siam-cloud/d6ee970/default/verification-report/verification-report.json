@@ -1,0 +1,15 @@
+{
+  "application": "siam-cloud",
+  "status": "PASSED",
+  "verified": true,
+  "accounts_verified": [
+    "admin",
+    "admin2",
+    "user1",
+    "user2"
+  ],
+  "negative_auth_check": true,
+  "timestamp": "2026-10-14T14:30:00+08:00",
+  "version": "d6ee970",
+  "commit": "d6ee970f8decaac09d7f6cbce022b6c67d8d2d33"
+}

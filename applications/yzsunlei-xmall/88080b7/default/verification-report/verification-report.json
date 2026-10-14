@@ -1,0 +1,15 @@
+{
+  "application": "yzsunlei-xmall",
+  "status": "PASSED",
+  "verified": true,
+  "accounts_verified": [
+    "admin",
+    "admin2",
+    "user1",
+    "user2"
+  ],
+  "negative_auth_check": true,
+  "timestamp": "2026-10-14T14:30:00+08:00",
+  "version": "88080b7",
+  "commit": "88080b7aeed2f87f79cb70c0f185f66739de0482"
+}
